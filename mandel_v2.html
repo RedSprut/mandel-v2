@@ -743,6 +743,9 @@ let rows=[],act=0,lastDraw=null,sgGen=[];
 let drawsCache={lotto:[],viking:[],euro:[]};
 let favsCache=[];
 const L=()=>LOTS[cur];
+const LOTTERY_LABELS={lotto:'Lotto',viking:'Vikinglotto',euro:'Eurojackpot'};
+const lotteryName=id=>LOTTERY_LABELS[id]||LOTS[id]?.name||String(id||'').toUpperCase();
+const drawLotteryName=(d,id=cur)=>d?.lotteryId?lotteryName(d.lotteryId):(d?.lotteryName||lotteryName(id));
 const KEY=id=>'draws_'+id;
 const FAV_KEY=()=>'favs';
 const ROI_KEY=()=>'md2_roi_'+cur; // ROI stays personal (per-device, not shared)
@@ -1572,6 +1575,8 @@ function normalizeOfficialDraw(raw,id){
     bonus,
     jackpot:jackpotNok?Math.round(jackpotNok/100000)/10:null,
     payoutTiers:payoutTiers.length?payoutTiers:null,
+    lotteryId:id,
+    lotteryName:lotteryName(id),
     source:'Norsk Tipping',
     sourceUrl:l.officialUrl,
     drawId:raw.drawId??null,
@@ -1660,7 +1665,7 @@ async function addDraw(){
   const draws=await loadD(cur);
   const ex=draws.findIndex(d=>d.date===date);
   if(ex>=0){if(!(await customConfirm(`Тираж ${date} уже есть. Заменить?`)))return;draws.splice(ex,1);}
-  draws.push({date,main,bonus,jackpot,payoutTiers});draws.sort((a,b)=>b.date.localeCompare(a.date));
+  draws.push({date,main,bonus,jackpot,payoutTiers,lotteryId:cur,lotteryName:lotteryName(cur)});draws.sort((a,b)=>b.date.localeCompare(a.date));
   await saveD(cur,draws);
   document.querySelectorAll('.binp').forEach(i=>{i.value='';i.className='binp';});
   document.getElementById('inp-jackpot').value='';
@@ -1680,7 +1685,7 @@ async function renderHistory(){
     let balls=d.main.map(n=>`<div class="hball ${l.cls}-m">${n}</div>`).join('');
     if(d.bonus&&d.bonus.length){balls+=`<div style="font-size:9px;opacity:.4;margin:0 2px">|</div>`;balls+=d.bonus.map(n=>`<div class="hball ${l.cls}-b">${n}</div>`).join('');}
     const[y,mo,dy]=d.date.split('-');
-    const src=d.source?` · ${d.source}`:'';
+    const src=` · ${drawLotteryName(d,cur)}`;
     div.innerHTML=`<div><div class="hist-date">${dy} ${ms[+mo-1]} ${y}${src}</div><div style="display:flex;gap:3px;flex-wrap:wrap">${balls}</div></div><button class="btn-del" onclick="delDraw('${d.date}')">🗑</button>`;
     c.appendChild(div);
   });

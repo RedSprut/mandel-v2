@@ -7,6 +7,17 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;max-width:430px;margin:0 auto;padding-bottom:82px;background:var(--bg);color:var(--fg);transition:background .3s,color .3s}
+body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov{display:none!important}
+.lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#fff7dc 0,#f2f2f7 42%,#e8edf7 100%);color:#1c1c1e}
+body.dark .lock-ov{background:radial-gradient(circle at 50% 0,#2a2010 0,#1c1c1e 48%,#111 100%);color:#fff}
+body:not(.locked)>.lock-ov{display:none}
+.lock-box{width:100%;max-width:380px;background:rgba(255,255,255,.88);border:1px solid rgba(0,0,0,.08);box-shadow:0 18px 50px rgba(0,0,0,.18);border-radius:22px;padding:22px;backdrop-filter:blur(14px)}
+body.dark .lock-box{background:rgba(44,44,46,.9);border-color:#3a3a3c}
+.lock-title{font-size:22px;font-weight:900;margin-bottom:6px}.lock-sub{font-size:13px;color:#636366;line-height:1.5;margin-bottom:14px}
+body.dark .lock-sub{color:#aeaeb2}
+.lock-inp{width:100%;padding:14px 15px;border-radius:14px;border:1.5px solid #d1d1d6;font-size:17px;font-weight:700;outline:none;background:#fff;color:#1c1c1e}
+.lock-inp:focus{border-color:#4a7cf7}.lock-btn{width:100%;margin-top:10px;padding:14px;border-radius:14px;border:none;background:#1c1c1e;color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+.lock-err{min-height:18px;margin-top:8px;font-size:12px;color:#ff3b30;font-weight:700}
 
 /* ══ LIGHT THEME (default) ══ */
 :root{
@@ -390,7 +401,17 @@ body.dark{
 }
 </style>
 </head>
-<body>
+<body class="locked">
+
+<div class="lock-ov" id="lock-ov">
+  <div class="lock-box">
+    <div class="lock-title">Мандель · Лотерея</div>
+    <div class="lock-sub">Закрытая семейная ссылка. Введи код доступа, чтобы открыть приложение.</div>
+    <input class="lock-inp" id="lock-code" type="password" autocomplete="current-password" placeholder="Код доступа" onkeydown="if(event.key==='Enter')unlockApp()">
+    <button class="lock-btn" onclick="unlockApp()">Открыть</button>
+    <div class="lock-err" id="lock-err"></div>
+  </div>
+</div>
 
 <div class="hdr" id="main-hdr">
   <button class="hdr-back" onclick="handleBack()">‹</button>
@@ -675,6 +696,35 @@ body.dark{
 </div>
 
 <script>
+// ═══════════════════════════════════════════════
+//  SIMPLE FAMILY ACCESS GATE
+// ═══════════════════════════════════════════════
+const ACCESS_HASH='bafeb8651c0a3018606588173571827635ee318454e3d84314f9a49dcbcf67dd';
+async function sha256Hex(text){
+  const bytes=new TextEncoder().encode(text);
+  const hash=await crypto.subtle.digest('SHA-256',bytes);
+  return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function initAccessGate(){
+  if(localStorage.getItem('md2_access_ok')===ACCESS_HASH){
+    document.body.classList.remove('locked');
+    return;
+  }
+  setTimeout(()=>document.getElementById('lock-code')?.focus(),50);
+}
+async function unlockApp(){
+  const inp=document.getElementById('lock-code'),err=document.getElementById('lock-err');
+  try{
+    const ok=(await sha256Hex((inp.value||'').trim()))===ACCESS_HASH;
+    if(!ok){err.textContent='Неверный код доступа';inp.select();return;}
+    localStorage.setItem('md2_access_ok',ACCESS_HASH);
+    document.body.classList.remove('locked');
+    err.textContent='';
+  }catch(e){
+    err.textContent='Браузер не поддерживает проверку кода';
+  }
+}
+
 // ═══════════════════════════════════════════════
 //  DATA
 // ═══════════════════════════════════════════════
@@ -2195,6 +2245,7 @@ function ccAnswer(val){
 // ═══════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════
+initAccessGate();
 initTheme();
 initGenControls();
 selLot('euro');

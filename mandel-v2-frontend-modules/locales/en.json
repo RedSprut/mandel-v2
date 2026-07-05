@@ -1,0 +1,44 @@
+{
+  "app": {
+    "kicker": "Lottery analysis PWA",
+    "title": "Mandel v2 modules",
+    "subtitle": "Mobile-ready i18n, feedback and lottery configs."
+  },
+  "language": {
+    "label": "Language"
+  },
+  "sections": {
+    "copy": {
+      "title": "Copy rows",
+      "description": "A compact UX pattern for clipboard copy, toast confirmation and button state."
+    },
+    "lotteries": {
+      "title": "Global lotteries",
+      "description": "A normalized config shape for worldwide lottery support."
+    },
+    "integration": {
+      "title": "Integration notes",
+      "description": "Use these files as drop-in modules in the existing Mandel v2 app."
+    }
+  },
+  "buttons": {
+    "copyRows": "Copy rows",
+    "copied": "Copied! ✅"
+  },
+  "notifications": {
+    "copySuccess": "Copied {count} rows.",
+    "copyError": "Copy failed. Check browser permissions."
+  },
+  "rows": {
+    "rowLabel": "Row {number}"
+  },
+  "copy": {
+    "header": "Mandel v2 rows · {date}",
+    "row": "Row {number}: {main} | Bonus: {bonus}"
+  },
+  "lotteries": {
+    "mainFormula": "Pick {pick} numbers from {min}-{max}",
+    "playerBonus": "Pick {pick} {label} from {min}-{max}",
+    "drawnBonus": "{label} is drawn separately and is not selected by the player"
+  }
+}

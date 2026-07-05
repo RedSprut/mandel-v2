@@ -1,0 +1,44 @@
+{
+  "app": {
+    "kicker": "PWA для анализа лотерей",
+    "title": "Mandel v2 модули",
+    "subtitle": "Мобильная i18n-система, UX feedback и конфиги лотерей."
+  },
+  "language": {
+    "label": "Язык"
+  },
+  "sections": {
+    "copy": {
+      "title": "Копирование рядов",
+      "description": "Компактный UX-паттерн для буфера обмена, toast-подтверждения и состояния кнопки."
+    },
+    "lotteries": {
+      "title": "Глобальные лотереи",
+      "description": "Нормализованная структура данных для поддержки мировых лотерей."
+    },
+    "integration": {
+      "title": "Интеграция",
+      "description": "Используйте эти файлы как подключаемые модули в существующем Mandel v2."
+    }
+  },
+  "buttons": {
+    "copyRows": "Скопировать ряды",
+    "copied": "Скопировано! ✅"
+  },
+  "notifications": {
+    "copySuccess": "Скопировано {count} ряда.",
+    "copyError": "Не удалось скопировать. Проверьте разрешения браузера."
+  },
+  "rows": {
+    "rowLabel": "Ряд {number}"
+  },
+  "copy": {
+    "header": "Ряды Mandel v2 · {date}",
+    "row": "Ряд {number}: {main} | Бонус: {bonus}"
+  },
+  "lotteries": {
+    "mainFormula": "Выбрать {pick} чисел из диапазона {min}-{max}",
+    "playerBonus": "Выбрать {pick} {label} из диапазона {min}-{max}",
+    "drawnBonus": "{label} выпадает отдельно и не выбирается игроком"
+  }
+}

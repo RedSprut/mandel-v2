@@ -1,0 +1,44 @@
+{
+  "app": {
+    "kicker": "PWA for lotterianalyse",
+    "title": "Mandel v2 moduler",
+    "subtitle": "Mobilklar i18n, tilbakemelding og lotterikonfigurasjon."
+  },
+  "language": {
+    "label": "Språk"
+  },
+  "sections": {
+    "copy": {
+      "title": "Kopier rekker",
+      "description": "Et kompakt UX-mønster for utklippstavle, toast og knappestatus."
+    },
+    "lotteries": {
+      "title": "Globale lotterier",
+      "description": "En normalisert konfigurasjon for lotterier over hele verden."
+    },
+    "integration": {
+      "title": "Integrasjon",
+      "description": "Bruk filene som moduler i den eksisterende Mandel v2-appen."
+    }
+  },
+  "buttons": {
+    "copyRows": "Kopier rekker",
+    "copied": "Kopiert! ✅"
+  },
+  "notifications": {
+    "copySuccess": "{count} rekker kopiert.",
+    "copyError": "Kunne ikke kopiere. Sjekk nettlesertillatelsene."
+  },
+  "rows": {
+    "rowLabel": "Rekke {number}"
+  },
+  "copy": {
+    "header": "Mandel v2 rekker · {date}",
+    "row": "Rekke {number}: {main} | Tillegg: {bonus}"
+  },
+  "lotteries": {
+    "mainFormula": "Velg {pick} tall fra {min}-{max}",
+    "playerBonus": "Velg {pick} {label} fra {min}-{max}",
+    "drawnBonus": "{label} trekkes separat og velges ikke av spilleren"
+  }
+}

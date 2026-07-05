@@ -1,0 +1,9 @@
+{
+  "name": "Mandel v2 Frontend Modules",
+  "short_name": "Mandel v2",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#101114",
+  "description": "Vanilla JS modules for Mandel v2 i18n, UX feedback and lottery configuration."
+}

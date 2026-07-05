@@ -1,0 +1,11 @@
+{
+  "name": "mandel-v2-frontend-modules",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 5173 --bind 127.0.0.1",
+    "check:json": "python3 -m json.tool locales/ru.json >/dev/null",
+    "check:js": "node --check src/app.js && node --check src/i18n.js && node --check src/feedback.js && node --check src/lotteries.js"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "app": {
+    "kicker": "彩票分析 PWA",
+    "title": "Mandel v2 模块",
+    "subtitle": "面向移动端的 i18n、UX 反馈和彩票配置。"
+  },
+  "language": {
+    "label": "语言"
+  },
+  "sections": {
+    "copy": {
+      "title": "复制号码行",
+      "description": "用于剪贴板复制、toast 提示和按钮状态的紧凑 UX 模式。"
+    },
+    "lotteries": {
+      "title": "全球彩票",
+      "description": "用于支持全球彩票的标准化配置结构。"
+    },
+    "integration": {
+      "title": "集成说明",
+      "description": "将这些文件作为模块接入现有 Mandel v2 应用。"
+    }
+  },
+  "buttons": {
+    "copyRows": "复制号码行",
+    "copied": "已复制！✅"
+  },
+  "notifications": {
+    "copySuccess": "已复制 {count} 行。",
+    "copyError": "复制失败。请检查浏览器权限。"
+  },
+  "rows": {
+    "rowLabel": "第 {number} 行"
+  },
+  "copy": {
+    "header": "Mandel v2 号码行 · {date}",
+    "row": "第 {number} 行：{main} | 特别号：{bonus}"
+  },
+  "lotteries": {
+    "mainFormula": "从 {min}-{max} 中选择 {pick} 个号码",
+    "playerBonus": "从 {min}-{max} 中选择 {pick} 个 {label}",
+    "drawnBonus": "{label} 单独开奖，玩家不选择"
+  }
+}

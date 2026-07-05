@@ -1,0 +1,401 @@
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-strong: #101114;
+  --text: #16181d;
+  --muted: #656d78;
+  --border: #dde3ec;
+  --primary: #245cff;
+  --primary-strong: #1745c8;
+  --success-green: #22c55e;
+  --success-green-strong: #16a34a;
+  --danger: #ef4444;
+  --shadow: 0 14px 36px rgba(16, 17, 20, 0.1);
+  --radius: 8px;
+  --safe-bottom: env(safe-area-inset-bottom);
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--bg);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: calc(18px + env(safe-area-inset-top)) 14px calc(24px + var(--safe-bottom));
+  color: var(--text);
+  background: radial-gradient(circle at 50% 0, #ffffff 0, var(--bg) 42%, #eef2f7 100%);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+.app-header,
+.app-shell {
+  width: min(100%, 960px);
+  margin: 0 auto;
+}
+
+.app-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  padding: 10px 0 14px;
+}
+
+.brand-block {
+  display: grid;
+  gap: 6px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(30px, 9vw, 54px);
+  line-height: 0.98;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 1.16;
+  font-weight: 850;
+}
+
+.brand-block p:last-child,
+.section-heading p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.language-control {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.language-control select {
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: 0 1px 0 rgba(16, 17, 20, 0.04);
+}
+
+.app-shell {
+  display: grid;
+  gap: 12px;
+}
+
+.module-section {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 2px rgba(16, 17, 20, 0.04);
+  backdrop-filter: blur(12px);
+}
+
+.section-heading {
+  display: grid;
+  gap: 6px;
+}
+
+.rows-list {
+  display: grid;
+  gap: 8px;
+}
+
+.ticket-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  contain: layout paint;
+}
+
+.ticket-row strong {
+  flex: 0 0 auto;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.number-group {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ball {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: var(--surface-strong);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.ball.bonus {
+  color: #101114;
+  background: #f5c542;
+}
+
+.button,
+.tap-target,
+button {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.1s ease, background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+  will-change: transform;
+}
+
+.button:active,
+.tap-target:active,
+button:active {
+  transform: scale(0.97);
+  filter: brightness(0.9);
+}
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  width: 100%;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  color: #ffffff;
+  background: var(--primary);
+  font-weight: 850;
+  box-shadow: 0 10px 22px rgba(36, 92, 255, 0.22);
+}
+
+.button-primary:focus-visible,
+.language-control select:focus-visible {
+  outline: 3px solid rgba(36, 92, 255, 0.24);
+  outline-offset: 2px;
+}
+
+.button.is-copied {
+  background: var(--success-green);
+  box-shadow: 0 10px 22px rgba(34, 197, 94, 0.22);
+}
+
+.lottery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.lottery-card {
+  display: grid;
+  gap: 10px;
+  min-height: 134px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  contain: layout paint;
+}
+
+.lottery-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.lottery-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.lottery-name {
+  font-size: 17px;
+  font-weight: 850;
+}
+
+.lottery-region {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.formula-pill {
+  justify-self: start;
+  padding: 6px 9px;
+  border-radius: var(--radius);
+  color: #ffffff;
+  background: var(--surface-strong);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.lottery-meta {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.code-sample {
+  overflow-x: auto;
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--radius);
+  color: #e8edf7;
+  background: #101114;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.toast-root {
+  position: fixed;
+  right: 14px;
+  bottom: calc(16px + var(--safe-bottom));
+  left: 14px;
+  z-index: 1000;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 390px);
+  padding: 13px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius);
+  color: #ffffff;
+  background: rgba(16, 17, 20, 0.92);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  animation: toast-in 180ms ease-out both;
+  pointer-events: auto;
+  contain: layout paint;
+}
+
+.toast.success {
+  background: linear-gradient(135deg, var(--success-green-strong), var(--success-green));
+}
+
+.toast.error {
+  background: linear-gradient(135deg, #b91c1c, var(--danger));
+}
+
+.toast-icon {
+  flex: 0 0 auto;
+  font-size: 18px;
+}
+
+.toast-message {
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 780;
+  line-height: 1.35;
+}
+
+.toast.is-hiding {
+  animation: toast-out 180ms ease-in both;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.98);
+  }
+}
+
+@media (min-width: 720px) {
+  body {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .app-header {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    align-items: end;
+    padding-top: 24px;
+  }
+
+  .app-shell {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .module-section:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .tap-target,
+  button,
+  .toast {
+    transition: none;
+    animation: none;
+  }
+}

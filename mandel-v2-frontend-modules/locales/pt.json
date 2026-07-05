@@ -1,0 +1,44 @@
+{
+  "app": {
+    "kicker": "PWA de análise de loterias",
+    "title": "Módulos Mandel v2",
+    "subtitle": "i18n móvel, feedback UX e configurações de loterias."
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "sections": {
+    "copy": {
+      "title": "Copiar linhas",
+      "description": "Um padrão UX compacto para área de transferência, toast e estado do botão."
+    },
+    "lotteries": {
+      "title": "Loterias globais",
+      "description": "Uma estrutura normalizada para suporte a loterias no mundo todo."
+    },
+    "integration": {
+      "title": "Integração",
+      "description": "Use estes arquivos como módulos no app Mandel v2 existente."
+    }
+  },
+  "buttons": {
+    "copyRows": "Copiar linhas",
+    "copied": "Copiado! ✅"
+  },
+  "notifications": {
+    "copySuccess": "{count} linhas copiadas.",
+    "copyError": "Não foi possível copiar. Verifique as permissões do navegador."
+  },
+  "rows": {
+    "rowLabel": "Linha {number}"
+  },
+  "copy": {
+    "header": "Linhas Mandel v2 · {date}",
+    "row": "Linha {number}: {main} | Bônus: {bonus}"
+  },
+  "lotteries": {
+    "mainFormula": "Escolha {pick} números de {min}-{max}",
+    "playerBonus": "Escolha {pick} {label} de {min}-{max}",
+    "drawnBonus": "{label} é sorteado separadamente e não é escolhido pelo jogador"
+  }
+}

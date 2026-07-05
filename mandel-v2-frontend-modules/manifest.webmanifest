@@ -1,9 +1,0 @@
-{
-  "name": "Mandel v2",
-  "short_name": "Mandel v2",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#101114",
-  "description": "Lottery row helper for Mandel v2."
-}

@@ -987,7 +987,7 @@ const MAX_ROWS=50;
 const WHEEL_POOL_MAX=18;
 const L=()=>LOTS[cur];
 const LOTTERY_LABELS=Object.fromEntries(Object.entries(LOTS).map(([id,l])=>[id,l.short||l.name]));
-const OFFICIAL_LOTS=Object.keys(LOTS).filter(id=>LOTS[id].officialProvider||LOTS[id].officialGame);
+const OFFICIAL_LOTS=Object.keys(LOTS);
 const lotteryName=id=>LOTTERY_LABELS[id]||LOTS[id]?.name||String(id||'').toUpperCase();
 const drawLotteryName=(d,id=cur)=>d?.lotteryId?lotteryName(d.lotteryId):(d?.lotteryName||lotteryName(id));
 const KEY=id=>'draws_'+id;
@@ -1136,7 +1136,7 @@ function updateOfficialControls(){
     btn.textContent=provider?'↻ Обновить текущую лотерею':'↻ Проверить results.json';
     btn.style.opacity='1';
   }
-  if(all)all.textContent=`↻ Все живые (${OFFICIAL_LOTS.length})`;
+  if(all)all.textContent=`↻ Все источники (${OFFICIAL_LOTS.length})`;
   if(open){
     open.disabled=!l.officialUrl;
     open.style.opacity=l.officialUrl?'1':'.5';
@@ -2391,10 +2391,10 @@ async function updateOfficialCurrent(){
 }
 async function updateOfficialAll(){
   try{
-    showOfficialStatus('Проверяю все подключённые живые источники…');
+    showOfficialStatus('Проверяю все источники: live-API и results.json…');
     const out=[];
     for(const id of OFFICIAL_LOTS){
-      try{out.push(await importOfficial(id));}
+      try{out.push(getOfficialProvider(id)?await importOfficial(id):await importResultsJson(id));}
       catch(e){out.push({lot:id,error:e.message});}
     }
     await renderHistory();

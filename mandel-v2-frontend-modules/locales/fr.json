@@ -1,24 +1,20 @@
 {
   "app": {
-    "kicker": "PWA d'analyse de loterie",
-    "title": "Modules Mandel v2",
-    "subtitle": "i18n mobile, feedback UX et configurations de loteries."
+    "kicker": "Assistant de loterie",
+    "title": "Mandel v2",
+    "subtitle": "Enregistrez vos lignes, copiez-les vite et comparez les jeux populaires."
   },
   "language": {
     "label": "Langue"
   },
   "sections": {
     "copy": {
-      "title": "Copier les lignes",
-      "description": "Un modèle UX compact pour le presse-papiers, le toast et l'état du bouton."
+      "title": "Mes lignes",
+      "description": "Copiez les lignes choisies dans vos notes, messages ou compte de loterie."
     },
     "lotteries": {
-      "title": "Loteries mondiales",
-      "description": "Une structure normalisée pour prendre en charge les loteries mondiales."
-    },
-    "integration": {
-      "title": "Intégration",
-      "description": "Utilisez ces fichiers comme modules dans l'application Mandel v2 existante."
+      "title": "Loteries populaires",
+      "description": "Formats de jeu des principales loteries de différents pays."
     }
   },
   "buttons": {

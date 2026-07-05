@@ -1,24 +1,20 @@
 {
   "app": {
-    "kicker": "Lottery analysis PWA",
-    "title": "Mandel v2 modules",
-    "subtitle": "Mobile-ready i18n, feedback and lottery configs."
+    "kicker": "Lottery assistant",
+    "title": "Mandel v2",
+    "subtitle": "Save lottery rows, copy them quickly and compare popular games."
   },
   "language": {
     "label": "Language"
   },
   "sections": {
     "copy": {
-      "title": "Copy rows",
-      "description": "A compact UX pattern for clipboard copy, toast confirmation and button state."
+      "title": "My rows",
+      "description": "Copy selected rows to notes, messages or your lottery account."
     },
     "lotteries": {
-      "title": "Global lotteries",
-      "description": "A normalized config shape for worldwide lottery support."
-    },
-    "integration": {
-      "title": "Integration notes",
-      "description": "Use these files as drop-in modules in the existing Mandel v2 app."
+      "title": "Popular lotteries",
+      "description": "Game formats for the main lotteries from different countries."
     }
   },
   "buttons": {

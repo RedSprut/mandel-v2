@@ -1,24 +1,20 @@
 {
   "app": {
-    "kicker": "PWA for lotterianalyse",
-    "title": "Mandel v2 moduler",
-    "subtitle": "Mobilklar i18n, tilbakemelding og lotterikonfigurasjon."
+    "kicker": "Lotteriassistent",
+    "title": "Mandel v2",
+    "subtitle": "Lagre rekker, kopier dem raskt og sammenlign populære spill."
   },
   "language": {
     "label": "Språk"
   },
   "sections": {
     "copy": {
-      "title": "Kopier rekker",
-      "description": "Et kompakt UX-mønster for utklippstavle, toast og knappestatus."
+      "title": "Mine rekker",
+      "description": "Kopier valgte rekker til notater, meldinger eller lotterikontoen din."
     },
     "lotteries": {
-      "title": "Globale lotterier",
-      "description": "En normalisert konfigurasjon for lotterier over hele verden."
-    },
-    "integration": {
-      "title": "Integrasjon",
-      "description": "Bruk filene som moduler i den eksisterende Mandel v2-appen."
+      "title": "Populære lotterier",
+      "description": "Spillformater for de største lotteriene fra ulike land."
     }
   },
   "buttons": {

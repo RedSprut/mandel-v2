@@ -283,17 +283,6 @@ button:active {
   line-height: 1.4;
 }
 
-.code-sample {
-  overflow-x: auto;
-  margin: 0;
-  padding: 12px;
-  border-radius: var(--radius);
-  color: #e8edf7;
-  background: #101114;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
 .toast-root {
   position: fixed;
   right: 14px;
@@ -385,9 +374,6 @@ button:active {
     grid-template-columns: 1fr 1fr;
   }
 
-  .module-section:last-child {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

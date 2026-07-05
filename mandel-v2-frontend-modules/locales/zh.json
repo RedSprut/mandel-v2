@@ -1,24 +1,20 @@
 {
   "app": {
-    "kicker": "彩票分析 PWA",
-    "title": "Mandel v2 模块",
-    "subtitle": "面向移动端的 i18n、UX 反馈和彩票配置。"
+    "kicker": "彩票助手",
+    "title": "Mandel v2",
+    "subtitle": "保存号码行、快速复制，并比较热门彩票。"
   },
   "language": {
     "label": "语言"
   },
   "sections": {
     "copy": {
-      "title": "复制号码行",
-      "description": "用于剪贴板复制、toast 提示和按钮状态的紧凑 UX 模式。"
+      "title": "我的号码行",
+      "description": "将选中的号码行复制到备忘录、消息或彩票平台账户。"
     },
     "lotteries": {
-      "title": "全球彩票",
-      "description": "用于支持全球彩票的标准化配置结构。"
-    },
-    "integration": {
-      "title": "集成说明",
-      "description": "将这些文件作为模块接入现有 Mandel v2 应用。"
+      "title": "热门彩票",
+      "description": "不同国家主要彩票的玩法格式。"
     }
   },
   "buttons": {

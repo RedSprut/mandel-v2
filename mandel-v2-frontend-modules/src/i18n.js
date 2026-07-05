@@ -12,6 +12,7 @@ export const SUPPORTED_LANGUAGES = [
 ];
 
 const SUPPORTED_CODES = new Set(SUPPORTED_LANGUAGES.map((language) => language.code));
+const LOCALE_VERSION = 'clean-ui-2026-07-05';
 
 export function createI18n({
   basePath = './locales',
@@ -28,7 +29,7 @@ export function createI18n({
     const normalized = normalizeLanguage(language) || defaultLanguage;
     if (cache.has(normalized)) return cache.get(normalized);
 
-    const response = await fetch(`${basePath}/${normalized}.json`, { cache: 'force-cache' });
+    const response = await fetch(`${basePath}/${normalized}.json?v=${LOCALE_VERSION}`, { cache: 'no-cache' });
     if (!response.ok) {
       throw new Error(`Cannot load locale: ${normalized}`);
     }

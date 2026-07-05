@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-07-05",
+  "games": {
+    "powerball": [],
+    "megaMillions": [],
+    "euroMillions": [],
+    "eurojackpot": [],
+    "superEnalotto": [],
+    "vikinglotto": [],
+    "lottoMax": [],
+    "powerballAustralia": []
+  }
+}

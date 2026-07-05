@@ -856,6 +856,30 @@ async function unlockApp(){
 // ═══════════════════════════════════════════════
 //  DATA
 // ═══════════════════════════════════════════════
+const LOTTERY_CONFIG={
+  powerball:{name:'Powerball',range:{min:1,max:69},ballCount:5,extraBall:{count:1,range:{min:1,max:26}}},
+  megaMillions:{name:'Mega Millions',range:{min:1,max:70},ballCount:5,extraBall:{count:1,range:{min:1,max:24}}},
+  euroMillions:{name:'EuroMillions',range:{min:1,max:50},ballCount:5,extraBall:{count:2,range:{min:1,max:12}}},
+  eurojackpot:{name:'Eurojackpot',range:{min:1,max:50},ballCount:5,extraBall:{count:2,range:{min:1,max:12}}},
+  superEnalotto:{name:'SuperEnalotto',range:{min:1,max:90},ballCount:6,extraBall:{count:1,range:{min:1,max:90}}},
+  vikinglotto:{name:'Vikinglotto',range:{min:1,max:48},ballCount:6,extraBall:{count:1,range:{min:1,max:8}}},
+  lottoMax:{name:'Lotto Max',range:{min:1,max:52},ballCount:7,extraBall:{count:1,range:{min:1,max:52}}},
+  powerballAustralia:{name:'Powerball Australia',range:{min:1,max:35},ballCount:7,extraBall:{count:1,range:{min:1,max:20}}}
+};
+const LOTTERY_APP_KEYS={
+  powerball:'powerball',
+  megaMillions:'mega',
+  euroMillions:'euromillions',
+  eurojackpot:'euro',
+  superEnalotto:'superenalotto',
+  vikinglotto:'viking',
+  lottoMax:'lottomax',
+  powerballAustralia:'powerballau'
+};
+const APP_LOTTERY_KEYS=Object.fromEntries(Object.entries(LOTTERY_APP_KEYS).map(([configKey,appKey])=>[appKey,configKey]));
+const RESULTS_JSON_URL='results.json';
+let resultsJsonCache=null;
+
 const LOTS={
   lotto:{name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',res:'20:00',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
     tiers:[{match:'7',label:'7 rette'},{match:'6+1',label:'6 + tillegg'},{match:'6',label:'6 rette'},{match:'5',label:'5 rette'},{match:'4',label:'4 rette'}]},
@@ -870,6 +894,89 @@ const LOTS={
   lottomax:{name:'LOTTO MAX',short:'Lotto Max',region:'Canada',flag:'🇨🇦',activeClass:'ow',cls:'viking',mB:52,pM:7,bB:52,pBo:0,offBo:1,price:6,currency:'CAD',minR:1,day:'Вт и Пт',dl:'22:30',res:'после 22:30 ET',combos:133784560,plm:'7 numbers',plb:'Bonus отдельно',bonusName:'Bonus',drawDays:[2,5],officialUrl:'https://www.olg.ca/en/lottery/play-lotto-max-encore/how-to-play.html'},
   powerballau:{name:'POWERBALL AUSTRALIA',short:'Powerball AU',region:'Australia',flag:'🇦🇺',activeClass:'ow',cls:'viking',mB:35,pM:7,bB:20,pBo:1,offBo:1,price:1.35,currency:'AUD',minR:1,day:'Четверг',dl:'19:30',res:'20:30 AEST',combos:134490400,plm:'7 main numbers',plb:'1 Powerball',bonusName:'Powerball',drawDays:[4],officialUrl:'https://www.thelott.com/powerball/how-to-play'}
 };
+function resolveGameKey(gameKey){
+  return LOTS[gameKey]?gameKey:LOTTERY_APP_KEYS[gameKey]||null;
+}
+function resolveConfigKey(gameKey){
+  if(LOTTERY_CONFIG[gameKey])return gameKey;
+  const appKey=resolveGameKey(gameKey);
+  return APP_LOTTERY_KEYS[appKey]||null;
+}
+function getLotteryConfig(gameKey){
+  const configKey=resolveConfigKey(gameKey);
+  if(LOTTERY_CONFIG[configKey])return LOTTERY_CONFIG[configKey];
+  const appKey=resolveGameKey(gameKey),l=LOTS[appKey];
+  if(!l)return null;
+  return{name:l.name,range:{min:1,max:l.mB},ballCount:l.pM,extraBall:(l.offBo||l.pBo)?{count:l.offBo||l.pBo,range:{min:1,max:l.bB}}:{count:0,range:{min:1,max:0}}};
+}
+function syncRulesFromConfig(gameKey){
+  const appKey=resolveGameKey(gameKey),cfg=getLotteryConfig(gameKey);
+  if(!appKey||!cfg||!LOTS[appKey])return null;
+  const rules=LOTS[appKey];
+  rules.mB=cfg.range.max;
+  rules.pM=cfg.ballCount;
+  rules.bB=cfg.extraBall?.range?.max||cfg.range.max;
+  if(rules.pBo>0)rules.pBo=cfg.extraBall?.count||0;
+  rules.offBo=cfg.extraBall?.count||rules.offBo||rules.pBo||0;
+  rules.plm=rules.plm||`${cfg.ballCount} numbers`;
+  rules.plb=rules.pBo>0?(rules.plb||`${cfg.extraBall.count} extra`):rules.plb;
+  return rules;
+}
+function normalizeResultDraw(draw){
+  return{
+    date:draw.date||draw.drawDate||'',
+    main:uniqValid(draw.main||draw.numbers||draw.mainNumbers||[],Number.MAX_SAFE_INTEGER),
+    bonus:uniqValid(draw.bonus||draw.extra||draw.extraBall||draw.extraNumbers||[],Number.MAX_SAFE_INTEGER),
+    jackpot:draw.jackpot??null
+  };
+}
+async function fetchResultsJson(url=RESULTS_JSON_URL){
+  if(url===RESULTS_JSON_URL&&resultsJsonCache)return resultsJsonCache;
+  const res=await fetch(url,{cache:'no-store'});
+  if(!res.ok)throw new Error(`results.json HTTP ${res.status}`);
+  const data=await res.json();
+  if(url===RESULTS_JSON_URL)resultsJsonCache=data;
+  return data;
+}
+async function loadHistoricalResults(gameKey,url=RESULTS_JSON_URL){
+  const db=await fetchResultsJson(url);
+  const configKey=resolveConfigKey(gameKey),appKey=resolveGameKey(gameKey);
+  const source=db.games?.[configKey]||db.games?.[appKey]||db[configKey]||db[appKey]||[];
+  return Array.isArray(source)?source.map(normalizeResultDraw):[];
+}
+function analyzeData(gameKey,historicalData=[]){
+  const cfg=getLotteryConfig(gameKey);
+  if(!cfg)throw new Error(`Unknown lottery: ${gameKey}`);
+  const mainFrequency=new Map();
+  const extraFrequency=new Map();
+  for(let n=cfg.range.min;n<=cfg.range.max;n++)mainFrequency.set(n,0);
+  if(cfg.extraBall?.count){
+    for(let n=cfg.extraBall.range.min;n<=cfg.extraBall.range.max;n++)extraFrequency.set(n,0);
+  }
+  for(let i=0;i<historicalData.length;i++){
+    const draw=normalizeResultDraw(historicalData[i]);
+    for(let j=0;j<draw.main.length;j++){
+      const n=draw.main[j];
+      if(mainFrequency.has(n))mainFrequency.set(n,mainFrequency.get(n)+1);
+    }
+    for(let j=0;j<draw.bonus.length;j++){
+      const n=draw.bonus[j];
+      if(extraFrequency.has(n))extraFrequency.set(n,extraFrequency.get(n)+1);
+    }
+  }
+  const byHot=(a,b)=>b[1]-a[1]||a[0]-b[0];
+  const byCold=(a,b)=>a[1]-b[1]||a[0]-b[0];
+  return{
+    gameKey:resolveConfigKey(gameKey),
+    totalDraws:historicalData.length,
+    mainFrequency,
+    extraFrequency,
+    hotNumbers:[...mainFrequency.entries()].sort(byHot),
+    coldNumbers:[...mainFrequency.entries()].sort(byCold),
+    hotExtraNumbers:[...extraFrequency.entries()].sort(byHot)
+  };
+}
+
 let cur='euro',curPage='sim',curAT='inp',sgAlgo='freq';
 let rows=[],act=0,lastDraw=null,sgGen=[];
 let drawsCache=Object.fromEntries(Object.keys(LOTS).map(id=>[id,[]]));
@@ -912,7 +1019,7 @@ function storageSet(key,value,shared=true){
 async function loadD(id){
   try{
     const r=await withTimeout(storageGet(KEY(id),true));
-    const v=r?JSON.parse(r.value):[];
+    const v=r?JSON.parse(r.value):await loadHistoricalResults(id).catch(()=>[]);
     drawsCache[id]=v;
     return v;
   }catch(e){ console.error('loadD failed',e); drawsCache[id]=drawsCache[id]||[]; return drawsCache[id]; }
@@ -997,7 +1104,7 @@ function renderLotteryNav(){
   const tabs=document.getElementById('lot-tabs'),strip=document.getElementById('sched-strip');
   if(tabs){
     tabs.innerHTML=Object.entries(LOTS).map(([id,l])=>`
-      <div class="lt ${id===cur?(l.activeClass||'ow'):''}" id="lt-${id}" onclick="selLot('${id}')">
+      <div class="lt ${id===cur?(l.activeClass||'ow'):''}" id="lt-${id}" onclick="initLottery('${id}')">
         <div class="lt-flag">${l.flag||'🎲'}</div>
         <div class="lt-name">${l.short||l.name}</div>
       </div>`).join('');
@@ -1005,7 +1112,7 @@ function renderLotteryNav(){
   if(strip){
     strip.innerHTML=Object.entries(LOTS).map(([id,l],i)=>`
       ${i?'<div class="ss-div"></div>':''}
-      <div class="ss-item" onclick="selLot('${id}')">
+      <div class="ss-item" onclick="initLottery('${id}')">
         <div class="ss-name" style="color:${mColor(l.cls)}">${l.short||l.name}</div>
         <div class="ss-day">${l.day} · до ${l.dl}</div>
         <div class="ss-price">${formatPrice(l)}/ряд</div>
@@ -1026,8 +1133,26 @@ function updateOfficialControls(){
     open.style.opacity=l.officialUrl?'1':'.5';
   }
 }
+function clearAnalysisUI(){
+  ['copy-out','world-analysis-out','draw-check-out','chk-result','life-out','wheel-status','heat-status'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    if('value'in el)el.value='';
+    else el.textContent='';
+    if(id==='world-analysis-out'||id==='wheel-status')el.style.display='none';
+  });
+}
+function initLottery(gameKey){
+  const id=resolveGameKey(gameKey);
+  if(!id)throw new Error(`Unknown lottery: ${gameKey}`);
+  syncRulesFromConfig(id);
+  clearAnalysisUI();
+  selLot(id);
+  return{gameKey:id,config:getLotteryConfig(id),rules:LOTS[id]};
+}
 function selLot(id){
   if(!LOTS[id])return;
+  syncRulesFromConfig(id);
   cur=id;lastDraw=null;
   renderLotteryNav();
   initRows();renderSim();resetBanner();buildCheckFields();renderFavs();renderWheelBuilder();renderSavedDrawOptions();updateFilterDefaults();
@@ -2246,10 +2371,11 @@ function fmtChance(n){return n>=1000000?(n/1000000).toFixed(n>=10000000?0:1).rep
 async function renderFreq(){
   const l=L(),draws=await loadD(cur);
   const dBo=drawBonusCount(l);
-  const mf=buildFreq(draws,'main',l.mB);
+  const analysis=analyzeData(cur,draws);
+  const mf=analysis.mainFrequency;
   renderHeatmap(mf,draws.length);
   renderFChart('fc-main',mf,l.mB,draws.length*l.pM,l.cls);
-  if(dBo>0){document.getElementById('fc-bc').style.display='';document.getElementById('fc-bt').textContent='Частота '+bonusLabel(l);renderFChart('fc-bonus',buildFreq(draws,'bonus',l.bB),l.bB,draws.reduce((s,d)=>s+((d.bonus||[]).length),0),l.cls+'-b');}
+  if(dBo>0){document.getElementById('fc-bc').style.display='';document.getElementById('fc-bt').textContent='Частота '+bonusLabel(l);renderFChart('fc-bonus',analysis.extraFrequency,l.bB,draws.reduce((s,d)=>s+((d.bonus||[]).length),0),l.cls+'-b');}
   else document.getElementById('fc-bc').style.display='none';
   const hc=document.getElementById('hc-grid');
   if(draws.length<5){hc.innerHTML='<div class="empty" style="width:100%">Нужно мин. 5 тиражей</div>';return;}

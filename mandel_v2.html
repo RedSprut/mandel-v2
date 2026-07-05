@@ -225,8 +225,8 @@ body.dark{
 .bn-icon{font-size:36px;line-height:1}.bn-lbl{font-size:17px;font-weight:900;color:var(--sub);line-height:1.15}
 .bn.on .bn-lbl{color:#4a7cf7}
 
-.sec-tabs{display:flex;margin:14px 14px 0;background:var(--tab-bg);border-radius:14px;padding:4px}
-.st{flex:1;padding:13px 10px;border-radius:11px;border:none;background:transparent;font-size:16px;font-weight:850;color:var(--sub);cursor:pointer;transition:all .18s;white-space:nowrap}
+.sec-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:14px 14px 0;background:var(--tab-bg);border-radius:14px;padding:4px}
+.st{min-width:0;padding:13px 8px;border-radius:11px;border:none;background:transparent;font-size:16px;font-weight:850;color:var(--sub);cursor:pointer;transition:all .18s;white-space:normal;line-height:1.18;text-align:center}
 .st.on{background:var(--tab-on);font-weight:700;color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .tab-content{display:none}.tab-content.vis{display:block}
 #pg-ana .card{font-size:17px;line-height:1.55}
@@ -394,8 +394,8 @@ body.dark{
   .rb{width:29px;height:29px;font-size:11px}
   .ticket-row{padding:8px;gap:3px}
   .main-grid{grid-template-columns:repeat(7,1fr)}
-  .sec-tabs{overflow-x:auto;justify-content:flex-start}
-  .st{min-width:100px}
+  .sec-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .st{min-width:0;font-size:14px;padding:12px 5px}
   .bn-icon{font-size:32px}.bn-lbl{font-size:15px}
   .hdr-title{font-size:21px}.hdr-title .hdr-sub{font-size:16px}
 }
@@ -404,8 +404,8 @@ body.dark{
   body{padding-bottom:calc(132px + env(safe-area-inset-bottom))}
   .gen-grid,.gen-actions{grid-template-columns:1fr}
   .bnav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);max-width:430px;margin:0;padding:12px 0 calc(22px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;box-shadow:0 -10px 28px rgba(0,0,0,.08)}
-  .sec-tabs{overflow-x:auto;justify-content:flex-start}
-  .st{min-width:112px}
+  .sec-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .st{min-width:0}
 }
 
 @media (min-width:700px){

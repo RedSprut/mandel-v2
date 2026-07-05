@@ -1049,7 +1049,14 @@ function selLot(id){
 function initRows(){rows=[nr(),nr()];act=0;}
 const nr=()=>({m:[],b:[]});
 
-function renderSim(){renderRows();renderMainGrid();renderBonusCol();renderSimBtns();updateHdr();}
+function renderSim(){updatePickLabels();renderRows();renderMainGrid();renderBonusCol();renderSimBtns();updateHdr();}
+
+function updatePickLabels(){
+  const l=L();
+  const plm=document.getElementById('plm'),plb=document.getElementById('plb');
+  if(plm)plm.textContent=l.plm||`Выберите ${l.pM} из ${l.mB}`;
+  if(plb)plb.textContent=l.pBo>0?(l.plb||`${l.pBo} из ${l.bB}`):'';
+}
 
 function updateHdr(){
   const l=L();

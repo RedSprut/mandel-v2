@@ -6,7 +6,7 @@
 <title>Мандель · Лотерея</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;max-width:430px;margin:0 auto;padding-bottom:82px;background:var(--bg);color:var(--fg);transition:background .3s,color .3s}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;max-width:430px;margin:0 auto;padding-bottom:112px;background:var(--bg);color:var(--fg);transition:background .3s,color .3s}
 body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov{display:none!important}
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#fff7dc 0,#f2f2f7 42%,#e8edf7 100%);color:#1c1c1e}
 body.dark .lock-ov{background:radial-gradient(circle at 50% 0,#2a2010 0,#1c1c1e 48%,#111 100%);color:#fff}
@@ -94,7 +94,9 @@ body.dark{
 /* ══ BASE ══ */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;position:sticky;top:0;z-index:260;background:var(--nav-bg);border-bottom:1px solid var(--nav-border);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:background .3s,border-color .3s;box-shadow:0 1px 0 rgba(0,0,0,.04)}
 .hdr-back,.hdr-icon{width:36px;height:36px;border-radius:50%;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--bg3);color:var(--fg);flex-shrink:0}
-.hdr-title{font-size:17px;font-weight:700;text-align:center;flex:1;min-width:0;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-title{font-size:18px;font-weight:800;text-align:center;flex:1;min-width:0;padding:0 8px;line-height:1.16}
+.hdr-title .hdr-main{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-title .hdr-sub{display:block;font-size:14px;font-weight:700;color:var(--sub);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .lot-tabs{display:flex;gap:8px;padding:12px 14px 0}
 .lt{flex:1;padding:10px 4px;border-radius:14px;border:2px solid var(--lt-border);background:var(--lt-bg);cursor:pointer;text-align:center;transition:all .18s}
@@ -122,7 +124,7 @@ body.dark{
 
 /* card */
 .card{background:var(--bg2);border-radius:16px;padding:16px;margin:10px 14px 0;box-shadow:var(--card-shadow)}
-.card-t{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;color:var(--sub)}
+.card-t{font-size:14px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;margin-bottom:12px;color:var(--sub)}
 
 /* rows */
 .mine-tall{font-size:16px;font-weight:600;margin-bottom:10px}
@@ -181,12 +183,32 @@ body.dark{
 .gen-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .world-chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .world-chip{font-size:11px;font-weight:800;padding:6px 8px;border-radius:10px;background:var(--bg3);color:var(--fg);border:1px solid var(--border)}
+.filter-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+.filter-check{display:flex;align-items:flex-start;gap:9px;padding:10px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);font-size:13px;font-weight:700;line-height:1.35;cursor:pointer}
+.filter-check input{margin-top:2px;transform:scale(1.15)}
+.filter-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.mini-inp{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--inp-border);background:var(--inp-bg);color:var(--fg);font-size:13px;font-weight:700;outline:none}
+.wheel-box{background:var(--bg2);border:1.5px solid var(--border);border-radius:16px;padding:14px;margin-top:10px}
+.wheel-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.wheel-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px}
+.wheel-num{aspect-ratio:1;border-radius:50%;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-size:12px;font-weight:800;cursor:pointer}
+.wheel-num.sel{background:#4a7cf7;color:#fff;border-color:#4a7cf7}
+.wheel-summary,.copy-out,.life-out,.draw-check-out,.heat-status{font-size:12px;line-height:1.55;color:var(--sub2);margin-top:8px}
+.heatmap-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.heat-cell{aspect-ratio:1;border:none;border-radius:11px;color:#fff;font-size:13px;font-weight:900;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.life-panel{background:var(--roi-card);border:1.5px solid var(--roi-card-b);border-radius:16px;padding:14px;margin-top:10px}
+.life-big{font-size:20px;font-weight:900;margin:8px 0 4px}
+.life-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.life-stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:10px}
+.life-stat span{display:block;font-size:11px;color:var(--sub);font-weight:700;text-transform:uppercase;margin-bottom:4px}
+.life-stat b{font-size:15px}
+.draw-check-row{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
 
 /* dball */
 .dball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
 .dball.lotto-m{background:#cc2060;color:#fff}.dball.lotto-b{background:#f4a0b0;color:#1c1c1e}.dball.viking-m{background:#1e3fbe;color:#fff}.dball.viking-b{background:#10183a;color:#fff}
 .dball.euro-m{background:#7ecfc0;color:#1c1c1e}.dball.euro-b{background:#f4a0b0;color:#1c1c1e}
-.mb{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.mb{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
 .mb.miss-lotto{background:var(--miss-lotto);color:var(--miss-lotto-c)}
 .mb.miss-viking{background:var(--miss-viking);color:var(--miss-viking-c)}
 .mb.miss-euro{background:var(--miss-euro);color:var(--miss-euro-c)}
@@ -198,15 +220,18 @@ body.dark{
 
 /* page + tabs */
 .page{display:none}.page.show{display:block}
-.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;display:flex;padding:8px 0 20px;z-index:200;background:var(--nav-bg);border-top:1px solid var(--nav-border);backdrop-filter:blur(10px)}
-.bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;border:none;background:transparent}
-.bn-icon{font-size:22px}.bn-lbl{font-size:10px;font-weight:600;color:var(--sub)}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;display:flex;padding:10px 0 calc(18px + env(safe-area-inset-bottom));z-index:240;background:var(--nav-bg);border-top:1px solid var(--nav-border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:6px 0;border:none;background:transparent;min-height:58px;justify-content:center}
+.bn-icon{font-size:28px;line-height:1}.bn-lbl{font-size:13px;font-weight:800;color:var(--sub)}
 .bn.on .bn-lbl{color:#4a7cf7}
 
 .sec-tabs{display:flex;margin:12px 14px 0;background:var(--tab-bg);border-radius:12px;padding:3px}
-.st{flex:1;padding:7px 2px;border-radius:10px;border:none;background:transparent;font-size:11px;font-weight:500;color:var(--sub);cursor:pointer;transition:all .18s;white-space:nowrap}
+.st{flex:1;padding:10px 8px;border-radius:10px;border:none;background:transparent;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;transition:all .18s;white-space:nowrap}
 .st.on{background:var(--tab-on);font-weight:700;color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .tab-content{display:none}.tab-content.vis{display:block}
+#pg-ana .card{font-size:14px;line-height:1.45}
+#pg-ana .card [style*="font-size:12px"]{font-size:13px!important}
+#pg-ana .card [style*="font-size:11px"]{font-size:12px!important}
 
 /* inputs */
 .date-inp,.num-inp{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--inp-border);font-size:14px;background:var(--inp-bg);outline:none;color:var(--fg)}
@@ -248,14 +273,14 @@ body.dark{
 
 /* hist */
 .hist-item{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--hist-border)}
-.hist-date{font-size:11px;color:var(--sub);margin-bottom:3px}
-.hball{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.hist-date{font-size:14px;color:var(--sub);margin-bottom:6px;line-height:1.35}
+.hball{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
 .hball.lotto-m{background:#cc2060;color:#fff}.hball.lotto-b{background:#f4a0b0;color:#1c1c1e}.hball.viking-m{background:#1e3fbe;color:#fff}
 .hball.viking-b{background:#10183a;color:#fff}.hball.euro-m{background:#7ecfc0;color:#1c1c1e}.hball.euro-b{background:#f4a0b0;color:#1c1c1e}
 .btn-del{background:none;border:none;color:#ff3b30;font-size:18px;cursor:pointer;padding:4px 8px}
 
 /* stat row */
-.srow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--srow-border);font-size:13px}
+.srow{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--srow-border);font-size:14px;line-height:1.4}
 .srow span:first-child{color:var(--sub2)}.srow span:last-child{font-weight:700}
 
 /* mandel box */
@@ -286,13 +311,13 @@ body.dark{
 /* favorites */
 .fav-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--hist-border)}
 .fav-balls{display:flex;gap:4px;flex-wrap:wrap}
-.fav-name{font-size:12px;color:var(--sub);margin-bottom:5px}
+.fav-name{font-size:14px;color:var(--sub);margin-bottom:6px}
 .btn-fav-del{background:none;border:none;color:#ff3b30;font-size:16px;cursor:pointer;padding:2px 6px}
 .btn-fav-use{background:#4a7cf7;color:#fff;border:none;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer}
 
 /* check ticket */
 .check-inp-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
-.check-result-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--hist-border)}
+.check-result-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--hist-border)}
 
 /* comparison table */
 .cmp-table{width:100%;border-collapse:collapse;font-size:12px}
@@ -333,7 +358,7 @@ body.dark{
 .empty{text-align:center;padding:28px 16px;color:var(--sub);font-size:14px}
 .warn-note{background:var(--warn-bg);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--warn-c);line-height:1.5;margin-top:8px}
 .divl{height:1px;background:var(--border);margin:10px 0}
-.info-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--srow-border);font-size:13px}
+.info-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--srow-border);font-size:14px;line-height:1.4}
 .info-row span:first-child{color:var(--sub2)}.info-row span:last-child{font-weight:700}
 
 /* custom confirm modal (native confirm() can be blocked in sandboxed iframes) */
@@ -373,9 +398,11 @@ body.dark{
 }
 
 @media (max-width:430px){
-  body{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+  body{padding-bottom:calc(108px + env(safe-area-inset-bottom))}
   .gen-grid,.gen-actions{grid-template-columns:1fr}
-  .bnav{position:static;left:auto;bottom:auto;transform:none;max-width:430px;margin:18px auto 0;padding:10px 0 calc(14px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;box-shadow:none}
+  .bnav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);max-width:430px;margin:0;padding:10px 0 calc(18px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;box-shadow:0 -10px 28px rgba(0,0,0,.08)}
+  .sec-tabs{overflow-x:auto;justify-content:flex-start}
+  .st{min-width:92px}
 }
 
 @media (min-width:700px){
@@ -470,6 +497,7 @@ body.dark{
           <select class="gen-select" id="gen-count" onchange="onGenCountChange()">
             <option value="1">1 ряд</option><option value="2">2 ряда</option><option value="3">3 ряда</option><option value="4">4 ряда</option><option value="5">5 рядов</option>
             <option value="6">6 рядов</option><option value="7">7 рядов</option><option value="8">8 рядов</option><option value="9">9 рядов</option><option value="10" selected>10 рядов</option>
+            <option value="15">15 рядов</option><option value="20">20 рядов</option><option value="30">30 рядов</option><option value="40">40 рядов</option><option value="50">50 рядов</option>
           </select>
         </div>
         <div>
@@ -489,9 +517,26 @@ body.dark{
         <button class="btn-exp" onclick="generateSelectedRows()" style="margin-top:0">Сгенерировать</button>
         <button class="btn-exp" onclick="renderWorldAnalysis()" style="margin-top:0">Анализ лото по миру</button>
       </div>
+      <div class="filter-grid">
+        <label class="filter-check"><input type="checkbox" id="flt-parity" checked>Исключать все чётные / все нечётные ряды</label>
+        <label class="filter-check"><input type="checkbox" id="flt-sum" checked>Фильтр суммы чисел <span id="sum-hint"></span></label>
+        <div class="filter-mini">
+          <input class="mini-inp" id="sum-min" type="number" placeholder="Мин. сумма">
+          <input class="mini-inp" id="sum-max" type="number" placeholder="Макс. сумма">
+        </div>
+        <label class="filter-check"><input type="checkbox" id="flt-consec" checked>Запретить больше 3 чисел подряд</label>
+      </div>
+      <button class="btn-exp" onclick="copyRowsForNorsk()" style="margin-top:10px">📋 Скопировать для Norsk Tipping</button>
       <div id="world-analysis-out" class="warn-note" style="display:none"></div>
+      <div id="copy-out" class="copy-out"></div>
     </div>
     <button class="btn-draw euro" id="btn-draw" onclick="doDraw()">🎲 Симулировать тираж</button>
+    <div class="life-panel">
+      <div class="card-t" style="margin-bottom:4px">Reality Check Simulator</div>
+      <div style="font-size:13px;color:var(--sub2);line-height:1.5">Проверяет текущие ряды на 50 годах случайных тиражей. Это не прогноз, а демонстрация дисперсии и стоимости игры.</div>
+      <button class="btn-exp" onclick="runLifeSim()" style="margin-top:10px">🏦 Прожить 50 лет с этими числами</button>
+      <div id="life-out" class="life-out"></div>
+    </div>
     <button class="ndb euro" id="ndb" onclick="openSG()">
       <div class="ndb-l"><div class="ndb-title">🎯 Умная генерация</div><div class="ndb-sub" id="ndb-sub">На следующий тираж · по алгоритму</div></div>
       <div style="font-size:20px">→</div>
@@ -501,10 +546,34 @@ body.dark{
       <div style="font-size:20px">⠿</div>
     </button>
     <div class="warn-note" id="wheel-status" style="display:none"></div>
+    <div class="wheel-box">
+      <div class="card-t" style="margin-bottom:4px">Конструктор колёсных систем</div>
+      <div style="font-size:13px;color:var(--sub2);line-height:1.5">Выберите пул чисел кликами, затем гарантию покрытия. Если полная гарантия не помещается в 50 рядов, будет показан честный процент покрытия.</div>
+      <div class="wheel-tools">
+        <select class="gen-select" id="wheel-guarantee" onchange="renderWheelBuilder()">
+          <option value="2">Гарантия 2 из 2</option>
+          <option value="3">Гарантия 3 из 3</option>
+          <option value="4" selected>Гарантия 4 из 4</option>
+          <option value="5">Гарантия 5 из 5</option>
+        </select>
+        <button class="btn-exp" onclick="autoWheelPool()" style="margin-top:0">Автопул</button>
+      </div>
+      <div class="wheel-grid" id="wheel-pool-grid"></div>
+      <div class="wheel-summary" id="wheel-builder-summary"></div>
+      <div class="gen-actions">
+        <button class="btn-exp" onclick="clearWheelPool()" style="margin-top:0">Очистить</button>
+        <button class="btn-exp" onclick="applyWheelBuilder()" style="margin-top:0">Сгенерировать wheel</button>
+      </div>
+    </div>
     <!-- CHECK TICKET inline -->
     <div class="card" style="margin:10px 0 0">
       <div class="card-t">🔍 Проверить реальный билет</div>
       <div style="font-size:12px;color:var(--sub2);margin-bottom:8px">Введи числа которые выпали в реальном тираже — система проверит твои ряды</div>
+      <div class="draw-check-row">
+        <select class="gen-select" id="saved-draw-select"><option value="">Выбрать сохранённый тираж</option></select>
+        <button class="btn-exp" onclick="checkAgainstSavedDraw()" style="margin-top:0">Проверить против тиража из базы</button>
+      </div>
+      <div id="draw-check-out" class="draw-check-out"></div>
       <div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px" id="chk-lbl-m">Выпавшие главные числа</div>
       <div class="check-inp-row" id="chk-main-inp"></div>
       <div id="chk-bonus-wrap" style="display:none">
@@ -583,6 +652,12 @@ body.dark{
   <!-- FREQ -->
   <div class="tab-content" id="at-freq">
     <div class="card"><div class="card-t">🔥 Горячие и ❄️ Холодные</div><div class="hc-grid" id="hc-grid"><div class="empty" style="width:100%">Нужно мин. 5 тиражей</div></div></div>
+    <div class="card">
+      <div class="card-t">Интерактивная тепловая карта</div>
+      <div style="font-size:13px;color:var(--sub2);line-height:1.5;margin-bottom:10px">Красный = чаще выпадало в базе, синий = холоднее. Нажатие добавляет число в текущий ряд симулятора.</div>
+      <div class="heatmap-grid" id="heatmap-grid"><div class="empty">Нет данных</div></div>
+      <div id="heat-status" class="heat-status"></div>
+    </div>
     <div class="card"><div class="card-t">Частота главных чисел</div><div class="freq-wrap"><div class="freq-chart" id="fc-main"></div></div></div>
     <div class="card" id="fc-bc" style="display:none"><div class="card-t" id="fc-bt">Бонусные числа</div><div class="freq-wrap"><div class="freq-chart" id="fc-bonus"></div></div></div>
     <div class="card"><div class="card-t">🎯 Частые комбинации</div><div id="sugg-out"><div class="empty">Нужно мин. 10 тиражей</div></div><div class="warn-note" id="sugg-warn" style="display:none">⚠️ Числа из прошлого НЕ предсказывают будущее. Только для образовательных целей.</div></div>
@@ -742,6 +817,10 @@ let cur='euro',curPage='sim',curAT='inp',sgAlgo='freq';
 let rows=[],act=0,lastDraw=null,sgGen=[];
 let drawsCache={lotto:[],viking:[],euro:[]};
 let favsCache=[];
+let wheelPools={lotto:[],viking:[],euro:[]};
+let lifeRunning=false;
+const MAX_ROWS=50;
+const WHEEL_POOL_MAX=18;
 const L=()=>LOTS[cur];
 const LOTTERY_LABELS={lotto:'Lotto',viking:'Vikinglotto',euro:'Eurojackpot'};
 const lotteryName=id=>LOTTERY_LABELS[id]||LOTS[id]?.name||String(id||'').toUpperCase();
@@ -841,7 +920,7 @@ function selPage(p){
   document.getElementById('bn-'+p).classList.add('on');
   const lt=document.getElementById('lot-tabs');
   lt.style.display=p==='sim'?'flex':'none';
-  if(p==='ana'){document.getElementById('hdr-title').textContent='Аналитика тиражей';renderAna();}
+  if(p==='ana'){updateAnaHdr();renderAna();}
   else{updateHdr();}
 }
 async function handleBack(){
@@ -857,7 +936,7 @@ function selLot(id){
   const clsMap={lotto:'ol',viking:'ov',euro:'oe'};
   document.querySelectorAll('.lt').forEach(t=>t.className='lt');
   document.getElementById('lt-'+id).className='lt '+clsMap[id];
-  initRows();renderSim();resetBanner();buildCheckFields();renderFavs();
+  initRows();renderSim();resetBanner();buildCheckFields();renderFavs();renderWheelBuilder();renderSavedDrawOptions();updateFilterDefaults();
   const nd=nextDraw(id);
   document.getElementById('ndb-sub').textContent=nd.dateStr+' · '+L().dl;
   document.getElementById('ndb').className='ndb '+L().cls;
@@ -866,6 +945,7 @@ function selLot(id){
   document.getElementById('chk-btn').className='btn-draw '+L().cls;
   clearWheelStatus();
   updateGenCountUI();
+  if(curPage==='ana'){updateAnaHdr();renderAna();}
   // highlight strip
   ['lotto','viking','euro'].forEach(li=>{
     const ss=document.querySelector(`.ss-item:nth-child(${li==='lotto'?1:li==='viking'?3:5})`);
@@ -884,6 +964,10 @@ function updateHdr(){
   const l=L();
   const f=rows.filter(r=>r.m.length===l.pM&&(l.pBo===0||r.b.length===l.pBo)).length;
   document.getElementById('hdr-title').textContent=f>0?`${f} rekke, ${f*l.price} NOK`:'Fyll ut minst 2 rekker';
+}
+function updateAnaHdr(){
+  const title=document.getElementById('hdr-title');
+  title.innerHTML=`<span class="hdr-main">Аналитика тиражей</span><span class="hdr-sub">${lotteryName(cur)}</span>`;
 }
 
 function renderRows(){
@@ -945,7 +1029,7 @@ function togM(n){clearWheelStatus();const l=L(),row=rows[act],i=row.m.indexOf(n)
 function togB(n){clearWheelStatus();const l=L(),row=rows[act],i=row.b.indexOf(n);if(i>=0)row.b.splice(i,1);else if(row.b.length<l.pBo){row.b.push(n);row.b.sort((a,b)=>a-b);}renderSim();}
 function undo(i){const l=L(),r=rows[i];if(l.pBo>0&&r.b.length>0)r.b.pop();else if(r.m.length>0)r.m.pop();renderSim();}
 function clrRow(i){clearWheelStatus();rows[i]=nr();renderSim();}
-function addRow(){if(rows.length>=10)return;rows.push(nr());act=rows.length-1;renderSim();}
+function addRow(){if(rows.length>=MAX_ROWS)return;rows.push(nr());act=rows.length-1;renderSim();}
 
 function rnd(max,cnt,ex=[]){
   const p=[];for(let i=1;i<=max;i++)if(!ex.includes(i))p.push(i);
@@ -976,7 +1060,7 @@ const GEN_COUNT_KEY='md2_gen_count';
 function getGenCount(){
   const el=document.getElementById('gen-count');
   const raw=el?+el.value:+localStorage.getItem(GEN_COUNT_KEY)||10;
-  return Math.max(1,Math.min(10,Number.isFinite(raw)?raw:10));
+  return Math.max(1,Math.min(MAX_ROWS,Number.isFinite(raw)?raw:10));
 }
 function onGenCountChange(){
   const c=getGenCount();
@@ -985,10 +1069,11 @@ function onGenCountChange(){
   if(document.getElementById('sg-ov')?.classList.contains('show'))generateCombos();
 }
 function initGenControls(){
-  const saved=Math.max(1,Math.min(10,+localStorage.getItem(GEN_COUNT_KEY)||10));
+  const saved=Math.max(1,Math.min(MAX_ROWS,+localStorage.getItem(GEN_COUNT_KEY)||10));
   const sel=document.getElementById('gen-count');
   if(sel)sel.value=String(saved);
   updateGenCountUI();
+  updateFilterDefaults();
 }
 function updateGenCountUI(){
   const c=getGenCount(),sel=document.getElementById('gen-count'),sub=document.getElementById('wheel-sub');
@@ -997,7 +1082,7 @@ function updateGenCountUI(){
 }
 function rowWord(n){return n===1?'ряд':(n>=2&&n<=4?'ряда':'рядов');}
 function setGeneratedRows(gen,status){
-  rows=gen.slice(0,10).map(g=>({m:[...g.m],b:[...(g.b||[])]}));
+  rows=gen.slice(0,MAX_ROWS).map(g=>({m:[...g.m],b:[...(g.b||[])]}));
   if(!rows.length)rows=[nr()];
   act=0;
   renderSim();
@@ -1020,10 +1105,73 @@ function genBonus(l,draws,mode='rnd'){
   return rnd(l.bB,l.pBo);
 }
 function rangeNums(max){return Array.from({length:max},(_,i)=>i+1);}
+function defaultSumRange(l){
+  if(l.cls==='lotto')return{min:95,max:150};
+  const avg=l.pM*(l.mB+1)/2;
+  const spread=Math.max(18,Math.round(l.mB*l.pM*.22));
+  return{min:Math.max(l.pM,Math.round(avg-spread)),max:Math.min(l.pM*l.mB,Math.round(avg+spread))};
+}
+function updateFilterDefaults(force=false){
+  const l=L(),r=defaultSumRange(l),minEl=document.getElementById('sum-min'),maxEl=document.getElementById('sum-max'),hint=document.getElementById('sum-hint');
+  if(!minEl||!maxEl)return;
+  if(force||minEl.dataset.lot!==cur){minEl.value=r.min;maxEl.value=r.max;minEl.dataset.lot=cur;maxEl.dataset.lot=cur;}
+  if(hint)hint.textContent=`(${r.min}-${r.max})`;
+}
+function getFilterSettings(){
+  const l=L(),d=defaultSumRange(l);
+  const minEl=document.getElementById('sum-min'),maxEl=document.getElementById('sum-max');
+  let min=+(minEl?.value||d.min),max=+(maxEl?.value||d.max);
+  if(min>max)[min,max]=[max,min];
+  return{
+    parity:document.getElementById('flt-parity')?.checked!==false,
+    sum:document.getElementById('flt-sum')?.checked!==false,
+    consecutive:document.getElementById('flt-consec')?.checked!==false,
+    min,max
+  };
+}
+function maxConsecutive(nums){
+  const a=[...nums].sort((x,y)=>x-y);
+  let best=0,run=0,prev=null;
+  a.forEach(n=>{run=prev!==null&&n===prev+1?run+1:1;best=Math.max(best,run);prev=n;});
+  return best;
+}
+function passesFilters(row,l=L(),flt=getFilterSettings()){
+  const m=[...(row.m||[])].sort((a,b)=>a-b);
+  if(m.length!==l.pM)return false;
+  if(flt.parity){
+    const odd=m.filter(n=>n%2).length;
+    if(odd===0||odd===m.length)return false;
+  }
+  if(flt.sum){
+    const sum=m.reduce((s,n)=>s+n,0);
+    if(sum<flt.min||sum>flt.max)return false;
+  }
+  if(flt.consecutive&&maxConsecutive(m)>3)return false;
+  return true;
+}
+function randomFilteredRow(l=L(),draws=[]){
+  const flt=getFilterSettings();
+  for(let i=0;i<600;i++){
+    const row={m:rnd(l.mB,l.pM),b:genBonus(l,draws)};
+    if(passesFilters(row,l,flt))return row;
+  }
+  return{m:rnd(l.mB,l.pM),b:genBonus(l,draws)};
+}
+function filterGeneratedRows(out,count,l=L(),draws=[]){
+  const flt=getFilterSettings();
+  const ok=[];
+  (out||[]).forEach(r=>{if(ok.length<count&&passesFilters(r,l,flt))ok.push(r);});
+  let guard=0;
+  while(ok.length<count&&guard++<count*800){
+    const row=randomFilteredRow(l,draws);
+    if(!ok.some(x=>x.m.join(',')===row.m.join(',')))ok.push(row);
+  }
+  return ok.slice(0,count);
+}
 async function generateRowsByAlgo(algo,count){
-  if(algo==='wheel')return(await buildWheelGenerated(count)).rows;
-  if(algo==='world-hot'||algo==='world-mix')return await generateWorldRows(algo,count);
   const l=L(),draws=await loadD(cur),hasHist=draws.length>=5;
+  if(algo==='wheel')return filterGeneratedRows((await buildWheelGenerated(count)).rows,count,l,draws);
+  if(algo==='world-hot'||algo==='world-mix')return filterGeneratedRows(await generateWorldRows(algo,count),count,l,draws);
   const freq=buildFreq(draws,'main',l.mB);
   const sorted=[...freq.entries()].sort((a,b)=>b[1]-a[1]);
   const out=[];
@@ -1056,7 +1204,7 @@ async function generateRowsByAlgo(algo,count){
   }else{
     for(let i=0;i<count;i++)out.push({m:rnd(l.mB,l.pM),b:genBonus(l,draws)});
   }
-  return out;
+  return filterGeneratedRows(out,count,l,draws);
 }
 async function generateSelectedRows(){
   const algo=document.getElementById('direct-algo')?.value||'freq';
@@ -1064,6 +1212,28 @@ async function generateSelectedRows(){
   const gen=await generateRowsByAlgo(algo,count);
   const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'Мандель-сегменты',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль'};
   setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`);
+}
+function rowsToNorskText(){
+  const l=L();
+  fillAll();
+  const lines=[`${lotteryName(cur)} · ${new Date().toLocaleDateString('ru-RU')}`];
+  rows.filter(r=>r.m.length===l.pM).forEach((r,i)=>{
+    const bonus=l.pBo>0&&r.b.length?` | ${bonusLabel(l)}: ${r.b.join(', ')}`:'';
+    lines.push(`Ряд ${i+1}: ${r.m.join(', ')}${bonus}`);
+  });
+  return lines.join('\n');
+}
+async function copyRowsForNorsk(){
+  const text=rowsToNorskText();
+  const out=document.getElementById('copy-out');
+  try{
+    await navigator.clipboard.writeText(text);
+    if(out)out.textContent=`Скопировано ${rows.filter(r=>r.m.length===L().pM).length} ${rowWord(rows.length)} для Norsk Tipping.`;
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+    if(out)out.textContent='Текст подготовлен и скопирован. Если iPhone спросит разрешение, подтвердите вставку.';
+  }
 }
 async function loadAllDraws(){
   const out={};
@@ -1159,6 +1329,107 @@ function pairKeys(nums){
   for(let i=0;i<nums.length;i++)for(let j=i+1;j<nums.length;j++)keys.push(nums[i]+'-'+nums[j]);
   return keys;
 }
+function subsetKeys(nums,k){
+  return chooseCombos([...nums].sort((a,b)=>a-b),k).map(c=>c.join('-'));
+}
+function getWheelGuarantee(){
+  const l=L();
+  const raw=+document.getElementById('wheel-guarantee')?.value||4;
+  return Math.max(2,Math.min(l.pM,raw));
+}
+function renderWheelBuilder(){
+  const l=L(),grid=document.getElementById('wheel-pool-grid'),summary=document.getElementById('wheel-builder-summary');
+  if(!grid)return;
+  const pool=wheelPools[cur]||[];
+  grid.innerHTML='';
+  for(let n=1;n<=l.mB;n++){
+    const btn=document.createElement('button');
+    btn.className='wheel-num'+(pool.includes(n)?' sel':'');
+    btn.textContent=n;
+    btn.onclick=()=>toggleWheelNumber(n);
+    grid.appendChild(btn);
+  }
+  const t=getWheelGuarantee();
+  const lower=pool.length>=l.pM&&pool.length>=t?Math.ceil(comb(pool.length,t)/comb(l.pM,t)):0;
+  if(summary){
+    summary.textContent=pool.length
+      ? `Выбрано ${pool.length}/${WHEEL_POOL_MAX}. ${t} из ${t}: нижняя математическая граница ${lower||'—'} рядов, лимит вывода ${MAX_ROWS}.`
+      : `Выберите от ${l.pM} до ${WHEEL_POOL_MAX} чисел или нажмите Автопул.`;
+  }
+}
+function toggleWheelNumber(n){
+  const pool=wheelPools[cur]||[];
+  const i=pool.indexOf(n);
+  if(i>=0)pool.splice(i,1);
+  else{
+    if(pool.length>=WHEEL_POOL_MAX){alert(`Для быстрой и честной матрицы лимит пула ${WHEEL_POOL_MAX} чисел.`);return;}
+    pool.push(n);
+  }
+  wheelPools[cur]=pool.sort((a,b)=>a-b);
+  renderWheelBuilder();
+}
+async function autoWheelPool(){
+  const l=L(),draws=await loadD(cur),seed=selectedNums('m',l.mB);
+  const freq=draws.length>=5?buildFreq(draws,'main',l.mB):null;
+  wheelPools[cur]=buildWheelPool(l.mB,l.pM,Math.min(WHEEL_POOL_MAX,Math.max(14,l.pM+8)),seed,freq);
+  renderWheelBuilder();
+}
+function clearWheelPool(){
+  wheelPools[cur]=[];
+  clearWheelStatus();
+  renderWheelBuilder();
+}
+function buildGuaranteedWheel(pool,pick,t,rowLimit=MAX_ROWS){
+  const l=L(),flt=getFilterSettings();
+  const targets=new Set(subsetKeys(pool,t));
+  const total=targets.size;
+  let candidates=chooseCombos(pool,pick).filter(c=>passesFilters({m:c,b:[]},l,flt));
+  let usedUnfiltered=false;
+  if(!candidates.length){
+    candidates=chooseCombos(pool,pick);
+    usedUnfiltered=true;
+  }
+  const data=candidates.map(c=>({c,keys:subsetKeys(c,t)}));
+  const used=new Set(),usage=new Map(pool.map(n=>[n,0])),rowsOut=[];
+  while(targets.size&&rowsOut.length<rowLimit&&used.size<data.length){
+    let best=null,bestScore=-Infinity,bestIdx=-1;
+    for(let i=0;i<data.length;i++){
+      const item=data[i],key=item.c.join(',');
+      if(used.has(key))continue;
+      let cover=0;
+      item.keys.forEach(k=>{if(targets.has(k))cover++;});
+      if(!cover)continue;
+      const penalty=item.c.reduce((s,n)=>s+(usage.get(n)||0),0);
+      const score=cover*100-penalty*5+Math.random();
+      if(score>bestScore){best=item;bestScore=score;bestIdx=i;}
+    }
+    if(!best)break;
+    const row=[...best.c].sort((a,b)=>a-b);
+    rowsOut.push(row);
+    used.add(row.join(','));
+    row.forEach(n=>usage.set(n,(usage.get(n)||0)+1));
+    best.keys.forEach(k=>targets.delete(k));
+    if(bestIdx>=0)data.splice(bestIdx,1);
+  }
+  const covered=total-targets.size;
+  return{rows:rowsOut,covered,total,full:targets.size===0,lowerBound:Math.ceil(total/comb(pick,t)),usedUnfiltered};
+}
+async function applyWheelBuilder(){
+  const l=L(),pool=[...(wheelPools[cur]||[])].sort((a,b)=>a-b),t=getWheelGuarantee();
+  if(pool.length<l.pM){alert(`Выберите минимум ${l.pM} главных чисел для ${lotteryName(cur)}.`);return;}
+  const built=buildGuaranteedWheel(pool,l.pM,t,MAX_ROWS);
+  const draws=await loadD(cur);
+  rows=built.rows.map(m=>({m,b:genBonus(l,draws,'freq')}));
+  if(!rows.length)rows=[randomFilteredRow(l,draws)];
+  act=0;renderSim();resetBanner();
+  const pct=built.total?Math.round(built.covered/built.total*100):100;
+  const el=document.getElementById('wheel-status');
+  el.style.display='';
+  el.textContent=built.full
+    ? `Wheel готов: ${rows.length} ${rowWord(rows.length)} · полная гарантия ${t} из ${t} для пула ${pool.length} чисел. Нижняя граница: ${built.lowerBound}.`
+    : `Wheel готов: ${rows.length} ${rowWord(rows.length)} · покрытие ${built.covered}/${built.total} (${pct}%). Полная гарантия ${t} из ${t} не поместилась в лимит ${MAX_ROWS} рядов.`;
+  if(built.usedUnfiltered)el.textContent+=' Фильтры были слишком строгими для пула, часть wheel построена без них.';
+}
 
 function buildWheelPool(maxN,pick,poolSize,seed,freq){
   const target=Math.max(pick,Math.min(maxN,poolSize));
@@ -1245,16 +1516,16 @@ async function buildWheelGenerated(rowCount){
 }
 
 async function applyWheelMatrix(){
-  const count=getGenCount();
+  const count=getGenCount(),l=L(),draws=await loadD(cur);
   const built=await buildWheelGenerated(count);
-  rows=built.rows;
+  rows=filterGeneratedRows(built.rows,count,l,draws);
   if(!rows.length)rows=[nr()];
   act=0;
   renderSim();
   resetBanner();
   const el=document.getElementById('wheel-status');
   el.style.display='';
-  el.textContent=`Матрица готова: ${rows.length} ${rowWord(rows.length)} · пары ${built.cov.covered}/${built.cov.total} · пул ${built.pool.length} чисел`;
+  el.textContent=`Матрица готова: ${rows.length} ${rowWord(rows.length)} · пары исходной матрицы ${built.cov.covered}/${built.cov.total} · пул ${built.pool.length} чисел · фильтры применены`;
 }
 
 // ═══════════════════════════════════════════════
@@ -1328,6 +1599,73 @@ function checkPrize(m,b,dM,dB,l){
   else{if(mh===5&&bh===2)return P('ДЖЕКПОТ 🏆',7);if(mh===5&&bh===1)return P('2-й приз',6);if(mh===5)return P('3-й приз',5);if(mh===4&&bh===2)return P('4-й приз',4);if(mh===4&&bh===1)return P('5-й приз',3);if(mh===4)return P('6-й приз',2);if(mh===3&&bh===2)return P('7-й приз',1);if(mh===2&&bh===2)return P('8-й приз',1);if(mh===3&&bh===1)return P('9-й приз',1);if(mh===3)return P('10-й приз',1);if(mh===1&&bh===2)return P('11-й приз',1);if(mh===2&&bh===1)return P('12-й приз',1);}
   return null;
 }
+function estimatePrizeNok(p,l){
+  if(!p)return 0;
+  if(p.name.includes('ДЖЕКПОТ'))return l.cls==='euro'?25000000:l.cls==='viking'?15000000:10000000;
+  if(l.cls==='lotto'){
+    if(p.name.includes('6+tillegg'))return 500000;
+    if(p.name.includes('6 rette'))return 70000;
+    if(p.name.includes('5 rette'))return 1200;
+    if(p.name.includes('4 rette'))return 50;
+  }
+  if(l.cls==='viking'){
+    if(p.name.includes('6+0'))return 500000;
+    if(p.name.includes('5+1'))return 25000;
+    if(p.name.includes('5+0'))return 2500;
+    if(p.name.includes('4 rette'))return 250;
+    if(p.name.includes('3 rette'))return 50;
+  }
+  if(l.cls==='euro'){
+    if(p.name.startsWith('12-й'))return 75;
+    if(p.name.startsWith('11-й'))return 100;
+    if(p.name.startsWith('10-й'))return 130;
+    if(p.name.startsWith('9-й'))return 180;
+    if(p.name.startsWith('8-й'))return 250;
+    if(p.name.startsWith('7-й'))return 500;
+    if(p.name.startsWith('6-й'))return 1200;
+    if(p.name.startsWith('5-й'))return 3500;
+    if(p.name.startsWith('4-й'))return 60000;
+    if(p.name.startsWith('3-й'))return 180000;
+    if(p.name.startsWith('2-й'))return 1000000;
+  }
+  return 0;
+}
+function runLifeSim(){
+  if(lifeRunning)return;
+  const l=L(),out=document.getElementById('life-out');
+  fillAll();
+  const ticket=rows.filter(r=>r.m.length===l.pM&&(l.pBo===0||r.b.length===l.pBo)).map(r=>({m:[...r.m],b:[...r.b]}));
+  if(!ticket.length){if(out)out.textContent='Нет заполненных рядов для симуляции.';return;}
+  lifeRunning=true;
+  const total=2600,batch=25;
+  let done=0,spent=0,won=0,best=0,hits=0;
+  const paint=()=>{
+    const years=(done/52).toFixed(1),net=won-spent;
+    out.innerHTML=`<div class="life-big">Прошло ${years} лет...</div>
+      <div class="life-stats">
+        <div class="life-stat"><span>Потрачено</span><b>${fmtInt(spent)} NOK</b></div>
+        <div class="life-stat"><span>Выиграно</span><b>${fmtInt(won)} NOK</b></div>
+        <div class="life-stat"><span>Баланс</span><b style="color:${net>=0?'#34c759':'#ff3b30'}">${net>=0?'+':''}${fmtInt(net)} NOK</b></div>
+        <div class="life-stat"><span>Попаданий</span><b>${hits}</b></div>
+      </div>
+      <div style="margin-top:8px">Лучший одиночный приз: ${fmtInt(best)} NOK · рядов в билете: ${ticket.length}</div>`;
+  };
+  const step=()=>{
+    for(let x=0;x<batch&&done<total;x++,done++){
+      const dM=rnd(l.mB,l.pM),dB=drawBonusCount(l)>0?rnd(l.bB,drawBonusCount(l)):[];
+      spent+=ticket.length*l.price;
+      ticket.forEach(row=>{
+        const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l);
+        if(v>0){won+=v;hits++;best=Math.max(best,v);}
+      });
+    }
+    paint();
+    if(done<total)setTimeout(step,12);
+    else lifeRunning=false;
+  };
+  paint();
+  step();
+}
 
 // ═══════════════════════════════════════════════
 //  CHECK REAL TICKET
@@ -1383,6 +1721,31 @@ function checkTicket(){
   // scroll to banner
   document.getElementById('win-banner').scrollIntoView({behavior:'smooth'});
   document.getElementById('chk-result').innerHTML=`<div style="color:#34c759;font-size:13px;font-weight:600;margin-top:6px">✅ Проверка выполнена — смотри баннер выше</div>`;
+}
+async function renderSavedDrawOptions(){
+  const sel=document.getElementById('saved-draw-select');
+  if(!sel)return;
+  const draws=await loadD(cur);
+  const prev=sel.value;
+  sel.innerHTML='<option value="">Выбрать сохранённый тираж</option>';
+  draws.slice(0,80).forEach(d=>{
+    const opt=document.createElement('option');
+    opt.value=d.date;
+    opt.textContent=`${d.date} · ${drawLotteryName(d,cur)}`;
+    sel.appendChild(opt);
+  });
+  if([...sel.options].some(o=>o.value===prev))sel.value=prev;
+}
+async function checkAgainstSavedDraw(){
+  const sel=document.getElementById('saved-draw-select'),out=document.getElementById('draw-check-out');
+  const date=sel?.value;
+  if(!date){if(out)out.textContent='Выберите тираж из базы.';return;}
+  const draws=await loadD(cur),d=draws.find(x=>x.date===date);
+  if(!d){if(out)out.textContent='Тираж не найден в базе.';await renderSavedDrawOptions();return;}
+  fillAll();
+  showBanner(d.main||[],d.bonus||[]);
+  document.getElementById('win-banner').scrollIntoView({behavior:'smooth'});
+  if(out)out.textContent=`Проверено против тиража ${date}: совпадения подсвечены в баннере, как в купоне Norsk Tipping.`;
 }
 
 // ═══════════════════════════════════════════════
@@ -1447,6 +1810,7 @@ async function selAT(id){
 }
 
 async function renderAna(){
+  updateAnaHdr();
   buildInpFields();await renderHistory();
   if(curAT==='freq'){await renderFreq();await renderSugg();await renderPairs();}
   if(curAT==='chi')await renderChi();
@@ -1628,6 +1992,7 @@ async function updateOfficialCurrent(){
     showOfficialStatus(`Проверяю Norsk Tipping для ${L().name}…`);
     const r=await importOfficial(cur);
     await renderHistory();
+    await renderSavedDrawOptions();
     if(curPage==='ana')await renderAna();
     showOfficialStatus(`${L().name}: добавлено ${r.added}, обновлено ${r.updated}, без изменений ${r.unchanged}, архив сохранён ${r.preserved}. В базе всего ${r.totalStored}. Последний официальный тираж: ${r.latest}.${r.invalid?` Отклонено некорректных: ${r.invalid}.`:''}`);
   }catch(e){
@@ -1640,6 +2005,7 @@ async function updateOfficialAll(){
     const out=[];
     for(const id of Object.keys(LOTS))out.push(await importOfficial(id));
     await renderHistory();
+    await renderSavedDrawOptions();
     if(curPage==='ana')await renderAna();
     showOfficialStatus(out.map(r=>`${LOTS[r.lot].name}: +${r.added}, ↻${r.updated}, =${r.unchanged}, архив ${r.preserved}, всего ${r.totalStored}, последний ${r.latest}`).join(' · '));
   }catch(e){
@@ -1671,6 +2037,7 @@ async function addDraw(){
   document.getElementById('inp-jackpot').value='';
   clearPayoutInp();
   await renderHistory();
+  await renderSavedDrawOptions();
 }
 
 async function renderHistory(){
@@ -1696,6 +2063,7 @@ async function delDraw(date){
   const draws=await loadD(cur);
   await saveD(cur,draws.filter(d=>d.date!==date));
   await renderHistory();
+  await renderSavedDrawOptions();
 }
 
 function buildFreq(draws,key,maxN){
@@ -1724,6 +2092,7 @@ async function renderFreq(){
   const l=L(),draws=await loadD(cur);
   const dBo=drawBonusCount(l);
   const mf=buildFreq(draws,'main',l.mB);
+  renderHeatmap(mf,draws.length);
   renderFChart('fc-main',mf,l.mB,draws.length*l.pM,l.cls);
   if(dBo>0){document.getElementById('fc-bc').style.display='';document.getElementById('fc-bt').textContent='Частота '+bonusLabel(l);renderFChart('fc-bonus',buildFreq(draws,'bonus',l.bB),l.bB,draws.reduce((s,d)=>s+((d.bonus||[]).length),0),l.cls+'-b');}
   else document.getElementById('fc-bc').style.display='none';
@@ -1733,6 +2102,43 @@ async function renderFreq(){
   const hot=sorted.slice(0,5),cold=sorted.slice(-5).reverse();
   const exp=(draws.length*l.pM/l.mB).toFixed(1);
   hc.innerHTML=`<div class="hc-col"><div class="hc-lbl hot">🔥 Горячие</div>${hot.map(([n,c])=>`<div class="hc-row"><div class="hc-ball" style="background:${mColor(l.cls)};color:${mText(l.cls)}">${n}</div><div style="font-size:11px;color:var(--sub2)"><b>${c}×</b> (ожид.${exp})</div></div>`).join('')}</div><div class="hc-col"><div class="hc-lbl cold">❄️ Холодные</div>${cold.map(([n,c])=>`<div class="hc-row"><div class="hc-ball" style="background:var(--bg3);color:var(--sub)">${n}</div><div style="font-size:11px;color:var(--sub2)"><b>${c}×</b> (ожид.${exp})</div></div>`).join('')}</div>`;
+}
+function heatColor(score){
+  const s=Math.max(0,Math.min(1,score));
+  const hue=210-(210*s);
+  const light=48+(12*(1-Math.abs(s-.5)*2));
+  return`hsl(${hue} 78% ${light}%)`;
+}
+function renderHeatmap(freq,drawCount){
+  const l=L(),grid=document.getElementById('heatmap-grid');
+  if(!grid)return;
+  if(!drawCount){grid.innerHTML='<div class="empty">Нет данных</div>';return;}
+  const vals=[...freq.values()],min=Math.min(...vals),max=Math.max(...vals),span=Math.max(1,max-min);
+  grid.innerHTML='';
+  freq.forEach((cnt,n)=>{
+    const score=(cnt-min)/span;
+    const btn=document.createElement('button');
+    btn.className='heat-cell';
+    btn.style.background=heatColor(score);
+    btn.title=`${n}: ${cnt} раз`;
+    btn.textContent=n;
+    btn.onclick=()=>addHeatNumber(n);
+    grid.appendChild(btn);
+  });
+}
+function addHeatNumber(n){
+  const l=L();
+  if(curPage!=='sim')selPage('sim');
+  let row=rows[act]||rows[0];
+  if(!row||row.m.length>=l.pM){
+    if(rows.length<MAX_ROWS){rows.push(nr());act=rows.length-1;row=rows[act];}
+    else{act=0;row=rows[0];}
+  }
+  if(!row.m.includes(n)&&row.m.length<l.pM)row.m.push(n);
+  row.m.sort((a,b)=>a-b);
+  renderSim();
+  const out=document.getElementById('heat-status');
+  if(out)out.textContent=`Число ${n} добавлено в ряд ${act+1}. Готовый ряд можно сохранить в Избранное.`;
 }
 
 function renderFChart(elId,freq,maxN,total,cls){
@@ -2064,6 +2470,7 @@ async function handleTextImport(){
     }
     ta.value='';
     await renderHistory();
+    await renderSavedDrawOptions();
     alert(`Импорт успешен: ${imported} тиражей (видно всем по ссылке)!`);
   }catch(err){
     alert('Ошибка при сохранении: '+err.message);
@@ -2103,6 +2510,7 @@ function handleImp(e){
         return;
       }
       await renderHistory();
+      await renderSavedDrawOptions();
       alert(`Импорт успешен: ${imported} тиражей (видно всем по ссылке)!`);
     }catch(err){
       alert('Ошибка при сохранении: '+err.message);

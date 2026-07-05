@@ -7,7 +7,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;max-width:430px;margin:0 auto;padding-bottom:112px;background:var(--bg);color:var(--fg);transition:background .3s,color .3s}
-body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov{display:none!important}
+body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov{display:none!important}
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#fff7dc 0,#f2f2f7 42%,#e8edf7 100%);color:#1c1c1e}
 body.dark .lock-ov{background:radial-gradient(circle at 50% 0,#2a2010 0,#1c1c1e 48%,#111 100%);color:#fff}
 body:not(.locked)>.lock-ov{display:none}
@@ -118,6 +118,8 @@ body.dark{
 .win-banner.prize{border-color:#34c759;background:var(--bg2)}
 .win-banner.miss{border-color:#ff3b30;background:var(--bg2)}
 @keyframes glow{from{box-shadow:0 0 8px rgba(240,165,0,.3)}to{box-shadow:0 0 24px rgba(240,165,0,.7)}}
+@keyframes ballPop{0%{transform:scale(.55);opacity:0}65%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes fadeLift{0%{transform:translateY(8px);opacity:0}100%{transform:translateY(0);opacity:1}}
 .wb-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .wb-icon{font-size:34px}.wb-title{font-size:19px;font-weight:900}.wb-sub{font-size:15px;color:var(--sub);margin-top:3px;line-height:1.35}
 .wb-lbl{font-size:13px;color:var(--sub);font-weight:800;letter-spacing:.2px;text-transform:uppercase;margin-bottom:5px;margin-top:10px}
@@ -133,6 +135,8 @@ body.dark{
 .rn{font-size:15px;font-weight:800;min-width:18px;flex-shrink:0;color:var(--sub)}
 .rballs{display:flex;gap:4px;flex:1;align-items:center;overflow:hidden}
 .rb{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.rb,.dball,.mb,.hball,.sg-cball,.hc-ball,.heat-cell,.wheel-num{animation:ballPop .24s ease both}
+.ticket-row,.sg-combo,.hist-item{animation:fadeLift .18s ease both}
 .rb-e-lotto{background:var(--rb-e-lotto);color:var(--rb-e-col-lotto)}
 .rb-e-viking{background:var(--rb-e-viking);color:var(--rb-e-col-viking)}
 .rb-e-euro{background:var(--rb-e-euro);color:var(--rb-e-col-euro)}
@@ -372,6 +376,22 @@ body.dark{
 .cc-btn.cancel{background:var(--bg3);color:var(--sub)}
 .cc-btn.ok{background:#ff3b30;color:#fff}
 
+/* feedback modal */
+.fb-ov{position:fixed;inset:0;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;z-index:520;opacity:0;pointer-events:none;transition:opacity .2s;padding:20px}
+.fb-ov.show{opacity:1;pointer-events:all}
+.fb-box{width:100%;max-width:360px;background:var(--modal-bg);border-radius:22px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.3);text-align:center;transform:scale(.96);transition:transform .2s}
+.fb-ov.show .fb-box{transform:scale(1)}
+.fb-icon{font-size:42px;margin-bottom:8px}
+.fb-title{font-size:22px;font-weight:900;color:var(--fg);margin-bottom:6px}
+.fb-msg{font-size:16px;line-height:1.5;color:var(--sub2);margin-bottom:16px;white-space:pre-line}
+.fb-btn{width:100%;padding:14px;border-radius:14px;border:none;background:#4a7cf7;color:#fff;font-size:17px;font-weight:900;cursor:pointer}
+
+/* visible tap/click feedback */
+button,.lt,.ss-item,.ticket-row,.sg-algo,.bn,.nb,.ndb,.st,.wheel-num,.heat-cell,.pair-cell,.fbar,.btn-s,.btn-draw,.btn-add,.btn-exp,.btn-del,.btn-fav-use,.btn-fav-del,.btn-close2,.sg-use,.cc-btn,.fb-btn,.filter-check{transition:transform .12s ease,filter .12s ease,box-shadow .12s ease,background-color .12s ease,border-color .12s ease}
+button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:active,.nb:active,.ndb:active,.st:active,.wheel-num:active,.heat-cell:active,.pair-cell:active,.fbar:active,.btn-s:active,.btn-draw:active,.btn-add:active,.btn-exp:active,.btn-del:active,.btn-fav-use:active,.btn-fav-del:active,.btn-close2:active,.sg-use:active,.cc-btn:active,.fb-btn:active,.filter-check:active{transform:scale(.96);filter:brightness(.92);box-shadow:inset 0 0 0 999px rgba(0,0,0,.06)}
+.nb:active{transform:scale(.84)}
+.lt:active,.ss-item:active,.ticket-row:active,.bn:active,.st:active,.filter-check:active{background-color:var(--bg3)}
+
 /* payout tier inputs */
 .payout-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .payout-match{font-size:11px;font-weight:700;color:var(--sub2);min-width:42px;flex-shrink:0}
@@ -430,6 +450,11 @@ body.dark{
   .card{margin-left:0;margin-right:0}
   .sched-strip{margin-left:0;margin-right:0}
   .win-banner{margin-top:14px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  button,.lt,.ss-item,.ticket-row,.sg-algo,.bn,.nb,.ndb,.st,.wheel-num,.heat-cell,.pair-cell,.fbar,.btn-s,.btn-draw,.btn-add,.btn-exp,.btn-del,.btn-fav-use,.btn-fav-del,.btn-close2,.sg-use,.cc-btn,.fb-btn,.filter-check,.fb-box{transition:none!important}
+  .rb,.dball,.mb,.hball,.sg-cball,.hc-ball,.heat-cell,.wheel-num,.ticket-row,.sg-combo,.hist-item{animation:none!important}
 }
 
 /* readability overrides */
@@ -781,6 +806,16 @@ body.dark{
   </div>
 </div>
 
+<!-- FEEDBACK MODAL -->
+<div class="fb-ov" id="fb-ov" onclick="fbOut(event)">
+  <div class="fb-box">
+    <div class="fb-icon" id="fb-icon">✅</div>
+    <div class="fb-title" id="fb-title">Готово</div>
+    <div class="fb-msg" id="fb-msg">Действие выполнено.</div>
+    <button class="fb-btn" onclick="closeFeedback()">OK</button>
+  </div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════════
 //  SIMPLE FAMILY ACCESS GATE
@@ -871,7 +906,7 @@ async function loadD(id){
 async function saveD(id,arr){
   drawsCache[id]=arr; // optimistic local update so UI never freezes
   try{ await withTimeout(storageSet(KEY(id),JSON.stringify(arr),true)); }
-  catch(e){ console.error('Storage save failed',e); alert('⚠️ Не удалось сохранить в общую базу (таймаут). Данные сохранены только локально на этом экране — перезагрузка может их сбросить.'); }
+  catch(e){ console.error('Storage save failed',e); showFeedback('Не сохранилось в общую базу','Таймаут хранилища. Данные остались только на этом экране; перезагрузка может их сбросить.','⚠️',4200); }
 }
 function mergeDrawLists(oldArr,newArr){
   const byDate=new Map((oldArr||[]).filter(d=>d&&d.date).map(d=>[d.date,d]));
@@ -898,7 +933,7 @@ async function loadFav(){
 async function saveFavs(arr){
   favsCache=arr;
   try{ await withTimeout(storageSet(FAV_KEY(),JSON.stringify(arr),true)); }
-  catch(e){ console.error('Storage save failed',e); alert('⚠️ Не удалось сохранить избранное (таймаут)'); }
+  catch(e){ console.error('Storage save failed',e); showFeedback('Избранное не сохранилось','Хранилище ответило таймаутом. Попробуйте ещё раз через несколько секунд.','⚠️',3800); }
 }
 
 // ─── PERSONAL STORAGE (ROI — stays only on this device) ───
@@ -1221,6 +1256,7 @@ async function generateSelectedRows(){
   const gen=await generateRowsByAlgo(algo,count);
   const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'Мандель-сегменты',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль'};
   setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`);
+  showFeedback('Ряды готовы',`Сгенерировано ${count} ${rowWord(count)}.\nМетод: ${labels[algo]||algo}.`,'🎯',1900);
 }
 function rowsToNorskText(){
   const l=L();
@@ -1235,13 +1271,16 @@ function rowsToNorskText(){
 async function copyRowsForNorsk(){
   const text=rowsToNorskText();
   const out=document.getElementById('copy-out');
+  const readyCount=rows.filter(r=>r.m.length===L().pM).length;
   try{
     await navigator.clipboard.writeText(text);
-    if(out)out.textContent=`Скопировано ${rows.filter(r=>r.m.length===L().pM).length} ${rowWord(rows.length)} для Norsk Tipping.`;
+    if(out)out.textContent=`Скопировано ${readyCount} ${rowWord(readyCount)} для Norsk Tipping.`;
+    showFeedback('Скопировано',`Скопировано ${readyCount} ${rowWord(readyCount)}.\nМожно вставить в сообщение, заметки или перенести в Norsk Tipping.`,'📋');
   }catch(e){
     const ta=document.createElement('textarea');
     ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
     if(out)out.textContent='Текст подготовлен и скопирован. Если iPhone спросит разрешение, подтвердите вставку.';
+    showFeedback('Текст готов',`Комбинации подготовлены для вставки.\nЕсли браузер спросит разрешение, подтвердите вставку.`,'📋');
   }
 }
 async function loadAllDraws(){
@@ -1371,7 +1410,7 @@ function toggleWheelNumber(n){
   const i=pool.indexOf(n);
   if(i>=0)pool.splice(i,1);
   else{
-    if(pool.length>=WHEEL_POOL_MAX){alert(`Для быстрой и честной матрицы лимит пула ${WHEEL_POOL_MAX} чисел.`);return;}
+    if(pool.length>=WHEEL_POOL_MAX){showFeedback('Лимит пула',`Для быстрой и честной матрицы лимит пула: ${WHEEL_POOL_MAX} чисел.`,'⚠️',3200);return;}
     pool.push(n);
   }
   wheelPools[cur]=pool.sort((a,b)=>a-b);
@@ -1425,7 +1464,7 @@ function buildGuaranteedWheel(pool,pick,t,rowLimit=MAX_ROWS){
 }
 async function applyWheelBuilder(){
   const l=L(),pool=[...(wheelPools[cur]||[])].sort((a,b)=>a-b),t=getWheelGuarantee();
-  if(pool.length<l.pM){alert(`Выберите минимум ${l.pM} главных чисел для ${lotteryName(cur)}.`);return;}
+  if(pool.length<l.pM){showFeedback('Недостаточно чисел',`Выберите минимум ${l.pM} главных чисел для ${lotteryName(cur)}.`,'⚠️',3200);return;}
   const built=buildGuaranteedWheel(pool,l.pM,t,MAX_ROWS);
   const draws=await loadD(cur);
   rows=built.rows.map(m=>({m,b:genBonus(l,draws,'freq')}));
@@ -1438,6 +1477,7 @@ async function applyWheelBuilder(){
     ? `Wheel готов: ${rows.length} ${rowWord(rows.length)} · полная гарантия ${t} из ${t} для пула ${pool.length} чисел. Нижняя граница: ${built.lowerBound}.`
     : `Wheel готов: ${rows.length} ${rowWord(rows.length)} · покрытие ${built.covered}/${built.total} (${pct}%). Полная гарантия ${t} из ${t} не поместилась в лимит ${MAX_ROWS} рядов.`;
   if(built.usedUnfiltered)el.textContent+=' Фильтры были слишком строгими для пула, часть wheel построена без них.';
+  showFeedback('Wheel готов',`${rows.length} ${rowWord(rows.length)} для пула ${pool.length} чисел.\nГарантия: ${t} из ${t}.`,'📐',2200);
 }
 
 function buildWheelPool(maxN,pick,poolSize,seed,freq){
@@ -1710,8 +1750,8 @@ function checkTicket(){
   const dM=[];
   for(let i=0;i<l.pM;i++){
     const v=+document.getElementById('chk-m'+i).value;
-    if(!v||v<1||v>l.mB){alert(`Главное число ${i+1}: введи от 1 до ${l.mB}`);return;}
-    if(dM.includes(v)){alert(`Число ${v} повторяется`);return;}
+    if(!v||v<1||v>l.mB){showFeedback('Проверьте число',`Главное число ${i+1}: введите от 1 до ${l.mB}.`,'⚠️',3200);return;}
+    if(dM.includes(v)){showFeedback('Повтор числа',`Число ${v} повторяется.`,'⚠️',2800);return;}
     dM.push(v);
   }
   dM.sort((a,b)=>a-b);
@@ -1719,8 +1759,8 @@ function checkTicket(){
   if(dBo>0){
     for(let i=0;i<dBo;i++){
       const v=+document.getElementById('chk-b'+i).value;
-      if(!v||v<1||v>l.bB){alert(`Бонус ${i+1}: введи от 1 до ${l.bB}`);return;}
-      if(dB.includes(v)){alert(`Бонус ${v} повторяется`);return;}
+      if(!v||v<1||v>l.bB){showFeedback('Проверьте бонус',`Бонус ${i+1}: введите от 1 до ${l.bB}.`,'⚠️',3200);return;}
+      if(dB.includes(v)){showFeedback('Повтор бонуса',`Бонус ${v} повторяется.`,'⚠️',2800);return;}
       dB.push(v);
     }
     dB.sort((a,b)=>a-b);
@@ -1755,6 +1795,7 @@ async function checkAgainstSavedDraw(){
   showBanner(d.main||[],d.bonus||[]);
   document.getElementById('win-banner').scrollIntoView({behavior:'smooth'});
   if(out)out.textContent=`Проверено против тиража ${date}: совпадения подсвечены в баннере, как в купоне Norsk Tipping.`;
+  showFeedback('Проверено',`Тираж ${date}: совпадения подсвечены вверху, как в купоне Norsk Tipping.`,'🔍',2200);
 }
 
 // ═══════════════════════════════════════════════
@@ -1768,7 +1809,7 @@ async function saveFav(){
   favs.unshift({name,rows:rows.map(r=>({m:[...r.m],b:[...r.b]})),lot:cur});
   await saveFavs(favs.slice(0,10));
   await renderFavs();
-  alert('Комбинации сохранены в Избранное (видно всем по этой ссылке)!');
+  showFeedback('Сохранено','Комбинации добавлены в Избранное и видны по этой ссылке.','⭐');
 }
 
 async function renderFavs(){
@@ -1798,7 +1839,7 @@ async function useFav(i){
   if(!favs[i])return;
   rows=favs[i].rows.map(r=>({m:[...r.m],b:[...r.b]}));
   act=0;renderSim();resetBanner();
-  alert('Комбинации загружены!');
+  showFeedback('Загружено','Комбинации из Избранного снова поставлены в симулятор.','✅');
 }
 
 async function delFav(i){
@@ -2029,12 +2070,12 @@ async function addDraw(){
   const l=L();
   const dBo=drawBonusCount(l);
   const date=document.getElementById('inp-date').value;
-  if(!date){alert('Введи дату');return;}
+  if(!date){showFeedback('Нужна дата','Введите дату тиража.','⚠️',2800);return;}
   const main=[];
-  for(let i=0;i<l.pM;i++){const v=+document.getElementById('bm'+i).value;if(!v||v<1||v>l.mB){alert(`Главное число ${i+1}: 1–${l.mB}`);return;}if(main.includes(v)){alert(`Число ${v} повторяется`);return;}main.push(v);}
+  for(let i=0;i<l.pM;i++){const v=+document.getElementById('bm'+i).value;if(!v||v<1||v>l.mB){showFeedback('Проверьте число',`Главное число ${i+1}: 1–${l.mB}.`,'⚠️',3200);return;}if(main.includes(v)){showFeedback('Повтор числа',`Число ${v} повторяется.`,'⚠️',2800);return;}main.push(v);}
   main.sort((a,b)=>a-b);
   const bonus=[];
-  if(dBo>0){for(let i=0;i<dBo;i++){const v=+document.getElementById('bb'+i).value;if(!v||v<1||v>l.bB){alert(`Бонус ${i+1}: 1–${l.bB}`);return;}if(bonus.includes(v)){alert(`Бонус ${v} повторяется`);return;}bonus.push(v);}bonus.sort((a,b)=>a-b);}
+  if(dBo>0){for(let i=0;i<dBo;i++){const v=+document.getElementById('bb'+i).value;if(!v||v<1||v>l.bB){showFeedback('Проверьте бонус',`Бонус ${i+1}: 1–${l.bB}.`,'⚠️',3200);return;}if(bonus.includes(v)){showFeedback('Повтор бонуса',`Бонус ${v} повторяется.`,'⚠️',2800);return;}bonus.push(v);}bonus.sort((a,b)=>a-b);}
   const jackpot=parseFloat(document.getElementById('inp-jackpot').value)||null;
   const payoutTiers=readPayoutInp();
   const draws=await loadD(cur);
@@ -2455,12 +2496,12 @@ function toggleTextImport(){
 async function handleTextImport(){
   const ta=document.getElementById('text-import-area');
   const raw=ta.value.trim();
-  if(!raw){ alert('Вставь JSON текст сначала'); return; }
+  if(!raw){ showFeedback('Нет текста','Вставьте JSON текст сначала.','⚠️',2800); return; }
   let d;
   try{
     d=JSON.parse(raw);
   }catch(err){
-    alert('Ошибка формата JSON: '+err.message);
+    showFeedback('Ошибка JSON',err.message,'⚠️',4200);
     return;
   }
   try{
@@ -2474,15 +2515,15 @@ async function handleTextImport(){
       }
     }
     if(imported===0){
-      alert('В тексте не найдено тиражей (ожидаются ключи lotto/viking/euro с массивами)');
+      showFeedback('Тиражи не найдены','В тексте ожидаются ключи lotto/viking/euro с массивами.','⚠️',4200);
       return;
     }
     ta.value='';
     await renderHistory();
     await renderSavedDrawOptions();
-    alert(`Импорт успешен: ${imported} тиражей (видно всем по ссылке)!`);
+    showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\nДанные видны всем по этой ссылке.`,'✅');
   }catch(err){
-    alert('Ошибка при сохранении: '+err.message);
+    showFeedback('Ошибка сохранения',err.message,'⚠️',4200);
   }
 }
 
@@ -2493,15 +2534,15 @@ function doImport(){
 }
 function handleImp(e){
   const f=e.target.files&&e.target.files[0];
-  if(!f){ alert('Файл не выбран'); return; }
+  if(!f){ showFeedback('Файл не выбран','Выберите JSON-файл для импорта.','⚠️',2800); return; }
   const r=new FileReader();
-  r.onerror=()=>alert('Не удалось прочитать файл');
+  r.onerror=()=>showFeedback('Не удалось прочитать файл','Попробуйте выбрать файл ещё раз.','⚠️',3600);
   r.onload=async ev=>{
     let d;
     try{
       d=JSON.parse(ev.target.result);
     }catch(err){
-      alert('Ошибка формата JSON: '+err.message);
+      showFeedback('Ошибка JSON',err.message,'⚠️',4200);
       return;
     }
     try{
@@ -2515,14 +2556,14 @@ function handleImp(e){
         }
       }
       if(imported===0){
-        alert('В файле не найдено тиражей (ожидаются ключи lotto/viking/euro с массивами)');
+        showFeedback('Тиражи не найдены','В файле ожидаются ключи lotto/viking/euro с массивами.','⚠️',4200);
         return;
       }
       await renderHistory();
       await renderSavedDrawOptions();
-      alert(`Импорт успешен: ${imported} тиражей (видно всем по ссылке)!`);
+      showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\nДанные видны всем по этой ссылке.`,'✅');
     }catch(err){
-      alert('Ошибка при сохранении: '+err.message);
+      showFeedback('Ошибка сохранения',err.message,'⚠️',4200);
     }
   };
   r.readAsText(f);
@@ -2664,6 +2705,25 @@ function customConfirm(msg){
 function ccAnswer(val){
   document.getElementById('cc-ov').classList.remove('show');
   if(_ccResolve){_ccResolve(val);_ccResolve=null;}
+}
+
+let _fbTimer=null;
+function showFeedback(title,msg,icon='✅',autoMs=2200){
+  const ov=document.getElementById('fb-ov');
+  if(!ov)return;
+  document.getElementById('fb-icon').textContent=icon;
+  document.getElementById('fb-title').textContent=title;
+  document.getElementById('fb-msg').textContent=msg;
+  ov.classList.add('show');
+  clearTimeout(_fbTimer);
+  if(autoMs)_fbTimer=setTimeout(closeFeedback,autoMs);
+}
+function closeFeedback(){
+  clearTimeout(_fbTimer);
+  document.getElementById('fb-ov')?.classList.remove('show');
+}
+function fbOut(e){
+  if(e.target===document.getElementById('fb-ov'))closeFeedback();
 }
 
 // ═══════════════════════════════════════════════

@@ -659,11 +659,11 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
       <button class="btn-draw euro" id="btn-add-draw" onclick="addDraw()" style="font-size:14px;padding:12px;margin-top:6px">+ Добавить тираж</button>
     </div>
     <div class="card">
-      <div class="card-t">Официальная база Norsk Tipping</div>
-      <div style="font-size:12px;color:var(--sub2);line-height:1.55;margin-bottom:10px">Обновляет последние тиражи из официального JSON Norsk Tipping за доступный период результатов.</div>
+      <div class="card-t" id="official-title">Официальные результаты</div>
+      <div id="official-desc" style="font-size:12px;color:var(--sub2);line-height:1.55;margin-bottom:10px">Обновляет последние тиражи из подключённого официального источника или общей базы results.json.</div>
       <button class="btn-draw euro" id="official-btn" onclick="updateOfficialCurrent()" style="font-size:14px;padding:12px;margin-top:0">↻ Обновить текущую лотерею</button>
       <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn-exp" id="official-all-btn" onclick="updateOfficialAll()" style="margin-top:0">↻ Все 3</button>
+        <button class="btn-exp" id="official-all-btn" onclick="updateOfficialAll()" style="margin-top:0">↻ Все игры</button>
         <button class="btn-exp" id="official-open-btn" onclick="openOfficialResults()" style="margin-top:0">↗ Официальный сайт</button>
       </div>
       <div id="official-status" class="warn-note" style="display:none"></div>
@@ -881,18 +881,18 @@ const RESULTS_JSON_URL='results.json';
 let resultsJsonCache=null;
 
 const LOTS={
-  lotto:{name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',res:'20:00',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
+  lotto:{name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',res:'20:00',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
     tiers:[{match:'7',label:'7 rette'},{match:'6+1',label:'6 + tillegg'},{match:'6',label:'6 rette'},{match:'5',label:'5 rette'},{match:'4',label:'4 rette'}]},
-  viking:{name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:8,pBo:1,offBo:1,price:8,currency:'NOK',minR:1,day:'Среда',dl:'18:00',res:'21:00',combos:98172096,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
+  viking:{name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:8,pBo:1,offBo:1,price:8,currency:'NOK',minR:1,day:'Среда',dl:'18:00',res:'21:00',combos:98172096,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
     tiers:[{match:'6+1',label:'6+1'},{match:'6+0',label:'6+0'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4',label:'4 rette'},{match:'3',label:'3 rette'}]},
-  euro:{name:'EUROJACKPOT',short:'EuroJackpot',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:25,currency:'NOK',minR:1,day:'Вт и Пт',dl:'19:00',res:'после 21:00',combos:139838160,plm:'Velg 5 hovedtall',plb:'2 stjernetall',bonusName:'Звёздные числа',drawDays:[2,5],officialGame:'eurojackpot all',officialUrl:'https://www.norsk-tipping.no/lotteri/eurojackpot/resultater',
+  euro:{name:'EUROJACKPOT',short:'EuroJackpot',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:25,currency:'NOK',minR:1,day:'Вт и Пт',dl:'19:00',res:'после 21:00',combos:139838160,plm:'Velg 5 hovedtall',plb:'2 stjernetall',bonusName:'Звёздные числа',drawDays:[2,5],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'eurojackpot all',officialUrl:'https://www.norsk-tipping.no/lotteri/eurojackpot/resultater',
     tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'4+0',label:'4+0'},{match:'3+2',label:'3+2'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'}]},
-  powerball:{name:'POWERBALL',short:'Powerball',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'lotto',mB:69,pM:5,bB:26,pBo:1,offBo:1,price:2,currency:'USD',minR:1,day:'Пн, Ср, Сб',dl:'22:00',res:'23:00 ET',combos:292201338,plm:'5 white balls',plb:'1 Powerball',bonusName:'Powerball',drawDays:[1,3,6],officialUrl:'https://www.powerball.com/'},
-  mega:{name:'MEGA MILLIONS',short:'Mega Millions',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'euro',mB:70,pM:5,bB:24,pBo:1,offBo:1,price:5,currency:'USD',minR:1,day:'Вт и Пт',dl:'22:45',res:'23:00 ET',combos:290472336,plm:'5 white balls',plb:'1 Mega Ball',bonusName:'Mega Ball',drawDays:[2,5],officialUrl:'https://www.megamillions.com/'},
-  euromillions:{name:'EUROMILLIONS',short:'EuroMillions',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:2.5,currency:'EUR',minR:1,day:'Вт и Пт',dl:'20:00',res:'после 21:00 CET',combos:139838160,plm:'5 main numbers',plb:'2 Lucky Stars',bonusName:'Lucky Stars',drawDays:[2,5],officialUrl:'https://www.euro-millions.com/'},
-  superenalotto:{name:'SUPERENALOTTO',short:'SuperEnalotto',region:'Italy',flag:'🇮🇹',activeClass:'ow',cls:'lotto',mB:90,pM:6,bB:90,pBo:0,offBo:1,price:1,currency:'EUR',minR:1,day:'Вт, Чт, Сб',dl:'19:30',res:'20:00 CET',combos:622614630,plm:'6 numeri',plb:'Jolly отдельно',bonusName:'Jolly',drawDays:[2,4,6],officialUrl:'https://www.superenalotto.it/'},
-  lottomax:{name:'LOTTO MAX',short:'Lotto Max',region:'Canada',flag:'🇨🇦',activeClass:'ow',cls:'viking',mB:52,pM:7,bB:52,pBo:0,offBo:1,price:6,currency:'CAD',minR:1,day:'Вт и Пт',dl:'22:30',res:'после 22:30 ET',combos:133784560,plm:'7 numbers',plb:'Bonus отдельно',bonusName:'Bonus',drawDays:[2,5],officialUrl:'https://www.olg.ca/en/lottery/play-lotto-max-encore/how-to-play.html'},
-  powerballau:{name:'POWERBALL AUSTRALIA',short:'Powerball AU',region:'Australia',flag:'🇦🇺',activeClass:'ow',cls:'viking',mB:35,pM:7,bB:20,pBo:1,offBo:1,price:1.35,currency:'AUD',minR:1,day:'Четверг',dl:'19:30',res:'20:30 AEST',combos:134490400,plm:'7 main numbers',plb:'1 Powerball',bonusName:'Powerball',drawDays:[4],officialUrl:'https://www.thelott.com/powerball/how-to-play'}
+  powerball:{name:'POWERBALL',short:'Powerball',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'lotto',mB:69,pM:5,bB:26,pBo:1,offBo:1,price:2,currency:'USD',minR:1,day:'Пн, Ср, Сб',dl:'22:00',res:'23:00 ET',combos:292201338,plm:'5 white balls',plb:'1 Powerball',bonusName:'Powerball',drawDays:[1,3,6],officialProvider:'socrata-powerball',officialSourceName:'NY Open Data / Powerball',officialUrl:'https://www.powerball.com/previous-results'},
+  mega:{name:'MEGA MILLIONS',short:'Mega Millions',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'euro',mB:70,pM:5,bB:24,pBo:1,offBo:1,price:5,currency:'USD',minR:1,day:'Вт и Пт',dl:'22:45',res:'23:00 ET',combos:290472336,plm:'5 white balls',plb:'1 Mega Ball',bonusName:'Mega Ball',drawDays:[2,5],officialProvider:'socrata-mega',officialSourceName:'NY Open Data / Mega Millions',officialUrl:'https://www.megamillions.com/'},
+  euromillions:{name:'EUROMILLIONS',short:'EuroMillions',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:2.5,currency:'EUR',minR:1,day:'Вт и Пт',dl:'20:00',res:'после 21:00 CET',combos:139838160,plm:'5 main numbers',plb:'2 Lucky Stars',bonusName:'Lucky Stars',drawDays:[2,5],officialSourceName:'EuroMillions',officialUrl:'https://www.euro-millions.com/'},
+  superenalotto:{name:'SUPERENALOTTO',short:'SuperEnalotto',region:'Italy',flag:'🇮🇹',activeClass:'ow',cls:'lotto',mB:90,pM:6,bB:90,pBo:0,offBo:1,price:1,currency:'EUR',minR:1,day:'Вт, Чт, Сб',dl:'19:30',res:'20:00 CET',combos:622614630,plm:'6 numeri',plb:'Jolly отдельно',bonusName:'Jolly',drawDays:[2,4,6],officialSourceName:'SuperEnalotto',officialUrl:'https://www.superenalotto.it/'},
+  lottomax:{name:'LOTTO MAX',short:'Lotto Max',region:'Canada',flag:'🇨🇦',activeClass:'ow',cls:'viking',mB:52,pM:7,bB:52,pBo:0,offBo:1,price:6,currency:'CAD',minR:1,day:'Вт и Пт',dl:'22:30',res:'после 22:30 ET',combos:133784560,plm:'7 numbers',plb:'Bonus отдельно',bonusName:'Bonus',drawDays:[2,5],officialSourceName:'WCLC Lotto Max',officialUrl:'https://www.wclc.com/winning-numbers/lotto-max-extra.htm'},
+  powerballau:{name:'POWERBALL AUSTRALIA',short:'Powerball AU',region:'Australia',flag:'🇦🇺',activeClass:'ow',cls:'viking',mB:35,pM:7,bB:20,pBo:1,offBo:1,price:1.35,currency:'AUD',minR:1,day:'Четверг',dl:'19:30',res:'20:30 AEST',combos:134490400,plm:'7 main numbers',plb:'1 Powerball',bonusName:'Powerball',drawDays:[4],officialProvider:'thelott-powerball-au',officialSourceName:'The Lott',officialUrl:'https://www.thelott.com/powerball/results'}
 };
 function resolveGameKey(gameKey){
   return LOTS[gameKey]?gameKey:LOTTERY_APP_KEYS[gameKey]||null;
@@ -987,7 +987,7 @@ const MAX_ROWS=50;
 const WHEEL_POOL_MAX=18;
 const L=()=>LOTS[cur];
 const LOTTERY_LABELS=Object.fromEntries(Object.entries(LOTS).map(([id,l])=>[id,l.short||l.name]));
-const OFFICIAL_LOTS=Object.keys(LOTS).filter(id=>LOTS[id].officialGame);
+const OFFICIAL_LOTS=Object.keys(LOTS).filter(id=>LOTS[id].officialProvider||LOTS[id].officialGame);
 const lotteryName=id=>LOTTERY_LABELS[id]||LOTS[id]?.name||String(id||'').toUpperCase();
 const drawLotteryName=(d,id=cur)=>d?.lotteryId?lotteryName(d.lotteryId):(d?.lotteryName||lotteryName(id));
 const KEY=id=>'draws_'+id;
@@ -1019,7 +1019,9 @@ function storageSet(key,value,shared=true){
 async function loadD(id){
   try{
     const r=await withTimeout(storageGet(KEY(id),true));
-    const v=r?JSON.parse(r.value):await loadHistoricalResults(id).catch(()=>[]);
+    const stored=r?JSON.parse(r.value):[];
+    const remote=await loadHistoricalResults(id).catch(()=>[]);
+    const v=remote.length?mergeDrawLists(stored,remote).merged:stored;
     drawsCache[id]=v;
     return v;
   }catch(e){ console.error('loadD failed',e); drawsCache[id]=drawsCache[id]||[]; return drawsCache[id]; }
@@ -1120,14 +1122,21 @@ function renderLotteryNav(){
   }
 }
 function updateOfficialControls(){
-  const l=L(),has=!!l.officialGame;
+  const l=L(),provider=getOfficialProvider(cur),source=officialSourceName(l);
+  const title=document.getElementById('official-title'),desc=document.getElementById('official-desc');
   const btn=document.getElementById('official-btn'),all=document.getElementById('official-all-btn'),open=document.getElementById('official-open-btn');
-  if(btn){
-    btn.disabled=!has;
-    btn.textContent=has?'↻ Обновить текущую лотерею':'Официальный импорт недоступен';
-    btn.style.opacity=has?'1':'.5';
+  if(title)title.textContent=`Официальные результаты · ${l.short||l.name}`;
+  if(desc){
+    desc.textContent=provider
+      ? `Источник: ${source}. Обновляет последние тиражи и сразу пересчитывает историю, частоты, призы и статистику.`
+      : `Источник: ${source}. Прямой браузерный импорт без backend пока не подключён; статистика берётся из общей базы results.json и ручного ввода.`;
   }
-  if(all)all.textContent=`↻ Norsk Tipping (${OFFICIAL_LOTS.length})`;
+  if(btn){
+    btn.disabled=false;
+    btn.textContent=provider?'↻ Обновить текущую лотерею':'↻ Проверить results.json';
+    btn.style.opacity='1';
+  }
+  if(all)all.textContent=`↻ Все живые (${OFFICIAL_LOTS.length})`;
   if(open){
     open.disabled=!l.officialUrl;
     open.style.opacity=l.officialUrl?'1':'.5';
@@ -2127,7 +2136,7 @@ function togglePayoutInp(){
 function buildPayoutInp(){
   const l=L(),w=document.getElementById('payout-inp-wrap');
   w.innerHTML='';
-  l.tiers.forEach((t,i)=>{
+  getPrizeTiers(l).forEach((t,i)=>{
     const row=document.createElement('div');row.className='payout-row';
     row.innerHTML=`
       <div class="payout-match">${t.label}</div>
@@ -2140,7 +2149,7 @@ function buildPayoutInp(){
 function readPayoutInp(){
   const l=L();
   const tiers=[];
-  l.tiers.forEach((t,i)=>{
+  getPrizeTiers(l).forEach((t,i)=>{
     const prizeEl=document.getElementById('pt-prize-'+i),winEl=document.getElementById('pt-winners-'+i);
     const prize=prizeEl?prizeEl.value.trim():'';
     const win=winEl?winEl.value.trim():'';
@@ -2155,7 +2164,15 @@ function clearPayoutInp(){
   document.querySelectorAll('.payout-inp').forEach(i=>i.value='');
 }
 
-// ─── OFFICIAL NORSK TIPPING IMPORT ────────────
+// ─── OFFICIAL RESULTS IMPORTS ────────────
+function getOfficialProvider(id){
+  const l=LOTS[id];
+  if(!l)return null;
+  return l.officialProvider||(l.officialGame?'norsk':null);
+}
+function officialSourceName(l=L()){
+  return l.officialSourceName||(l.officialGame?'Norsk Tipping':l.name);
+}
 function ymd(date){
   const d=new Date(date);
   const m=String(d.getMonth()+1).padStart(2,'0');
@@ -2169,6 +2186,11 @@ function officialApiUrl(id){
   from.setDate(from.getDate()-105); // Norsk Tipping exposes lottery results about 15 weeks back.
   return `https://api.norsk-tipping.no/LotteryGameInfo/v2/api/results/${encodeURIComponent(l.officialGame)}?fromDate=${ymd(from)}&toDate=${ymd(to)}`;
 }
+function socrataApiUrl(id){
+  const resource=id==='powerball'?'d6yy-54nr':'5xaw-6ayf';
+  const params=new URLSearchParams({'$limit':'80','$order':'draw_date DESC'});
+  return `https://data.ny.gov/resource/${resource}.json?${params}`;
+}
 function showOfficialStatus(msg){
   const el=document.getElementById('official-status');
   if(!el)return;
@@ -2179,6 +2201,9 @@ function parseNok(v){
   if(v===null||v===undefined||v==='')return null;
   const n=Number(v);
   return Number.isFinite(n)?Math.round(n):null;
+}
+function parseNumberString(s){
+  return String(s||'').trim().split(/\s+/).map(n=>+n).filter(Number.isInteger);
 }
 function officialTierMatch(name,id){
   const s=String(name||'').toLowerCase().replace(/\s+/g,'').replace(/rette/g,'');
@@ -2202,6 +2227,7 @@ function officialTierMatch(name,id){
 }
 function normalizeOfficialDraw(raw,id){
   const l=LOTS[id];
+  const tiers=getPrizeTiers(l);
   const nums=Array.isArray(raw.winnerNumber)?raw.winnerNumber:[];
   const main=uniqValid(nums.filter(n=>+n.type===1).map(n=>+n.number),l.mB);
   const bonus=uniqValid(nums.filter(n=>+n.type===2).map(n=>+n.number),l.bB);
@@ -2209,9 +2235,9 @@ function normalizeOfficialDraw(raw,id){
   const jackpotNok=parseNok(firstPrize.jackpotAmount)||parseNok(firstPrize.value)||null;
   const payoutTiers=(raw.prize||[]).map(p=>{
     const match=officialTierMatch(p.name,id);
-    const known=l.tiers.find(t=>t.match===match);
+    const known=tiers.find(t=>t.match===match);
     return{match,label:known?known.label:String(p.name||match),prizeNOK:parseNok(p.value),winners:parseNok(p.winners)};
-  }).filter(t=>l.tiers.some(x=>x.match===t.match));
+  }).filter(t=>tiers.some(x=>x.match===t.match));
   return{
     date:String(raw.drawDate||'').slice(0,10),
     main,
@@ -2224,6 +2250,52 @@ function normalizeOfficialDraw(raw,id){
     sourceUrl:l.officialUrl,
     drawId:raw.drawId??null,
     drawName:raw.drawName||'',
+    importedAt:new Date().toISOString()
+  };
+}
+function normalizeSocrataDraw(raw,id){
+  const l=LOTS[id];
+  const nums=parseNumberString(raw.winning_numbers);
+  const main=id==='powerball'?nums.slice(0,5):nums;
+  const bonus=id==='powerball'?nums.slice(5,6):parseNumberString(raw.mega_ball);
+  return{
+    date:String(raw.draw_date||'').slice(0,10),
+    main:uniqValid(main,l.mB),
+    bonus:uniqValid(bonus,l.bB),
+    jackpot:null,
+    payoutTiers:null,
+    lotteryId:id,
+    lotteryName:lotteryName(id),
+    source:officialSourceName(l),
+    sourceUrl:l.officialUrl,
+    drawId:raw.draw_date||null,
+    importedAt:new Date().toISOString()
+  };
+}
+function normalizeTheLottDraw(raw,id){
+  const l=LOTS[id],tiers=getPrizeTiers(l);
+  const payoutTiers=(raw.Dividends||[]).map(d=>{
+    const idx=Math.max(0,(+d.Division||1)-1);
+    const tier=tiers[idx]||{match:String(d.Division),label:`Division ${d.Division}`};
+    return{
+      match:tier.match,
+      label:tier.label,
+      prizeNOK:parseNok(d.BlocDividend),
+      winners:parseNok(d.BlocNumberOfWinners)
+    };
+  }).filter(t=>t.prizeNOK!==null||t.winners!==null);
+  return{
+    date:String(raw.DrawDate||'').slice(0,10),
+    main:uniqValid(raw.PrimaryNumbers||[],l.mB),
+    bonus:uniqValid(raw.SecondaryNumbers||[],l.bB),
+    jackpot:null,
+    payoutTiers:payoutTiers.length?payoutTiers:null,
+    lotteryId:id,
+    lotteryName:lotteryName(id),
+    source:officialSourceName(l),
+    sourceUrl:l.officialUrl,
+    drawId:raw.DrawNumber??null,
+    drawName:raw.DrawDisplayName||'',
     importedAt:new Date().toISOString()
   };
 }
@@ -2242,19 +2314,42 @@ function validateDrawRecord(d,id,official=false){
   return errs;
 }
 async function fetchOfficialDraws(id){
-  const res=await fetch(officialApiUrl(id),{cache:'no-store',mode:'cors'});
-  if(!res.ok)throw new Error(`${LOTS[id].name}: HTTP ${res.status}`);
-  const data=await res.json();
-  if(!data||!Array.isArray(data.gameResult))throw new Error(`${LOTS[id].name}: неожиданный формат API`);
-  return data.gameResult;
+  const provider=getOfficialProvider(id);
+  if(provider==='norsk'){
+    const res=await fetch(officialApiUrl(id),{cache:'no-store',mode:'cors'});
+    if(!res.ok)throw new Error(`${LOTS[id].name}: HTTP ${res.status}`);
+    const data=await res.json();
+    if(!data||!Array.isArray(data.gameResult))throw new Error(`${LOTS[id].name}: неожиданный формат API`);
+    return data.gameResult.map(d=>normalizeOfficialDraw(d,id));
+  }
+  if(provider==='socrata-powerball'||provider==='socrata-mega'){
+    const res=await fetch(socrataApiUrl(id),{cache:'no-store',mode:'cors'});
+    if(!res.ok)throw new Error(`${LOTS[id].name}: HTTP ${res.status}`);
+    const data=await res.json();
+    if(!Array.isArray(data))throw new Error(`${LOTS[id].name}: неожиданный формат NY Open Data`);
+    return data.map(d=>normalizeSocrataDraw(d,id));
+  }
+  if(provider==='thelott-powerball-au'){
+    const res=await fetch('https://data.api.thelott.com/sales/vmax/web/data/lotto/latestresults',{
+      method:'POST',
+      cache:'no-store',
+      mode:'cors',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({CompanyId:'GoldenCasket',MaxDrawCount:80,OptionalProductFilter:['Powerball']})
+    });
+    if(!res.ok)throw new Error(`${LOTS[id].name}: HTTP ${res.status}`);
+    const data=await res.json();
+    if(!data||!Array.isArray(data.DrawResults))throw new Error(`${LOTS[id].name}: неожиданный формат The Lott`);
+    return data.DrawResults.filter(d=>d.ProductId==='Powerball').map(d=>normalizeTheLottDraw(d,id));
+  }
+  throw new Error(`${LOTS[id].name}: живой официальный импорт не подключён`);
 }
 function sameDrawCore(a,b){
   return JSON.stringify({date:a.date,main:a.main,bonus:a.bonus,payoutTiers:a.payoutTiers,jackpot:a.jackpot})===
     JSON.stringify({date:b.date,main:b.main,bonus:b.bonus,payoutTiers:b.payoutTiers,jackpot:b.jackpot});
 }
 async function importOfficial(id){
-  const raw=await fetchOfficialDraws(id);
-  const normalized=raw.map(d=>normalizeOfficialDraw(d,id));
+  const normalized=await fetchOfficialDraws(id);
   const valid=[],invalid=[];
   normalized.forEach(d=>{
     const errs=validateDrawRecord(d,id,true);
@@ -2266,28 +2361,46 @@ async function importOfficial(id){
   await saveD(id,merged);
   return{lot:id,added,updated,unchanged,preserved,invalid:invalid.length,total:valid.length,totalStored:merged.length,latest:valid[0]?.date||'—'};
 }
+async function importResultsJson(id){
+  const rows=await loadHistoricalResults(id);
+  const valid=[],invalid=[];
+  rows.forEach(d=>{
+    const normalized={...d,lotteryId:id,lotteryName:lotteryName(id),source:d.source||'results.json',sourceUrl:d.sourceUrl||LOTS[id].officialUrl};
+    const errs=validateDrawRecord(normalized,id,true);
+    if(errs.length)invalid.push({date:normalized.date,errs});
+    else valid.push(normalized);
+  });
+  const old=await loadD(id);
+  const {merged,added,updated,unchanged,preserved}=mergeDrawLists(old,valid);
+  if(valid.length)await saveD(id,merged);
+  return{lot:id,added,updated,unchanged,preserved,invalid:invalid.length,total:valid.length,totalStored:merged.length,latest:valid[0]?.date||'—',cached:true};
+}
 async function updateOfficialCurrent(){
   try{
-    if(!L().officialGame){showOfficialStatus(`${L().name}: официальный импорт пока недоступен. Можно добавить тираж вручную.`);return;}
-    showOfficialStatus(`Проверяю Norsk Tipping для ${L().name}…`);
-    const r=await importOfficial(cur);
+    const provider=getOfficialProvider(cur),source=officialSourceName(L());
+    showOfficialStatus(provider?`Проверяю ${source} для ${L().name}…`:`Проверяю results.json для ${L().name}…`);
+    const r=provider?await importOfficial(cur):await importResultsJson(cur);
     await renderHistory();
     await renderSavedDrawOptions();
     if(curPage==='ana')await renderAna();
-    showOfficialStatus(`${L().name}: добавлено ${r.added}, обновлено ${r.updated}, без изменений ${r.unchanged}, архив сохранён ${r.preserved}. В базе всего ${r.totalStored}. Последний официальный тираж: ${r.latest}.${r.invalid?` Отклонено некорректных: ${r.invalid}.`:''}`);
+    const empty=r.total===0?' В results.json пока нет сохранённых тиражей для этой игры.':'';
+    showOfficialStatus(`${L().name}: добавлено ${r.added}, обновлено ${r.updated}, без изменений ${r.unchanged}, архив сохранён ${r.preserved}. В базе всего ${r.totalStored}. Последний тираж: ${r.latest}.${r.invalid?` Отклонено некорректных: ${r.invalid}.`:''}${empty}`);
   }catch(e){
     showOfficialStatus(`Ошибка обновления: ${e.message}`);
   }
 }
 async function updateOfficialAll(){
   try{
-    showOfficialStatus('Проверяю Norsk Tipping для всех лотерей…');
+    showOfficialStatus('Проверяю все подключённые живые источники…');
     const out=[];
-    for(const id of OFFICIAL_LOTS)out.push(await importOfficial(id));
+    for(const id of OFFICIAL_LOTS){
+      try{out.push(await importOfficial(id));}
+      catch(e){out.push({lot:id,error:e.message});}
+    }
     await renderHistory();
     await renderSavedDrawOptions();
     if(curPage==='ana')await renderAna();
-    showOfficialStatus(out.map(r=>`${LOTS[r.lot].name}: +${r.added}, ↻${r.updated}, =${r.unchanged}, архив ${r.preserved}, всего ${r.totalStored}, последний ${r.latest}`).join(' · '));
+    showOfficialStatus(out.map(r=>r.error?`${LOTS[r.lot].name}: ошибка ${r.error}`:`${LOTS[r.lot].name}: +${r.added}, ↻${r.updated}, =${r.unchanged}, архив ${r.preserved}, всего ${r.totalStored}, последний ${r.latest}`).join(' · '));
   }catch(e){
     showOfficialStatus(`Ошибка обновления: ${e.message}`);
   }
@@ -2355,6 +2468,27 @@ const mColor=cls=>cls==='lotto'?'#cc2060':cls==='viking'?'#1e3fbe':'#7ecfc0';
 const mText=cls=>cls==='euro'?'#1c1c1e':'#fff';
 const bonusLabel=l=>l.bonusName|| (l.cls==='euro'?'Звёздные числа':l.cls==='lotto'?'Tilleggstall':'Vikingtall');
 const drawBonusCount=l=>l.offBo||l.pBo||0;
+function buildGenericPrizeTiers(l){
+  const out=[],seen=new Set();
+  const add=(main,bonus=null,label=null)=>{
+    if(!Number.isInteger(main)||main<0)return;
+    const match=bonus===null?String(main):`${main}+${bonus}`;
+    if(seen.has(match))return;
+    seen.add(match);
+    out.push({match,label:label||match});
+  };
+  if(l.pBo>0){
+    for(let main=l.pM;main>=Math.max(0,l.pM-3);main--){
+      for(let bonus=l.pBo;bonus>=0;bonus--)add(main,bonus);
+    }
+  }else{
+    for(let main=l.pM;main>=Math.max(2,l.pM-4);main--)add(main,null,`${main} из ${l.pM}`);
+  }
+  return out.slice(0,12);
+}
+function getPrizeTiers(l=L()){
+  return Array.isArray(l?.tiers)&&l.tiers.length?l.tiers:buildGenericPrizeTiers(l);
+}
 function comb(n,k){
   if(k<0||k>n)return 0;
   k=Math.min(k,n-k);
@@ -2600,7 +2734,8 @@ async function renderPrizes(){
 
   // averages per tier
   const tierAgg={};
-  l.tiers.forEach(t=>{tierAgg[t.match]={label:t.label,prizes:[],winners:[]};});
+  const prizeTiers=getPrizeTiers(l);
+  prizeTiers.forEach(t=>{tierAgg[t.match]={label:t.label,prizes:[],winners:[]};});
   withPayouts.forEach(d=>{
     d.payoutTiers.forEach(t=>{
       if(tierAgg[t.match]){
@@ -2610,7 +2745,7 @@ async function renderPrizes(){
     });
   });
   let avgHtml='';
-  l.tiers.forEach(t=>{
+  prizeTiers.forEach(t=>{
     const agg=tierAgg[t.match];
     if(!agg.prizes.length&&!agg.winners.length)return;
     const avgPrize=agg.prizes.length?Math.round(agg.prizes.reduce((s,v)=>s+v,0)/agg.prizes.length):null;

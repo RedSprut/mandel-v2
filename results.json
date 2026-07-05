@@ -2,13 +2,4285 @@
   "schemaVersion": 1,
   "updatedAt": "2026-07-05",
   "games": {
-    "powerball": [],
-    "megaMillions": [],
-    "euroMillions": [],
-    "eurojackpot": [],
+    "lotto": [
+      {
+        "date": "2026-07-04",
+        "main": [
+          3,
+          9,
+          13,
+          27,
+          28,
+          31,
+          33
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1574
+      },
+      {
+        "date": "2026-06-27",
+        "main": [
+          5,
+          6,
+          7,
+          20,
+          25,
+          28,
+          34
+        ],
+        "bonus": [
+          31
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1573
+      },
+      {
+        "date": "2026-06-20",
+        "main": [
+          4,
+          8,
+          12,
+          13,
+          20,
+          31,
+          34
+        ],
+        "bonus": [
+          33
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1572
+      },
+      {
+        "date": "2026-06-13",
+        "main": [
+          4,
+          6,
+          9,
+          10,
+          14,
+          19,
+          23
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1571
+      },
+      {
+        "date": "2026-06-06",
+        "main": [
+          4,
+          8,
+          16,
+          20,
+          23,
+          25,
+          28
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1570
+      },
+      {
+        "date": "2026-05-30",
+        "main": [
+          10,
+          13,
+          17,
+          21,
+          25,
+          26,
+          32
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1569
+      },
+      {
+        "date": "2026-05-23",
+        "main": [
+          1,
+          5,
+          9,
+          12,
+          14,
+          21,
+          26
+        ],
+        "bonus": [
+          17
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1568
+      },
+      {
+        "date": "2026-05-16",
+        "main": [
+          5,
+          9,
+          11,
+          13,
+          15,
+          19,
+          25
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1567
+      },
+      {
+        "date": "2026-05-09",
+        "main": [
+          1,
+          4,
+          5,
+          12,
+          13,
+          18,
+          23
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1566
+      },
+      {
+        "date": "2026-05-02",
+        "main": [
+          2,
+          12,
+          16,
+          18,
+          19,
+          28,
+          29
+        ],
+        "bonus": [
+          31
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1565
+      },
+      {
+        "date": "2026-04-25",
+        "main": [
+          3,
+          10,
+          13,
+          20,
+          21,
+          30,
+          32
+        ],
+        "bonus": [
+          25
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1564
+      },
+      {
+        "date": "2026-04-18",
+        "main": [
+          1,
+          5,
+          7,
+          18,
+          23,
+          25,
+          31
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1563
+      },
+      {
+        "date": "2026-04-11",
+        "main": [
+          15,
+          16,
+          18,
+          19,
+          28,
+          29,
+          30
+        ],
+        "bonus": [
+          33
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1562
+      },
+      {
+        "date": "2026-04-04",
+        "main": [
+          3,
+          10,
+          14,
+          17,
+          21,
+          24,
+          32
+        ],
+        "bonus": [
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1561
+      },
+      {
+        "date": "2026-03-28",
+        "main": [
+          10,
+          13,
+          14,
+          15,
+          23,
+          25,
+          26
+        ],
+        "bonus": [
+          34
+        ],
+        "jackpot": null,
+        "lotteryId": "lotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater",
+        "drawId": 1560
+      }
+    ],
+    "vikinglotto": [
+      {
+        "date": "2026-07-01",
+        "main": [
+          1,
+          2,
+          9,
+          28,
+          36,
+          45
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1574
+      },
+      {
+        "date": "2026-06-24",
+        "main": [
+          10,
+          12,
+          18,
+          24,
+          42,
+          47
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1573
+      },
+      {
+        "date": "2026-06-17",
+        "main": [
+          7,
+          9,
+          19,
+          21,
+          35,
+          47
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1572
+      },
+      {
+        "date": "2026-06-10",
+        "main": [
+          7,
+          27,
+          34,
+          35,
+          38,
+          46
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1571
+      },
+      {
+        "date": "2026-06-03",
+        "main": [
+          1,
+          7,
+          9,
+          12,
+          14,
+          36
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1570
+      },
+      {
+        "date": "2026-05-27",
+        "main": [
+          23,
+          31,
+          34,
+          39,
+          45,
+          47
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1569
+      },
+      {
+        "date": "2026-05-20",
+        "main": [
+          14,
+          17,
+          23,
+          35,
+          41,
+          45
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1568
+      },
+      {
+        "date": "2026-05-13",
+        "main": [
+          9,
+          25,
+          28,
+          29,
+          35,
+          47
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1567
+      },
+      {
+        "date": "2026-05-06",
+        "main": [
+          1,
+          8,
+          9,
+          19,
+          25,
+          42
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1566
+      },
+      {
+        "date": "2026-04-29",
+        "main": [
+          2,
+          8,
+          28,
+          36,
+          41,
+          44
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1565
+      },
+      {
+        "date": "2026-04-22",
+        "main": [
+          7,
+          25,
+          26,
+          29,
+          32,
+          37
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1564
+      },
+      {
+        "date": "2026-04-15",
+        "main": [
+          1,
+          6,
+          33,
+          35,
+          36,
+          48
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1563
+      },
+      {
+        "date": "2026-04-08",
+        "main": [
+          2,
+          5,
+          6,
+          17,
+          36,
+          46
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1562
+      },
+      {
+        "date": "2026-04-01",
+        "main": [
+          5,
+          11,
+          19,
+          33,
+          42,
+          46
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1561
+      },
+      {
+        "date": "2026-03-25",
+        "main": [
+          1,
+          10,
+          23,
+          31,
+          36,
+          39
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "viking",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/viking/resultater",
+        "drawId": 1560
+      }
+    ],
+    "eurojackpot": [
+      {
+        "date": "2026-07-03",
+        "main": [
+          4,
+          9,
+          20,
+          25,
+          28
+        ],
+        "bonus": [
+          1,
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 224
+      },
+      {
+        "date": "2026-06-30",
+        "main": [
+          12,
+          19,
+          34,
+          44,
+          50
+        ],
+        "bonus": [
+          3,
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 223
+      },
+      {
+        "date": "2026-06-26",
+        "main": [
+          17,
+          25,
+          35,
+          39,
+          41
+        ],
+        "bonus": [
+          5,
+          9
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 223
+      },
+      {
+        "date": "2026-06-23",
+        "main": [
+          24,
+          27,
+          43,
+          48,
+          50
+        ],
+        "bonus": [
+          4,
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 222
+      },
+      {
+        "date": "2026-06-19",
+        "main": [
+          16,
+          27,
+          37,
+          42,
+          45
+        ],
+        "bonus": [
+          5,
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 222
+      },
+      {
+        "date": "2026-06-16",
+        "main": [
+          9,
+          26,
+          29,
+          37,
+          42
+        ],
+        "bonus": [
+          1,
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 221
+      },
+      {
+        "date": "2026-06-12",
+        "main": [
+          2,
+          4,
+          14,
+          18,
+          28
+        ],
+        "bonus": [
+          9,
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 221
+      },
+      {
+        "date": "2026-06-09",
+        "main": [
+          1,
+          14,
+          22,
+          39,
+          48
+        ],
+        "bonus": [
+          8,
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 220
+      },
+      {
+        "date": "2026-06-05",
+        "main": [
+          21,
+          23,
+          44,
+          47,
+          50
+        ],
+        "bonus": [
+          1,
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 220
+      },
+      {
+        "date": "2026-06-02",
+        "main": [
+          2,
+          36,
+          38,
+          40,
+          46
+        ],
+        "bonus": [
+          7,
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 219
+      },
+      {
+        "date": "2026-05-29",
+        "main": [
+          3,
+          20,
+          21,
+          42,
+          49
+        ],
+        "bonus": [
+          5,
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 219
+      },
+      {
+        "date": "2026-05-26",
+        "main": [
+          5,
+          11,
+          23,
+          33,
+          42
+        ],
+        "bonus": [
+          10,
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 218
+      },
+      {
+        "date": "2026-05-22",
+        "main": [
+          5,
+          34,
+          35,
+          42,
+          46
+        ],
+        "bonus": [
+          3,
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 218
+      },
+      {
+        "date": "2026-05-19",
+        "main": [
+          10,
+          36,
+          37,
+          39,
+          47
+        ],
+        "bonus": [
+          5,
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 217
+      },
+      {
+        "date": "2026-05-15",
+        "main": [
+          1,
+          32,
+          33,
+          36,
+          37
+        ],
+        "bonus": [
+          7,
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 217
+      },
+      {
+        "date": "2026-05-12",
+        "main": [
+          7,
+          15,
+          19,
+          28,
+          35
+        ],
+        "bonus": [
+          3,
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 216
+      },
+      {
+        "date": "2026-05-08",
+        "main": [
+          3,
+          17,
+          18,
+          31,
+          41
+        ],
+        "bonus": [
+          6,
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 216
+      },
+      {
+        "date": "2026-05-05",
+        "main": [
+          1,
+          30,
+          33,
+          34,
+          43
+        ],
+        "bonus": [
+          5,
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 215
+      },
+      {
+        "date": "2026-05-01",
+        "main": [
+          10,
+          11,
+          13,
+          16,
+          27
+        ],
+        "bonus": [
+          5,
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 215
+      },
+      {
+        "date": "2026-04-28",
+        "main": [
+          19,
+          20,
+          41,
+          43,
+          46
+        ],
+        "bonus": [
+          5,
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 214
+      },
+      {
+        "date": "2026-04-24",
+        "main": [
+          6,
+          21,
+          29,
+          39,
+          44
+        ],
+        "bonus": [
+          1,
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 214
+      },
+      {
+        "date": "2026-04-21",
+        "main": [
+          31,
+          32,
+          36,
+          39,
+          47
+        ],
+        "bonus": [
+          7,
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 213
+      },
+      {
+        "date": "2026-04-17",
+        "main": [
+          16,
+          31,
+          35,
+          43,
+          44
+        ],
+        "bonus": [
+          2,
+          9
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 213
+      },
+      {
+        "date": "2026-04-14",
+        "main": [
+          13,
+          22,
+          32,
+          46,
+          47
+        ],
+        "bonus": [
+          6,
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 212
+      },
+      {
+        "date": "2026-04-10",
+        "main": [
+          1,
+          6,
+          11,
+          18,
+          48
+        ],
+        "bonus": [
+          10,
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 212
+      },
+      {
+        "date": "2026-04-07",
+        "main": [
+          2,
+          4,
+          16,
+          23,
+          27
+        ],
+        "bonus": [
+          5,
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 211
+      },
+      {
+        "date": "2026-04-03",
+        "main": [
+          9,
+          10,
+          18,
+          22,
+          37
+        ],
+        "bonus": [
+          1,
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 211
+      },
+      {
+        "date": "2026-03-31",
+        "main": [
+          5,
+          15,
+          18,
+          20,
+          35
+        ],
+        "bonus": [
+          7,
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 210
+      },
+      {
+        "date": "2026-03-27",
+        "main": [
+          21,
+          23,
+          25,
+          38,
+          40
+        ],
+        "bonus": [
+          7,
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 210
+      },
+      {
+        "date": "2026-03-24",
+        "main": [
+          9,
+          15,
+          23,
+          43,
+          48
+        ],
+        "bonus": [
+          3,
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "euro",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/eurojackpot/resultater",
+        "drawId": 209
+      }
+    ],
+    "powerball": [
+      {
+        "date": "2026-07-04",
+        "main": [
+          17,
+          38,
+          46,
+          50,
+          69
+        ],
+        "bonus": [
+          20
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-07-01",
+        "main": [
+          2,
+          6,
+          26,
+          39,
+          68
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-29",
+        "main": [
+          10,
+          14,
+          41,
+          53,
+          59
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-27",
+        "main": [
+          3,
+          16,
+          28,
+          30,
+          59
+        ],
+        "bonus": [
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-24",
+        "main": [
+          13,
+          14,
+          16,
+          21,
+          38
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-22",
+        "main": [
+          17,
+          19,
+          21,
+          45,
+          48
+        ],
+        "bonus": [
+          13
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-20",
+        "main": [
+          16,
+          20,
+          44,
+          48,
+          50
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-17",
+        "main": [
+          3,
+          26,
+          49,
+          53,
+          61
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-15",
+        "main": [
+          25,
+          55,
+          57,
+          60,
+          62
+        ],
+        "bonus": [
+          23
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-13",
+        "main": [
+          3,
+          13,
+          44,
+          50,
+          53
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-10",
+        "main": [
+          12,
+          31,
+          38,
+          60,
+          66
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-08",
+        "main": [
+          3,
+          24,
+          34,
+          43,
+          49
+        ],
+        "bonus": [
+          20
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-06",
+        "main": [
+          16,
+          32,
+          55,
+          59,
+          64
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-03",
+        "main": [
+          14,
+          16,
+          38,
+          55,
+          64
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-06-01",
+        "main": [
+          2,
+          42,
+          47,
+          57,
+          58
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-30",
+        "main": [
+          1,
+          27,
+          35,
+          44,
+          52
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-27",
+        "main": [
+          5,
+          14,
+          21,
+          31,
+          51
+        ],
+        "bonus": [
+          13
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-25",
+        "main": [
+          17,
+          32,
+          48,
+          60,
+          64
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-23",
+        "main": [
+          4,
+          16,
+          41,
+          48,
+          66
+        ],
+        "bonus": [
+          26
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-20",
+        "main": [
+          10,
+          28,
+          30,
+          46,
+          57
+        ],
+        "bonus": [
+          25
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-18",
+        "main": [
+          4,
+          13,
+          34,
+          61,
+          65
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-16",
+        "main": [
+          8,
+          37,
+          40,
+          44,
+          65
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-13",
+        "main": [
+          22,
+          31,
+          52,
+          56,
+          67
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-11",
+        "main": [
+          24,
+          30,
+          37,
+          56,
+          64
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-09",
+        "main": [
+          15,
+          41,
+          46,
+          47,
+          56
+        ],
+        "bonus": [
+          22
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-06",
+        "main": [
+          18,
+          27,
+          51,
+          65,
+          68
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-04",
+        "main": [
+          30,
+          36,
+          42,
+          60,
+          63
+        ],
+        "bonus": [
+          13
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-05-02",
+        "main": [
+          25,
+          37,
+          42,
+          52,
+          65
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-29",
+        "main": [
+          3,
+          19,
+          35,
+          51,
+          67
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-27",
+        "main": [
+          18,
+          31,
+          33,
+          36,
+          62
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-25",
+        "main": [
+          4,
+          30,
+          36,
+          52,
+          57
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-22",
+        "main": [
+          24,
+          29,
+          32,
+          49,
+          63
+        ],
+        "bonus": [
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-20",
+        "main": [
+          9,
+          17,
+          36,
+          47,
+          64
+        ],
+        "bonus": [
+          26
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-18",
+        "main": [
+          24,
+          25,
+          39,
+          46,
+          61
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-15",
+        "main": [
+          13,
+          21,
+          27,
+          43,
+          45
+        ],
+        "bonus": [
+          26
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-13",
+        "main": [
+          38,
+          43,
+          59,
+          63,
+          64
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-11",
+        "main": [
+          6,
+          47,
+          49,
+          53,
+          60
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-08",
+        "main": [
+          3,
+          16,
+          17,
+          42,
+          52
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-06",
+        "main": [
+          7,
+          24,
+          37,
+          42,
+          57
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-04",
+        "main": [
+          3,
+          6,
+          13,
+          41,
+          65
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-04-01",
+        "main": [
+          4,
+          10,
+          11,
+          52,
+          64
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-30",
+        "main": [
+          7,
+          11,
+          31,
+          41,
+          57
+        ],
+        "bonus": [
+          20
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-28",
+        "main": [
+          11,
+          42,
+          43,
+          59,
+          61
+        ],
+        "bonus": [
+          25
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-25",
+        "main": [
+          7,
+          21,
+          55,
+          56,
+          64
+        ],
+        "bonus": [
+          26
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-23",
+        "main": [
+          12,
+          18,
+          47,
+          56,
+          63
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-21",
+        "main": [
+          12,
+          28,
+          36,
+          41,
+          59
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-18",
+        "main": [
+          14,
+          18,
+          19,
+          21,
+          69
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-16",
+        "main": [
+          7,
+          10,
+          20,
+          47,
+          52
+        ],
+        "bonus": [
+          20
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-14",
+        "main": [
+          9,
+          30,
+          42,
+          50,
+          52
+        ],
+        "bonus": [
+          21
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-11",
+        "main": [
+          3,
+          6,
+          55,
+          58,
+          63
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-09",
+        "main": [
+          22,
+          23,
+          28,
+          36,
+          54
+        ],
+        "bonus": [
+          13
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-07",
+        "main": [
+          17,
+          18,
+          30,
+          50,
+          68
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-04",
+        "main": [
+          7,
+          14,
+          42,
+          47,
+          56
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-03-02",
+        "main": [
+          2,
+          17,
+          18,
+          38,
+          62
+        ],
+        "bonus": [
+          20
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-28",
+        "main": [
+          6,
+          20,
+          35,
+          54,
+          65
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-25",
+        "main": [
+          50,
+          52,
+          54,
+          56,
+          64
+        ],
+        "bonus": [
+          23
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-23",
+        "main": [
+          5,
+          11,
+          23,
+          29,
+          47
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-21",
+        "main": [
+          27,
+          28,
+          36,
+          48,
+          49
+        ],
+        "bonus": [
+          21
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-18",
+        "main": [
+          9,
+          33,
+          52,
+          64,
+          66
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-16",
+        "main": [
+          16,
+          18,
+          19,
+          56,
+          58
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-14",
+        "main": [
+          23,
+          43,
+          58,
+          60,
+          64
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-11",
+        "main": [
+          6,
+          20,
+          33,
+          40,
+          48
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-09",
+        "main": [
+          6,
+          19,
+          22,
+          28,
+          48
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-07",
+        "main": [
+          25,
+          36,
+          42,
+          51,
+          58
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-04",
+        "main": [
+          27,
+          29,
+          30,
+          37,
+          58
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-02-02",
+        "main": [
+          3,
+          8,
+          31,
+          60,
+          65
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-31",
+        "main": [
+          2,
+          8,
+          14,
+          40,
+          63
+        ],
+        "bonus": [
+          23
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-28",
+        "main": [
+          21,
+          35,
+          40,
+          46,
+          68
+        ],
+        "bonus": [
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-26",
+        "main": [
+          21,
+          31,
+          51,
+          60,
+          63
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-24",
+        "main": [
+          2,
+          16,
+          35,
+          61,
+          63
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-21",
+        "main": [
+          11,
+          26,
+          27,
+          53,
+          55
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-19",
+        "main": [
+          5,
+          28,
+          34,
+          37,
+          55
+        ],
+        "bonus": [
+          17
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-17",
+        "main": [
+          5,
+          8,
+          27,
+          49,
+          57
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-14",
+        "main": [
+          6,
+          24,
+          39,
+          43,
+          51
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-12",
+        "main": [
+          5,
+          27,
+          45,
+          56,
+          59
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-10",
+        "main": [
+          5,
+          19,
+          21,
+          28,
+          64
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-07",
+        "main": [
+          15,
+          28,
+          57,
+          58,
+          63
+        ],
+        "bonus": [
+          23
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-05",
+        "main": [
+          4,
+          18,
+          24,
+          51,
+          56
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2026-01-03",
+        "main": [
+          18,
+          21,
+          40,
+          53,
+          60
+        ],
+        "bonus": [
+          23
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      },
+      {
+        "date": "2025-12-31",
+        "main": [
+          11,
+          18,
+          21,
+          24,
+          38
+        ],
+        "bonus": [
+          26
+        ],
+        "jackpot": null,
+        "lotteryId": "powerball",
+        "source": "NY Open Data / Powerball",
+        "sourceUrl": "https://www.powerball.com/previous-results"
+      }
+    ],
+    "megaMillions": [
+      {
+        "date": "2026-07-03",
+        "main": [
+          5,
+          9,
+          29,
+          47,
+          57
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-30",
+        "main": [
+          26,
+          41,
+          50,
+          53,
+          62
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-26",
+        "main": [
+          5,
+          13,
+          30,
+          33,
+          52
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-23",
+        "main": [
+          48,
+          51,
+          60,
+          63,
+          66
+        ],
+        "bonus": [
+          20
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-19",
+        "main": [
+          13,
+          16,
+          21,
+          26,
+          50
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-16",
+        "main": [
+          12,
+          20,
+          53,
+          67,
+          70
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-12",
+        "main": [
+          9,
+          17,
+          24,
+          39,
+          51
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-09",
+        "main": [
+          9,
+          30,
+          36,
+          38,
+          40
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-05",
+        "main": [
+          13,
+          30,
+          50,
+          52,
+          66
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-06-02",
+        "main": [
+          15,
+          26,
+          43,
+          48,
+          60
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-29",
+        "main": [
+          19,
+          24,
+          47,
+          59,
+          65
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-26",
+        "main": [
+          1,
+          5,
+          49,
+          51,
+          59
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-22",
+        "main": [
+          3,
+          22,
+          34,
+          54,
+          61
+        ],
+        "bonus": [
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-19",
+        "main": [
+          10,
+          26,
+          34,
+          56,
+          64
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-15",
+        "main": [
+          17,
+          23,
+          25,
+          52,
+          61
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-12",
+        "main": [
+          17,
+          32,
+          35,
+          40,
+          47
+        ],
+        "bonus": [
+          17
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-08",
+        "main": [
+          37,
+          47,
+          49,
+          51,
+          58
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-05",
+        "main": [
+          12,
+          22,
+          50,
+          51,
+          55
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-05-01",
+        "main": [
+          16,
+          21,
+          27,
+          41,
+          61
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-28",
+        "main": [
+          14,
+          36,
+          41,
+          47,
+          66
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-24",
+        "main": [
+          7,
+          16,
+          32,
+          35,
+          40
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-21",
+        "main": [
+          1,
+          36,
+          43,
+          56,
+          58
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-17",
+        "main": [
+          38,
+          43,
+          44,
+          49,
+          62
+        ],
+        "bonus": [
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-14",
+        "main": [
+          17,
+          21,
+          24,
+          57,
+          69
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-10",
+        "main": [
+          3,
+          18,
+          36,
+          42,
+          49
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-07",
+        "main": [
+          5,
+          15,
+          22,
+          33,
+          37
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-04-03",
+        "main": [
+          31,
+          45,
+          62,
+          63,
+          68
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-31",
+        "main": [
+          18,
+          35,
+          45,
+          60,
+          65
+        ],
+        "bonus": [
+          17
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-27",
+        "main": [
+          13,
+          27,
+          28,
+          41,
+          62
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-24",
+        "main": [
+          4,
+          13,
+          52,
+          53,
+          69
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-20",
+        "main": [
+          11,
+          20,
+          51,
+          55,
+          63
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-17",
+        "main": [
+          4,
+          11,
+          18,
+          38,
+          50
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-13",
+        "main": [
+          6,
+          19,
+          36,
+          40,
+          55
+        ],
+        "bonus": [
+          9
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-10",
+        "main": [
+          16,
+          21,
+          30,
+          35,
+          65
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-06",
+        "main": [
+          8,
+          19,
+          26,
+          38,
+          42
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-03-03",
+        "main": [
+          7,
+          21,
+          53,
+          54,
+          62
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-27",
+        "main": [
+          11,
+          18,
+          39,
+          43,
+          67
+        ],
+        "bonus": [
+          23
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-24",
+        "main": [
+          12,
+          39,
+          43,
+          49,
+          55
+        ],
+        "bonus": [
+          23
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-20",
+        "main": [
+          15,
+          40,
+          48,
+          58,
+          63
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-17",
+        "main": [
+          3,
+          37,
+          44,
+          52,
+          63
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-13",
+        "main": [
+          34,
+          40,
+          49,
+          59,
+          68
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-10",
+        "main": [
+          5,
+          25,
+          30,
+          36,
+          68
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-06",
+        "main": [
+          13,
+          21,
+          25,
+          52,
+          62
+        ],
+        "bonus": [
+          19
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-02-03",
+        "main": [
+          5,
+          11,
+          22,
+          25,
+          69
+        ],
+        "bonus": [
+          21
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-30",
+        "main": [
+          11,
+          34,
+          36,
+          43,
+          63
+        ],
+        "bonus": [
+          13
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-27",
+        "main": [
+          4,
+          20,
+          38,
+          56,
+          66
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-23",
+        "main": [
+          30,
+          42,
+          49,
+          53,
+          66
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-20",
+        "main": [
+          8,
+          47,
+          50,
+          56,
+          70
+        ],
+        "bonus": [
+          12
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-16",
+        "main": [
+          2,
+          22,
+          33,
+          42,
+          67
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-13",
+        "main": [
+          16,
+          40,
+          56,
+          64,
+          66
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-09",
+        "main": [
+          12,
+          30,
+          36,
+          42,
+          47
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-06",
+        "main": [
+          9,
+          39,
+          47,
+          58,
+          68
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2026-01-02",
+        "main": [
+          6,
+          13,
+          34,
+          43,
+          52
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-30",
+        "main": [
+          18,
+          43,
+          49,
+          63,
+          69
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-26",
+        "main": [
+          9,
+          19,
+          31,
+          63,
+          64
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-23",
+        "main": [
+          15,
+          37,
+          38,
+          41,
+          64
+        ],
+        "bonus": [
+          21
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-19",
+        "main": [
+          1,
+          11,
+          27,
+          39,
+          59
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-16",
+        "main": [
+          20,
+          24,
+          46,
+          59,
+          65
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-12",
+        "main": [
+          10,
+          50,
+          55,
+          58,
+          59
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-09",
+        "main": [
+          19,
+          32,
+          41,
+          49,
+          66
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-05",
+        "main": [
+          34,
+          38,
+          42,
+          44,
+          69
+        ],
+        "bonus": [
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-12-02",
+        "main": [
+          17,
+          25,
+          26,
+          53,
+          60
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-28",
+        "main": [
+          6,
+          7,
+          13,
+          39,
+          48
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-25",
+        "main": [
+          11,
+          15,
+          31,
+          32,
+          59
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-21",
+        "main": [
+          3,
+          4,
+          19,
+          31,
+          63
+        ],
+        "bonus": [
+          9
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-18",
+        "main": [
+          5,
+          10,
+          23,
+          27,
+          30
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-14",
+        "main": [
+          1,
+          8,
+          11,
+          12,
+          57
+        ],
+        "bonus": [
+          7
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-11",
+        "main": [
+          10,
+          13,
+          40,
+          42,
+          46
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-07",
+        "main": [
+          16,
+          21,
+          23,
+          48,
+          70
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-11-04",
+        "main": [
+          11,
+          14,
+          17,
+          50,
+          57
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-31",
+        "main": [
+          2,
+          24,
+          52,
+          66,
+          68
+        ],
+        "bonus": [
+          9
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-28",
+        "main": [
+          2,
+          19,
+          33,
+          53,
+          61
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-24",
+        "main": [
+          11,
+          18,
+          31,
+          51,
+          56
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-21",
+        "main": [
+          2,
+          18,
+          27,
+          34,
+          59
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-17",
+        "main": [
+          9,
+          21,
+          27,
+          48,
+          56
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-14",
+        "main": [
+          12,
+          22,
+          49,
+          57,
+          58
+        ],
+        "bonus": [
+          19
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-10",
+        "main": [
+          3,
+          18,
+          23,
+          32,
+          56
+        ],
+        "bonus": [
+          8
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-07",
+        "main": [
+          17,
+          26,
+          33,
+          45,
+          56
+        ],
+        "bonus": [
+          19
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-10-03",
+        "main": [
+          18,
+          19,
+          38,
+          54,
+          57
+        ],
+        "bonus": [
+          19
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      },
+      {
+        "date": "2025-09-30",
+        "main": [
+          4,
+          8,
+          27,
+          37,
+          63
+        ],
+        "bonus": [
+          14
+        ],
+        "jackpot": null,
+        "lotteryId": "mega",
+        "source": "NY Open Data / Mega Millions",
+        "sourceUrl": "https://www.megamillions.com/"
+      }
+    ],
+    "euroMillions": [
+      {
+        "date": "2026-07-03",
+        "main": [
+          2,
+          12,
+          17,
+          25,
+          39
+        ],
+        "bonus": [
+          1,
+          2
+        ],
+        "jackpot": 80.2,
+        "lotteryId": "euromillions",
+        "source": "Euro-Millions.com",
+        "sourceUrl": "https://www.euro-millions.com/results"
+      },
+      {
+        "date": "2026-06-30",
+        "main": [
+          1,
+          8,
+          37,
+          44,
+          48
+        ],
+        "bonus": [
+          2,
+          6
+        ],
+        "jackpot": 68.9,
+        "lotteryId": "euromillions",
+        "source": "Euro-Millions.com",
+        "sourceUrl": "https://www.euro-millions.com/results"
+      }
+    ],
     "superEnalotto": [],
-    "vikinglotto": [],
-    "lottoMax": [],
-    "powerballAustralia": []
+    "lottoMax": [
+      {
+        "date": "2026-07-03",
+        "main": [
+          9,
+          18,
+          32,
+          39,
+          41,
+          44,
+          50
+        ],
+        "bonus": [
+          15
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      },
+      {
+        "date": "2026-06-30",
+        "main": [
+          6,
+          10,
+          18,
+          23,
+          25,
+          33,
+          42
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      },
+      {
+        "date": "2026-06-26",
+        "main": [
+          5,
+          6,
+          16,
+          30,
+          33,
+          43,
+          51
+        ],
+        "bonus": [
+          35
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      },
+      {
+        "date": "2026-06-23",
+        "main": [
+          4,
+          17,
+          22,
+          35,
+          47,
+          49,
+          51
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      },
+      {
+        "date": "2026-06-19",
+        "main": [
+          5,
+          13,
+          21,
+          33,
+          41,
+          42,
+          51
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      },
+      {
+        "date": "2026-06-16",
+        "main": [
+          1,
+          22,
+          25,
+          31,
+          36,
+          37,
+          44
+        ],
+        "bonus": [
+          13
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      },
+      {
+        "date": "2026-06-12",
+        "main": [
+          1,
+          12,
+          28,
+          35,
+          41,
+          42,
+          52
+        ],
+        "bonus": [
+          20
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      },
+      {
+        "date": "2026-06-09",
+        "main": [
+          6,
+          7,
+          11,
+          12,
+          36,
+          46,
+          50
+        ],
+        "bonus": [
+          24
+        ],
+        "jackpot": null,
+        "lotteryId": "lottomax",
+        "source": "WCLC Lotto Max",
+        "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      }
+    ],
+    "powerballAustralia": [
+      {
+        "date": "2026-07-02",
+        "main": [
+          6,
+          12,
+          17,
+          22,
+          24,
+          30,
+          32
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1572
+      },
+      {
+        "date": "2026-06-25",
+        "main": [
+          7,
+          17,
+          18,
+          23,
+          25,
+          26,
+          29
+        ],
+        "bonus": [
+          16
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1571
+      },
+      {
+        "date": "2026-06-18",
+        "main": [
+          1,
+          6,
+          20,
+          21,
+          26,
+          28,
+          29
+        ],
+        "bonus": [
+          19
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1570
+      },
+      {
+        "date": "2026-06-11",
+        "main": [
+          2,
+          8,
+          9,
+          11,
+          17,
+          24,
+          25
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1569
+      },
+      {
+        "date": "2026-06-04",
+        "main": [
+          3,
+          5,
+          12,
+          27,
+          32,
+          33,
+          34
+        ],
+        "bonus": [
+          10
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1568
+      },
+      {
+        "date": "2026-05-28",
+        "main": [
+          5,
+          10,
+          12,
+          16,
+          26,
+          30,
+          34
+        ],
+        "bonus": [
+          11
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1567
+      },
+      {
+        "date": "2026-05-21",
+        "main": [
+          1,
+          13,
+          15,
+          16,
+          29,
+          32,
+          34
+        ],
+        "bonus": [
+          6
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1566
+      },
+      {
+        "date": "2026-05-14",
+        "main": [
+          1,
+          2,
+          3,
+          16,
+          19,
+          22,
+          25
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1565
+      },
+      {
+        "date": "2026-05-07",
+        "main": [
+          7,
+          15,
+          17,
+          23,
+          28,
+          30,
+          31
+        ],
+        "bonus": [
+          18
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1564
+      },
+      {
+        "date": "2026-04-30",
+        "main": [
+          4,
+          13,
+          16,
+          17,
+          21,
+          24,
+          27
+        ],
+        "bonus": [
+          17
+        ],
+        "jackpot": null,
+        "lotteryId": "powerballau",
+        "source": "The Lott",
+        "sourceUrl": "https://www.thelott.com/powerball/results",
+        "drawId": 1563
+      }
+    ]
   }
 }

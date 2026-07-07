@@ -100,7 +100,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
   radial-gradient(70% 34% at 18% -6%,var(--curtain-glow) 0,transparent 55%),
   radial-gradient(70% 34% at 82% -6%,var(--curtain-glow) 0,transparent 55%),
   var(--bg)}
-body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov{display:none!important}
+body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov{display:none!important}
 
 /* ══ ЭКРАН-ЗАМОК: билет за кулисами ══ */
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;color:#F6EEE4;background:
@@ -500,6 +500,62 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .cc-btn.cancel{background:var(--bg3);color:var(--sub)}
 .cc-btn.ok{background:#d63a4a;color:#fff}
 
+/* ══ ИНФОПОЛЕ-СТИЛИ ══ */
+/* ══ ИНФОРМАЦИОННОЕ ПОЛЕ ══ */
+.if-winrow{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--border);border-radius:16px;margin-bottom:10px;background:var(--bg3)}
+.if-winlbl{font-weight:800;font-size:14px}.if-winsub{font-size:11.5px;color:var(--sub2);margin-top:2px;line-height:1.35}
+.if-winsel{width:150px;flex-shrink:0}
+.if-card{border-color:rgba(233,180,76,.5)!important}
+.if-badge{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(160deg,#F5CE7B,#E9B44C);color:#2A1608;padding:2px 7px;border-radius:10px;vertical-align:2px;margin-left:4px}
+.if-ov{position:fixed;inset:0;background:rgba(10,4,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:560;display:none;padding:0}
+.if-ov.show{display:flex;align-items:flex-end;justify-content:center}
+.if-sheet{width:100%;max-width:720px;height:94dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--modal-bg);border:1px solid rgba(233,180,76,.35);border-radius:26px 26px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom))}
+.if-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.if-title{font-family:'Unbounded',sans-serif;font-size:19px;font-weight:900}
+.if-sub{font-size:13px;color:var(--sub2);margin-top:3px}
+.if-ctx{margin-top:10px;font-size:12.5px;font-weight:800;color:var(--gold);letter-spacing:.3px}
+.if-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+.if-sumcard{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:10px 12px}
+.if-sumv{font-family:'Unbounded',sans-serif;font-weight:900;font-size:16px}
+.if-suml{font-size:11px;color:var(--sub2);margin-top:2px;line-height:1.3}
+.if-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0 12px}
+.if-tab{padding:9px 4px;border-radius:12px;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:800;font-size:12.5px;cursor:pointer}
+.if-tab.on{background:linear-gradient(160deg,#F5CE7B,#E9B44C);color:#2A1608;border-color:transparent}
+.if-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
+.if-ball{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:800;font-size:12px;cursor:pointer;position:relative;text-shadow:0 1px 2px rgba(0,0,0,.3);
+  background-image:radial-gradient(circle at 32% 25%,rgba(255,255,255,.92) 0,rgba(255,255,255,.34) 11%,rgba(255,255,255,0) 30%),radial-gradient(circle at 50% 42%,var(--ball-hi) 0,var(--ball) 58%,var(--ball-lo) 105%);
+  box-shadow:inset 0 -.3em .45em rgba(0,0,0,.28),inset 0 .1em .16em rgba(255,255,255,.4)}
+.if-seclbl{font-weight:800;font-size:13px;margin:16px 0 8px;color:var(--sub2);text-transform:uppercase;letter-spacing:1px}
+.if-pair{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--srow-border);font-size:14px}
+.if-pair b{font-family:'Unbounded',sans-serif;font-weight:800}
+.if-bar{height:6px;border-radius:3px;background:var(--bg3);overflow:hidden;flex:1;margin:0 12px}
+.if-bar>i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#E9B44C,#F5CE7B)}
+.if-note{font-size:12.5px;line-height:1.55;color:var(--sub2);margin-top:10px}
+.if-rowcard{border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:10px;background:var(--bg3)}
+.if-rowtype{font-weight:800;font-size:13.5px}
+.if-rowscore{font-size:11.5px;color:var(--gold);font-weight:800}
+.if-rowballs{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 6px}
+.if-rball{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:800;font-size:10.5px;text-shadow:0 1px 2px rgba(0,0,0,.3);
+  background-image:radial-gradient(circle at 32% 25%,rgba(255,255,255,.92) 0,rgba(255,255,255,.34) 11%,rgba(255,255,255,0) 30%),radial-gradient(circle at 50% 42%,var(--ball-hi) 0,var(--ball) 58%,var(--ball-lo) 105%);
+  box-shadow:inset 0 -.3em .45em rgba(0,0,0,.28),inset 0 .1em .16em rgba(255,255,255,.4)}
+.if-rowexp{font-size:12.5px;color:var(--sub2);line-height:1.5}
+.if-legal{margin-top:16px;padding-top:12px;border-top:1px solid var(--srow-border);font-size:11.5px;line-height:1.55;color:var(--sub2);text-align:center}
+.if-empty{text-align:center;padding:40px 16px;color:var(--sub2);font-size:14.5px;line-height:1.6}
+.if-status{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:800;background:var(--bg3);border:1px solid var(--gold);color:var(--gold)}
+@media(min-width:700px){.if-ov.show{align-items:center}.if-sheet{height:auto;max-height:92dvh;border-radius:26px}}
+.pick-counts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.pick-cnt{padding:10px 4px;border-radius:12px;border:1.5px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:800;font-family:'Unbounded',sans-serif;font-size:14px;cursor:pointer;text-align:center}
+.pick-cnt.on{border-color:var(--gold);background:var(--sg-algo-sel-bg);box-shadow:0 0 0 1px var(--gold)}
+.pick-mode{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--border);border-radius:14px;margin-bottom:7px;background:var(--bg3);cursor:pointer}
+.pick-mode.on{border-color:var(--gold);background:var(--sg-algo-sel-bg);box-shadow:0 0 0 1px var(--gold)}
+.pick-mode-t{font-weight:800;font-size:13.5px}.pick-mode-d{font-size:12px;color:var(--sub2);margin-top:2px;line-height:1.4}
+.cons-num{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--srow-border)}
+.cons-cat{font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:9px;white-space:nowrap}
+.cons-cat.hi{background:rgba(233,180,76,.18);color:var(--gold)}
+.cons-cat.mid{background:rgba(126,207,192,.15);color:#7ECFC0}
+.cons-cat.dist{background:var(--bg3);color:var(--sub2);border:1px solid var(--border)}
+.mx-info{cursor:pointer;color:var(--gold);font-weight:800;margin-left:6px}
+
 /* модал уведомления */
 .fb-ov{position:fixed;inset:0;background:rgba(10,4,8,.55);display:flex;align-items:center;justify-content:center;z-index:520;opacity:0;pointer-events:none;transition:opacity .2s;padding:20px}
 
@@ -762,6 +818,10 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
       <div class="ndb-l"><div class="ndb-title">🎯 Умная генерация</div><div class="ndb-sub" id="ndb-sub">На следующий тираж · по алгоритму</div></div>
       <div style="font-size:20px">→</div>
     </button>
+    <button class="ndb euro" id="cons-btn" onclick="CONS_run()">
+      <div class="ndb-l"><div class="ndb-title">🧠 Консенсус моделей <span class="if-badge">meta</span></div><div class="ndb-sub">Все модели + Информационное поле как судья</div></div>
+      <div style="font-size:20px">→</div>
+    </button>
     <button class="ndb euro" id="wheel-btn" onclick="applyWheelMatrix()">
       <div class="ndb-l"><div class="ndb-title">Колесная матрица</div><div class="ndb-sub" id="wheel-sub">10 рядов · покрытие пар</div></div>
       <div style="font-size:20px">⠿</div>
@@ -968,6 +1028,14 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
     </div>
     <div class="sg-algo-t">Выбери алгоритм</div>
     <div class="sg-algos">
+      <div class="if-winrow">
+        <div><div class="if-winlbl">Период анализа</div><div class="if-winsub">Используются только последние доступные тиражи выбранной лотереи</div></div>
+        <select class="num-inp if-winsel" id="if-win" onchange="IF_setWin(this.value)">
+          <option value="10">10 тиражей</option><option value="25">25 тиражей</option>
+          <option value="50" selected>50 тиражей</option><option value="100">100 тиражей</option>
+          <option value="0">Все доступные</option>
+        </select>
+      </div>
       <div class="sg-algo" id="al-freq" onclick="selAlgo('freq')"><div class="sg-algo-icon">📊</div><div><div class="sg-algo-name">Частотный анализ</div><div class="sg-algo-desc">Числа которые чаще выпадали в базе тиражей</div></div></div>
       <div class="sg-algo" id="al-bal" onclick="selAlgo('bal')"><div class="sg-algo-icon">⚖️</div><div><div class="sg-algo-name">Балансированный</div><div class="sg-algo-desc">40% горячих + 30% средних + 30% холодных</div></div></div>
       <div class="sg-algo" id="al-rnd" onclick="selAlgo('rnd')"><div class="sg-algo-icon">🎲</div><div><div class="sg-algo-name">Равновероятный (pure random)</div><div class="sg-algo-desc">Единственный метод который теория вероятности считает честным</div></div></div>
@@ -982,6 +1050,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
       <div class="sg-algo" id="al-phys" onclick="selAlgo('phys')"><div class="sg-algo-icon">🎱</div><div><div class="sg-algo-name">Физика: лототрон</div><div class="sg-algo-desc">Честная симуляция: шары в камере, поток воздуха, упругие соударения, выход через люк</div></div></div>
       <div class="sg-algo" id="al-chaos" onclick="selAlgo('chaos')"><div class="sg-algo-icon">🌀</div><div><div class="sg-algo-name">Детерминированный хаос</div><div class="sg-algo-desc">Логистическое отображение x→3.99·x·(1−x): предсказание невозможно даже в детерминированной системе</div></div></div>
       <div class="sg-algo" id="al-quantum" onclick="selAlgo('quantum')"><div class="sg-algo-icon">⚛️</div><div><div class="sg-algo-name">Квантовый коллапс</div><div class="sg-algo-desc">Истинная квантовая случайность (ANU QRNG) + туннелирование холодных чисел через частотный барьер</div></div></div>
+      <div class="sg-algo if-card" id="al-field" onclick="IF_run()"><div class="sg-algo-icon">🧬</div><div><div class="sg-algo-name">Информационное поле <span class="if-badge">meta</span></div><div class="sg-algo-desc">Авторская модель Mandel World. Анализирует последние доступные тиражи выбранной лотереи, структуру комбинаций, частоты, интервалы, связи между шарами и разнообразие. Создаёт 10 собственных исследовательских строк.</div></div></div>
     </div>
     <div id="sg-result"></div>
     <div class="sg-disc">⚠️ <b>Важно:</b> Ни один алгоритм не может предсказать результат лотереи. Каждый тираж независим. Только для образовательных и развлекательных целей.</div>
@@ -996,6 +1065,64 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
     <div class="lang-title">🌐 Language · Язык · Språk</div>
     <div class="lang-grid" id="lang-grid"></div>
     <button class="btn-close2" onclick="closeLangPicker()">✕</button>
+  </div>
+</div>
+
+<div class="if-ov" id="cons-ov">
+  <div class="if-sheet">
+    <div class="if-hdr">
+      <div><div class="if-title">🧠 Консенсус моделей</div><div class="if-sub">Модели создали исследовательские строки, а Информационное поле проанализировало их структуру</div></div>
+      <button class="btn-close2" onclick="CONS_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
+    </div>
+    <div class="if-ctx" id="cons-ctx">—</div>
+    <div class="if-summary" id="cons-summary"></div>
+    <div id="cons-body"></div>
+    <button class="btn-draw euro" id="cons-pick-btn" style="margin-top:14px" onclick="CONS_openPick()">💠 Сформировать выборку</button>
+    <div class="if-legal">Модели анализируют последние доступные тиражи выбранной лотереи и структуру комбинаций. Независимый будущий тираж не становится предсказуемым.</div>
+  </div>
+</div>
+
+<div class="lang-ov" id="pick-ov" onclick="if(event.target===this)PICK_close()">
+  <div class="lang-box">
+    <div class="lang-title">💠 Собрать итоговую выборку</div>
+    <div class="if-note" style="margin:0 0 10px">Выберите, сколько исследовательских строк включить в итоговую матрицу.</div>
+    <div class="pick-counts" id="pick-counts"></div>
+    <div class="if-seclbl" style="margin-top:14px">Режим отбора</div>
+    <div id="pick-modes"></div>
+    <button class="btn-draw euro" id="pick-go" style="margin-top:12px" onclick="PICK_go()">Сформировать 5 строк</button>
+    <button class="btn-close2" onclick="PICK_close()">Закрыть</button>
+  </div>
+</div>
+
+<div class="if-ov" id="matrix-ov">
+  <div class="if-sheet">
+    <div class="if-hdr">
+      <div><div class="if-title">💠 Итоговая матрица консенсуса</div><div class="if-sub" id="matrix-sub">—</div></div>
+      <button class="btn-close2" onclick="MATRIX_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
+    </div>
+    <div class="if-ctx" id="matrix-ctx">—</div>
+    <div id="matrix-body"></div>
+    <button class="btn-draw euro" style="margin-top:12px" onclick="MATRIX_use()">Использовать в симуляторе</button>
+    <div class="if-legal">Важно: это образовательный анализ последних доступных результатов выбранной лотереи. Ни одна модель не делает будущий независимый тираж более предсказуемым.</div>
+  </div>
+</div>
+
+<div class="if-ov" id="if-ov">
+  <div class="if-sheet">
+    <div class="if-hdr">
+      <div><div class="if-title">🧬 Информационное поле</div><div class="if-sub">Карта структуры и связей чисел</div></div>
+      <button class="btn-close2" onclick="IF_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
+    </div>
+    <div class="if-ctx" id="if-ctx">—</div>
+    <div class="if-summary" id="if-summary"></div>
+    <div class="if-tabs">
+      <button class="if-tab on" id="ift-field" onclick="IF_tab('field')">Поле</button>
+      <button class="if-tab" id="ift-links" onclick="IF_tab('links')">Связи</button>
+      <button class="if-tab" id="ift-div" onclick="IF_tab('div')">Разнообразие</button>
+      <button class="if-tab" id="ift-rows" onclick="IF_tab('rows')">10 строк</button>
+    </div>
+    <div id="if-body"></div>
+    <div class="if-legal">Модели анализируют последние доступные тиражи выбранной лотереи и структуру комбинаций. Независимый будущий тираж не становится предсказуемым.</div>
   </div>
 </div>
 
@@ -1532,6 +1659,7 @@ function selLot(id){
   if(!LOTS[id])return;
   syncRulesFromConfig(id);
   cur=id;lastDraw=null;
+  IF_reset();CONS_reset();
   renderLotteryNav();
   renderHero();
   initRows();renderSim();resetBanner();buildCheckFields();renderFavs();renderWheelBuilder();renderSavedDrawOptions();updateFilterDefaults();
@@ -1852,7 +1980,7 @@ async function quantumStream(n){
   return{src,next:()=>{const v=data[i%data.length]/65536;i++;return(v+Math.random()*1e-6)%1;}};
 }
 async function generateRowsByAlgo(algo,count){
-  const l=L(),draws=await loadD(cur),hasHist=draws.length>=5;
+  const l=L(),draws=IF_window(await loadD(cur)),hasHist=draws.length>=5;
   if(algo==='wheel')return filterGeneratedRows((await buildWheelGenerated(count)).rows,count,l,draws);
   if(algo==='world-hot'||algo==='world-mix')return filterGeneratedRows(await generateWorldRows(algo,count),count,l,draws);
   const freq=buildFreq(draws,'main',l.mB);
@@ -3799,6 +3927,546 @@ initGenControls();
 selLot('euro');
 selPage('sim');
 buildCheckFields();
+
+/* ═══════════════════════════════════════════════════════════
+   ИНФОРМАЦИОННОЕ ПОЛЕ · авторская meta-модель Mandel World
+   Сервисы: контекст анализа, окно тиражей, Field Strength Score,
+   парные связи, энтропия, 10 исследовательских строк, экран.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Сервис 1: окно последних тиражей (единая точка для ВСЕХ моделей) ── */
+function IF_getWin(){const v=parseInt(localStorage.getItem('md2_win')||'50');return isFinite(v)?v:50;}
+function IF_setWin(v){localStorage.setItem('md2_win',String(parseInt(v)||0));IF_state=null;}
+function IF_window(draws){
+  const w=IF_getWin();
+  if(!Array.isArray(draws))return[];
+  return w>0?draws.slice(0,w):draws.slice();
+}
+
+/* ── Сервис 2: LotteryAnalysisContext — единственная точка входа моделей ── */
+async function IF_ctx(){
+  const l=L();
+  const all=await loadD(cur);
+  const draws=IF_window(all);
+  return{
+    lotteryId:cur,
+    lotteryName:l.short||l.name,
+    ruleVersion:1,
+    mainPoolRange:[1,l.mB],
+    mainNumbersCount:l.pM,
+    bonusPoolRange:l.bB?[1,l.bB]:null,
+    bonusNumbersCount:drawBonusCount?drawBonusCount(l):(l.pBo||0),
+    bonusLabel:l.bonusName||'',
+    currentDraws:draws,
+    selectedDrawWindow:IF_getWin(),
+    availableDrawsCount:all.length,
+    lastDrawDate:all[0]&&all[0].date||null,
+    sourceStatus:getOfficialProvider(cur)?'live':'local'
+  };
+}
+var IF_state=null; /* var: селЛот вызывает IF_reset при инициализации до объявления */
+
+/* ── Сервис 3: парные связи (lift) — раздельно для основных и бонусных ── */
+function IF_pairs(draws,key,maxN){
+  const co=new Map(),cnt=new Array(maxN+1).fill(0);
+  let rows=0;
+  for(const d of draws){
+    const arr=(d&&d[key]||[]).filter(n=>n>=1&&n<=maxN);
+    if(arr.length<2){arr.forEach(n=>cnt[n]++);if(arr.length)rows++;continue;}
+    rows++;
+    arr.forEach(n=>cnt[n]++);
+    for(let i=0;i<arr.length;i++)for(let j=i+1;j<arr.length;j++){
+      const k=Math.min(arr[i],arr[j])+'-'+Math.max(arr[i],arr[j]);
+      co.set(k,(co.get(k)||0)+1);
+    }
+  }
+  const lift=new Map();
+  for(const[k,obs]of co){
+    const[a,b]=k.split('-').map(Number);
+    const exp=rows>0?(cnt[a]/rows)*(cnt[b]/rows)*rows:0;
+    lift.set(k,{obs,exp,lift:exp>0?obs/exp:0,a,b});
+  }
+  return{co,cnt,rows,lift};
+}
+
+/* ── Сервис 4: энтропия распределения ── */
+function IF_entropy(cnt,maxN){
+  let tot=0;for(let n=1;n<=maxN;n++)tot+=cnt[n];
+  if(!tot)return{h:0,status:'—',desc:''};
+  let H=0;
+  for(let n=1;n<=maxN;n++){const p=cnt[n]/tot;if(p>0)H-=p*Math.log(p);}
+  const hn=H/Math.log(maxN);
+  let status,desc;
+  if(hn>=0.965){status='Поле распределено широко';desc='Выборы и статистика распределены между многими числами без выраженного центра.';}
+  else if(hn<=0.93){status='Поле концентрируется';desc='В выбранном периоде модель чаще выделяет ограниченный набор чисел.';}
+  else{status='Поле сбалансировано';desc='Концентрация и разнообразие находятся в среднем диапазоне.';}
+  return{h:hn,status,desc};
+}
+
+/* ── Сервис 5: Field Strength Score (25/15/15/20/15/10) ── */
+function IF_scores(draws,key,maxN,perDraw){
+  const n=draws.length;
+  const shortW=Math.max(3,Math.min(10,n)),midW=Math.max(5,Math.min(25,n));
+  const cAll=new Array(maxN+1).fill(0),cShort=new Array(maxN+1).fill(0),cMid=new Array(maxN+1).fill(0);
+  const lastSeen=new Array(maxN+1).fill(-1);
+  draws.forEach((d,i)=>{
+    for(const v of (d&&d[key]||[])){
+      if(v<1||v>maxN)continue;
+      cAll[v]++;
+      if(i<shortW)cShort[v]++;
+      if(i<midW)cMid[v]++;
+      if(lastSeen[v]<0)lastSeen[v]=i;
+    }
+  });
+  const P=IF_pairs(draws,key,maxN);
+  /* connectivity: сумма lift со всеми партнёрами */
+  const conn=new Array(maxN+1).fill(0);
+  for(const v of P.lift.values()){conn[v.a]+=v.lift;conn[v.b]+=v.lift;}
+  /* структурный вклад: насколько тиражи с этим числом сбалансированы по чётности и сумме */
+  const sums=draws.map(d=>(d&&d[key]||[]).reduce((s,x)=>s+x,0)).filter(x=>x>0);
+  const meanSum=sums.length?sums.reduce((a,b)=>a+b,0)/sums.length:0;
+  const sdSum=sums.length?Math.sqrt(sums.reduce((a,b)=>a+(b-meanSum)**2,0)/sums.length)||1:1;
+  const struct=new Array(maxN+1).fill(0.5);
+  for(let v=1;v<=maxN;v++){
+    const rel=draws.filter(d=>(d&&d[key]||[]).includes(v));
+    if(!rel.length)continue;
+    let acc=0;
+    for(const d of rel){
+      const arr=d[key];
+      const even=arr.filter(x=>x%2===0).length/arr.length;
+      const z=Math.min(Math.abs((arr.reduce((s,x)=>s+x,0)-meanSum)/sdSum),2)/2;
+      acc+=1-(0.6*Math.abs(even-0.5)*2+0.4*z);
+    }
+    struct[v]=acc/rel.length;
+  }
+  /* diversity: числа с менее покрытыми парами добавляют больше разнообразия */
+  const pairCov=new Array(maxN+1).fill(0);
+  for(const v of P.lift.values()){pairCov[v.a]+=v.obs;pairCov[v.b]+=v.obs;}
+  const expGap=maxN/Math.max(perDraw,1);
+  const nz=a=>{const mx=Math.max(...a.slice(1),1e-9);return a.map(x=>x/mx);};
+  const fAll=nz(cAll),fShort=nz(cShort),fConn=nz(conn),fStruct=struct.slice(),fCovInv=nz(pairCov).map(x=>1-x);
+  const out=[];
+  for(let v=1;v<=maxN;v++){
+    const gap=lastSeen[v]<0?n:lastSeen[v];
+    const gapS=Math.min(gap/expGap,2)/2;
+    const score=100*(0.25*fAll[v]+0.15*fShort[v]+0.15*gapS+0.20*fConn[v]+0.15*fStruct[v]+0.10*fCovInv[v]);
+    out.push({n:v,score:Math.round(score),
+      sig:{freq:fAll[v],recent:fShort[v],gap:gapS,conn:fConn[v],struct:fStruct[v],div:fCovInv[v]},
+      cnt:cAll[v],cntShort:cShort[v],gap});
+  }
+  return{scores:out,pairs:P,entropy:IF_entropy(cAll,maxN),meanSum,sdSum,cAll};
+}
+
+/* ── Сервис 6: генерация 10 типизированных строк поля ── */
+function IF_weightsFrom(scores,pow){
+  const w=new Array(scores.length+1).fill(0);
+  for(const s of scores)w[s.n]=Math.pow(Math.max(s.score,1)/100,pow||2);
+  return w;
+}
+function IF_pickBonus(bScores,l,type,rng){
+  const k=drawBonusCount?drawBonusCount(l):(l.pBo||0);
+  if(!k||!l.bB)return[];
+  if(type==='control')return rnd(l.bB,k);
+  const pow=type==='core'?3:2;
+  return weightedDistinct(IF_weightsFrom(bScores,pow),k,l.bB,Math.random).sort((a,b)=>a-b);
+}
+function IF_buildRows(A,Ab,l,ctx){
+  const S=[...A.scores].sort((a,b)=>b.score-a.score);
+  const topPairs=[...A.pairs.lift.values()].filter(p=>p.obs>=2).sort((a,b)=>b.lift-a.lift);
+  const rarePairs=[...A.pairs.lift.values()].filter(p=>p.lift<1&&p.obs>=1).sort((a,b)=>a.lift-b.lift);
+  const k=l.pM,maxN=l.mB;
+  const usedPairs=new Set(),rows=[];
+  const pairKey=(a,b)=>Math.min(a,b)+'-'+Math.max(a,b);
+  const rowPairs=m=>{const r=[];for(let i=0;i<m.length;i++)for(let j=i+1;j<m.length;j++)r.push(pairKey(m[i],m[j]));return r;};
+  const addRow=(type,name,m,exp)=>{
+    m=[...new Set(m)].slice(0,k).sort((a,b)=>a-b);
+    while(m.length<k){const c=1+Math.floor(Math.random()*maxN);if(!m.includes(c))m.push(c);}
+    m.sort((a,b)=>a-b);
+    const prs=rowPairs(m),newP=prs.filter(p=>!usedPairs.has(p));
+    let maxOv=0;for(const r of rows){const ov=r.m.filter(x=>m.includes(x)).length;if(ov>maxOv)maxOv=ov;}
+    prs.forEach(p=>usedPairs.add(p));
+    const strong=m.filter(x=>(A.scores[x-1]||{}).score>=70);
+    const sPairs=prs.filter(p=>{const v=A.pairs.lift.get(p);return v&&v.lift>=1.3&&v.obs>=2;});
+    rows.push({modelId:'field',modelName:'Информационное поле',type,typeName:name,
+      lotteryId:ctx.lotteryId,drawWindow:ctx.currentDraws.length,
+      m,b:IF_pickBonus(Ab?Ab.scores:[],l,type,Math.random),
+      generatedAt:new Date().toISOString(),
+      fieldScore:Math.round(m.reduce((s,x)=>s+((A.scores[x-1]||{}).score||0),0)/k),
+      explanation:exp,strong,strongPairs:sPairs.slice(0,3),newPairs:newP.length,maxOverlap:maxOv});
+  };
+  const W=pow=>IF_weightsFrom(A.scores,pow);
+  /* 1 Ядро поля */
+  addRow('core','Ядро поля',weightedDistinct(W(3.2),k,maxN,Math.random),'Числа с наибольшей силой поля в выбранном периоде.');
+  /* 2 Сбалансированное поле */
+  {let m=[],tries=0;
+   while(tries++<80){m=weightedDistinct(W(2),k,maxN,Math.random);
+     const ev=m.filter(x=>x%2===0).length,lo=m.filter(x=>x<=maxN/2).length;
+     if(Math.abs(ev-k/2)<=1&&Math.abs(lo-k/2)<=1)break;}
+   addRow('balanced','Сбалансированное поле',m,'Контроль чётных/нечётных и низких/высоких чисел при высокой силе поля.');}
+  /* 3 Поле связей */
+  {const m=[];if(topPairs[0]){m.push(topPairs[0].a,topPairs[0].b);}
+   while(m.length<k){let best=null,bl=-1;
+     for(const p of topPairs.slice(0,60)){
+       const cand=m.includes(p.a)&&!m.includes(p.b)?p.b:(m.includes(p.b)&&!m.includes(p.a)?p.a:null);
+       if(cand&&p.lift>bl){bl=p.lift;best=cand;}}
+     if(best==null)best=weightedDistinct(W(2),1,maxN,Math.random).find(x=>!m.includes(x));
+     if(best!=null&&!m.includes(best))m.push(best);else break;}
+   addRow('links','Поле связей',m,'Строка выращена из самых сильных связей пар выбранного периода.');}
+  /* 4 Поле покрытия */
+  {const covered=new Set([...A.pairs.lift.keys()]);
+   const m=[];const shuffled=S.slice(0,Math.min(maxN,30)).sort(()=>Math.random()-.5);
+   for(const s of shuffled){if(m.length>=k)break;
+     const news=m.every(x=>!covered.has(pairKey(x,s.n)));
+     if(news||m.length<2)m.push(s.n);}
+   addRow('coverage','Поле покрытия',m,'Пары, слабо представленные в периоде: строка расширяет покрытие уникальных пар.');}
+  /* 5 Диверсифицированное поле */
+  {const used=new Set(rows.flatMap(r=>r.m));
+   const w=W(2).map((x,i)=>used.has(i)?x*0.15:x);
+   addRow('diverse','Диверсифицированное поле',weightedDistinct(w,k,maxN,Math.random),'Минимальное пересечение с первыми строками поля при сохранении силы.');}
+  /* 6 Структурное поле */
+  {let best=null,bd=1e18;
+   for(let t=0;t<70;t++){const m=weightedDistinct(W(1.8),k,maxN,Math.random);
+     const d=Math.abs(m.reduce((s,x)=>s+x,0)-A.meanSum);
+     if(d<bd){bd=d;best=m;}}
+   addRow('struct','Структурное поле',best,'Сумма и разброс строки приближены к типичной структуре тиражей периода.');}
+  /* 7 Поле диапазонов */
+  {const ter=Math.ceil(maxN/3),m=[];
+   const q=[Math.ceil(k/3),Math.ceil(k/3),k-2*Math.ceil(k/3)];
+   for(let z=0;z<3;z++){
+     const lo=z*ter+1,hi=Math.min((z+1)*ter,maxN);
+     const zone=S.filter(s=>s.n>=lo&&s.n<=hi);
+     const w=new Array(maxN+1).fill(0);zone.forEach(s=>w[s.n]=Math.pow(Math.max(s.score,1)/100,2));
+     weightedDistinct(w,Math.max(q[z],1),maxN,Math.random).forEach(x=>{if(!m.includes(x))m.push(x);});}
+   addRow('ranges','Поле диапазонов',m,'Равномерное представительство нижней, средней и верхней третей диапазона.');}
+  /* 8 Поле пар */
+  {const m=[];for(const p of topPairs){if(m.length>=k)break;
+     if(!m.includes(p.a)&&m.length<k)m.push(p.a);
+     if(!m.includes(p.b)&&m.length<k)m.push(p.b);}
+   addRow('pairs','Поле пар',m,'Собрана из верхних пар по силе связи (normalized lift).');}
+  /* 9 Поле редких связей */
+  {const m=[];for(const p of rarePairs){if(m.length>=k)break;
+     if(!m.includes(p.a)&&m.length<k)m.push(p.a);
+     if(!m.includes(p.b)&&m.length<k)m.push(p.b);}
+   addRow('rare','Поле редких связей',m,'Недопредставленные связи: исследует пары с lift ниже ожидаемого.');}
+  /* 10 Контрольная структура */
+  addRow('control','Контрольная структура',rnd(maxN,k),'Равномерно случайная строка для честного сравнения с моделью.');
+  return rows;
+}
+
+/* ── Сервис 7: запуск отдельного Информационного поля ── */
+async function IF_run(){
+  const ctx=await IF_ctx();
+  const l=L();
+  if(typeof closeSG==='function'){try{closeSG();}catch(e){}}
+  document.getElementById('if-ov').classList.add('show');
+  const body=document.getElementById('if-body');
+  document.getElementById('if-ctx').textContent=ctx.lotteryName+' · '+(ctx.selectedDrawWindow>0&&ctx.availableDrawsCount>=ctx.selectedDrawWindow?('последние '+ctx.currentDraws.length+' тиражей'):('все доступные '+ctx.currentDraws.length+' тиражей'));
+  if(ctx.currentDraws.length<5){
+    document.getElementById('if-summary').innerHTML='';
+    body.innerHTML='<div class="if-empty">📭 Недостаточно данных для анализа.<br>Для '+ctx.lotteryName+' доступно '+ctx.currentDraws.length+' тиражей — нужно минимум 5.<br><br>Обнови официальные результаты на вкладке «Аналитика».</div>';
+    IF_state=null;return;
+  }
+  body.innerHTML='<div class="if-empty">🧬 Анализирую структуру поля…</div>';
+  await new Promise(r=>setTimeout(r,60));
+  const A=IF_scores(ctx.currentDraws,'m',l.mB,l.pM);
+  const bonusCnt=drawBonusCount?drawBonusCount(l):(l.pBo||0);
+  const Ab=(l.bB&&bonusCnt)?IF_scores(ctx.currentDraws,'b',l.bB,bonusCnt):null;
+  const rows=IF_buildRows(A,Ab,l,ctx);
+  const strongBalls=A.scores.filter(s=>s.score>=70).length;
+  const strongLinks=[...A.pairs.lift.values()].filter(p=>p.lift>=1.5&&p.obs>=2).length;
+  IF_state={ctx,A,Ab,rows,strongBalls,strongLinks,lot:cur,tab:'field'};
+  /* сохранить эксперимент локально */
+  try{localStorage.setItem('md2_if_exp',JSON.stringify({lottery:cur,window:ctx.selectedDrawWindow,drawsUsed:ctx.currentDraws.length,date:new Date().toISOString(),rows:rows.map(r=>({type:r.type,m:r.m,b:r.b,score:r.fieldScore}))}));}catch(e){}
+  const sum=[[ctx.currentDraws.length,'тиражей в анализе'],[rows.length,'строк создано'],[strongBalls,'сильных шаров'],[strongLinks,'сильных связей']];
+  document.getElementById('if-summary').innerHTML=sum.map(x=>'<div class="if-sumcard"><div class="if-sumv">'+x[0]+'</div><div class="if-suml">'+x[1]+'</div></div>').join('')+
+    '<div class="if-sumcard" style="grid-column:1/-1"><span class="if-status">'+A.entropy.status+'</span><div class="if-suml" style="margin-top:6px">'+A.entropy.desc+' Концентрация поля описывает структуру модели на выбранном историческом окне, а не уменьшение случайности будущего тиража.</div></div>';
+  IF_tab('field');
+}
+function IF_close(){document.getElementById('if-ov').classList.remove('show');}
+function IF_reset(){IF_state=null;}
+
+/* ── Экран: вкладки ── */
+function IF_tab(t){
+  if(!IF_state)return;
+  IF_state.tab=t;
+  ['field','links','div','rows'].forEach(x=>document.getElementById('ift-'+x).classList.toggle('on',x===t));
+  const{A,Ab,rows,ctx}=IF_state,l=LOTS[IF_state.lot],body=document.getElementById('if-body');
+  const glow=s=>'box-shadow:inset 0 -.3em .45em rgba(0,0,0,.28),inset 0 .1em .16em rgba(255,255,255,.4),0 0 '+(2+s.score/8)+'px '+(s.score/28)+'px rgba(233,180,76,'+(0.08+s.score/140)+')';
+  const ballCls='rb-m-'+l.cls,bBallCls='rb-b-'+l.cls;
+  if(t==='field'){
+    body.innerHTML='<div class="if-grid">'+A.scores.map(s=>'<div class="if-ball '+ballCls+'" style="'+glow(s)+';opacity:'+(0.55+s.score/220)+'" onclick="IF_ballInfo('+s.n+',false)">'+s.n+'</div>').join('')+'</div>'+
+      (Ab?'<div class="if-seclbl">'+(l.bonusName||'Дополнительные шары')+'</div><div class="if-grid">'+Ab.scores.map(s=>'<div class="if-ball '+bBallCls+'" style="'+glow(s)+';opacity:'+(0.55+s.score/220)+'" onclick="IF_ballInfo('+s.n+',true)">'+s.n+'</div>').join('')+'</div>':'')+
+      '<div class="if-note">Нажми на шар — увидишь его силу поля и сильные связи. Свечение отражает Field Strength Score. <b onclick="IF_scoreInfo()" style="color:var(--gold);cursor:pointer">ⓘ Что такое сила поля</b></div>';
+  }
+  if(t==='links'){
+    const top=[...A.pairs.lift.values()].filter(p=>p.obs>=2).sort((a,b)=>b.lift-a.lift).slice(0,14);
+    body.innerHTML='<div class="if-seclbl">Связи в поле</div><div class="if-note" style="margin:0 0 8px">Какие пары чисел чаще образуют связи внутри выбранного периода.</div>'+
+      (top.length?top.map(p=>'<div class="if-pair"><b>'+p.a+' — '+p.b+'</b><div class="if-bar"><i style="width:'+Math.min(p.lift/2*100,100)+'%"></i></div><span style="color:var(--sub2);font-size:12px">×'+p.obs+'</span></div>').join(''):'<div class="if-empty">Пар с повторной встречаемостью пока нет — период слишком короткий.</div>')+
+      '<div class="if-note">Связи показывают структуру совместной встречаемости чисел в выбранных тиражах и исследовательских строках. Это не прогноз будущего тиража.</div>';
+  }
+  if(t==='div'){
+    const S=[...A.scores].sort((a,b)=>b.score-a.score);
+    const topN=S.slice(0,8),lowN=S.slice(-8).reverse();
+    const goodP=[...A.pairs.lift.values()].sort((a,b)=>b.obs-a.obs).slice(0,5);
+    const total=l.mB*(l.mB-1)/2,covered=A.pairs.lift.size;
+    body.innerHTML='<div class="if-seclbl">Представлены сильнее</div><div class="if-rowballs">'+topN.map(s=>'<div class="if-rball '+ballCls+'">'+s.n+'</div>').join('')+'</div>'+
+      '<div class="if-seclbl">Представлены слабее</div><div class="if-rowballs">'+lowN.map(s=>'<div class="if-rball '+ballCls+'" style="opacity:.55">'+s.n+'</div>').join('')+'</div>'+
+      '<div class="if-seclbl">Хорошо покрытые пары</div>'+goodP.map(p=>'<div class="if-pair"><b>'+p.a+' — '+p.b+'</b><span style="color:var(--sub2);font-size:12px">встречались ×'+p.obs+'</span></div>').join('')+
+      '<div class="if-seclbl">Покрытие пар периода</div><div class="if-pair"><b>'+covered+' / '+total+'</b><div class="if-bar"><i style="width:'+(covered/total*100)+'%"></i></div><span style="color:var(--sub2);font-size:12px">'+Math.round(covered/total*100)+'%</span></div>'+
+      '<div class="if-note">Следующая строка улучшит разнообразие, если добавит числа из слабо представленной группы и новые, ещё не встречавшиеся пары — так работает «Поле покрытия».</div>';
+  }
+  if(t==='rows'){
+    body.innerHTML=rows.map((r,i)=>'<div class="if-rowcard"><div style="display:flex;justify-content:space-between;align-items:center"><span class="if-rowtype">'+(i+1)+' · '+r.typeName+'</span><span class="if-rowscore">Field Score '+r.fieldScore+'</span></div>'+
+      '<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball '+ballCls+'">'+n+'</div>').join('')+(r.b&&r.b.length?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball '+bBallCls+'">'+n+'</div>').join(''):'')+'</div>'+
+      '<div class="if-rowexp">'+r.explanation+' Новых пар: '+r.newPairs+(r.maxOverlap?' · пересечение с другими строками: до '+r.maxOverlap+' чисел':'')+'</div></div>').join('')+
+      '<button class="btn-draw '+l.cls+'" style="margin-top:6px" onclick="IF_useRows()">Использовать 10 строк в симуляторе</button>';
+  }
+}
+function IF_ballInfo(n,isBonus){
+  const st=IF_state;if(!st)return;
+  const A=isBonus?st.Ab:st.A;if(!A)return;
+  const s=A.scores[n-1];
+  const lvl=x=>x>=0.66?'высокая':(x>=0.33?'средняя':'низкая');
+  const lvl2=x=>x>=0.66?'сильные':(x>=0.33?'средние':'слабые');
+  const lvl3=x=>x>=0.66?'высокий':(x>=0.33?'средний':'низкий');
+  const links=[...A.pairs.lift.values()].filter(p=>(p.a===n||p.b===n)&&p.obs>=2).sort((a,b)=>b.lift-a.lift).slice(0,3);
+  const linkTxt=links.length?'\nСильные связи:\n'+links.map(p=>n+' — '+(p.a===n?p.b:p.a)).join('\n'):'';
+  showFeedback('Шар '+n+' · '+(s.score>=70?'Высокая':(s.score>=40?'Средняя':'Спокойная'))+' сила поля',
+    'Сила поля: '+s.score+'/100\nЧастота в периоде: '+lvl(s.sig.freq)+'\nНедавняя активность: '+lvl(s.sig.recent)+'\nСвязи с другими шарами: '+lvl2(s.sig.conn)+'\nСтруктурный вклад: '+lvl3(s.sig.struct)+'\nВклад в разнообразие: '+lvl3(s.sig.div)+linkTxt,'🧬',6000);
+}
+function IF_scoreInfo(){
+  showFeedback('Сила поля','Сила поля объединяет статистику выбранного периода, интервалы, связи между числами и вклад в разнообразие комбинаций. Она описывает структуру доступных данных выбранной лотереи, а не вероятность будущего независимого тиража.','ⓘ',7000);
+}
+function IF_useRows(){
+  if(!IF_state)return;
+  IF_close();
+  const dur=setGeneratedRows(IF_state.rows.map(r=>({m:r.m,b:r.b})),'Готово: 10 исследовательских строк · Информационное поле · '+IF_state.ctx.lotteryName+' · '+IF_state.ctx.currentDraws.length+' тиражей.');
+  setTimeout(()=>showFeedback('Строки поля готовы','10 исследовательских строк Информационного поля перенесены в симулятор.','🧬',2400),dur+150);
+}
+/* инициализация селектора окна */
+document.addEventListener('DOMContentLoaded',()=>{
+  const sel=document.getElementById('if-win');
+  if(sel)sel.value=String(IF_getWin());
+});
+
+
+/* ═══════════════════════════════════════════════════════════
+   КОНСЕНСУС МОДЕЛЕЙ · Информационное поле как главный судья
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Реестр базовых моделей с семействами (динамический; world-* исключены —
+      они смешивают лотереи, что запрещено принципом контекста) ── */
+const CONS_MODELS=[
+  {id:'freq',   name:'Частотный анализ',      family:'Историческая частотность'},
+  {id:'bal',    name:'Балансированный',       family:'Горячие / холодные числа'},
+  {id:'overdue',name:'Gap-анализ',            family:'Интервалы и gap-анализ'},
+  {id:'markov', name:'Цепи Маркова',          family:'Последовательности и переходы'},
+  {id:'bayes',  name:'Байесовский',           family:'Байесовские и вероятностные'},
+  {id:'gauss',  name:'Гаусс · ЦПТ',           family:'Байесовские и вероятностные'},
+  {id:'delta',  name:'Дельта-метод',          family:'Структура комбинации'},
+  {id:'man',    name:'Мандель-сегменты',      family:'Структура комбинации'},
+  {id:'wheel',  name:'Колёсная матрица',      family:'Комбинаторное покрытие'},
+  {id:'rnd',    name:'Pure random',           family:'Равномерная случайность'},
+  {id:'phys',   name:'Физика лототрона',      family:'Физическая симуляция'},
+  {id:'chaos',  name:'Детерминированный хаос',family:'Авторские экспериментальные'},
+  {id:'quantum',name:'Квантовый коллапс',     family:'Авторские экспериментальные'}
+];
+const CONS_ROWS_PER_MODEL=10;
+var CONS_state=null;
+function CONS_reset(){CONS_state=null;}
+
+/* ── Запуск: все модели × 10 строк через единый контекст ── */
+async function CONS_run(){
+  const ctx=await IF_ctx();
+  const l=L();
+  document.getElementById('cons-ov').classList.add('show');
+  const body=document.getElementById('cons-body');
+  document.getElementById('cons-ctx').textContent=ctx.lotteryName+' · '+(ctx.selectedDrawWindow>0&&ctx.availableDrawsCount>=ctx.selectedDrawWindow?('последние '+ctx.currentDraws.length+' тиражей'):('все доступные '+ctx.currentDraws.length+' тиражей'));
+  if(ctx.currentDraws.length<5){
+    document.getElementById('cons-summary').innerHTML='';
+    document.getElementById('cons-pick-btn').style.display='none';
+    body.innerHTML='<div class="if-empty">📭 Недостаточно данных для консенсуса.<br>Для '+ctx.lotteryName+' доступно '+ctx.currentDraws.length+' тиражей — нужно минимум 5.</div>';
+    return;
+  }
+  document.getElementById('cons-pick-btn').style.display='';
+  body.innerHTML='<div class="if-empty">🧠 Модели создают исследовательские строки…</div>';
+  await new Promise(r=>setTimeout(r,60));
+  /* 1) строки всех базовых моделей */
+  const modelRows=[];
+  for(const M of CONS_MODELS){
+    let rows=[];
+    try{rows=await generateRowsByAlgo(M.id,CONS_ROWS_PER_MODEL);}catch(e){rows=[];}
+    rows.slice(0,CONS_ROWS_PER_MODEL).forEach((r,i)=>modelRows.push({
+      modelId:M.id,modelName:M.name,family:M.family,rowNumber:i+1,
+      lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,
+      m:[...r.m].sort((a,b)=>a-b),b:[...(r.b||[])].sort((a,b)=>a-b),
+      generatedAt:new Date().toISOString()
+    }));
+    body.innerHTML='<div class="if-empty">🧠 '+M.name+' — готово…</div>';
+    await new Promise(r=>setTimeout(r,10));
+  }
+  /* 2) Consensus Score: только базовые модели (40/25/20/15) */
+  const maxN=l.mB;
+  const byNum=Array.from({length:maxN+1},()=>({models:new Set(),fams:new Set(),freq:0,perModel:new Map()}));
+  for(const r of modelRows)for(const n of r.m){
+    const e=byNum[n];e.models.add(r.modelId);e.fams.add(r.family);e.freq++;
+    e.perModel.set(r.modelId,(e.perModel.get(r.modelId)||0)+1);
+  }
+  const totModels=CONS_MODELS.length,totFams=new Set(CONS_MODELS.map(m=>m.family)).size;
+  const maxFreq=Math.max(...byNum.slice(1).map(e=>e.freq),1);
+  const cons=[];
+  for(let n=1;n<=maxN;n++){
+    const e=byNum[n];
+    /* устойчивость: среднее появлений на поддержавшую модель, норм. к 10 строкам */
+    const stab=e.models.size?[...e.perModel.values()].reduce((a,b)=>a+b,0)/e.models.size/CONS_ROWS_PER_MODEL:0;
+    const score=100*(0.40*(e.models.size/totModels)+0.25*(e.fams.size/totFams)+0.20*(e.freq/maxFreq)+0.15*Math.min(stab,1));
+    cons.push({n,score:Math.round(score),models:e.models.size,fams:e.fams.size,freq:e.freq,stab});
+  }
+  /* 3) Информационное поле — судья: анализ поля + свои 10 строк с учётом консенсуса */
+  const A=IF_scores(ctx.currentDraws,'m',l.mB,l.pM);
+  const bonusCnt=drawBonusCount?drawBonusCount(l):(l.pBo||0);
+  const Ab=(l.bB&&bonusCnt)?IF_scores(ctx.currentDraws,'b',l.bB,bonusCnt):null;
+  /* поле видит консенсус: подмешиваем Consensus Score в веса поля (но не в сам Consensus Score!) */
+  const blended={...A,scores:A.scores.map(s=>({...s,score:Math.round(0.6*s.score+0.4*(cons[s.n-1]||{}).score||0)}))};
+  const fieldRows=IF_buildRows(blended,Ab,l,ctx).map(r=>({modelId:'field',modelName:'Информационное поле',family:'Авторская meta-модель',rowNumber:0,lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,m:r.m,b:r.b,typeName:r.typeName,explanation:r.explanation,generatedAt:r.generatedAt}));
+  CONS_state={ctx,l,modelRows,fieldRows,cons,A,Ab,lot:cur,pickN:5,pickMode:'mixed'};
+  /* сохранить эксперимент */
+  try{localStorage.setItem('md2_cons_exp',JSON.stringify({lottery:cur,window:ctx.selectedDrawWindow,drawsUsed:ctx.currentDraws.length,models:CONS_MODELS.map(m=>m.id),date:new Date().toISOString()}));}catch(e){}
+  /* 4) сводка + топ чисел */
+  const sum=[[CONS_MODELS.length,'базовых моделей'],[modelRows.length,'строк моделей'],[fieldRows.length,'строк Информационного поля'],[modelRows.length+fieldRows.length,'всего кандидатов'],[totFams,'семейств моделей'],[ctx.currentDraws.length,'тиражей использовано']];
+  document.getElementById('cons-summary').innerHTML=sum.map(x=>'<div class="if-sumcard"><div class="if-sumv">'+x[0]+'</div><div class="if-suml">'+x[1]+'</div></div>').join('');
+  const top=[...cons].sort((a,b)=>b.score-a.score).slice(0,12);
+  const cat=s=>s>=65?['высокий консенсус','hi']:(s>=40?['средний консенсус','mid']:['распределённая поддержка','dist']);
+  body.innerHTML='<div class="if-seclbl">Топ чисел по консенсусу</div>'+
+    top.map(t=>{const c=cat(t.score);return '<div class="cons-num"><div class="if-rball rb-m-'+l.cls+'">'+t.n+'</div><div style="flex:1"><b style="font-size:13.5px">Score '+t.score+'</b><div style="font-size:11.5px;color:var(--sub2)">'+t.models+' моделей · '+t.fams+' семейств · '+t.freq+' появлений</div></div><span class="cons-cat '+c[1]+'">'+c[0]+'</span></div>';}).join('')+
+    '<div class="if-note" style="margin-top:10px">Консенсус показывает согласие моделей на последних тиражах выбранной лотереи. Он не является вероятностью будущего тиража.</div>'+
+    '<div class="if-seclbl" style="margin-top:16px">Роль Информационного поля</div>'+
+    '<div class="if-note" style="margin-top:0">Информационное поле сравнивает голоса моделей, связи между числами, повторы и разнообразие матрицы. Оно помогает сформировать более структурированный итоговый набор исследовательских строк — но не считается отдельным независимым голосом в Consensus Score.</div>';
+}
+function CONS_close(){document.getElementById('cons-ov').classList.remove('show');}
+
+/* ── Модал «Собрать итоговую выборку» ── */
+const PICK_MODES=[
+  ['consensus','Максимальный консенсус','Строки с высокой поддержкой среди разных моделей и математических семейств.'],
+  ['balance','Баланс и разнообразие','Строки с контролем диапазонов, суммы, чётности и минимизацией повторов.'],
+  ['coverage','Матрица покрытия','Строки, которые увеличивают покрытие уникальных пар чисел.'],
+  ['minoverlap','Минимум повторов','Строки подбираются так, чтобы меньше пересекаться между собой.'],
+  ['mixed','Смешанная выборка','Набор разных типов: консенсус, баланс, покрытие, диверсификация и контрольная структура.'],
+  ['random','Контрольная random-выборка','Равномерно случайные строки для честного сравнения с аналитическими моделями.']
+];
+function CONS_openPick(){
+  if(!CONS_state)return;
+  document.getElementById('pick-counts').innerHTML=[1,3,5,10,20].map(n=>'<button class="pick-cnt'+(n===CONS_state.pickN?' on':'')+'" onclick="PICK_setN('+n+')">'+n+'</button>').join('');
+  document.getElementById('pick-modes').innerHTML=PICK_MODES.map(m=>'<div class="pick-mode'+(m[0]===CONS_state.pickMode?' on':'')+'" onclick="PICK_setMode(\''+m[0]+'\')"><div><div class="pick-mode-t">'+m[1]+'</div><div class="pick-mode-d">'+m[2]+'</div></div></div>').join('');
+  document.getElementById('pick-go').textContent='Сформировать '+CONS_state.pickN+' '+rowWord(CONS_state.pickN);
+  document.getElementById('pick-ov').classList.add('show');
+}
+function PICK_setN(n){CONS_state.pickN=n;CONS_openPick();}
+function PICK_setMode(m){CONS_state.pickMode=m;CONS_openPick();}
+function PICK_close(){document.getElementById('pick-ov').classList.remove('show');}
+
+/* ── Candidate Score + двухэтапный диверсифицированный отбор ── */
+function CONS_candidateScore(row,st){
+  const{cons,A,l}=st;
+  const avgCons=row.m.reduce((s,n)=>s+((cons[n-1]||{}).score||0),0)/row.m.length;
+  const avgField=row.m.reduce((s,n)=>s+((A.scores[n-1]||{}).score||0),0)/row.m.length;
+  const models=new Set(),fams=new Set();
+  row.m.forEach(n=>{const c=cons[n-1];if(c){/* приблизительно: числа с широкой поддержкой */}});
+  /* структурный баланс строки */
+  const ev=row.m.filter(x=>x%2===0).length/row.m.length;
+  const balance=1-Math.abs(ev-0.5)*2;
+  const sum=row.m.reduce((a,b)=>a+b,0);
+  const sumFit=1-Math.min(Math.abs(sum-A.meanSum)/(A.sdSum*2||1),1);
+  /* связи пар в строке */
+  let pl=0,pc=0;
+  for(let i=0;i<row.m.length;i++)for(let j=i+1;j<row.m.length;j++){
+    const v=A.pairs.lift.get(Math.min(row.m[i],row.m[j])+'-'+Math.max(row.m[i],row.m[j]));
+    if(v){pl+=Math.min(v.lift,2)/2;pc++;}
+  }
+  const pairQ=pc?pl/pc:0;
+  return Math.round(0.35*avgCons+0.20*avgField+0.15*balance*100+0.15*sumFit*100+0.15*pairQ*100);
+}
+async function PICK_go(){
+  const st=CONS_state;if(!st)return;
+  PICK_close();
+  const body=document.getElementById('matrix-body');
+  document.getElementById('matrix-ov').classList.add('show');
+  const phrases=['Модели передают результаты…','Информационное поле анализирует связи…','Проверяем разнообразие…','Формируем итоговую матрицу…'];
+  for(let i=0;i<phrases.length;i++){body.innerHTML='<div class="if-empty">'+phrases[i]+'</div>';await new Promise(r=>setTimeout(r,260));}
+  const{l,ctx,cons}=st;
+  const pairKey=(a,b)=>Math.min(a,b)+'-'+Math.max(a,b);
+  /* кандидаты: строки моделей + строки поля; контрольный режим — свежий random */
+  let pool;
+  if(st.pickMode==='random'){
+    pool=Array.from({length:st.pickN},()=>({modelId:'control',modelName:'Контрольная random',family:'Равномерная случайность',m:rnd(l.mB,l.pM).sort((a,b)=>a-b),b:(drawBonusCount(l)&&l.bB)?rnd(l.bB,drawBonusCount(l)).sort((a,b)=>a-b):[],typeName:'Контрольная random-строка'}));
+  }else{
+    pool=[...st.modelRows,...st.fieldRows].map(r=>({...r}));
+  }
+  pool.forEach(r=>{r.cs=CONS_candidateScore(r,st);});
+  /* режим-зависимый детерминированный порядок: при равных целях режимы выбирают разное */
+  {let seed=0;for(const ch of st.pickMode)seed=(seed*31+ch.charCodeAt(0))>>>0;
+   const rng=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+   for(let i=pool.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}}
+  /* Этап 2: последовательный диверсифицированный выбор */
+  const chosen=[],usedPairs=new Set();
+  const dedup=new Set();
+  pool=pool.filter(r=>{const k=r.m.join(',');if(dedup.has(k))return false;dedup.add(k);return true;});
+  while(chosen.length<st.pickN&&pool.length){
+    let best=null,bv=-1e9;
+    for(const r of pool){
+      let maxOv=0,newP=0;
+      const prs=[];
+      for(let i=0;i<r.m.length;i++)for(let j=i+1;j<r.m.length;j++)prs.push(pairKey(r.m[i],r.m[j]));
+      newP=prs.filter(p=>!usedPairs.has(p)).length;
+      for(const c of chosen){const ov=c.m.filter(x=>r.m.includes(x)).length;if(ov>maxOv)maxOv=ov;}
+      let v=r.cs;
+      if(st.pickMode==='consensus')v=r.cs*1.4-maxOv*6;
+      if(st.pickMode==='balance'){const ev=r.m.filter(x=>x%2===0).length;v=r.cs-Math.abs(ev-r.m.length/2)*10-maxOv*8;}
+      if(st.pickMode==='coverage')v=newP*1000+r.cs;
+      if(st.pickMode==='minoverlap')v=-maxOv*1000+r.cs;
+      if(st.pickMode==='mixed'){
+        const want=['consensus','balanced','coverage','diverse','control'][chosen.length%5];
+        v=r.cs-maxOv*8+((r.typeName||'').toLowerCase().includes(want)||r.modelId==='field'?12:0);
+      }
+      if(st.pickMode==='random')v=Math.random();
+      if(v>bv){bv=v;best=r;}
+    }
+    if(!best)break;
+    const prs=[];for(let i=0;i<best.m.length;i++)for(let j=i+1;j<best.m.length;j++)prs.push(pairKey(best.m[i],best.m[j]));
+    best.newPairs=prs.filter(p=>!usedPairs.has(p)).length;
+    best.overlapPrev=chosen.length?Math.max(...chosen.map(c=>c.m.filter(x=>best.m.includes(x)).length)):0;
+    prs.forEach(p=>usedPairs.add(p));
+    chosen.push(best);
+    pool=pool.filter(r=>r!==best);
+  }
+  st.matrix=chosen;
+  try{localStorage.setItem('md2_matrix_exp',JSON.stringify({lottery:cur,mode:st.pickMode,n:st.pickN,date:new Date().toISOString(),rows:chosen.map(r=>({m:r.m,b:r.b,model:r.modelId,cs:r.cs}))}));}catch(e){}
+  /* рендер итоговой матрицы */
+  const totalCand=st.modelRows.length+st.fieldRows.length;
+  document.getElementById('matrix-sub').textContent=chosen.length+' '+rowWord(chosen.length)+' из '+totalCand+' исследовательских результатов';
+  document.getElementById('matrix-ctx').textContent=ctx.lotteryName+' · последние '+ctx.currentDraws.length+' доступных тиражей · режим: '+(PICK_MODES.find(m=>m[0]===st.pickMode)||[])[1];
+  body.innerHTML=chosen.map((r,i)=>{
+    const who=r.modelId==='field'?('Информационное поле · '+(r.typeName||'')):(r.modelName+(r.family?' · '+r.family:''));
+    const supModels=new Set(),supFams=new Set();
+    r.m.forEach(n=>{st.modelRows.forEach(mr=>{if(mr.m.includes(n)){supModels.add(mr.modelId);supFams.add(mr.family);}});});
+    r._exp='Числа строки поддержали '+supModels.size+' моделей из '+CONS_MODELS.length+' ('+supFams.size+' семейств). '+(r.explanation||'')+' Включена в матрицу за '+(st.pickMode==='coverage'?'вклад в покрытие пар':(st.pickMode==='minoverlap'?'минимальное пересечение':'сочетание Candidate Score и разнообразия'))+'. Анализ выполнен по '+ctx.currentDraws.length+' последним тиражам '+ctx.lotteryName+'.';
+    return '<div class="if-rowcard"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="if-rowtype">Строка '+(i+1)+' · '+who+'</span><span class="if-rowscore">CS '+r.cs+'<span class="mx-info" onclick="MATRIX_info('+i+')">ⓘ</span></span></div>'+
+      '<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+(r.b&&r.b.length?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>'+
+      '<div class="if-rowexp">Добавляет '+r.newPairs+' новых пар'+(i?' · пересечение с предыдущими: до '+r.overlapPrev+' чисел':'')+'</div></div>';
+  }).join('');
+}
+function MATRIX_info(i){
+  const r=CONS_state&&CONS_state.matrix&&CONS_state.matrix[i];
+  if(r)showFeedback('Строка '+(i+1),r._exp,'💠',8000);
+}
+function MATRIX_close(){document.getElementById('matrix-ov').classList.remove('show');}
+function MATRIX_use(){
+  const st=CONS_state;if(!st||!st.matrix)return;
+  MATRIX_close();CONS_close();
+  const dur=setGeneratedRows(st.matrix.map(r=>({m:r.m,b:r.b})),'Готово: '+st.matrix.length+' '+rowWord(st.matrix.length)+' · Итоговая матрица консенсуса · '+st.ctx.lotteryName+'.');
+  setTimeout(()=>showFeedback('Матрица готова',st.matrix.length+' '+rowWord(st.matrix.length)+' итоговой матрицы консенсуса перенесены в симулятор.','💠',2600),dur+150);
+}
+
 </script>
 </body>
 </html>

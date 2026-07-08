@@ -56,7 +56,8 @@ const RULES = {
   },
   eurojackpot: {
     mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 12,
-    currentFrom: '2012-03-23',
+    archiveFrom: '2012-03-23',
+    currentFrom: '2022-03-25',
     source: 'Euro-Jackpot.net',
     sourceUrl: 'https://www.euro-jackpot.net/results-archive-2012'
   },
@@ -127,12 +128,14 @@ async function main() {
       fetched = await fetchGame(game);
     } catch (err) {
       const existing = previous.games?.[game] || [];
+      const { kept: existingKept, rejected: rejectedExisting } = normalizeAndValidate(game, existing, currentRulesOnly);
       console.error(`warn ${game}: ${err.message}; keeping ${existing.length} existing rows`);
-      games[game] = existing;
+      games[game] = existingKept;
       diagnostics[game] = {
         fetchError: err.message,
         keptExisting: true,
-        merged: existing.length,
+        merged: existingKept.length,
+        rejectedExisting: summarizeRejected(rejectedExisting),
         currentRulesOnly,
         currentFrom: RULES[game].currentFrom,
         source: RULES[game].source,
@@ -141,13 +144,15 @@ async function main() {
       continue;
     }
     const { kept, rejected } = normalizeAndValidate(game, fetched, currentRulesOnly);
-    const merged = mergeByDate(previous.games?.[game] || [], kept);
+    const mergedRaw = mergeByDate(previous.games?.[game] || [], kept);
+    const { kept: merged, rejected: rejectedExisting } = normalizeAndValidate(game, mergedRaw, currentRulesOnly);
     games[game] = merged;
     diagnostics[game] = {
       fetched: fetched.length,
       kept: kept.length,
       merged: merged.length,
       rejected: summarizeRejected(rejected),
+      rejectedExisting: summarizeRejected(rejectedExisting),
       currentRulesOnly,
       currentFrom: RULES[game].currentFrom,
       source: RULES[game].source,

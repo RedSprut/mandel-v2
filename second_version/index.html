@@ -373,20 +373,20 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .chi2-desc{font-size:15px;color:var(--chi-text);line-height:1.55}
 
 /* история */
-.hist-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--hist-border)}
-.hist-main{min-width:0}
+.hist-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--hist-border)}
+.hist-main{min-width:0;overflow:visible}
 .hist-date{font-size:15px;color:var(--sub);margin-bottom:8px;line-height:1.35}
-.hist-balls{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.hist-balls{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow:visible}
 .hist-balls::-webkit-scrollbar{display:none}
 .hist-sep{font-size:9px;opacity:.4;margin:0 2px;flex:0 0 auto}
-.hball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex:0 0 auto}
+.hball{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex:0 0 auto}
 .hball.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
 .hball.lotto-b{--ball:#F2ECE1;--ball-hi:#FFFFFF;--ball-lo:#B9AF9E;color:#141018;font-weight:800}
 .hball.viking-m{--ball:#1e3fbe;--ball-hi:#5a76e8;--ball-lo:#0e1f66;color:#fff}
 .hball.viking-b{--ball:#10183a;--ball-hi:#3a4570;--ball-lo:#05081a;color:#fff}
 .hball.euro-m{--ball:#7ecfc0;--ball-hi:#b2ece2;--ball-lo:#3f9184;color:#123230}
 .hball.euro-b{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
-.btn-del{background:none;border:none;color:#e8556a;font-size:18px;cursor:pointer;padding:4px 8px}
+.btn-del{background:none;border:none;color:#e8556a;font-size:18px;cursor:pointer;padding:4px 5px;min-width:28px}
 
 /* строки статистики */
 .srow{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--srow-border);font-size:16px;line-height:1.45}
@@ -402,6 +402,9 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 
 /* экспорт */
 .btn-exp{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--exp-border);background:var(--exp-bg);font-size:15px;font-weight:800;cursor:pointer;margin-top:8px;color:var(--exp-c);line-height:1.25}
+.matrix-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:12px;align-items:stretch}
+.matrix-actions .btn-draw,.matrix-actions .btn-exp{margin-top:0}
+.matrix-copy{width:auto;min-width:140px;padding:12px 14px}
 
 /* ROI */
 .roi-card{background:var(--roi-card);border:1.5px solid var(--roi-card-b);border-radius:16px;padding:14px;margin-bottom:12px}
@@ -418,11 +421,17 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .pair-axis{width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:var(--sub);flex-shrink:0}
 
 /* избранное */
-.fav-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--hist-border)}
-.fav-balls{display:flex;gap:4px;flex-wrap:wrap}
+.fav-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--hist-border)}
+.fav-main{min-width:0;overflow:visible}
+.fav-rows{display:flex;flex-direction:column;gap:4px}
+.fav-rowballs{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap;overflow:visible}
+.fav-balls{display:flex;gap:4px;flex-wrap:nowrap}
 .fav-name{font-size:15px;color:var(--sub);margin-bottom:7px}
 .btn-fav-del{background:none;border:none;color:#e8556a;font-size:16px;cursor:pointer;padding:2px 6px}
-.btn-fav-use{background:linear-gradient(160deg,var(--gold2),var(--gold));color:#2A1608;border:none;border-radius:20px;padding:8px 14px;font-size:14px;font-weight:800;cursor:pointer}
+.fav-actions{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.btn-fav-use,.btn-fav-copy{width:38px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:18px;padding:0;font-size:14px;font-weight:800;cursor:pointer;line-height:1}
+.btn-fav-use{background:linear-gradient(160deg,var(--gold2),var(--gold));color:#2A1608;border:none}
+.btn-fav-copy{background:var(--exp-bg);color:var(--exp-c);border:1.5px solid var(--exp-border)}
 
 /* проверка билета */
 .check-inp-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
@@ -639,13 +648,16 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .st{min-width:0}
   .hist-item{gap:7px}
   .hist-date{font-size:13px;margin-bottom:6px}
-  .hball{width:30px;height:30px;font-size:10px}
+  .hball{width:28px;height:28px;font-size:9.5px}
   .hist-balls{gap:2px}
   .hist-sep{margin:0 1px}
   .btn-del{padding:4px 5px}
+  .btn-fav-use,.btn-fav-copy{width:34px;height:32px;font-size:13px}
+  .matrix-actions{grid-template-columns:1fr}
+  .matrix-copy{width:100%}
 }
 @media (max-width:360px){
-  .hball{width:28px;height:28px;font-size:9.5px}
+  .hball{width:26px;height:26px;font-size:9px}
 }
 
 /* ── ПЛАНШЕТ И БРАУЗЕР: резиновая сетка ── */
@@ -1115,7 +1127,10 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
     </div>
     <div class="if-ctx" id="matrix-ctx">—</div>
     <div id="matrix-body"></div>
-    <button class="btn-draw euro" style="margin-top:12px" onclick="MATRIX_use()">Использовать в симуляторе</button>
+    <div class="matrix-actions">
+      <button class="btn-draw euro" onclick="MATRIX_use()">Использовать в симуляторе</button>
+      <button class="btn-exp matrix-copy" id="matrix-copy-btn" onclick="MATRIX_copy(this)">📋 Копировать</button>
+    </div>
     <div class="if-legal">Важно: это образовательный анализ последних доступных результатов выбранной лотереи. Ни одна модель не делает будущий независимый тираж более предсказуемым.</div>
   </div>
 </div>
@@ -1693,19 +1708,22 @@ function selLot(id){
 // ═══════════════════════════════════════════════
 function initRows(){rows=[nr(),nr()];act=0;}
 const nr=()=>({m:[],b:[]});
+function drawBonusCount(l){return l.offBo||l.pBo||0;}
 
 function renderSim(){updatePickLabels();renderRows();renderMainGrid();renderBonusCol();renderSimBtns();updateHdr();}
 
 function updatePickLabels(){
   const l=L();
+  const dBo=drawBonusCount(l);
   const plm=document.getElementById('plm'),plb=document.getElementById('plb');
   if(plm)plm.textContent=l.plm||`Выберите ${l.pM} из ${l.mB}`;
-  if(plb)plb.textContent=l.pBo>0?(l.plb||`${l.pBo} из ${l.bB}`):'';
+  if(plb)plb.textContent=dBo>0?(l.plb||`${dBo} из ${l.bB}`):'';
 }
 
 function updateHdr(){
   const l=L();
-  const f=rows.filter(r=>r.m.length===l.pM&&(l.pBo===0||r.b.length===l.pBo)).length;
+  const dBo=drawBonusCount(l);
+  const f=rows.filter(r=>r.m.length===l.pM&&(dBo===0||r.b.length===dBo)).length;
   document.getElementById('hdr-title').textContent=f>0?`${f} ${rowWord(f)}, ${fmtInt(f*l.price)} ${l.currency||'NOK'}`:'Fyll ut minst 2 rekker';
 }
 function updateAnaHdr(){
@@ -1715,15 +1733,16 @@ function updateAnaHdr(){
 
 function renderRows(){
   const l=L(),c=document.getElementById('rows-c');c.innerHTML='';
+  const dBo=drawBonusCount(l);
   rows.forEach((row,i)=>{
     const div=document.createElement('div');
     div.className='ticket-row'+(i===act?' on-'+l.cls:'');
     div.onclick=()=>{act=i;renderSim();};
     let h=`<div class="rn">${i+1}</div><div class="rballs">`;
     for(let j=0;j<l.pM;j++){const n=row.m[j];h+=n!==undefined?`<div class="rb rb-m-${l.cls}">${n}</div>`:`<div class="rb rb-e-${l.cls}">·</div>`;}
-    if(l.pBo>0){
+    if(dBo>0){
       h+=l.cls==='euro'?'<div class="rstar">★</div>':'<div class="rpipe"></div>';
-      for(let j=0;j<l.pBo;j++){const n=row.b[j];h+=n!==undefined?`<div class="rb rb-b-${l.cls}">${n}</div>`:`<div class="rb rb-e-${l.cls}">·</div>`;}
+      for(let j=0;j<dBo;j++){const n=row.b[j];h+=n!==undefined?`<div class="rb rb-b-${l.cls}">${n}</div>`:`<div class="rb rb-e-${l.cls}">·</div>`;}
     }
     h+='</div>';
     const has=row.m.length>0||row.b.length>0;
@@ -1748,9 +1767,10 @@ function renderMainGrid(){
 
 function renderBonusCol(){
   const l=L(),col=document.getElementById('bonus-col');col.innerHTML='';
-  if(!l.pBo){col.style.display='none';return;}
+  const dBo=drawBonusCount(l);
+  if(!dBo){col.style.display='none';return;}
   col.style.display='grid';
-  const row=rows[act],mD=row.m.length>=l.pM,bF=row.b.length>=l.pBo;
+  const row=rows[act],mD=row.m.length>=l.pM,bF=row.b.length>=dBo;
   for(let n=1;n<=l.bB;n++){
     const s=row.b.includes(n),btn=document.createElement('button');
     btn.className='nb nb-'+l.cls+(s?' sb-'+l.cls:'')+((!mD||bF)&&!s?' dis':'');
@@ -1786,8 +1806,8 @@ function quickRoll(){
 }
 
 function togM(n){clearWheelStatus();const l=L(),row=rows[act],i=row.m.indexOf(n);if(i>=0)row.m.splice(i,1);else if(row.m.length<l.pM){row.m.push(n);row.m.sort((a,b)=>a-b);}renderSim();}
-function togB(n){clearWheelStatus();const l=L(),row=rows[act],i=row.b.indexOf(n);if(i>=0)row.b.splice(i,1);else if(row.b.length<l.pBo){row.b.push(n);row.b.sort((a,b)=>a-b);}renderSim();}
-function undo(i){const l=L(),r=rows[i];if(l.pBo>0&&r.b.length>0)r.b.pop();else if(r.m.length>0)r.m.pop();renderSim();}
+function togB(n){clearWheelStatus();const l=L(),dBo=drawBonusCount(l),row=rows[act],i=row.b.indexOf(n);if(i>=0)row.b.splice(i,1);else if(row.b.length<dBo){row.b.push(n);row.b.sort((a,b)=>a-b);}renderSim();}
+function undo(i){const l=L(),dBo=drawBonusCount(l),r=rows[i];if(dBo>0&&r.b.length>0)r.b.pop();else if(r.m.length>0)r.m.pop();renderSim();}
 function clrRow(i){clearWheelStatus();rows[i]=nr();renderSim();}
 function addRow(){if(rows.length>=MAX_ROWS)return;rows.push(nr());act=rows.length-1;renderSim();}
 
@@ -1799,16 +1819,18 @@ function rnd(max,cnt,ex=[]){
 function fillOne(){
   clearWheelStatus();
   const l=L(),row=rows[act];
-  row.m=rnd(l.mB,l.pM);if(l.pBo>0)row.b=rnd(l.bB,l.pBo);
+  const dBo=drawBonusCount(l);
+  row.m=rnd(l.mB,l.pM);if(dBo>0)row.b=rnd(l.bB,dBo);
   const nx=rows.findIndex((r,i)=>i>act&&r.m.length===0);if(nx>=0)act=nx;
   renderSim();
 }
 function fillAll(){
   clearWheelStatus();
   const l=L();
+  const dBo=drawBonusCount(l);
   rows.forEach(r=>{
     if(r.m.length<l.pM){const e=rnd(l.mB,l.pM-r.m.length,r.m);r.m=[...r.m,...e].sort((a,b)=>a-b);}
-    if(l.pBo>0&&r.b.length<l.pBo){const e=rnd(l.bB,l.pBo-r.b.length,r.b);r.b=[...r.b,...e].sort((a,b)=>a-b);}
+    if(dBo>0&&r.b.length<dBo){const e=rnd(l.bB,dBo-r.b.length,r.b);r.b=[...r.b,...e].sort((a,b)=>a-b);}
   });
   renderSim();
 }
@@ -1841,8 +1863,35 @@ function updateGenCountUI(){
   if(sub)sub.textContent=`${c} ${rowWord(c)} · покрытие пар`;
 }
 function rowWord(n){return n===1?'ряд':(n>=2&&n<=4?'ряда':'рядов');}
+function normalizeNumberList(nums,max,limit){
+  const out=[];
+  (Array.isArray(nums)?nums:[]).forEach(v=>{
+    const n=+v;
+    if(Number.isInteger(n)&&n>=1&&n<=max&&!out.includes(n))out.push(n);
+  });
+  return out.slice(0,limit).sort((a,b)=>a-b);
+}
+function completeBonusList(nums,l){
+  const dBo=drawBonusCount(l);
+  if(!dBo||!l.bB)return[];
+  const out=normalizeNumberList(nums,l.bB,dBo);
+  while(out.length<dBo){
+    const n=1+Math.floor(Math.random()*l.bB);
+    if(!out.includes(n))out.push(n);
+  }
+  return out.sort((a,b)=>a-b);
+}
+function normalizeGeneratedRow(row,l=L()){
+  return{
+    m:normalizeNumberList(row&&row.m,l.mB,l.pM),
+    b:completeBonusList(row&&row.b,l)
+  };
+}
+function normalizeGeneratedRows(gen,l=L()){
+  return (Array.isArray(gen)?gen:[]).slice(0,MAX_ROWS).map(r=>normalizeGeneratedRow(r,l));
+}
 function setGeneratedRows(gen,status){
-  rows=gen.slice(0,MAX_ROWS).map(g=>({m:[...g.m],b:[...(g.b||[])]}));
+  rows=normalizeGeneratedRows(gen,L());
   if(!rows.length)rows=[nr()];
   act=0;
   renderSim();
@@ -1857,13 +1906,14 @@ function showGenStatus(msg){
   el.textContent=msg;
 }
 function genBonus(l,draws,mode='rnd'){
-  if(!l.pBo)return[];
+  const dBo=drawBonusCount(l);
+  if(!dBo||!l.bB)return[];
   const bf=draws.length>=5?buildFreq(draws,'bonus',l.bB):null;
   if(mode==='freq'&&bf){
     const top=[...bf.entries()].sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
-    return shufSlice(top,l.pBo);
+    return shufSlice(top,dBo);
   }
-  return rnd(l.bB,l.pBo);
+  return rnd(l.bB,dBo);
 }
 function rangeNums(max){return Array.from({length:max},(_,i)=>i+1);}
 function defaultSumRange(l){
@@ -2096,9 +2146,13 @@ async function generateSelectedRows(){
 function rowsToNorskText(){
   const l=L();
   fillAll();
-  const lines=[`${lotteryName(cur)} · ${new Date().toLocaleDateString('ru-RU')}`];
-  rows.filter(r=>r.m.length===l.pM).forEach((r,i)=>{
-    const bonus=l.pBo>0&&r.b.length?` | ${bonusLabel(l)}: ${r.b.join(', ')}`:'';
+  return rowsToShareText(rows,l,`${lotteryName(cur)} · ${new Date().toLocaleDateString('ru-RU')}`);
+}
+function rowsToShareText(rowList,l=L(),title){
+  const dBo=drawBonusCount(l);
+  const lines=[title||`${l.name||lotteryName(cur)} · ${new Date().toLocaleDateString('ru-RU')}`];
+  normalizeGeneratedRows(rowList,l).filter(r=>r.m.length===l.pM).forEach((r,i)=>{
+    const bonus=dBo>0&&r.b.length?` | ${bonusLabel(l)}: ${r.b.join(', ')}`:'';
     lines.push(`Ряд ${i+1}: ${r.m.join(', ')}${bonus}`);
   });
   return lines.join('\n');
@@ -2118,7 +2172,7 @@ function setCopyButtonState(btn){
   clearTimeout(btn._copyTimer);
   const original=btn.dataset.originalText||btn.textContent;
   btn.dataset.originalText=original;
-  btn.textContent='Скопировано! ✅';
+  btn.textContent=btn.classList.contains('btn-fav-copy')?'✓':'Скопировано! ✅';
   btn.classList.add('btn-copied');
   btn._copyTimer=setTimeout(()=>{
     btn.textContent=btn.dataset.originalText;
@@ -2188,6 +2242,7 @@ function profileBuckets(scores,l){
 }
 async function generateWorldRows(mode,count){
   const l=L(),allData=await loadAllDraws(),scores=buildWorldScores(l,allData),b=profileBuckets(scores,l),out=[];
+  const dBo=drawBonusCount(l);
   for(let i=0;i<count;i++){
     let m;
     if(mode==='world-hot'){
@@ -2197,7 +2252,7 @@ async function generateWorldRows(mode,count){
       m=uniqValid([...shufSlice(b.hot,hN),...shufSlice(b.mid,mN),...shufSlice(b.cold,cN)],l.mB);
       while(m.length<l.pM){m.push(rnd(l.mB,1,m)[0]);m.sort((a,b)=>a-b);}
     }
-    out.push({m,b:l.pBo>0?rnd(l.bB,l.pBo):[]});
+    out.push({m,b:dBo>0?rnd(l.bB,dBo):[]});
   }
   return out;
 }
@@ -2694,7 +2749,7 @@ async function saveFav(){
   fillAll();
   const favs=await loadFav();
   const name=`${l.name} · ${new Date().toLocaleDateString('ru-RU')}`;
-  favs.unshift({name,rows:rows.map(r=>({m:[...r.m],b:[...r.b]})),lot:cur});
+  favs.unshift({name,rows:normalizeGeneratedRows(rows,l).map(r=>({m:[...r.m],b:[...r.b]})),lot:cur});
   await saveFavs(favs.slice(0,10));
   await renderFavs();
   showFeedback('Сохранено','Комбинации добавлены в Избранное и видны по этой ссылке.','⭐');
@@ -2705,29 +2760,48 @@ async function renderFavs(){
   const myFavs=favs.filter(f=>f.lot===cur);
   if(!myFavs.length){c.innerHTML='<div class="empty" style="padding:16px">Нет сохранённых</div>';return;}
   c.innerHTML='';
+  let changed=false;
   myFavs.forEach((fav,fi)=>{
+    const favIndex=favs.indexOf(fav);
+    const displayRows=normalizeGeneratedRows(fav.rows,l);
+    if(JSON.stringify(displayRows)!==JSON.stringify(fav.rows)){fav.rows=displayRows;changed=true;}
     const div=document.createElement('div');div.className='fav-item';
     let rowsH='';
-    fav.rows.forEach(row=>{
+    displayRows.forEach(row=>{
       let balls=row.m.map(n=>`<div class="hball ${l.cls}-m">${n}</div>`).join('');
       if(row.b&&row.b.length>0){balls+=`<div style="font-size:9px;opacity:.4;margin:0 2px">|</div>`;balls+=row.b.map(n=>`<div class="hball ${l.cls}-b">${n}</div>`).join('');}
-      rowsH+=`<div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:3px">${balls}</div>`;
+      rowsH+=`<div class="fav-rowballs">${balls}</div>`;
     });
-    div.innerHTML=`<div><div class="fav-name">${fav.name}</div>${rowsH}</div>
-      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
-        <button class="btn-fav-use" onclick="useFav(${favs.indexOf(fav)})">▶ Загрузить</button>
-        <button class="btn-fav-del" onclick="delFav(${favs.indexOf(fav)})">🗑</button>
+    div.innerHTML=`<div class="fav-main"><div class="fav-name">${fav.name}</div><div class="fav-rows">${rowsH}</div></div>
+      <div class="fav-actions">
+        <button class="btn-fav-use" title="Загрузить" aria-label="Загрузить" onclick="useFav(${favIndex})">▶</button>
+        <button class="btn-fav-copy" title="Копировать" aria-label="Копировать" onclick="copyFav(${favIndex},this)">📋</button>
+        <button class="btn-fav-del" title="Удалить" aria-label="Удалить" onclick="delFav(${favIndex})">🗑</button>
       </div>`;
     c.appendChild(div);
   });
+  if(changed)await saveFavs(favs);
 }
 
 async function useFav(i){
   const favs=await loadFav();
   if(!favs[i])return;
-  rows=favs[i].rows.map(r=>({m:[...r.m],b:[...r.b]}));
+  rows=normalizeGeneratedRows(favs[i].rows,L());
   act=0;renderSim();resetBanner();
   showFeedback('Загружено','Комбинации из Избранного снова поставлены в симулятор.','✅');
+}
+
+async function copyFav(i,btn){
+  const favs=await loadFav();
+  if(!favs[i])return;
+  const l=LOTS[favs[i].lot]||L();
+  try{
+    await writeClipboardText(rowsToShareText(favs[i].rows,l,favs[i].name));
+    setCopyButtonState(btn);
+    showCopyToast('Избранное скопировано');
+  }catch(e){
+    showFeedback('Не скопировано','Браузер запретил доступ к буферу обмена. Попробуйте ещё раз после разрешения.','⚠️',3400);
+  }
 }
 
 async function delFav(i){
@@ -3175,7 +3249,6 @@ function buildFreq(draws,key,maxN){
 const mColor=cls=>cls==='lotto'?'#cc2060':cls==='viking'?'#1e3fbe':'#7ecfc0';
 const mText=cls=>cls==='euro'?'#1c1c1e':'#fff';
 const bonusLabel=l=>l.bonusName|| (l.cls==='euro'?'Звёздные числа':l.cls==='lotto'?'Tilleggstall':'Vikingtall');
-const drawBonusCount=l=>l.offBo||l.pBo||0;
 function buildGenericPrizeTiers(l){
   const out=[],seen=new Set();
   const add=(main,bonus=null,label=null)=>{
@@ -4081,7 +4154,7 @@ function IF_pickBonus(bScores,l,type,rng){
   if(!k||!l.bB)return[];
   if(type==='control')return rnd(l.bB,k);
   const pow=type==='core'?3:2;
-  return weightedDistinct(IF_weightsFrom(bScores,pow),k,l.bB,Math.random).sort((a,b)=>a-b);
+  return completeBonusList(weightedDistinct(IF_weightsFrom(bScores||[],pow),k,l.bB,rng||Math.random),l);
 }
 function IF_buildRows(A,Ab,l,ctx){
   const S=[...A.scores].sort((a,b)=>b.score-a.score);
@@ -4309,12 +4382,15 @@ async function CONS_run(){
   for(const M of CONS_MODELS){
     let rows=[];
     try{rows=await generateRowsByAlgo(M.id,CONS_ROWS_PER_MODEL);}catch(e){rows=[];}
-    rows.slice(0,CONS_ROWS_PER_MODEL).forEach((r,i)=>modelRows.push({
-      modelId:M.id,modelName:M.name,family:M.family,rowNumber:i+1,
-      lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,
-      m:[...r.m].sort((a,b)=>a-b),b:[...(r.b||[])].sort((a,b)=>a-b),
-      generatedAt:new Date().toISOString()
-    }));
+    rows.slice(0,CONS_ROWS_PER_MODEL).forEach((r,i)=>{
+      const fixed=normalizeGeneratedRow(r,l);
+      modelRows.push({
+        modelId:M.id,modelName:M.name,family:M.family,rowNumber:i+1,
+        lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,
+        m:fixed.m,b:fixed.b,
+        generatedAt:new Date().toISOString()
+      });
+    });
     body.innerHTML='<div class="if-empty">🧠 '+M.name+' — готово…</div>';
     await new Promise(r=>setTimeout(r,10));
   }
@@ -4341,7 +4417,7 @@ async function CONS_run(){
   const Ab=(l.bB&&bonusCnt)?IF_scores(ctx.currentDraws,'b',l.bB,bonusCnt):null;
   /* поле видит консенсус: подмешиваем Consensus Score в веса поля (но не в сам Consensus Score!) */
   const blended={...A,scores:A.scores.map(s=>({...s,score:Math.round(0.6*s.score+0.4*(cons[s.n-1]||{}).score||0)}))};
-  const fieldRows=IF_buildRows(blended,Ab,l,ctx).map(r=>({modelId:'field',modelName:'Информационное поле',family:'Авторская meta-модель',rowNumber:0,lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,m:r.m,b:r.b,typeName:r.typeName,explanation:r.explanation,generatedAt:r.generatedAt}));
+  const fieldRows=IF_buildRows(blended,Ab,l,ctx).map(r=>{const fixed=normalizeGeneratedRow(r,l);return{modelId:'field',modelName:'Информационное поле',family:'Авторская meta-модель',rowNumber:0,lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,m:fixed.m,b:fixed.b,typeName:r.typeName,explanation:r.explanation,generatedAt:r.generatedAt};});
   CONS_state={ctx,l,modelRows,fieldRows,cons,A,Ab,lot:cur,pickN:5,pickMode:'mixed'};
   /* сохранить эксперимент */
   try{localStorage.setItem('md2_cons_exp',JSON.stringify({lottery:cur,window:ctx.selectedDrawWindow,drawsUsed:ctx.currentDraws.length,models:CONS_MODELS.map(m=>m.id),date:new Date().toISOString()}));}catch(e){}
@@ -4369,6 +4445,7 @@ const PICK_MODES=[
 ];
 function CONS_openPick(){
   if(!CONS_state)return;
+  document.getElementById('cons-ov').classList.remove('show');
   document.getElementById('pick-counts').innerHTML=[1,3,5,10,20].map(n=>'<button class="pick-cnt'+(n===CONS_state.pickN?' on':'')+'" onclick="PICK_setN('+n+')">'+n+'</button>').join('');
   document.getElementById('pick-modes').innerHTML=PICK_MODES.map(m=>'<div class="pick-mode'+(m[0]===CONS_state.pickMode?' on':'')+'" onclick="PICK_setMode(\''+m[0]+'\')"><div><div class="pick-mode-t">'+m[1]+'</div><div class="pick-mode-d">'+m[2]+'</div></div></div>').join('');
   document.getElementById('pick-go').textContent='Сформировать '+CONS_state.pickN+' '+rowWord(CONS_state.pickN);
@@ -4402,6 +4479,7 @@ function CONS_candidateScore(row,st){
 async function PICK_go(){
   const st=CONS_state;if(!st)return;
   PICK_close();
+  CONS_close();
   const body=document.getElementById('matrix-body');
   document.getElementById('matrix-ov').classList.add('show');
   const phrases=['Модели передают результаты…','Информационное поле анализирует связи…','Проверяем разнообразие…','Формируем итоговую матрицу…'];
@@ -4413,7 +4491,7 @@ async function PICK_go(){
   if(st.pickMode==='random'){
     pool=Array.from({length:st.pickN},()=>({modelId:'control',modelName:'Контрольная random',family:'Равномерная случайность',m:rnd(l.mB,l.pM).sort((a,b)=>a-b),b:(drawBonusCount(l)&&l.bB)?rnd(l.bB,drawBonusCount(l)).sort((a,b)=>a-b):[],typeName:'Контрольная random-строка'}));
   }else{
-    pool=[...st.modelRows,...st.fieldRows].map(r=>({...r}));
+    pool=[...st.modelRows,...st.fieldRows].map(r=>{const fixed=normalizeGeneratedRow(r,l);return{...r,m:fixed.m,b:fixed.b};});
   }
   pool.forEach(r=>{r.cs=CONS_candidateScore(r,st);});
   /* режим-зависимый детерминированный порядок: при равных целях режимы выбирают разное */
@@ -4452,13 +4530,14 @@ async function PICK_go(){
     chosen.push(best);
     pool=pool.filter(r=>r!==best);
   }
-  st.matrix=chosen;
-  try{localStorage.setItem('md2_matrix_exp',JSON.stringify({lottery:cur,mode:st.pickMode,n:st.pickN,date:new Date().toISOString(),rows:chosen.map(r=>({m:r.m,b:r.b,model:r.modelId,cs:r.cs}))}));}catch(e){}
+  const matrixRows=chosen.map(r=>{const fixed=normalizeGeneratedRow(r,l);return{...r,m:fixed.m,b:fixed.b};});
+  st.matrix=matrixRows;
+  try{localStorage.setItem('md2_matrix_exp',JSON.stringify({lottery:cur,mode:st.pickMode,n:st.pickN,date:new Date().toISOString(),rows:matrixRows.map(r=>({m:r.m,b:r.b,model:r.modelId,cs:r.cs}))}));}catch(e){}
   /* рендер итоговой матрицы */
   const totalCand=st.modelRows.length+st.fieldRows.length;
-  document.getElementById('matrix-sub').textContent=chosen.length+' '+rowWord(chosen.length)+' из '+totalCand+' исследовательских результатов';
+  document.getElementById('matrix-sub').textContent=matrixRows.length+' '+rowWord(matrixRows.length)+' из '+totalCand+' исследовательских результатов';
   document.getElementById('matrix-ctx').textContent=ctx.lotteryName+' · последние '+ctx.currentDraws.length+' доступных тиражей · режим: '+(PICK_MODES.find(m=>m[0]===st.pickMode)||[])[1];
-  body.innerHTML=chosen.map((r,i)=>{
+  body.innerHTML=matrixRows.map((r,i)=>{
     const who=r.modelId==='field'?('Информационное поле · '+(r.typeName||'')):(r.modelName+(r.family?' · '+r.family:''));
     const supModels=new Set(),supFams=new Set();
     r.m.forEach(n=>{st.modelRows.forEach(mr=>{if(mr.m.includes(n)){supModels.add(mr.modelId);supFams.add(mr.family);}});});
@@ -4471,6 +4550,17 @@ async function PICK_go(){
 function MATRIX_info(i){
   const r=CONS_state&&CONS_state.matrix&&CONS_state.matrix[i];
   if(r)showFeedback('Строка '+(i+1),r._exp,'💠',8000);
+}
+async function MATRIX_copy(btn){
+  const st=CONS_state;
+  if(!st||!st.matrix||!st.matrix.length)return;
+  try{
+    await writeClipboardText(rowsToShareText(st.matrix,st.l,st.ctx.lotteryName+' · итоговая матрица консенсуса'));
+    setCopyButtonState(btn||document.getElementById('matrix-copy-btn'));
+    showCopyToast('Матрица скопирована');
+  }catch(e){
+    showFeedback('Не скопировано','Браузер запретил доступ к буферу обмена. Попробуйте ещё раз после разрешения.','⚠️',3400);
+  }
 }
 function MATRIX_close(){document.getElementById('matrix-ov').classList.remove('show');}
 function MATRIX_use(){

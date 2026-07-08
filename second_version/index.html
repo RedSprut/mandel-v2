@@ -1197,7 +1197,7 @@ const LOTTERY_CONFIG={
   euroMillions:{name:'EuroMillions',range:{min:1,max:50},ballCount:5,extraBall:{count:2,range:{min:1,max:12}}},
   eurojackpot:{name:'Eurojackpot',range:{min:1,max:50},ballCount:5,extraBall:{count:2,range:{min:1,max:12}}},
   superEnalotto:{name:'SuperEnalotto',range:{min:1,max:90},ballCount:6,extraBall:{count:1,range:{min:1,max:90}}},
-  vikinglotto:{name:'Vikinglotto',range:{min:1,max:48},ballCount:6,extraBall:{count:1,range:{min:1,max:8}}},
+  vikinglotto:{name:'Vikinglotto',range:{min:1,max:48},ballCount:6,extraBall:{count:1,range:{min:1,max:5}}},
   lottoMax:{name:'Lotto Max',range:{min:1,max:52},ballCount:7,extraBall:{count:1,range:{min:1,max:52}}},
   powerballAustralia:{name:'Powerball Australia',range:{min:1,max:35},ballCount:7,extraBall:{count:1,range:{min:1,max:20}}}
 };
@@ -1212,13 +1212,13 @@ const LOTTERY_APP_KEYS={
   powerballAustralia:'powerballau'
 };
 const APP_LOTTERY_KEYS=Object.fromEntries(Object.entries(LOTTERY_APP_KEYS).map(([configKey,appKey])=>[appKey,configKey]));
-const RESULTS_JSON_URL='results.json';
+const RESULTS_JSON_URL='../results.json';
 let resultsJsonCache=null;
 
 const LOTS={
   lotto:{name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',res:'20:00',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
     tiers:[{match:'7',label:'7 rette'},{match:'6+1',label:'6 + tillegg'},{match:'6',label:'6 rette'},{match:'5',label:'5 rette'},{match:'4',label:'4 rette'}]},
-  viking:{name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:8,pBo:1,offBo:1,price:8,currency:'NOK',minR:1,day:'Среда',dl:'18:00',res:'21:00',combos:98172096,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
+  viking:{name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:5,pBo:1,offBo:1,price:8,currency:'NOK',minR:1,day:'Среда',dl:'18:00',res:'21:00',combos:61357560,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
     tiers:[{match:'6+1',label:'6+1'},{match:'6+0',label:'6+0'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4',label:'4 rette'},{match:'3',label:'3 rette'}]},
   euro:{name:'EUROJACKPOT',short:'EuroJackpot',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:25,currency:'NOK',minR:1,day:'Вт и Пт',dl:'19:00',res:'после 21:00',combos:139838160,plm:'Velg 5 hovedtall',plb:'2 stjernetall',bonusName:'Звёздные числа',drawDays:[2,5],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'eurojackpot all',officialUrl:'https://www.norsk-tipping.no/lotteri/eurojackpot/resultater',
     tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'4+0',label:'4+0'},{match:'3+2',label:'3+2'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'}]},

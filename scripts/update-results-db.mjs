@@ -7,6 +7,8 @@ const DEFAULT_OUT = path.join(ROOT, 'results.json');
 const TODAY = new Date();
 const CURRENT_YEAR = TODAY.getUTCFullYear();
 const HTTP_TIMEOUT_MS = 12000;
+const DEFAULT_USER_AGENT = 'MandelWorldResultsBot/1.0 (+https://github.com/RedSprut/mandel-v2)';
+const BROWSER_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15';
 
 const MONTHS = {
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -83,7 +85,7 @@ const RULES = {
     mainCount: 6, mainMax: 90, bonusCount: 1, bonusMax: 90,
     currentFrom: '1997-01-01',
     source: 'National-Lottery.com / Lottologia',
-    sourceUrl: 'https://lottologia.com/superenalotto/estrazioni'
+    sourceUrl: 'https://www.national-lottery.com/superenalotto/results/2026-archive'
   },
   lottoMax: {
     mainCount: 7, mainMax: 52, bonusCount: 1, bonusMax: 52,
@@ -370,22 +372,25 @@ async function fetchSuperEnalotto() {
   for (let year = 1997; year <= CURRENT_YEAR; year++) {
     const sourceUrl = `https://www.national-lottery.com/superenalotto/results/${year}-archive`;
     try {
-      const html = await fetchText(sourceUrl, { attempts: 1, timeoutMs: 6000 });
+      const html = await fetchText(sourceUrl, {
+        attempts: 2,
+        timeoutMs: 4000,
+        headers: { 'user-agent': BROWSER_USER_AGENT }
+      });
+      out.push(...parseNationalSuperEnalottoRows(html, sourceUrl));
       archiveFailures = 0;
-      for (const row of extractRows(html)) {
-        const main = numbersByClass(row, 'ball', (cls) => !/\bjolly\b/.test(cls) && !/\bsuperstar\b/.test(cls));
-        const bonus = numbersByClass(row, 'jolly');
-        const title = firstMatch(row, /title="View SuperEnalotto draw details for\s+([^"]+)"/i);
-        const date = parseEnglishDate(title, year) || parseEnglishDate(stripTags(row), year);
-        if (date) {
-          out.push(draw(date, main, bonus, 'superEnalotto', 'National-Lottery.com / SuperEnalotto', sourceUrl));
-        }
-      }
-      await sleep(150);
+      await sleep(1200);
     } catch (err) {
       archiveFailures += 1;
       console.error(`warn superEnalotto ${year}: ${err.message}`);
-      if (archiveFailures >= 3) {
+      const fallbackRows = await fetchSuperEnalottoNetYear(year).catch((fallbackErr) => {
+        console.error(`warn superEnalotto ${year} fallback: ${fallbackErr.message}`);
+        return [];
+      });
+      if (fallbackRows.length) {
+        out.push(...fallbackRows);
+        archiveFailures = 0;
+      } else if (archiveFailures >= 3) {
         console.error('warn superEnalotto archive: skipped remaining archive years after 3 consecutive failures');
         break;
       }
@@ -398,6 +403,47 @@ async function fetchSuperEnalotto() {
   });
 
   return mergeByDate(out, lottologia);
+}
+
+function parseNationalSuperEnalottoRows(html, sourceUrl) {
+  const out = [];
+  for (const row of extractRows(html)) {
+    const main = numbersByClass(row, 'ball', (cls) => !/\bjolly\b/.test(cls) && !/\bsuperstar\b/.test(cls));
+    const bonus = numbersByClass(row, 'jolly');
+    const title = firstMatch(row, /title="View SuperEnalotto draw details for\s+([^"]+)"/i);
+    const date = parseEnglishDate(title) || parseEnglishDate(stripTags(row));
+    if (date && main.length === 6 && bonus.length === 1) {
+      out.push(draw(date, main, bonus, 'superEnalotto', 'National-Lottery.com / SuperEnalotto', sourceUrl));
+    }
+  }
+  return out;
+}
+
+async function fetchSuperEnalottoNetYear(year) {
+  const sourceUrl = `https://www.superenalotto.net/en/results/${year}`;
+  const html = await fetchText(sourceUrl, {
+    attempts: 1,
+    timeoutMs: 4000,
+    headers: { 'user-agent': BROWSER_USER_AGENT }
+  });
+  return parseSuperEnalottoNetRows(html, year, sourceUrl);
+}
+
+function parseSuperEnalottoNetRows(html, year, sourceUrl) {
+  const out = [];
+  for (const row of extractRows(html).filter((r) => /drawNumber/.test(r) && /ballCell/.test(r))) {
+    const groups = [...row.matchAll(/<td class="ballCell">([\s\S]*?)<\/td>/gi)].map((m) => m[1]);
+    if (groups.length < 2) continue;
+    const main = allLiNumbers(groups[0]);
+    const bonus = allLiNumbers(groups[1]);
+    const dateHtml = firstMatch(row, /<td class="date[^"]*"[^>]*>([\s\S]*?)<\/td>/i);
+    const drawId = stripTags(firstMatch(row, /<span class="drawNumber"[^>]*>([\s\S]*?)<\/span>/i)) || null;
+    const date = parseEnglishDate(dateHtml, year);
+    if (date && main.length === 6 && bonus.length === 1) {
+      out.push(draw(date, main, bonus, 'superEnalotto', 'SuperEnalotto.net', sourceUrl, drawId));
+    }
+  }
+  return out;
 }
 
 async function fetchSuperEnalottoLottologia() {
@@ -420,17 +466,27 @@ async function fetchSuperEnalottoLottologia() {
 }
 
 async function fetchLottoMax() {
-  const html = await fetchText('https://www.wclc.com/winning-numbers/lotto-max-extra.htm?channel=print');
   const out = [];
-  const blocks = [...html.matchAll(/<div class="pastWinNumGroup">([\s\S]*?)(?=<div class="pastWinNumSecondaryGroup">|<div class="pastWinNumGroup">|<\/div>\s*<!--\/ pastWinNum|$)/gi)]
-    .map((m) => m[1]);
-  for (const block of blocks) {
-    const date = parseEnglishDate(firstMatch(block, /<strong>([\s\S]*?)<\/strong>/i));
-    const nums = [...block.matchAll(/<li class="pastWinNumber(?:Bonus)?">([\s\S]*?)<\/li>/gi)]
-      .map((m) => numberFromText(stripTags(m[1])))
-      .filter(Number.isInteger);
-    if (date && nums.length >= 8) {
-      out.push(draw(date, nums.slice(0, 7), nums.slice(7, 8), 'lottoMax', RULES.lottoMax.source, RULES.lottoMax.sourceUrl));
+  for (let back = 0; back <= 12; back++) {
+    const sourceUrl = `https://www.wclc.com/lotto-max-extra.htm?back=${back}`;
+    let html;
+    try {
+      html = await fetchText(sourceUrl, { attempts: 1, timeoutMs: 8000 });
+    } catch (err) {
+      console.error(`warn lottoMax back ${back}: ${err.message}`);
+      continue;
+    }
+    const blocks = [...html.matchAll(/<div class="pastWinNum">([\s\S]*?)(?=<div class="pastWinNum">|<div class="pastWinNumNav"|$)/gi)]
+      .map((m) => m[1]);
+    for (const block of blocks) {
+      const mainBlock = firstMatch(block, /<div class="pastWinNumGroup">([\s\S]*?)(?=<div class="pastWinNumSecondaryGroup">|<div class="pastWinNumMaxmillions|<div class="pastWinNumSidebar"|$)/i);
+      const date = parseEnglishDate(firstMatch(block, /<div class="pastWinNumDate">([\s\S]*?)<\/div>/i));
+      const nums = [...mainBlock.matchAll(/<li class="pastWinNumber(?:Bonus)?">([\s\S]*?)<\/li>/gi)]
+        .map((m) => numberFromText(stripTags(m[1])))
+        .filter(Number.isInteger);
+      if (date && nums.length >= 8) {
+        out.push(draw(date, nums.slice(0, 7), nums.slice(7, 8), 'lottoMax', RULES.lottoMax.source, sourceUrl));
+      }
     }
   }
   return out;
@@ -535,21 +591,22 @@ function summarizeRejected(rejected) {
 }
 
 async function fetchText(url, options = {}) {
+  const headers = { 'user-agent': DEFAULT_USER_AGENT, ...(options.headers || {}) };
   const res = await fetchResponse(url, {
-    headers: {
-      'user-agent': 'MandelWorldResultsBot/1.0 (+https://github.com/RedSprut/mandel-v2)'
-    }
+    headers
   }, options);
   if (!res.ok) throw new Error(`${url} HTTP ${res.status}`);
   return res.text();
 }
 
 async function fetchJson(url, options = {}) {
+  const headers = {
+    'accept': 'application/json',
+    'user-agent': DEFAULT_USER_AGENT,
+    ...(options.headers || {})
+  };
   const res = await fetchResponse(url, {
-    headers: {
-      'accept': 'application/json',
-      'user-agent': 'MandelWorldResultsBot/1.0 (+https://github.com/RedSprut/mandel-v2)'
-    }
+    headers
   }, options);
   if (!res.ok) throw new Error(`${url} HTTP ${res.status}`);
   return res.json();

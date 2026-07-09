@@ -877,21 +877,14 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 .horo-sec-t{font-size:11px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;color:#8A6B2E;display:flex;align-items:center;gap:7px}
 .horo-sec-b{font-size:14.5px;line-height:1.65;color:#4A3418;margin-top:5px;font-weight:600}
 .horo-lucky{display:flex;gap:8px;margin-top:7px}
-.horo-lball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;background:radial-gradient(circle at 32% 26%,#FBE7B2,#D89B2B 60%,#8A5E15);box-shadow:0 3px 10px rgba(140,100,30,.4)}
+.horo-lball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;background:radial-gradient(circle at 32% 26%,#E8705C,#B3261E 55%,#6E120C);box-shadow:0 3px 10px rgba(110,18,12,.4),inset 0 -3px 6px rgba(60,5,0,.4);text-shadow:0 1px 2px rgba(60,5,0,.5)}
 .horo-note{font-size:10.5px;color:#8A6B2E;margin-top:14px;text-align:center;font-style:italic}
 .horo-btns{margin-top:14px}
 .horo-btns .btn-draw{background:linear-gradient(140deg,#C9952B,#8A5E15)!important;border:none!important}
 .horo-btns .btn-exp{background:rgba(255,250,235,.55)!important;border-color:#C9A55A!important;color:#6B4A0E!important}
 .horo-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:11px;border:1.5px solid #C9A55A;background:rgba(255,250,235,.6);color:#6B4A0E;font-size:16px;font-weight:900;cursor:pointer}
 
-/* уголки-орнаменты пергамента */
-.horo-corner{position:absolute;width:36px;height:36px;pointer-events:none}
-.horo-corner:before{content:'';position:absolute;inset:0;border:2px solid #B08A3E;opacity:.65}
-.horo-corner:after{content:'';position:absolute;width:12px;height:12px;border:2px solid #B08A3E;border-radius:50%;opacity:.55}
-.horo-corner.tl{top:10px;left:10px}.horo-corner.tl:before{border-right:none;border-bottom:none;border-radius:14px 0 0 0}.horo-corner.tl:after{right:-3px;bottom:-3px;border-left:none;border-top:none}
-.horo-corner.tr{top:10px;right:10px}.horo-corner.tr:before{border-left:none;border-bottom:none;border-radius:0 14px 0 0}.horo-corner.tr:after{left:-3px;bottom:-3px;border-right:none;border-top:none}
-.horo-corner.bl{bottom:10px;left:10px}.horo-corner.bl:before{border-right:none;border-top:none;border-radius:0 0 0 14px}.horo-corner.bl:after{right:-3px;top:-3px;border-left:none;border-bottom:none}
-.horo-corner.br{bottom:10px;right:10px}.horo-corner.br:before{border-left:none;border-top:none;border-radius:0 0 14px 0}.horo-corner.br:after{left:-3px;top:-3px;border-right:none;border-bottom:none}
+
 /* шпагат */
 .horo-twine{position:relative;height:14px;margin:20px -22px 6px}
 .horo-twine:before{content:'';position:absolute;left:0;right:0;top:4px;height:6px;
@@ -911,15 +904,13 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 /* ═══ 2. Бонус-шары генератора — изумрудные, всегда одним цветом ═══ */
 .qa-ball.bonus{background:radial-gradient(circle at 32% 26%,#C8F5DD,#3DBB8A 58%,#14614A)!important}
 
-/* филигранные уголки и усиленный кант */
-.horo-sheet{box-shadow:inset 0 0 0 3px rgba(138,107,46,.55),inset 0 0 0 5px rgba(251,243,220,.8),inset 0 0 0 7px rgba(138,107,46,.35),inset 0 0 60px rgba(140,100,30,.18),0 -18px 60px rgba(0,0,0,.45)!important}
-.horo-fil{position:absolute;width:58px;height:58px;pointer-events:none;opacity:.9}
-.horo-fil.tl{top:9px;left:9px}
-.horo-fil.tr{top:9px;right:9px;transform:scaleX(-1)}
-.horo-fil.bl{bottom:9px;left:9px;transform:scaleY(-1)}
-.horo-fil.br{bottom:9px;right:9px;transform:scale(-1,-1)}
+/* кант пергамента */
+.horo-sheet{box-shadow:inset 0 0 0 3px rgba(138,107,46,.5),inset 0 0 0 5px rgba(251,243,220,.85),inset 0 0 0 7px rgba(138,107,46,.3),inset 0 0 60px rgba(140,100,30,.16),0 -18px 60px rgba(0,0,0,.45)!important}
 .horo-ribbon{margin:-2px -10px 0}
 .horo-ribbon svg{width:100%;height:auto;display:block;filter:drop-shadow(0 3px 5px rgba(90,60,10,.28))}
+
+.horo-flourish{display:flex;justify-content:center;margin:10px 0 2px;opacity:.75}
+.horo-flourish svg{width:190px;height:20px}
 </style>
 </head>
 <body class="locked">
@@ -961,10 +952,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   <div class="sched-strip" id="sched-strip">
   </div>
 
-  <div class="scroll-anchors" id="scroll-anchors">
-  <button class="sa-btn" id="sa-btn" onclick="SA_go()">↓</button>
-</div>
-<div class="win-banner none" id="win-banner" onclick="ticketOrCombo(event)" style="cursor:pointer">
+  <div class="win-banner none" id="win-banner" onclick="ticketOrCombo(event)" style="cursor:pointer">
     <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Победная комбинация</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
     <div id="wb-body" style="display:none">
       <div class="wb-lbl">Выпавшие числа</div>
@@ -1388,24 +1376,43 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 
 <div class="horo-ov" id="horo-ov" onclick="if(event.target===this)HORO_close()">
   <div class="horo-sheet">
-    <svg class="horo-fil tl" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
-    <svg class="horo-fil tr" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
-    <svg class="horo-fil bl" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
-    <svg class="horo-fil br" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
     <button class="horo-close" onclick="HORO_close()">✕</button>
     <div class="horo-glyph" id="horo-glyph">♌</div>
     <div class="horo-ribbon">
-      <svg viewBox="0 0 320 74" preserveAspectRatio="xMidYMid meet">
-        <path d="M52,14 L14,6 L28,37 L14,68 L52,60 Z" fill="#D9BE84" stroke="#6B4A0E" stroke-width="2.5"/>
-        <path d="M268,14 L306,6 L292,37 L306,68 L268,60 Z" fill="#D9BE84" stroke="#6B4A0E" stroke-width="2.5"/>
-        <path d="M52,14 L52,60 L62,52 L62,22 Z" fill="#A8894E" stroke="#6B4A0E" stroke-width="2"/>
-        <path d="M268,14 L268,60 L258,52 L258,22 Z" fill="#A8894E" stroke="#6B4A0E" stroke-width="2"/>
-        <path d="M62,10 H258 Q270,10 270,24 V50 Q270,64 258,64 H62 Q50,64 50,50 V24 Q50,10 62,10 Z" fill="#FBF3DC" stroke="#6B4A0E" stroke-width="3"/>
-        <path d="M66,16 H254 Q264,16 264,26 V48 Q264,58 254,58 H66 Q56,58 56,48 V26 Q56,16 66,16 Z" fill="none" stroke="#B08A3E" stroke-width="1.5"/>
-        <text id="horo-title" x="160" y="46" text-anchor="middle" font-size="26" font-weight="900" fill="#6B4A0E" style="font-family:'Unbounded',sans-serif">Лев</text>
+      <svg viewBox="0 0 400 156" preserveAspectRatio="xMidYMid meet">
+        <g stroke="#3A2E20" fill="#E9DDBA">
+          <path d="M70,96 C34,94 18,116 32,134 C46,150 76,144 73,124 C71,108 50,107 49,119 C48,128 58,130 61,124" stroke-width="2.6"/>
+          <path d="M36,104 L52,98 M28,116 L44,110 M32,128 L48,122 M42,138 L56,132" stroke-width="1.2" fill="none" opacity=".85"/>
+        </g>
+        <g stroke="#3A2E20" fill="#E9DDBA" transform="translate(400,0) scale(-1,1)">
+          <path d="M70,96 C34,94 18,116 32,134 C46,150 76,144 73,124 C71,108 50,107 49,119 C48,128 58,130 61,124" stroke-width="2.6"/>
+          <path d="M36,104 L52,98 M28,116 L44,110 M32,128 L48,122 M42,138 L56,132" stroke-width="1.2" fill="none" opacity=".85"/>
+        </g>
+        <path d="M62,42 C90,34 310,34 338,42 C348,52 350,64 349,76 C348,88 344,96 338,102 C310,110 90,110 62,102 C56,96 52,88 51,76 C50,64 52,52 62,42 Z" fill="#FBF6E2" stroke="#3A2E20" stroke-width="2.8"/>
+        <path d="M62,42 C57,60 57,86 62,101" fill="none" stroke="#3A2E20" stroke-width="1.7" opacity=".55"/>
+        <path d="M338,42 C343,60 343,86 338,101" fill="none" stroke="#3A2E20" stroke-width="1.7" opacity=".55"/>
+        <path d="M65,48 L73,51 M63,57 L71,59 M62,66 L70,68 M62,76 L70,78 M63,86 L71,88 M65,95 L73,97" stroke="#7A6236" stroke-width="1" opacity=".7"/>
+        <path d="M335,48 L327,51 M337,57 L329,59 M338,66 L330,68 M338,76 L330,78 M337,86 L329,88 M335,95 L327,97" stroke="#7A6236" stroke-width="1" opacity=".7"/>
+        <path d="M72,47 C120,40 280,40 328,47" fill="none" stroke="#8A6B2E" stroke-width="1.1" opacity=".6"/>
+        <path d="M328,97 C280,104 120,104 72,97" fill="none" stroke="#8A6B2E" stroke-width="1.1" opacity=".6"/>
+        <g stroke="#B9A26B" fill="none" stroke-width="1.2" opacity=".4">
+          <path d="M92,96 C118,88 140,93 160,89 C152,95 142,97 134,95"/>
+          <path d="M308,96 C282,88 260,93 240,89 C248,95 258,97 266,95"/>
+        </g>
+        <g stroke="#3A2E20" fill="none" stroke-width="2" stroke-linecap="round">
+          <path d="M200,40 C193,26 174,22 164,30 C156,37 161,48 171,45 C177,43 177,35 171,35"/>
+          <path d="M200,40 C207,26 226,22 236,30 C244,37 239,48 229,45 C223,43 223,35 229,35"/>
+          <path d="M162,32 C144,22 118,26 108,38 C116,34 128,34 134,38"/>
+          <path d="M238,32 C256,22 282,26 292,38 C284,34 272,34 266,38"/>
+          <circle cx="200" cy="30" r="3" fill="#3A2E20"/>
+          <circle cx="106" cy="39" r="1.8" fill="#3A2E20"/>
+          <circle cx="294" cy="39" r="1.8" fill="#3A2E20"/>
+        </g>
+        <text id="horo-title" x="200" y="82" text-anchor="middle" font-size="27" font-weight="900" fill="#4A3418" style="font-family:'Unbounded',sans-serif">Лев</text>
       </svg>
     </div>
     <div class="horo-date" id="horo-date"></div>
+    <div class="horo-flourish"><svg viewBox="0 0 190 20" fill="none"><path d="M8,10 H70" stroke="#8A6B2E" stroke-width="1.6"/><path d="M120,10 H182" stroke="#8A6B2E" stroke-width="1.6"/><path d="M70,10 Q78,2 86,10 Q90,14 95,10" stroke="#8A6B2E" stroke-width="1.6"/><path d="M120,10 Q112,2 104,10 Q100,14 95,10" stroke="#8A6B2E" stroke-width="1.6"/><circle cx="95" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="8" cy="10" r="1.8" fill="#8A6B2E"/><circle cx="182" cy="10" r="1.8" fill="#8A6B2E"/></svg></div>
     <div class="horo-signs" id="horo-signs"></div>
     <div id="horo-body"></div>
     <div class="horo-twine"></div>
@@ -5719,5 +5726,8 @@ function HORO_share(){
 }
 
 </script>
+<div class="scroll-anchors" id="scroll-anchors">
+  <button class="sa-btn" id="sa-btn" onclick="SA_go()">↓</button>
+</div>
 </body>
 </html>

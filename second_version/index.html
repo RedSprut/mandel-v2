@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<script>
+/* диагностический ловец: покажет любую ошибку прямо на экране */
+window.__bootErrors=[];
+window.onerror=function(msg,src,line,col,err){
+  try{
+    window.__bootErrors.push(msg+' @'+line+':'+col);
+    var b=document.getElementById('boot-err');
+    if(!b){
+      b=document.createElement('div');
+      b.id='boot-err';
+      b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#B3261E;color:#fff;font:12px/1.5 -apple-system,monospace;padding:10px 14px;white-space:pre-wrap;word-break:break-all;max-height:45vh;overflow:auto';
+      (document.body||document.documentElement).appendChild(b);
+    }
+    b.textContent='⚠️ '+window.__bootErrors.join('\n');
+  }catch(e){}
+  return false;
+};
+window.addEventListener('unhandledrejection',function(e){
+  window.onerror(String(e.reason&&e.reason.message||e.reason||'promise rejection'),'',0,0);
+});
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Мандель · Лотерея</title>
@@ -100,7 +121,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
   radial-gradient(70% 34% at 18% -6%,var(--curtain-glow) 0,transparent 55%),
   radial-gradient(70% 34% at 82% -6%,var(--curtain-glow) 0,transparent 55%),
   var(--bg)}
-body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov{display:none!important}
+body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov,body.locked>#wc-ov,body.locked>#sup-ov,body.locked>#period-ov,body.locked>#cele-ov,body.locked>#ticket-ov,body.locked>#qa-ov,body.locked>#qab-ov,body.locked>#horo-ov,body.locked>.scroll-anchors{display:none!important}
 
 /* ══ ЭКРАН-ЗАМОК: билет за кулисами ══ */
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;color:#F6EEE4;background:
@@ -301,7 +322,7 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .dball.euro-m{--ball:#7ecfc0;--ball-hi:#b2ece2;--ball-lo:#3f9184;color:#123230}
 .dball.euro-b{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
 .mb{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700}
-.mb.miss-lotto,.mb.miss-viking,.mb.miss-euro{background-image:none;box-shadow:inset 0 2px 4px rgba(0,0,0,.16);text-shadow:none;font-family:'Manrope',sans-serif;font-weight:800}
+
 .mb.miss-lotto{background-color:var(--miss-lotto);color:var(--miss-lotto-c)}
 .mb.miss-viking{background-color:var(--miss-viking);color:var(--miss-viking-c)}
 .mb.miss-euro{background-color:var(--miss-euro);color:var(--miss-euro-c)}
@@ -688,7 +709,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-sim.show{display:grid;grid-template-columns:400px minmax(0,1fr);gap:0 18px;align-items:start;max-width:1280px;margin:0 auto;padding:0 20px 20px}
   #pg-sim .hero{grid-column:1/-1;max-width:none;margin:12px 0 0;padding:34px 24px 24px}
   #pg-sim .sched-strip{grid-column:1/-1;max-width:none;margin:10px 0 0}
-  #pg-sim .win-banner{grid-column:1;max-width:none;margin:12px 0 0;position:sticky;top:96px}
+  #pg-sim .win-banner{grid-column:1;max-width:none;margin:12px 0 0;position:sticky;top:96px;z-index:5;max-height:calc(100dvh - 120px);overflow:hidden;display:flex;flex-direction:column}#pg-sim .win-banner #wb-body{min-height:0;display:flex;flex-direction:column}#pg-sim #wb-rows{flex:1}
   #pg-sim>div[style*="padding:14px"]{grid-column:2;max-width:none;margin:0}
   #pg-ana .sec-tabs{max-width:960px}
   #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:14px;align-items:start;max-width:1280px;margin:0 auto;padding:14px 20px 20px}
@@ -717,6 +738,151 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 .page .card [style*="font-size:12px"],.page .gen-panel [style*="font-size:12px"],.page .wheel-box [style*="font-size:12px"]{font-size:15px!important}
 .page .card [style*="font-size:11px"],.page .gen-panel [style*="font-size:11px"],.page .wheel-box [style*="font-size:11px"]{font-size:14px!important}
 .page .card [style*="font-size:10px"],.page .gen-panel [style*="font-size:10px"],.page .wheel-box [style*="font-size:10px"]{font-size:13px!important}
+
+/* ══ ПРАЗДНИК ПОБЕДЫ ══ */
+.cele-ov{position:fixed;inset:0;background:rgba(10,4,8,.78);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);z-index:640;display:none;align-items:center;justify-content:center;padding:20px}
+.cele-ov.show{display:flex}
+.cele-box{position:relative;width:100%;max-width:380px;background:var(--modal-bg);border:2px solid var(--gold);border-radius:26px;padding:30px 22px;text-align:center;overflow:hidden;box-shadow:0 0 60px rgba(233,180,76,.35),0 24px 70px rgba(0,0,0,.5);animation:celePop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes celePop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.cele-icon{font-size:64px;animation:celeBounce 1s ease infinite alternate}
+@keyframes celeBounce{from{transform:translateY(0) scale(1)}to{transform:translateY(-10px) scale(1.08)}}
+.cele-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:24px;margin-top:8px;background:linear-gradient(175deg,#FBE7B2,#E9B44C 55%,#B07E1F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cele-msg{font-size:15px;line-height:1.6;margin-top:10px;white-space:pre-line}
+.cele-burst{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cele-p{position:absolute;top:-12px;font-size:18px;animation:celeFall linear forwards}
+@keyframes celeFall{to{transform:translateY(120vh) rotate(720deg);opacity:.9}}
+/* ══ ОБЪЁМНЫЕ ПРИГЛУШЁННЫЕ MISS-ШАРЫ ══ */
+.mb.miss-lotto,.mb.miss-viking,.mb.miss-euro{background-image:radial-gradient(circle at 32% 25%,rgba(255,255,255,.5) 0,rgba(255,255,255,.15) 12%,rgba(255,255,255,0) 32%),radial-gradient(circle at 50% 42%,var(--miss-hi,#fff2) 0,transparent 70%);box-shadow:inset 0 -.28em .4em rgba(0,0,0,.22),inset 0 .08em .14em rgba(255,255,255,.28);text-shadow:none;font-family:'Manrope',sans-serif;font-weight:800;opacity:.82}
+/* ══ БИЛЕТ: внутренний скролл на десктопе + намёк на кликабельность ══ */
+#wb-rows{max-height:46vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
+@media(min-width:1080px){#wb-rows{max-height:52vh}}
+#win-banner:active{transform:scale(.995)}
+/* ══ ЯКОРЯ ПРОКРУТКИ ══ */
+.scroll-anchors{position:fixed;right:14px;bottom:110px;display:none;flex-direction:column;gap:8px;z-index:450}
+.scroll-anchors.show{display:flex}
+.sa-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);background:var(--modal-bg);color:var(--gold);font-size:18px;font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;transition:transform .12s}
+.sa-btn:active{transform:scale(.9)}
+/* ══ КАСТОМНЫЙ СКРОЛЛБАР (десктоп) ══ */
+@media(min-width:900px){
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#E9B44C,#B07E1F);border-radius:5px;border:2px solid var(--bg)}
+  #wb-rows::-webkit-scrollbar{width:6px}
+}
+
+/* ══ БАННЕР ПОДПИСКИ ══ */
+.sub-banner{position:relative;border-radius:18px;padding:16px;margin-bottom:12px;cursor:pointer;overflow:hidden;border:1.5px solid var(--gold);background:linear-gradient(150deg,rgba(233,180,76,.16),rgba(176,126,31,.06)),var(--bg2);transition:transform .15s}
+.sub-banner:active{transform:scale(.985)}
+.sub-badge{position:absolute;top:12px;right:-30px;transform:rotate(38deg);background:linear-gradient(160deg,#F5CE7B,#B07E1F);color:#2A1608;font-size:9.5px;font-weight:900;letter-spacing:1.5px;padding:4px 34px}
+.sub-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:17px;background:linear-gradient(175deg,#FBE7B2,#E9B44C 55%,#B07E1F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub-desc{font-size:12.5px;color:var(--sub2);line-height:1.5;margin-top:5px;max-width:86%}
+.sub-price{font-family:'Unbounded',sans-serif;font-weight:900;font-size:15px;margin-top:9px;color:var(--gold)}
+.sub-price span{font-family:'Manrope',sans-serif;font-weight:700;font-size:11.5px;color:var(--sub2)}
+.sub-cta{font-size:12.5px;font-weight:800;margin-top:6px}
+
+/* ══ ЖИЗНЬ 50 ЛЕТ: моменты ══ */
+.life-sec{font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--sub2);margin:14px 0 8px}
+.life-moment{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--srow-border);border-radius:12px;margin-bottom:6px;background:linear-gradient(150deg,rgba(233,180,76,.08),transparent)}
+.life-yr{font-size:11.5px;font-weight:800;color:var(--sub2);white-space:nowrap}
+.life-mname{flex:1;font-size:13px;font-weight:800}
+.life-mv{font-family:'Unbounded',sans-serif;font-weight:900;font-size:12.5px;color:#34c759;white-space:nowrap}
+.life-tiers{display:flex;flex-wrap:wrap;gap:6px}
+.life-tier{font-size:11.5px;font-weight:800;padding:5px 10px;border-radius:999px;border:1px solid var(--srow-border);background:var(--bg2)}
+.life-note{font-size:12.5px;line-height:1.6;color:var(--sub2);margin-top:12px}
+/* ══ КАРТИНА ТИРАЖА ══ */
+#wb-crowd{margin-top:12px}
+.crowd-t{font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--sub2);margin-bottom:7px}
+.crowd-row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--srow-border);font-size:12px}
+.crowd-row:last-child{border-bottom:none}
+.crowd-tier{font-weight:900}
+.crowd-n{color:var(--sub2);font-weight:700}
+.crowd-p{font-weight:800;white-space:nowrap}
+.crowd-row.me{background:linear-gradient(90deg,rgba(233,180,76,.14),transparent);border-radius:8px;padding-left:6px}
+.crowd-note{font-size:10.5px;color:var(--sub2);margin-top:6px}
+
+/* ══ КВАНТОВО-АСТРАЛЬНЫЙ ══ */
+.qa-card{background:linear-gradient(140deg,#2A1B4A,#4A2B7A 55%,#7A4B2B)!important;border-color:#9B7BD8!important}
+.qa-card .ndb-title,.qa-card .ndb-sub{color:#F2EAFF}
+.qa-badge{font-size:9px;font-weight:900;letter-spacing:1.2px;padding:3px 8px;border-radius:999px;background:linear-gradient(160deg,#F5CE7B,#B07E1F);color:#2A1608;vertical-align:middle}
+.qa-sheet{background:radial-gradient(1px 1px at 12% 18%,#fff9 50%,transparent 51%),radial-gradient(1.5px 1.5px at 78% 8%,#fff7 50%,transparent 51%),radial-gradient(1px 1px at 55% 30%,#fff6 50%,transparent 51%),radial-gradient(1px 1px at 30% 65%,#fff5 50%,transparent 51%),radial-gradient(1.5px 1.5px at 88% 55%,#fff8 50%,transparent 51%),radial-gradient(1px 1px at 8% 88%,#fff6 50%,transparent 51%),linear-gradient(160deg,#1D1233,#2A1B4A 55%,#231433)!important;border:1.5px solid #9B7BD8!important}
+.qa-sheet .if-title,.qa-sheet .if-seclbl{color:#F2EAFF}
+.qa-sheet .if-sub,.qa-sheet .if-note{color:#C9B8E8}
+.qa-signs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.qa-sign{border:1px solid #6B4BA8;border-radius:12px;padding:8px 2px;text-align:center;cursor:pointer;background:rgba(155,123,216,.08);transition:all .15s}
+.qa-sign .z{font-size:18px}
+.qa-sign .zn{font-size:8.5px;font-weight:800;color:#C9B8E8;margin-top:2px}
+.qa-sign.on{border-color:#F5CE7B;background:linear-gradient(160deg,rgba(245,206,123,.22),rgba(155,123,216,.15));box-shadow:0 0 14px rgba(245,206,123,.35)}
+.qa-moon{margin:10px 0 2px;padding:10px 12px;border:1px solid #6B4BA8;border-radius:14px;background:rgba(155,123,216,.08);font-size:12.5px;line-height:1.6;color:#E8DEFA}
+.qa-go{background:linear-gradient(140deg,#7A4BD8,#B07E1F)!important;border:none!important}
+.qa-row{margin-top:12px;padding:12px;border:1px solid #6B4BA8;border-radius:16px;background:rgba(20,10,40,.5)}
+.qa-balls{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.qa-ball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;position:relative;background:radial-gradient(circle at 32% 26%,#C9A8FF,#7A4BD8 60%,#3A1B7A);animation:qaGlow 2.2s ease-in-out infinite alternate}
+.qa-ball.zres{background:radial-gradient(circle at 32% 26%,#FFE9B8,#E9B44C 60%,#8A5E15)}
+.qa-ball.mres{background:radial-gradient(circle at 32% 26%,#D8F2FF,#6BB8E8 60%,#2B5B8A)}
+.qa-ball.qb{background:radial-gradient(circle at 32% 26%,#EAD8FF,#9B6BE8 55%,#4A2B9A)}
+@keyframes qaGlow{from{box-shadow:0 0 8px rgba(155,123,216,.45)}to{box-shadow:0 0 20px rgba(245,206,123,.75)}}
+.qa-pass{margin-top:9px;font-size:11px;line-height:1.7;color:#C9B8E8;border-top:1px dashed #6B4BA8;padding-top:8px}
+.qa-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:10.5px;color:#C9B8E8}
+.qa-legend span{display:flex;align-items:center;gap:5px}
+.qa-dot{width:11px;height:11px;border-radius:50%}
+
+.qa-birthline{margin:10px 0 2px;padding:9px 12px;border:1px dashed #6B4BA8;border-radius:12px;font-size:12px;color:#C9B8E8;cursor:pointer}
+.qa-birthline b{color:#F5CE7B}
+.qab-inp{background:rgba(20,10,40,.55)!important;border-color:#6B4BA8!important;color:#F2EAFF!important}
+.qa-ball.nres{background:radial-gradient(circle at 32% 26%,#FFD8E8;#E86BA8 60%,#8A2B5B);background:radial-gradient(circle at 32% 26%,#FFD8E8,#E86BA8 60%,#8A2B5B)}
+
+.qa-sheet .btn-exp{background:rgba(20,10,40,.6)!important;border-color:#6B4BA8!important;color:#E8DEFA!important}
+.qa-sheet .btn-close2{color:#C9B8E8}
+#qab-t{color-scheme:dark;min-height:46px;display:flex;align-items:center;justify-content:center;font-size:16px}
+#qab-t:before{content:'';}
+.qab-hint{font-size:11px;color:#9B85C8;margin-top:5px;text-align:center}
+
+#qab-ov{z-index:620}
+/* ══ ТАКТИЛЬНЫЙ ОТКЛИК ВСЕХ КНОПОК ══ */
+.btn-draw,.btn-exp,.btn-close2,.pick-cnt,.pick-mode,.qa-sign,.ndb,.sg-algo,.lot-tab,.bnav-item{transition:transform .08s ease,filter .08s ease,box-shadow .15s ease;-webkit-tap-highlight-color:transparent}
+.btn-draw:active,.btn-exp:active,.btn-close2:active{transform:scale(.955);filter:brightness(1.18)}
+.pick-cnt:active,.qa-sign:active,.pick-mode:active{transform:scale(.92);filter:brightness(1.2)}
+.ndb:active,.sg-algo:active{transform:scale(.975);filter:brightness(1.12)}
+.lot-tab:active,.bnav-item:active{transform:scale(.93)}
+.qa-go:active{box-shadow:0 0 24px rgba(245,206,123,.6)}
+
+#qa-counts{grid-template-columns:repeat(5,1fr)!important;gap:7px}
+.qa-sheet .pick-cnt{background:rgba(20,10,40,.6);border:1.5px solid #6B4BA8;color:#E8DEFA;font-weight:900}
+.qa-sheet .pick-cnt.on{background:linear-gradient(160deg,#F5CE7B,#D89B2B);border-color:#F5CE7B;color:#2A1608;box-shadow:0 0 16px rgba(245,206,123,.55);transform:scale(1.04)}
+.qa-sheet .pick-cnt:active{transform:scale(.9);filter:brightness(1.25)}
+
+.qa-sheet{padding-bottom:calc(30px + env(safe-area-inset-bottom))!important}
+.qa-sheet .if-hdr .btn-close2{background:rgba(155,123,216,.28);border:1.5px solid #9B7BD8;color:#fff;font-size:17px;font-weight:900;border-radius:12px}
+/* ═══ 1. Анимация появления шаров генерации ═══ */
+.qa-ball{opacity:0;transform:scale(.2);animation:qaPop .45s cubic-bezier(.34,1.56,.64,1) forwards,qaGlow 2.2s ease-in-out .5s infinite alternate}
+@keyframes qaPop{from{opacity:0;transform:scale(.2) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+/* ═══ 4. ГОРОСКОП-ПЕРГАМЕНТ ═══ */
+.horo-ov{position:fixed;inset:0;background:rgba(10,4,8,.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:630;display:none;align-items:flex-end;justify-content:center}
+.horo-ov.show{display:flex}
+@media(min-width:700px){.horo-ov{align-items:center}}
+.horo-sheet{position:relative;width:100%;max-width:560px;max-height:88dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:26px 26px 0 0;padding:26px 22px calc(30px + env(safe-area-inset-bottom));
+  background:radial-gradient(140% 70% at 20% 8%,rgba(120,80,20,.10),transparent 60%),radial-gradient(120% 60% at 85% 90%,rgba(120,80,20,.12),transparent 55%),radial-gradient(2px 2px at 30% 40%,rgba(90,60,20,.18) 50%,transparent 51%),radial-gradient(2px 2px at 70% 70%,rgba(90,60,20,.14) 50%,transparent 51%),linear-gradient(165deg,#F7ECCB,#EFDFAE 55%,#E8D49A);
+  border:2px solid #B08A3E;box-shadow:inset 0 0 0 5px rgba(176,138,62,.25),inset 0 0 60px rgba(140,100,30,.18),0 -18px 60px rgba(0,0,0,.45)}
+@media(min-width:700px){.horo-sheet{border-radius:26px}}
+.horo-glyph{width:92px;height:92px;margin:2px auto 8px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;color:#fff;
+  background:radial-gradient(circle at 32% 26%,#FBE7B2,#E9B44C 55%,#8A5E15);box-shadow:0 0 28px rgba(233,180,76,.55),inset 0 -6px 14px rgba(90,60,10,.35);text-shadow:0 2px 6px rgba(90,60,10,.5)}
+.horo-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:22px;text-align:center;background:linear-gradient(175deg,#9A6B15,#6B4A0E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.horo-date{text-align:center;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#8A6B2E;margin:4px 0 12px}
+.horo-signs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 10px;scrollbar-width:none}
+.horo-signs::-webkit-scrollbar{display:none}
+.horo-schip{flex:0 0 auto;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;border:1.5px solid #C9A55A;background:rgba(255,250,235,.5);cursor:pointer;color:#6B4A0E;transition:all .15s}
+.horo-schip.on{background:linear-gradient(160deg,#F5CE7B,#D89B2B);box-shadow:0 0 12px rgba(217,155,43,.5);transform:scale(1.08)}
+.horo-schip:active{transform:scale(.88)}
+.horo-sec{margin-top:13px;border-top:1px solid rgba(176,138,62,.4);padding-top:11px}
+.horo-sec-t{font-size:11px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;color:#8A6B2E;display:flex;align-items:center;gap:7px}
+.horo-sec-b{font-size:14.5px;line-height:1.65;color:#4A3418;margin-top:5px;font-weight:600}
+.horo-lucky{display:flex;gap:8px;margin-top:7px}
+.horo-lball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;background:radial-gradient(circle at 32% 26%,#FBE7B2,#D89B2B 60%,#8A5E15);box-shadow:0 3px 10px rgba(140,100,30,.4)}
+.horo-note{font-size:10.5px;color:#8A6B2E;margin-top:14px;text-align:center;font-style:italic}
+.horo-btns{margin-top:14px}
+.horo-btns .btn-draw{background:linear-gradient(140deg,#C9952B,#8A5E15)!important;border:none!important}
+.horo-btns .btn-exp{background:rgba(255,250,235,.55)!important;border-color:#C9A55A!important;color:#6B4A0E!important}
+.horo-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:11px;border:1.5px solid #C9A55A;background:rgba(255,250,235,.6);color:#6B4A0E;font-size:16px;font-weight:900;cursor:pointer}
 </style>
 </head>
 <body class="locked">
@@ -758,7 +924,10 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   <div class="sched-strip" id="sched-strip">
   </div>
 
-  <div class="win-banner none" id="win-banner">
+  <div class="scroll-anchors" id="scroll-anchors">
+  <button class="sa-btn" id="sa-btn" onclick="SA_go()">↓</button>
+</div>
+<div class="win-banner none" id="win-banner" onclick="ticketOrCombo(event)" style="cursor:pointer">
     <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Победная комбинация</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
     <div id="wb-body" style="display:none">
       <div class="wb-lbl">Выпавшие числа</div>
@@ -766,6 +935,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
       <div id="wb-bonus-wrap"><div class="wb-lbl" id="wb-blbl"></div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px" id="wb-bonus"></div></div>
       <div class="wb-lbl">Ваши ряды</div>
       <div id="wb-rows"></div>
+        <div id="wb-crowd"></div>
     </div>
   </div>
 
@@ -829,6 +999,10 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
         <label class="filter-check"><input type="checkbox" id="flt-consec" checked>Запретить больше 3 чисел подряд</label>
       </div>
       <button class="btn-exp" id="copy-rows-btn" onclick="copyRowsForNorsk(this)" style="margin-top:10px">📋 Скопировать ряды</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+        <button class="btn-exp" style="margin:0" onclick="shareRows()">📤 Поделиться</button>
+        <button class="btn-exp" style="margin:0" onclick="SUP_open('sim')">⚖️ Верховный судья</button>
+      </div>
       <div id="world-analysis-out" class="warn-note" style="display:none"></div>
       <div id="copy-out" class="copy-out"></div>
     </div>
@@ -846,6 +1020,10 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
     <button class="ndb euro" id="cons-btn" onclick="CONS_run()">
       <div class="ndb-l"><div class="ndb-title">🧠 Консенсус моделей <span class="if-badge">meta</span></div><div class="ndb-sub">Все модели + Информационное поле как судья</div></div>
       <div style="font-size:20px">→</div>
+    </button>
+    <button class="ndb euro qa-card" id="qa-btn" onclick="QA_open()">
+      <div class="ndb-l"><div class="ndb-title">🔮 Квантово-астральный <span class="qa-badge">PREMIUM</span></div><div class="ndb-sub">Квантовая случайность ANU + твой знак + Луна на дату тиража</div></div>
+      <div style="font-size:20px">✨</div>
     </button>
     <button class="ndb euro" id="wheel-btn" onclick="applyWheelMatrix()">
       <div class="ndb-l"><div class="ndb-title">Колесная матрица</div><div class="ndb-sub" id="wheel-sub">10 рядов · покрытие пар</div></div>
@@ -929,6 +1107,14 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
     <div class="card">
       <div class="card-t" id="official-title">Официальные результаты</div>
       <div id="official-desc" style="font-size:12px;color:var(--sub2);line-height:1.55;margin-bottom:10px">Обновляет последние тиражи из подключённого официального источника или общей базы results.json.</div>
+      <div class="sub-banner" onclick="openSubInfo()">
+        <div class="sub-badge">PREMIUM</div>
+        <div class="sub-title">Mandel World Pro</div>
+        <div class="sub-desc">Полные базы с 2012 · Квантово-астральный · безлимит Консенсуса и Судьи · импорт/экспорт</div>
+        <div class="sub-price" id="sub-price-line">$4.99/мес <span>или $34.99/год · −42%</span></div>
+        <div class="sub-cta">Узнать подробнее →</div>
+      </div>
+      <button class="btn-exp" id="notify-btn" onclick="toggleWinNotify()" style="margin:0 0 8px">🔔 Уведомлять о выигрышах: выкл</button>
       <button class="btn-draw euro" id="official-btn" onclick="updateOfficialCurrent()" style="font-size:14px;padding:12px;margin-top:0">↻ Обновить текущую лотерею</button>
       <div style="display:flex;gap:8px;margin-top:8px">
         <button class="btn-exp" id="official-all-btn" onclick="updateOfficialAll()" style="margin-top:0">↻ Все игры</button>
@@ -1053,15 +1239,12 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
     </div>
     <div class="sg-algo-t">Выбери алгоритм</div>
     <div class="sg-algos">
-      <div class="if-winrow">
-        <div><div class="if-winlbl">Период анализа</div><div class="if-winsub">Используются только последние доступные тиражи выбранной лотереи</div></div>
-        <select class="num-inp if-winsel" id="if-win" onchange="IF_setWin(this.value)">
-          <option value="10">10 тиражей</option><option value="25">25 тиражей</option>
-          <option value="50" selected>50 тиражей</option><option value="100">100 тиражей</option>
-          <option value="0">Все доступные</option>
-        </select>
+      <div class="if-winrow" onclick="PERIOD_open()" style="cursor:pointer">
+        <div><div class="if-winlbl">Период анализа</div><div class="if-winsub" id="if-win-note">Вся доступная база выбранной лотереи</div></div>
+        <div class="if-winsel" id="if-win-btn" style="width:auto;padding:9px 14px;border:1.5px solid var(--gold);border-radius:12px;font-weight:800;font-size:13px;color:var(--gold)">Вся база ▾</div>
       </div>
-      <div class="sg-algo" id="al-freq" onclick="selAlgo('freq')"><div class="sg-algo-icon">📊</div><div><div class="sg-algo-name">Частотный анализ</div><div class="sg-algo-desc">Числа которые чаще выпадали в базе тиражей</div></div></div>
+      <div class="if-note" style="margin:0 0 10px">Каждая модель — свой способ читать историю тиражей за выбранный период: одни ищут частоту, другие связи пар, третьи пропуски и циклы. Ни одна не предсказывает будущее — они показывают структуру прошлого, из которой ты собираешь свою стратегию.</div>
+      <div class="sg-algo" id="al-freq" onclick="selAlgo('freq')"><div class="sg-algo-icon">🔥</div><div><div class="sg-algo-name">Частотный анализ</div><div class="sg-algo-desc">Числа которые чаще выпадали в базе тиражей</div></div></div>
       <div class="sg-algo" id="al-bal" onclick="selAlgo('bal')"><div class="sg-algo-icon">⚖️</div><div><div class="sg-algo-name">Балансированный</div><div class="sg-algo-desc">40% горячих + 30% средних + 30% холодных</div></div></div>
       <div class="sg-algo" id="al-rnd" onclick="selAlgo('rnd')"><div class="sg-algo-icon">🎲</div><div><div class="sg-algo-name">Равновероятный (pure random)</div><div class="sg-algo-desc">Единственный метод который теория вероятности считает честным</div></div></div>
       <div class="sg-algo" id="al-man" onclick="selAlgo('man')"><div class="sg-algo-icon">📐</div><div><div class="sg-algo-name">Метод Манделя</div><div class="sg-algo-desc">Максимальный охват диапазонов — один шар из каждого сегмента</div></div></div>
@@ -1119,6 +1302,140 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   </div>
 </div>
 
+<div class="lang-ov" id="wc-ov" onclick="if(event.target===this)WC_close()">
+  <div class="lang-box">
+    <div class="lang-title" id="wc-title">🎯 Победная комбинация</div>
+    <div class="if-ctx" id="wc-date" style="text-align:center;margin:2px 0 10px"></div>
+    <div class="if-rowballs" id="wc-balls" style="justify-content:center"></div>
+    <div class="if-note" id="wc-info" style="text-align:center"></div>
+    <button class="btn-draw euro" style="margin-top:12px" onclick="WC_check()">🔍 Проверить мой билет</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <button class="btn-exp" style="margin:0" onclick="WC_fav()">⭐ В избранное</button>
+      <button class="btn-exp" style="margin:0" onclick="WC_share()">📤 Поделиться</button>
+    </div>
+    <button class="btn-close2" onclick="WC_close()">Закрыть</button>
+  </div>
+</div>
+
+<div class="if-ov" id="ticket-ov">
+  <div class="if-sheet">
+    <div class="if-hdr">
+      <div><div class="if-title" id="tk-title">🎫 Мой билет</div><div class="if-sub" id="tk-sub"></div></div>
+      <button class="btn-close2" onclick="TK_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
+    </div>
+    <div id="tk-body" style="margin-top:12px"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+      <button class="btn-exp" style="margin:0" onclick="shareRows()">📤 Поделиться</button>
+      <button class="btn-exp" style="margin:0" onclick="TK_close()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<div class="if-ov" id="qa-ov">
+  <div class="if-sheet qa-sheet">
+    <div class="if-hdr">
+      <div><div class="if-title">🔮 Квантово-астральный генератор</div><div class="if-sub" id="qa-ctx"></div></div>
+      <button class="btn-close2" onclick="QA_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
+    </div>
+    <div class="if-seclbl">Твой знак зодиака</div>
+    <div class="qa-signs" id="qa-signs"></div>
+    <div class="qa-birthline" id="qa-birthline" onclick="QAB_open()">🎂 Дата рождения: <b id="qa-birthval">не указана</b> · настроить</div>
+    <div class="qa-moon" id="qa-moon"></div>
+    <div class="if-seclbl">Сколько рядов</div>
+    <div class="pick-counts" id="qa-counts" style="grid-template-columns:repeat(5,1fr)"></div>
+    <button class="btn-draw euro qa-go" id="qa-go" onclick="QA_go()">⚛️ Спросить Вселенную</button>
+    <div id="qa-result"></div>
+    <div class="if-note" style="margin-top:12px">Вселенная выбрала твои числа — настоящая квантовая случайность и настоящая астрономия. Но шансы она, увы, не меняет: вероятность джекпота остаётся прежней. Это развлечение, а не предсказание. 💜</div>
+  </div>
+</div>
+
+<div class="horo-ov" id="horo-ov" onclick="if(event.target===this)HORO_close()">
+  <div class="horo-sheet">
+    <button class="horo-close" onclick="HORO_close()">✕</button>
+    <div class="horo-glyph" id="horo-glyph">♌</div>
+    <div class="horo-title" id="horo-title">Лев</div>
+    <div class="horo-date" id="horo-date"></div>
+    <div class="horo-signs" id="horo-signs"></div>
+    <div id="horo-body"></div>
+    <div class="horo-note">Гороскоп — развлечение и вдохновение, а не руководство и не прогноз. 📜</div>
+    <div class="horo-btns">
+      <button class="btn-draw euro" onclick="HORO_share()">📤 Поделиться гороскопом</button>
+      <button class="btn-exp" style="margin-top:8px" onclick="HORO_close()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<div class="lang-ov" id="qab-ov" onclick="if(event.target===this)QAB_close()">
+  <div class="lang-box qa-sheet" style="border-radius:22px;position:relative">
+    <button class="horo-close" style="background:rgba(155,123,216,.25);border-color:#9B7BD8;color:#fff" onclick="QAB_close()">✕</button>
+    <div class="lang-title" style="color:#F2EAFF">🎂 Дата рождения</div>
+    <div class="if-note" style="margin:0 0 12px;color:#C9B8E8">Чем точнее данные — тем глубже анализ: натальная Луна, число судьбы, солнечный градус. Всё считается на устройстве и никуда не отправляется.</div>
+    <div style="display:grid;grid-template-columns:1fr 1.4fr 1.2fr;gap:8px">
+      <input type="number" class="num-inp qab-inp" id="qab-d" min="1" max="31" placeholder="День">
+      <select class="num-inp qab-inp" id="qab-m">
+        <option value="">Месяц</option>
+        <option value="1">Январь</option><option value="2">Февраль</option><option value="3">Март</option>
+        <option value="4">Апрель</option><option value="5">Май</option><option value="6">Июнь</option>
+        <option value="7">Июль</option><option value="8">Август</option><option value="9">Сентябрь</option>
+        <option value="10">Октябрь</option><option value="11">Ноябрь</option><option value="12">Декабрь</option>
+      </select>
+      <select class="num-inp qab-inp" id="qab-y"><option value="">Год</option></select>
+    </div>
+    <div class="if-seclbl" style="color:#F2EAFF">Время рождения (если известно)</div>
+    <input type="time" class="num-inp qab-inp" id="qab-t" style="width:100%">
+    <div class="qab-hint">Тапни на поле выше, чтобы выбрать часы и минуты</div>
+    <button class="btn-draw euro qa-go" style="margin-top:12px" onclick="QAB_save(true)">✨ Сохранить с временем</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <button class="btn-exp" style="margin:0;border-color:#6B4BA8;color:#E8DEFA" onclick="QAB_save(false)">Время неизвестно</button>
+      <button class="btn-exp" style="margin:0;border-color:#6B4BA8;color:#E8DEFA" onclick="QAB_skip()">Пропустить</button>
+    </div>
+    <button class="btn-exp" id="qab-clear" style="margin-top:8px;border-color:rgba(232,106,106,.5);color:#F0A8A8;display:none" onclick="QAB_clear()">🗑 Удалить сохранённую дату</button>
+  </div>
+</div>
+
+<div class="lang-ov" id="sup-ov" onclick="if(event.target===this)SUP_close()">
+  <div class="lang-box">
+    <div class="lang-title">⚖️ Верховный судья</div>
+    <div class="if-note" id="sup-src" style="margin:0 0 10px;text-align:center"></div>
+    <div class="if-note" style="margin:0 0 10px">Как думает судья: каждое число получает «голоса» из твоих рядов (чем чаще встречается — тем громче голос, 55% веса) и «силу поля» из истории тиражей выбранного периода (частота, пары, пропуски — 45%). Затем судья собирает строки так, чтобы они не повторяли друг друга: уже использованные числа временно теряют вес.</div>
+    <div class="if-seclbl" style="margin-top:0">Сколько строк собрать</div>
+    <div class="pick-counts" id="sup-counts" style="grid-template-columns:repeat(5,1fr)"></div>
+    <button class="btn-draw euro" id="sup-go" style="margin-top:12px" onclick="SUP_go()">Собрать вердикт</button>
+    <div id="sup-result"></div>
+    <button class="btn-close2" onclick="SUP_close()">Закрыть</button>
+  </div>
+</div>
+
+<div class="lang-ov" id="period-ov" onclick="if(event.target===this)PERIOD_close()">
+  <div class="lang-box">
+    <div class="lang-title">🗓 Период анализа</div>
+    <div class="if-note" id="period-note" style="margin:0 0 10px;text-align:center"></div>
+    <div id="period-presets"></div>
+    <div class="if-seclbl">Или диапазон дат «от — до»</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <input type="date" class="num-inp" id="period-from" style="width:100%">
+      <input type="date" class="num-inp" id="period-to" style="width:100%">
+    </div>
+    <button class="btn-exp" style="margin-top:8px" onclick="PERIOD_range()">Применить диапазон</button>
+    <div class="if-seclbl">Или своё число тиражей</div>
+    <div style="display:flex;gap:8px">
+      <input type="number" class="num-inp" id="period-custom" min="5" placeholder="например 73" style="flex:1">
+      <button class="btn-exp" style="margin:0;width:auto;padding:0 18px" onclick="PERIOD_custom()">ОК</button>
+    </div>
+    <button class="btn-close2" onclick="PERIOD_close()">Закрыть</button>
+  </div>
+</div>
+
+<div class="cele-ov" id="cele-ov" onclick="CELE_close()">
+  <div class="cele-box" onclick="event.stopPropagation()">
+    <div class="cele-burst" id="cele-burst"></div>
+    <div class="cele-icon" id="cele-icon">🏆</div>
+    <div class="cele-title" id="cele-title">ПОЗДРАВЛЯЕМ!</div>
+    <div class="cele-msg" id="cele-msg"></div>
+    <button class="btn-draw euro" style="margin-top:14px" onclick="CELE_close()">Ура! 🎉</button>
+  </div>
+</div>
+
 <div class="if-ov" id="matrix-ov">
   <div class="if-sheet">
     <div class="if-hdr">
@@ -1129,6 +1446,10 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
     <div id="matrix-body"></div>
     <div class="matrix-actions">
       <button class="btn-draw euro" onclick="MATRIX_use()">Использовать в симуляторе</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+        <button class="btn-exp" style="margin:0" onclick="shareMatrix()">📤 Поделиться</button>
+        <button class="btn-exp" style="margin:0" onclick="SUP_open('matrix')">⚖️ Верховный судья</button>
+      </div>
       <button class="btn-exp matrix-copy" id="matrix-copy-btn" onclick="MATRIX_copy(this)">📋 Копировать</button>
     </div>
     <div class="if-legal">Важно: это образовательный анализ последних доступных результатов выбранной лотереи. Ни одна модель не делает будущий независимый тираж более предсказуемым.</div>
@@ -1686,7 +2007,8 @@ async function renderHero(){
 function selLot(id){
   if(!LOTS[id])return;
   syncRulesFromConfig(id);
-  cur=id;lastDraw=null;
+  cur=id;lastDraw=null;CROWD_cache=null;const _wc=document.getElementById('wb-crowd');if(_wc)_wc.innerHTML='';
+  setTimeout(()=>{try{PERIOD_refreshLabel();}catch(e){}},50);
   IF_reset();CONS_reset();
   renderLotteryNav();
   renderHero();
@@ -2044,6 +2366,7 @@ async function quantumStream(n){
 }
 async function generateRowsByAlgo(algo,count){
   const l=L(),draws=IF_window(await loadD(cur)),hasHist=draws.length>=5;
+  if(algo==='qastro')return filterGeneratedRows((await QA_rows(count,{fast:true})).map(r=>({m:r.m,b:r.b})),count,l,draws);
   if(algo==='wheel')return filterGeneratedRows((await buildWheelGenerated(count)).rows,count,l,draws);
   if(algo==='world-hot'||algo==='world-mix')return filterGeneratedRows(await generateWorldRows(algo,count),count,l,draws);
   const freq=buildFreq(draws,'main',l.mB);
@@ -2631,16 +2954,28 @@ function runLifeSim(){
   lifeRunning=true;
   const total=2600,batch=25;
   let done=0,spent=0,won=0,best=0,hits=0;
-  const paint=()=>{
+  const wins=[],tierCnt={};
+  const paint=(final)=>{
     const years=(done/52).toFixed(1),net=won-spent;
-    out.innerHTML=`<div class="life-big">Прошло ${years} лет...</div>
+    let html=`<div class="life-big">${final?'Итог 50 лет с этими числами':'Прошло '+years+' лет...'}</div>
       <div class="life-stats">
         <div class="life-stat"><span>Потрачено</span><b>${fmtInt(spent)} ${l.currency||'NOK'}</b></div>
         <div class="life-stat"><span>Выиграно</span><b>${fmtInt(won)} ${l.currency||'NOK'}</b></div>
         <div class="life-stat"><span>Баланс</span><b style="color:${net>=0?'#34c759':'#ff3b30'}">${net>=0?'+':''}${fmtInt(net)} ${l.currency||'NOK'}</b></div>
-        <div class="life-stat"><span>Попаданий</span><b>${hits}</b></div>
-      </div>
-      <div style="margin-top:8px">Лучший одиночный приз: ${fmtInt(best)} ${l.currency||'NOK'} · рядов в билете: ${ticket.length}</div>`;
+        <div class="life-stat"><span>Праздников</span><b>${hits} 🎉</b></div>
+      </div>`;
+    if(final){
+      const top=[...wins].sort((a,b)=>b.v-a.v).slice(0,5);
+      if(top.length){
+        html+='<div class="life-sec">✨ Лучшие моменты этой жизни</div>'+top.map((w,i)=>
+          `<div class="life-moment"><div class="life-yr">${['🥇','🥈','🥉','🎖','🎖'][i]} Год ${Math.max(1,Math.round(w.yr))}</div><div class="life-mname">${w.name}</div><div class="life-mv">+${fmtInt(w.v)} ${l.currency||'NOK'}</div></div>`).join('');
+        const tiers=Object.entries(tierCnt).sort((a,b)=>b[1]-a[1]);
+        html+='<div class="life-sec">Все выигрыши за 50 лет</div><div class="life-tiers">'+tiers.map(([n,c])=>`<span class="life-tier">${n} × ${c}</span>`).join('')+'</div>';
+      }
+      const perYear=Math.round(hits/50);
+      html+=`<div class="life-note">${hits?('В среднем '+(perYear>0?perYear:hits)+' выигрышей в год — маленькие праздники были регулярно. '):''}${net<0?'Но баланс честный: лотерея за 50 лет почти всегда в минусе — она продаёт мечту, а не доход. Играй на сумму мечты, а не бюджета. 💛':'Невероятно: ты в плюсе! Это исключение из правил — 1 случай на тысячи таких жизней. 🍀'}</div>`;
+    }else html+=`<div style="margin-top:8px">Лучший приз пока: ${fmtInt(best)} ${l.currency||'NOK'} · рядов: ${ticket.length}</div>`;
+    out.innerHTML=html;
   };
   const step=()=>{
     for(let x=0;x<batch&&done<total;x++,done++){
@@ -2648,14 +2983,18 @@ function runLifeSim(){
       spent+=ticket.length*l.price;
       ticket.forEach(row=>{
         const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l);
-        if(v>0){won+=v;hits++;best=Math.max(best,v);}
+        if(v>0){won+=v;hits++;best=Math.max(best,v);wins.push({yr:done/52,name:p.name,v,lvl:p.lvl});tierCnt[p.name]=(tierCnt[p.name]||0)+1;}
       });
     }
-    paint();
+    paint(done>=total);
     if(done<total)setTimeout(step,12);
-    else lifeRunning=false;
+    else{
+      lifeRunning=false;
+      const jack=wins.find(w=>w.lvl>=7);
+      if(jack)setTimeout(()=>CELE_show('🏆 ДЖЕКПОТ ЗА 50 ЛЕТ!','На году '+Math.max(1,Math.round(jack.yr))+' эти числа взяли '+jack.name+'!\n+'+fmtInt(jack.v)+' '+(l.currency||'NOK'),'🏆'),400);
+    }
   };
-  paint();
+  paint(false);
   step();
 }
 
@@ -3157,6 +3496,7 @@ async function updateOfficialAll(quiet){
 }
 /* автообновление при открытии: не чаще одного раза в 6 часов, тихо в фоне */
 async function autoUpdateOnOpen(){
+  setTimeout(autoCheckFavorites,1500);
   try{
     const last=+localStorage.getItem('md2_autoupd')||0;
     if(Date.now()-last<6*3600*1000)return;
@@ -4021,11 +4361,15 @@ buildCheckFields();
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Сервис 1: окно последних тиражей (единая точка для ВСЕХ моделей) ── */
-function IF_getWin(){const v=parseInt(localStorage.getItem('md2_win')||'50');return isFinite(v)?v:50;}
-function IF_setWin(v){localStorage.setItem('md2_win',String(parseInt(v)||0));IF_state=null;}
+function IF_getWin(){const v=parseInt(localStorage.getItem('md2_win')||'0');return isFinite(v)?v:0;}
+function IF_setWin(v){localStorage.setItem('md2_win',String(parseInt(v)||0));localStorage.removeItem('md2_range');IF_state=null;}
+function IF_getRange(){try{const r=JSON.parse(localStorage.getItem('md2_range'));return(r&&r.from&&r.to)?r:null;}catch(e){return null;}}
+function IF_setRange(from,to){localStorage.setItem('md2_range',JSON.stringify({from,to}));localStorage.setItem('md2_win','0');IF_state=null;}
 function IF_window(draws){
-  const w=IF_getWin();
   if(!Array.isArray(draws))return[];
+  const r=IF_getRange();
+  if(r)return draws.filter(d=>d&&d.date&&d.date>=r.from&&d.date<=r.to);
+  const w=IF_getWin();
   return w>0?draws.slice(0,w):draws.slice();
 }
 
@@ -4355,7 +4699,8 @@ const CONS_MODELS=[
   {id:'rnd',    name:'Pure random',           family:'Равномерная случайность'},
   {id:'phys',   name:'Физика лототрона',      family:'Физическая симуляция'},
   {id:'chaos',  name:'Детерминированный хаос',family:'Авторские экспериментальные'},
-  {id:'quantum',name:'Квантовый коллапс',     family:'Авторские экспериментальные'}
+  {id:'quantum',name:'Квантовый коллапс',     family:'Авторские экспериментальные'},
+  {id:'qastro', name:'Квантово-астральный',   family:'Квантово-астральная'}
 ];
 const CONS_ROWS_PER_MODEL=10;
 var CONS_state=null;
@@ -4568,6 +4913,738 @@ function MATRIX_use(){
   MATRIX_close();CONS_close();
   const dur=setGeneratedRows(st.matrix.map(r=>({m:r.m,b:r.b})),'Готово: '+st.matrix.length+' '+rowWord(st.matrix.length)+' · Итоговая матрица консенсуса · '+st.ctx.lotteryName+'.');
   setTimeout(()=>showFeedback('Матрица готова',st.matrix.length+' '+rowWord(st.matrix.length)+' итоговой матрицы консенсуса перенесены в симулятор.','💠',2600),dur+150);
+}
+
+
+/* ═══════════════ ПОДЕЛИТЬСЯ (Web Share API + буфер) ═══════════════ */
+function rowsAsText(rws,l){
+  return rws.map((r,i)=>(i+1)+') '+r.m.join(' ')+(r.b&&r.b.length?' | '+r.b.join(' '):'')).join('\n');
+}
+async function shareText(title,text){
+  const payload={title,text:text+'\n\n🎰 Mandel World · redsprut.github.io/mandel-v2/second_version/'};
+  if(navigator.share){try{await navigator.share(payload);return;}catch(e){if(e&&e.name==='AbortError')return;}}
+  try{await navigator.clipboard.writeText(payload.text);showCopyToast('📋 Скопировано — вставь в любой мессенджер');}
+  catch(e){showFeedback('Поделиться','Скопируй вручную:\n\n'+payload.text,'📤',9000);}
+}
+function shareRows(){
+  const l=L();fillAll();
+  const good=rows.filter(r=>r.m.length===l.pM);
+  if(!good.length){showFeedback('Пусто','Сначала заполни хотя бы один ряд.','✋',2400);return;}
+  shareText('Мои ряды · '+l.name,'Мои ряды · '+l.name+'\n'+rowsAsText(good,l));
+}
+function shareMatrix(){
+  const st=CONS_state;
+  if(!st||!st.matrix){showFeedback('Матрица пуста','Сначала сформируй выборку.','✋',2400);return;}
+  shareText('Матрица консенсуса · '+st.ctx.lotteryName,'Итоговая матрица консенсуса · '+st.ctx.lotteryName+'\n'+rowsAsText(st.matrix,st.l));
+}
+
+/* ═══════════════ ПОБЕДНАЯ КОМБИНАЦИЯ + БИЛЕТ ═══════════════ */
+function ticketOrCombo(ev){
+  if(ev&&ev.target&&ev.target.closest('button'))return;
+  if(lastDraw)TK_open();else WC_open();
+}
+var WC_draw=null;
+async function WC_open(){
+  const l=L();
+  const draws=await loadD(cur);
+  if(!draws.length){
+    showFeedback('База пуста','Обнови официальные результаты на вкладке «Аналитика» — и здесь появится свежая победная комбинация '+(l.short||l.name)+'.','📭',4200);
+    return;
+  }
+  const d=draws[0];WC_draw=d;
+  document.getElementById('wc-title').textContent='🎯 Победная комбинация · '+(l.short||l.name);
+  document.getElementById('wc-date').textContent='Тираж '+d.date;
+  document.getElementById('wc-balls').innerHTML=
+    (d.main||[]).map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+
+    ((d.bonus&&d.bonus.length)?'<div style="width:8px"></div>'+d.bonus.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'');
+  let info='Официально опубликованные числа последнего тиража.';
+  if(d.prizes&&d.prizes.length){
+    const top=d.prizes.find(x=>x&&(x.winners>0)&&x.prizeNOK)||d.prizes[0];
+    if(top&&top.prizeNOK)info+=' Лучший выплаченный приз: '+Number(top.prizeNOK).toLocaleString('ru-RU')+' '+l.currency+'.';
+  }
+  document.getElementById('wc-info').textContent=info;
+  document.getElementById('wc-ov').classList.add('show');
+}
+function WC_close(){document.getElementById('wc-ov').classList.remove('show');}
+function WC_check(){
+  if(!WC_draw)return;
+  WC_close();
+  try{
+    const openBtn=document.querySelector('[onclick="toggleChk()"]');
+    document.getElementById('chk-wrap')?.scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){}
+  showCopyToast('🔍 Заполни свои числа в «Проверить билет» — сравнение с тиражом '+WC_draw.date);
+}
+async function WC_fav(){
+  if(!WC_draw)return;
+  const l=L(),favs=await loadFav();
+  favs.unshift({name:'🎯 Тираж '+WC_draw.date+' · '+(l.short||l.name),rows:[{m:[...(WC_draw.main||[])],b:[...(WC_draw.bonus||[])]}],lot:cur});
+  await saveFavs(favs.slice(0,10));
+  await renderFavs();
+  showCopyToast('⭐ Комбинация сохранена в Избранное');
+}
+function WC_share(){
+  if(!WC_draw)return;
+  const l=L();
+  shareText('Победная комбинация · '+(l.short||l.name),
+    '🎯 Победная комбинация '+(l.short||l.name)+' · тираж '+WC_draw.date+'\n'+
+    (WC_draw.main||[]).join(' ')+((WC_draw.bonus&&WC_draw.bonus.length)?' | '+WC_draw.bonus.join(' '):''));
+}
+function TK_open(){
+  if(!lastDraw)return;
+  const l=L();
+  document.getElementById('tk-sub').textContent=l.name+' · симуляция тиража';
+  document.getElementById('tk-body').innerHTML=
+    '<div class="if-seclbl" style="margin-top:0">Выпавшие числа</div><div class="if-rowballs">'+
+    lastDraw.main.map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+
+    (lastDraw.bonus.length?'<div style="width:8px"></div>'+lastDraw.bonus.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>'+
+    '<div class="if-seclbl">Мои ряды · '+rows.length+'</div>'+document.getElementById('wb-rows').innerHTML;
+  document.getElementById('ticket-ov').classList.add('show');
+}
+function TK_close(){document.getElementById('ticket-ov').classList.remove('show');}
+
+/* ═══════════════ ВЕРХОВНЫЙ СУДЬЯ ═══════════════ */
+var SUP_state=null;
+function SUP_open(src){
+  const l=L();
+  let srcRows=[],label='';
+  if(src==='sim'){fillAll();srcRows=rows.filter(r=>r.m.length===l.pM).map(r=>({m:[...r.m],b:[...(r.b||[])]}));label='Анализирую '+srcRows.length+' '+rowWord(srcRows.length)+' из симулятора';}
+  else{const st=CONS_state;if(st&&st.matrix)srcRows=st.matrix.map(r=>({m:[...r.m],b:[...(r.b||[])]}));label='Анализирую '+srcRows.length+' '+rowWord(srcRows.length)+' итоговой матрицы';}
+  if(srcRows.length<2){showFeedback('Мало данных','Судье нужно минимум 2 заполненных ряда.','⚖️',3000);return;}
+  SUP_state={src,srcRows,n:Math.min(3,srcRows.length)};
+  document.getElementById('sup-src').textContent=label+' · '+(l.short||l.name);
+  document.getElementById('sup-counts').innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>'<button class="pick-cnt'+(n===SUP_state.n?' on':'')+'" onclick="SUP_setN('+n+',this)">'+n+'</button>').join('');
+  document.getElementById('sup-result').innerHTML='';
+  document.getElementById('sup-go').style.display='';
+  document.getElementById('sup-ov').classList.add('show');
+}
+function SUP_setN(n,el){SUP_state.n=n;document.querySelectorAll('#sup-counts .pick-cnt').forEach(b=>b.classList.toggle('on',b===el));}
+function SUP_close(){document.getElementById('sup-ov').classList.remove('show');}
+async function SUP_go(){
+  const st=SUP_state;if(!st)return;
+  const l=L(),res=document.getElementById('sup-result');
+  res.innerHTML='<div class="if-empty" style="padding:20px">⚖️ Судья взвешивает голоса рядов и структуру поля…</div>';
+  await new Promise(r=>setTimeout(r,60));
+  const ctx=await IF_ctx();
+  /* голоса чисел в переданных рядах */
+  const support=new Array(l.mB+1).fill(0),supB=new Array((l.bB||0)+1).fill(0);
+  st.srcRows.forEach(r=>{r.m.forEach(n=>{if(n>=1&&n<=l.mB)support[n]++;});(r.b||[]).forEach(n=>{if(l.bB&&n>=1&&n<=l.bB)supB[n]++;});});
+  /* сила поля по выбранному периоду */
+  let A=null,Ab=null;
+  if(ctx.currentDraws.length>=5){
+    A=IF_scores(ctx.currentDraws,'main',l.mB,l.pM);
+    const bc=drawBonusCount(l);
+    Ab=(l.bB&&bc)?IF_scores(ctx.currentDraws,'bonus',l.bB,bc):null;
+  }
+  const maxSup=Math.max(...support,1);
+  const w=new Array(l.mB+1).fill(0);
+  for(let n=1;n<=l.mB;n++){
+    const sup=support[n]/maxSup;
+    const fld=A?((A.scores[n-1]||{}).score||0)/100:0.5;
+    w[n]=Math.pow(0.55*sup+0.45*fld,2.4);
+  }
+  const bc=drawBonusCount(l);
+  const maxSupB=Math.max(...supB,1);
+  const wb=new Array((l.bB||0)+1).fill(0);
+  if(l.bB)for(let n=1;n<=l.bB;n++){
+    const sup=supB[n]/maxSupB;
+    const fld=Ab?((Ab.scores[n-1]||{}).score||0)/100:0.5;
+    wb[n]=Math.pow(0.55*sup+0.45*fld,2.2)||0.01;
+  }
+  const verdict=[];
+  for(let i=0;i<st.n;i++){
+    const used=new Set(verdict.flatMap(r=>r.m));
+    const wi=w.map((x,idx)=>used.has(idx)?x*0.25:x);
+    const m=weightedDistinct(wi,l.pM,l.mB,Math.random).sort((a,b)=>a-b);
+    const b=(l.bB&&bc)?weightedDistinct(wb,bc,l.bB,Math.random).sort((a,b)=>a-b):[];
+    verdict.push({m,b});
+  }
+  st.verdict=verdict;
+  res.innerHTML='<div class="if-seclbl">Вердикт судьи · '+verdict.length+' '+rowWord(verdict.length)+'</div>'+
+    verdict.map((r,i)=>'<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+(r.b.length?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>').join('')+
+    '<div class="if-note">Судья объединил голоса твоих рядов ('+st.srcRows.length+') с силой поля последних '+(ctx.currentDraws.length)+' тиражей и собрал разнообразный вердикт. Это исследовательские строки, а не прогноз.</div>'+
+    '<button class="btn-draw '+l.cls+'" style="margin-top:10px" onclick="SUP_use()">Использовать в симуляторе</button>'+
+    '<button class="btn-exp" style="margin-top:8px" onclick="SUP_share()">📤 Поделиться вердиктом</button>';
+  document.getElementById('sup-go').style.display='none';
+}
+function SUP_use(){
+  const st=SUP_state;if(!st||!st.verdict)return;
+  SUP_close();try{MATRIX_close();CONS_close();}catch(e){}
+  const dur=setGeneratedRows(st.verdict.map(r=>({m:r.m,b:r.b})),'Готово: '+st.verdict.length+' '+rowWord(st.verdict.length)+' · Верховный судья.');
+  setTimeout(()=>showFeedback('Вердикт принят',st.verdict.length+' '+rowWord(st.verdict.length)+' Верховного судьи перенесены в симулятор.','⚖️',2400),dur+150);
+}
+function SUP_share(){
+  const st=SUP_state;if(!st||!st.verdict)return;
+  shareText('Вердикт Верховного судьи · '+L().name,'⚖️ Вердикт Верховного судьи · '+L().name+'\n'+rowsAsText(st.verdict,L()));
+}
+
+/* ═══════════════ ПЕРИОД АНАЛИЗА: динамические пресеты от базы ═══════════════ */
+async function PERIOD_range(){
+  const from=document.getElementById('period-from').value,to=document.getElementById('period-to').value;
+  if(!from||!to||from>to){showCopyToast('Укажи корректный диапазон: «от» раньше «до»');return;}
+  const cnt=IF_window(await loadD(cur)).length; /* предпросчёт по текущим значениям невозможен до set — считаем вручную */
+  const draws=await loadD(cur);
+  const inRange=draws.filter(d=>d&&d.date&&d.date>=from&&d.date<=to).length;
+  if(inRange<5){showCopyToast('В этом диапазоне только '+inRange+' тиражей — нужно минимум 5');return;}
+  IF_setRange(from,to);CONS_reset();
+  PERIOD_close();PERIOD_refreshLabel();
+  showCopyToast('🗓 Диапазон: '+from+' — '+to+' · '+inRange+' тиражей');
+}
+async function PERIOD_open(){
+  const l=L(),draws=await loadD(cur),n=draws.length;
+  /* заполняем границы дат из базы */
+  if(n){
+    const newest=draws[0].date,oldest=draws[n-1].date;
+    const pf=document.getElementById('period-from'),pt=document.getElementById('period-to');
+    pf.min=oldest;pf.max=newest;pt.min=oldest;pt.max=newest;
+    const r=IF_getRange();
+    pf.value=r?r.from:oldest;pt.value=r?r.to:newest;
+  }
+  const y=d=>{const now=Date.now();return draws.filter(x=>x&&x.date&&(now-new Date(x.date).getTime())<=d*365.25*24*3600*1000).length;};
+  const presets=[[0,'Вся база · '+n+' тиражей']];
+  [[1,'За 1 год'],[2,'За 2 года'],[3,'За 3 года']].forEach(([yy,lbl])=>{const c=y(yy);if(c>=10&&c<n)presets.push([c,lbl+' · '+c]);});
+  [150,100,50].forEach(k=>{if(n>k)presets.push([k,'Последние '+k]);});
+  document.getElementById('period-note').textContent='Для '+(l.short||l.name)+' доступно '+n+' тиражей. Все модели, поле и консенсус будут считать по выбранному периоду.';
+  const curW=IF_getRange()?-1:IF_getWin();
+  document.getElementById('period-presets').innerHTML=presets.map(([v,lbl])=>'<div class="pick-mode'+(v===curW?' on':'')+'" onclick="PERIOD_set('+v+')"><div class="pick-mode-t">'+lbl+'</div></div>').join('');
+  document.getElementById('period-custom').max=n;
+  document.getElementById('period-ov').classList.add('show');
+}
+function PERIOD_close(){document.getElementById('period-ov').classList.remove('show');}
+function PERIOD_set(v){
+  IF_setWin(v);CONS_reset();
+  PERIOD_close();
+  PERIOD_refreshLabel();
+  showCopyToast('🗓 Период: '+(v>0?'последние '+v+' тиражей':'вся база'));
+}
+function PERIOD_custom(){
+  const v=parseInt(document.getElementById('period-custom').value);
+  if(!isFinite(v)||v<5){showCopyToast('Минимум 5 тиражей');return;}
+  PERIOD_set(v);
+}
+async function PERIOD_refreshLabel(){
+  const w=IF_getWin(),r=IF_getRange(),draws=await loadD(cur),n=draws.length;
+  const btn=document.getElementById('if-win-btn'),note=document.getElementById('if-win-note');
+  if(r){
+    const cnt=draws.filter(d=>d&&d.date&&d.date>=r.from&&d.date<=r.to).length;
+    if(btn)btn.textContent='Диапазон ▾';
+    if(note)note.textContent=r.from+' — '+r.to+' · '+cnt+' тиражей';
+    return;
+  }
+  if(btn)btn.textContent=(w>0?w+' тиражей':'Вся база')+' ▾';
+  if(note)note.textContent=w>0?('Последние '+Math.min(w,n)+' из '+n+' доступных'):('Вся доступная база · '+n+' тиражей');
+}
+
+/* ═══════════════ АВТОПРОВЕРКА БИЛЕТОВ + ПРАЗДНИК ═══════════════ */
+function CELE_show(title,msg,icon){
+  const burst=document.getElementById('cele-burst');
+  const EMO=['🎉','✨','💰','🪙','⭐','🏆','🎊'];
+  burst.innerHTML=Array.from({length:36},()=>{
+    const e=EMO[Math.floor(Math.random()*EMO.length)];
+    const left=Math.random()*100,dur=(2.2+Math.random()*2.4).toFixed(2),delay=(Math.random()*1.2).toFixed(2),size=(14+Math.random()*14).toFixed(0);
+    return '<span class="cele-p" style="left:'+left+'%;animation-duration:'+dur+'s;animation-delay:'+delay+'s;font-size:'+size+'px">'+e+'</span>';
+  }).join('');
+  document.getElementById('cele-icon').textContent=icon||'🏆';
+  document.getElementById('cele-title').textContent=title;
+  document.getElementById('cele-msg').textContent=msg;
+  document.getElementById('cele-ov').classList.add('show');
+}
+function CELE_close(){document.getElementById('cele-ov').classList.remove('show');}
+function notifyAllowed(){return localStorage.getItem('md2_notify')==='1'&&typeof Notification!=='undefined'&&Notification.permission==='granted';}
+async function toggleWinNotify(){
+  const btn=document.getElementById('notify-btn');
+  if(localStorage.getItem('md2_notify')==='1'){
+    localStorage.setItem('md2_notify','0');
+    if(btn)btn.textContent='🔔 Уведомлять о выигрышах: выкл';
+    return;
+  }
+  if(typeof Notification==='undefined'){showFeedback('Недоступно','Этот браузер не поддерживает уведомления.','🔕',3000);return;}
+  const perm=await Notification.requestPermission();
+  if(perm==='granted'){
+    localStorage.setItem('md2_notify','1');
+    if(btn)btn.textContent='🔔 Уведомлять о выигрышах: вкл';
+    showCopyToast('🔔 Буду уведомлять о выигрышах избранных комбинаций');
+  }else showFeedback('Нет разрешения','Разреши уведомления в настройках браузера.','🔕',3600);
+}
+function initNotifyBtn(){
+  const btn=document.getElementById('notify-btn');
+  if(btn&&localStorage.getItem('md2_notify')==='1'&&typeof Notification!=='undefined'&&Notification.permission==='granted')btn.textContent='🔔 Уведомлять о выигрышах: вкл';
+}
+/* сверка избранного с новыми тиражами всех игр */
+async function autoCheckFavorites(){
+  try{
+    const favs=await loadFav();
+    if(!favs.length)return;
+    const wins=[],misses=[];
+    for(const id of Object.keys(LOTS)){
+      const myFavs=favs.filter(f=>f.lot===id&&f.rows&&f.rows.length);
+      if(!myFavs.length)continue;
+      const draws=await loadD(id);
+      if(!draws.length)continue;
+      const lastKey='md2_lastchk_'+id;
+      const lastChecked=localStorage.getItem(lastKey)||'';
+      const fresh=draws.filter(d=>d&&d.date&&d.date>lastChecked);
+      if(!fresh.length)continue;
+      localStorage.setItem(lastKey,draws[0].date);
+      const l=LOTS[id];
+      for(const d of fresh){
+        for(const f of myFavs){
+          for(const r of f.rows){
+            const p=checkPrize(r.m||[],r.b||[],d.main||[],d.bonus||[],l);
+            if(p)wins.push({game:l.short||l.name,date:d.date,name:p.name,row:r,cur:l.currency,lvl:p.lvl});
+          }
+        }
+      }
+      misses.push(l.short||l.name);
+    }
+    if(wins.length){
+      wins.sort((a,b)=>b.lvl-a.lvl);
+      const top=wins[0];
+      const msg=wins.slice(0,4).map(w=>w.game+' · тираж '+w.date+'\n'+w.name+'\nРяд: '+w.row.m.join(' ')+(w.row.b&&w.row.b.length?' | '+w.row.b.join(' '):'')).join('\n\n')+(wins.length>4?'\n\n…и ещё '+(wins.length-4):'');
+      CELE_show(top.lvl>=7?'🏆 ДЖЕКПОТ!':'🎉 ЕСТЬ ВЫИГРЫШ!',msg,top.lvl>=7?'🏆':'💰');
+      if(notifyAllowed())try{new Notification('🎰 Mandel World: есть выигрыш!',{body:top.game+' · '+top.name});}catch(e){}
+    }else if(misses.length){
+      showCopyToast('🎫 Избранное сверено с новыми тиражами ('+misses.join(', ')+') — побед в этом туре нет');
+    }
+  }catch(e){}
+}
+/* праздник и в симуляторе при реальном призовом уровне */
+const _origShowBanner=showBanner;
+showBanner=function(dM,dB){
+  _origShowBanner(dM,dB);
+  try{renderCrowd(dM,dB);}catch(e){}
+  try{
+    const l=L();let best=null;
+    rows.forEach(row=>{const p=checkPrize(row.m,row.b,dM,dB,l);if(p&&(!best||p.lvl>best.lvl))best=p;});
+    if(best&&best.lvl>=4){
+      /* средний реальный приз этого уровня из базы, если есть */
+      let extra='';
+      try{
+        const tiers=getPrizeTiers(l);
+      }catch(e){}
+      setTimeout(()=>CELE_show(best.lvl>=7?'🏆 ДЖЕКПОТ!':'🎉 КРУПНЫЙ ПРИЗ!',l.name+'\n'+best.name+(extra?'\n'+extra:''),best.lvl>=7?'🏆':'💎'),900);
+    }
+  }catch(e){}
+};
+/* хуки */
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{PERIOD_refreshLabel();initNotifyBtn();},500);
+  setTimeout(autoCheckFavorites,4500);
+  let saRaf=0;
+  const saUpd=()=>{
+    if(saRaf)return; /* защита от каскада мутаций: не чаще кадра */
+    saRaf=requestAnimationFrame(()=>{
+      saRaf=0;
+      const sa=document.getElementById('scroll-anchors'),btn=document.getElementById('sa-btn');
+      if(!sa||!btn)return;
+      const doc=document.documentElement;
+      const full=Math.max(doc.scrollHeight,document.body.scrollHeight);
+      const need=full>window.innerHeight*2;
+      if(sa.classList.contains('show')!==need)sa.classList.toggle('show',need); /* пишем только при изменении */
+      if(!need)return;
+      const maxTop=Math.max(0,full-window.innerHeight);
+      const mid=(window.scrollY||doc.scrollTop||0)<maxTop/2;
+      const want=mid?'↓':'↑';
+      if(btn.textContent!==want)btn.textContent=want;
+      const dir=mid?'down':'up';
+      if(btn.dataset.dir!==dir)btn.dataset.dir=dir;
+    });
+  };
+  window.SA_go=function(){
+    const btn=document.getElementById('sa-btn');
+    const doc=document.documentElement;
+    const full=Math.max(doc.scrollHeight,document.body.scrollHeight);
+    const maxTop=Math.max(0,full-window.innerHeight);
+    window.scrollTo({top:btn&&btn.dataset.dir==='down'?maxTop:0,behavior:'smooth'});
+    setTimeout(saUpd,450);
+  };
+  window.addEventListener('scroll',saUpd,{passive:true});
+  window.addEventListener('resize',saUpd);
+  new MutationObserver(()=>saUpd()).observe(document.body,{childList:true,subtree:true});
+  setTimeout(saUpd,800);
+});
+
+
+/* ═══ ПОДПИСКА (инфо-модал; оплата подключится на этапе мобильной сборки) ═══ */
+function openSubInfo(){
+  showFeedback('👑 Mandel World Pro',
+'Бесплатно навсегда:\n· симулятор всех 9 лотерей\n· база последних 30 тиражей каждой игры\n· умная генерация — 3 запуска в неделю\n· Поле, Консенсус и Квантово-астральный — по 3 пробы\n\nPro · $4.99/мес или $34.99/год (−42%):\n· полные исторические базы (с 2012)\n· безлимитные Консенсус, Поле, Судья и Квантово-астральный с натальной картой\n· произвольный период анализа\n· импорт и экспорт баз\n· автопроверка избранного и уведомления\n\nЦена в валюте твоего магазина приложений (USD/NOK/EUR) определится автоматически при оплате.','👑',12000);
+}
+
+
+/* ═══ Картина тиража: сколько «соседей» выиграло бы (по реальной статистике базы) ═══ */
+var CROWD_cache=null,CROWD_lot=null;
+async function crowdStats(){
+  if(CROWD_cache&&CROWD_lot===cur)return CROWD_cache;
+  const l=L();
+  const draws=await loadD(cur);
+  const agg={};let n=0;
+  for(const d of draws.slice(0,60)){
+    if(!d||!Array.isArray(d.prizes)||!d.prizes.length)continue;
+    n++;
+    for(const p of d.prizes){
+      if(!p||!p.label)continue;
+      (agg[p.label]=agg[p.label]||{w:[],v:[]});
+      if(isFinite(p.winners))agg[p.label].w.push(p.winners);
+      if(isFinite(p.prizeNOK)&&p.prizeNOK>0)agg[p.label].v.push(p.prizeNOK);
+    }
+  }
+  let tiers=Object.entries(agg).map(([label,a])=>({
+    label,
+    avgW:a.w.length?a.w.reduce((s,x)=>s+x,0)/a.w.length:0,
+    avgV:a.v.length?a.v.reduce((s,x)=>s+x,0)/a.v.length:0
+  })).filter(t=>t.avgV>0||t.avgW>0);
+  let src='real';
+  if(!tiers.length){
+    /* фолбэк: вероятности уровней × типичный объём проданных рядов */
+    src='calc';n=0;
+    const vol=Math.max(200000,Math.round(jackpotCombos(l)*0.08)); /* объём рынка: джекпот берётся в ~8% тиражей */
+    tiers=getPrizeTiers(l).map(t=>{
+      const mm=parseInt(t.match),bb=t.match.includes('+')?parseInt(t.match.split('+')[1]):null;
+      const pr={name:t.label,lvl:0,m:mm,b:bb};
+      const bonusDrawn=drawBonusCount(l);
+      const pMain=comb(l.pM,mm)*comb(l.mB-l.pM,l.pM-mm)/comb(l.mB,l.pM);
+      const pBon=(bb===null||!l.bB||!bonusDrawn)?1:comb(bonusDrawn,bb)*comb(l.bB-bonusDrawn,(l.pBo||bonusDrawn)-bb)/comb(l.bB,l.pBo||bonusDrawn);
+      const prob=pMain*(isFinite(pBon)?pBon:1);
+      const isTop=mm===l.pM&&(bb===null||bb===(l.pBo||drawBonusCount(l)));
+      const v=estimatePrizeNok({name:(isTop?'ДЖЕКПОТ ':'')+t.label,lvl:isTop?9:5,m:mm,b:bb===null?0:bb},l)||0;
+      return{label:t.label,avgW:prob>0?vol*prob:0,avgV:v};
+    }).filter(t=>t.avgW>=0.05&&t.avgV>0).slice(0,8);
+  }
+  tiers.sort((a,b)=>b.avgV-a.avgV);
+  CROWD_cache={tiers,n,src};CROWD_lot=cur;
+  return CROWD_cache;
+}
+async function renderCrowd(dM,dB){
+  const box=document.getElementById('wb-crowd');
+  if(!box)return;
+  const l=L();
+  const {tiers,n,src}=await crowdStats();
+  if(!tiers.length||(src==='real'&&n<3)){box.innerHTML='';return;}
+  /* мой лучший уровень в этом тираже */
+  let my=null;
+  rows.forEach(r=>{const p=checkPrize(r.m,r.b,dM,dB,l);if(p&&(!my||p.lvl>my.lvl))my=p;});
+  const jitter=x=>Math.max(0,Math.round(x*(0.82+Math.random()*0.36)));
+  box.innerHTML='<div class="crowd-t">🌍 Картина тиража</div>'+
+    tiers.slice(0,8).map(t=>{
+      const isMe=my&&my.name&&t.label&&my.name.replace(/\s/g,'')===t.label.replace(/\s/g,'');
+      const w=jitter(t.avgW);
+      return '<div class="crowd-row'+(isMe?' me':'')+'"><span class="crowd-tier">'+t.label+(isMe?' · + ты! 🎉':'')+'</span><span class="crowd-n">'+(w>0?w.toLocaleString('nb-NO')+' чел.':'—')+'</span><span class="crowd-p">'+(t.avgV?fmtInt(t.avgV)+' '+(l.currency||'NOK'):'')+'</span></div>';
+    }).join('')+
+    '<div class="crowd-note">'+(src==='real'?('Смоделировано по средним из '+n+' последних реальных тиражей '+(l.short||l.name)+'.'):'Оценка по вероятностям уровней и типичному объёму продаж — живые призовые появятся после обновления официальных результатов.')+'</div>';
+}
+
+
+/* ═══════════ КВАНТОВО-АСТРАЛЬНЫЙ ГЕНЕРАТОР ═══════════
+   Настоящая квантовая случайность (ANU QRNG / крипто-энтропия) +
+   настоящая астрономия (фаза Луны, Луна в знаке на дату тиража).
+   Развлечение, не предсказание — шансы не меняет. */
+var QA_state=null;
+var QA_skipSession=false; /* «пропустить» действует только до следующего открытия генератора */
+const QA_ZODIAC=[['♈','Овен'],['♉','Телец'],['♊','Близнецы'],['♋','Рак'],['♌','Лев'],['♍','Дева'],['♎','Весы'],['♏','Скорпион'],['♐','Стрелец'],['♑','Козерог'],['♒','Водолей'],['♓','Рыбы']];
+const QA_PHASES=[['🌑','Новолуние'],['🌒','Растущий серп'],['🌓','Первая четверть'],['🌔','Растущая Луна'],['🌕','Полнолуние'],['🌖','Убывающая Луна'],['🌗','Последняя четверть'],['🌘','Убывающий серп']];
+function QA_daysJ2000(d){return (d.getTime()/86400000)-10957.5;}
+function QA_moonPhase(d){
+  const syn=29.530588853;
+  const age=((QA_daysJ2000(d)-5.597)%syn+syn)%syn; /* от новолуния 06.01.2000 18:14 UTC */
+  const idx=Math.floor((age/syn)*8+0.5)%8;
+  const illum=Math.round((1-Math.cos(2*Math.PI*age/syn))/2*100);
+  return{idx,age,illum,emoji:QA_PHASES[idx][0],name:QA_PHASES[idx][1]};
+}
+function QA_moonSign(d){
+  const L=((218.316+13.176396*QA_daysJ2000(d))%360+360)%360; /* эклиптическая долгота Луны, ~±2° */
+  return Math.floor(L/30);
+}
+function QA_nextDrawDate(){
+  const l=L(),now=new Date();
+  const [hh,mm]=l.dl.split(':').map(Number);
+  let nd=null;
+  for(const d of l.drawDays){
+    const cand=new Date(now);
+    cand.setDate(now.getDate()+((d-now.getDay()+7)%7));
+    cand.setHours(hh,mm,0,0);
+    if(cand<=now)cand.setDate(cand.getDate()+7);
+    if(!nd||cand<nd)nd=cand;
+  }
+  return nd;
+}
+function QA_getSign(){const v=parseInt(localStorage.getItem('md2_zsign'));return isFinite(v)&&v>=0&&v<12?v:null;}
+async function QA_rows(count,opts){
+  opts=opts||{};
+  const l=L();
+  const drawDate=QA_nextDrawDate();
+  const ph=QA_moonPhase(drawDate),ms=QA_moonSign(drawDate);
+  const zs=QA_getSign();
+  const bo=drawBonusCount(l);
+  const need=count*(l.pM+bo)*4+16;
+  let q=null,src='крипто-энтропия устройства';
+  if(!opts.fast){
+    q=await quantumStream(need);
+    src=lastQuantumSrc||src;
+  }
+  if(!q||!q.length){
+    q=new Uint16Array(need);
+    (self.crypto||window.crypto).getRandomValues(q);
+  }
+  let qi=0;const u=()=>{const v=q[qi++%q.length]/65536;qi===q.length&&(qi=0);return v;};
+  const moonBoost=0.10+0.20*(ph.illum/100); /* полнолуние усиливает лунный резонанс */
+  /* натальный слой: Луна при рождении, число судьбы, день рождения */
+  const birth=QA_birth();
+  let natal=null;
+  if(birth){
+    const bd=QA_birthDateObj(birth);
+    natal={
+      moonSign:QA_moonSign(bd),
+      lifePath:QA_lifePath(birth.d,birth.m,birth.y),
+      day:birth.d,
+      hasTime:birth.hh!=null
+    };
+  }
+  const digitSum=n=>{while(n>9)n=[...String(n)].reduce((s,c)=>s+ +c,0);return n;};
+  const rows=[];
+  for(let r=0;r<count;r++){
+    const w=new Array(l.mB+1).fill(0);
+    for(let n=1;n<=l.mB;n++){
+      w[n]=1;
+      if(zs!==null&&n%12===zs)w[n]+=0.35;
+      if(n%12===ms)w[n]+=moonBoost;
+      if(natal){
+        if(n%12===natal.moonSign)w[n]+=natal.hasTime?0.22:0.15; /* точное время → точнее натальная Луна */
+        if(digitSum(n)===natal.lifePath)w[n]+=0.18; /* число судьбы */
+        if(n===natal.day||n===((natal.day-1)%l.mB)+1)w[n]+=0.12; /* день рождения */
+      }
+    }
+    const m=[],tags=[];
+    while(m.length<l.pM){
+      let tot=0;for(let n=1;n<=l.mB;n++)if(!m.includes(n))tot+=w[n];
+      let t=u()*tot,pick=0;
+      for(let n=1;n<=l.mB;n++){if(m.includes(n))continue;t-=w[n];if(t<=0){pick=n;break;}}
+      if(!pick)pick=[...Array(l.mB).keys()].map(x=>x+1).find(n=>!m.includes(n));
+      m.push(pick);
+      tags.push(natal&&(digitSum(pick)===natal.lifePath||pick===natal.day)?'n':(zs!==null&&pick%12===zs?'z':(pick%12===ms?'m':'q')));
+    }
+    const idx=m.map((v,i)=>i).sort((a,b)=>m[a]-m[b]);
+    const b=[];
+    if(l.bB&&bo){
+      while(b.length<bo){
+        const n=1+Math.floor(u()*l.bB);
+        if(!b.includes(n))b.push(n);
+      }
+      b.sort((x,y)=>x-y);
+    }
+    rows.push({m:idx.map(i=>m[i]),tags:idx.map(i=>tags[i]),b});
+  }
+  return Object.assign(rows,{meta:{ph,ms,zs,src,drawDate,natal}});
+}
+function QA_open(){
+  const l=L();
+  QA_state={n:parseInt(localStorage.getItem('md2_qa_n'))||3};
+  const dd=QA_nextDrawDate(),ph=QA_moonPhase(dd),ms=QA_moonSign(dd);
+  document.getElementById('qa-ctx').textContent=l.name+' · тираж '+dd.toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'short'});
+  const zs=QA_getSign();
+  document.getElementById('qa-signs').innerHTML=QA_ZODIAC.map((z,i)=>'<div class="qa-sign'+(i===zs?' on':'')+'" onclick="QA_setSign('+i+',this)"><div class="z">'+z[0]+'</div><div class="zn">'+z[1]+'</div></div>').join('');
+  document.getElementById('qa-moon').innerHTML=ph.emoji+' <b>'+ph.name+'</b> · освещённость '+ph.illum+'%<br>Луна в знаке <b>'+QA_ZODIAC[ms][0]+' '+QA_ZODIAC[ms][1]+'</b> на момент тиража';
+  document.getElementById('qa-counts').innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>'<button class="pick-cnt'+(n===QA_state.n?' on':'')+'" onclick="QA_setN('+n+',this)">'+n+'</button>').join('');
+  document.getElementById('qa-result').innerHTML='';
+  QA_refreshBirthUI();
+  document.getElementById('qa-ov').classList.add('show');
+  QA_skipSession=false;
+  if(QA_getSign()!==null&&!QA_birth())setTimeout(QAB_open,350);
+}
+function QA_close(){document.getElementById('qa-ov').classList.remove('show');}
+function QA_setSign(i,el){
+  localStorage.setItem('md2_zsign',i);
+  document.querySelectorAll('.qa-sign').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  if(!QA_birth()){QA_skipSession=false;setTimeout(QAB_open,300);}
+}
+function QA_setN(n,el){
+  QA_state.n=n;localStorage.setItem('md2_qa_n',n);
+  document.querySelectorAll('#qa-counts .pick-cnt').forEach(b=>b.classList.toggle('on',b===el));
+}
+async function QA_go(){
+  const st=QA_state;if(!st)return;
+  if(QA_getSign()===null){showCopyToast('✨ Сначала выбери свой знак зодиака');return;}
+  if(!QA_birth()&&!QA_skipSession){QAB_open();showCopyToast('🎂 Укажи дату рождения — или нажми «Пропустить»');return;}
+  const res=document.getElementById('qa-result');
+  res.innerHTML='<div class="if-empty" style="color:#C9B8E8;padding:22px">🔭 Запрашиваю квантовый поток и считаю положение Луны…</div>';
+  const l=L();
+  const rows=await QA_rows(st.n);
+  st.rows=rows;
+  const{ph,ms,zs,src,drawDate}=rows.meta;
+  res.innerHTML=rows.map((r,ri)=>
+    '<div class="qa-row"><div class="qa-balls">'+
+    r.m.map((n,i)=>'<div class="qa-ball '+(r.tags[i]==='z'?'zres':(r.tags[i]==='m'?'mres':'qb'))+'" style="animation-delay:'+(ri*0.12+i*0.07).toFixed(2)+'s,'+(ri*0.12+i*0.07+0.5).toFixed(2)+'s">'+n+'</div>').join('')+
+    (r.b.length?'<div style="width:6px"></div>'+r.b.map((n,bi)=>'<div class="qa-ball qb" style="width:34px;height:34px;font-size:13px;animation-delay:'+(ri*0.12+(r.m.length+bi)*0.07).toFixed(2)+'s,'+(ri*0.12+(r.m.length+bi)*0.07+0.5).toFixed(2)+'s">'+n+'</div>').join(''):'')+
+    '</div></div>').join('')+
+    '<div class="qa-legend"><span><span class="qa-dot" style="background:#E9B44C"></span>твой знак</span><span><span class="qa-dot" style="background:#6BB8E8"></span>Луна тиража</span><span><span class="qa-dot" style="background:#E86BA8"></span>личный резонанс</span><span><span class="qa-dot" style="background:#9B6BE8"></span>чистый квант</span></div>'+
+    '<div class="qa-pass">🪪 <b>Звёздный паспорт</b><br>Знак: '+QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+' · Луна тиража: '+ph.emoji+' '+ph.name+' ('+ph.illum+'%) в '+QA_ZODIAC[ms][1]+
+    (rows.meta.natal?'<br>Натальная Луна: '+QA_ZODIAC[rows.meta.natal.moonSign][0]+' '+QA_ZODIAC[rows.meta.natal.moonSign][1]+(rows.meta.natal.hasTime?' (по времени рождения)':' (~полдень)')+' · Число судьбы: '+rows.meta.natal.lifePath:'')+
+    '<br>Тираж: '+drawDate.toLocaleString('ru-RU',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'<br>Источник случайности: '+src+'</div>'+
+    '<button class="btn-draw euro qa-go" style="margin-top:12px" onclick="QA_use()">Использовать в симуляторе</button>'+
+    '<button class="btn-exp" style="margin-top:8px;border-color:#C9A55A;color:#F5CE7B" onclick="HORO_open()">📜 Гороскоп на сегодня</button>'+
+    '<button class="btn-exp" style="margin-top:8px;border-color:#6B4BA8;color:#E8DEFA" onclick="QA_share()">📤 Поделиться со Вселенной</button>';
+}
+function QA_use(){
+  const st=QA_state;if(!st||!st.rows)return;
+  QA_close();
+  const dur=setGeneratedRows(st.rows.map(r=>({m:r.m,b:r.b})),'Готово: '+st.rows.length+' '+rowWord(st.rows.length)+' · Квантово-астральный.');
+  setTimeout(()=>showFeedback('Вселенная услышала',st.rows.length+' '+rowWord(st.rows.length)+' перенесены в симулятор. Шансы прежние — мечта бесценна. ✨','🔮',2600),dur+150);
+}
+function QA_share(){
+  const st=QA_state;if(!st||!st.rows)return;
+  const{ph,ms,zs}=st.rows.meta;
+  shareText('Квантово-астральный ряд · '+L().name,
+    '🔮 Мои квантово-астральные числа · '+L().name+'\n'+
+    rowsAsText(st.rows,L())+'\n'+
+    QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+' · '+ph.emoji+' '+ph.name+' · Луна в '+QA_ZODIAC[ms][1]);
+}
+
+
+/* ═══ Натальные данные: дата/время рождения → глубокий анализ ═══ */
+function QA_birth(){try{const v=JSON.parse(localStorage.getItem('md2_birth'));return v&&v.y?v:null;}catch(e){return null;}}
+function QA_zodiacFromDate(d,m){
+  /* границы западного зодиака */
+  const B=[[3,21,4,19,0],[4,20,5,20,1],[5,21,6,20,2],[6,21,7,22,3],[7,23,8,22,4],[8,23,9,22,5],[9,23,10,22,6],[10,23,11,21,7],[11,22,12,21,8],[12,22,1,19,9],[1,20,2,18,10],[2,19,3,20,11]];
+  for(const[m1,d1,m2,d2,z]of B){
+    if((m===m1&&d>=d1)||(m===m2&&d<=d2))return z;
+  }
+  return 9; /* козерог на стыке года */
+}
+function QA_lifePath(d,m,y){
+  let n=String(d)+String(m)+String(y);
+  let sum=[...n].reduce((s,c)=>s+ +c,0);
+  while(sum>9&&sum!==11&&sum!==22)sum=[...String(sum)].reduce((s,c)=>s+ +c,0);
+  return sum;
+}
+function QA_birthDateObj(b){
+  return new Date(b.y,b.m-1,b.d,b.hh!=null?b.hh:12,b.mm!=null?b.mm:0);
+}
+function QAB_clear(){
+  localStorage.removeItem('md2_birth');
+  ['qab-d','qab-m','qab-y','qab-t'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('qab-clear').style.display='none';
+  QA_refreshBirthUI();
+  showCopyToast('🗑 Дата рождения удалена');
+}
+function QAB_open(){
+  const b=QA_birth();
+  document.getElementById('qab-clear').style.display=b?'':'none';
+  if(b){
+    document.getElementById('qab-d').value=b.d;
+    document.getElementById('qab-m').value=b.m;
+    document.getElementById('qab-y').value=b.y;
+    document.getElementById('qab-t').value=b.hh!=null?String(b.hh).padStart(2,'0')+':'+String(b.mm).padStart(2,'0'):'';
+  }
+  document.getElementById('qab-ov').classList.add('show');
+}
+function QAB_close(){document.getElementById('qab-ov').classList.remove('show');}
+function QAB_skip(){QA_skipSession=true;QAB_close();showCopyToast('✨ Хорошо, в этот раз без даты — спрошу снова в следующий');}
+function QAB_save(withTime){
+  const d=parseInt(document.getElementById('qab-d').value);
+  const m=parseInt(document.getElementById('qab-m').value);
+  const y=parseInt(document.getElementById('qab-y').value);
+  if(!d||!m||!y||d<1||d>31||y<1920||y>2020){showCopyToast('Проверь день, месяц и год');return;}
+  const days=[31,((y%4===0&&y%100!==0)||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];
+  if(d>days[m-1]){showCopyToast('В этом месяце нет такого дня');return;}
+  let hh=null,mm=null;
+  if(withTime){
+    const t=document.getElementById('qab-t').value;
+    if(!t){showCopyToast('Введи время или выбери «Время неизвестно»');return;}
+    [hh,mm]=t.split(':').map(Number);
+  }
+  localStorage.setItem('md2_birth',JSON.stringify({d,m,y,hh,mm}));
+  /* автокоррекция знака по дате */
+  const realSign=QA_zodiacFromDate(d,m);
+  const chosen=QA_getSign();
+  if(chosen!==realSign){
+    localStorage.setItem('md2_zsign',realSign);
+    showCopyToast('По дате рождения твой знак — '+QA_ZODIAC[realSign][0]+' '+QA_ZODIAC[realSign][1]+', обновил ✨');
+  }else{
+    showCopyToast('🎂 Сохранено — анализ станет глубже');
+  }
+  QAB_close();
+  QA_refreshBirthUI();
+  if(document.getElementById('qa-ov').classList.contains('show'))QA_open();
+}
+function QA_refreshBirthUI(){
+  const el=document.getElementById('qa-birthval');
+  if(!el)return;
+  const b=QA_birth();
+  el.textContent=b?(String(b.d).padStart(2,'0')+'.'+String(b.m).padStart(2,'0')+'.'+b.y+(b.hh!=null?' · '+String(b.hh).padStart(2,'0')+':'+String(b.mm).padStart(2,'0'):'')):'не указана';
+}
+
+
+/* iOS: без touchstart-слушателя Safari игнорирует :active на кнопках */
+document.addEventListener('touchstart',function(){},{passive:true});
+/* Барабан лет + авто-переход полей даты рождения */
+document.addEventListener('DOMContentLoaded',()=>{
+  const ys=document.getElementById('qab-y');
+  if(ys&&ys.options.length<=1){
+    let html='<option value="">Год</option>';
+    for(let y=2020;y>=1920;y--)html+='<option value="'+y+'">'+y+'</option>';
+    ys.innerHTML=html;
+  }
+  const dEl=document.getElementById('qab-d'),mEl=document.getElementById('qab-m'),tEl=document.getElementById('qab-t');
+  if(dEl){
+    dEl.addEventListener('input',()=>{
+      let v=dEl.value.replace(/\D/g,'').slice(0,2);
+      if(dEl.value!==v)dEl.value=v;
+      /* 2 цифры — или одна, но однозначная (4-9): дальше день продолжаться не может */
+      if(v.length===2||(v.length===1&&+v>3)){mEl.focus();}
+    });
+  }
+  if(mEl)mEl.addEventListener('change',()=>{if(mEl.value)ys.focus();});
+  if(ys)ys.addEventListener('change',()=>{if(ys.value&&tEl)tEl.focus();});
+});
+
+
+/* ═══════════ ГОРОСКОП НА ПЕРГАМЕНТЕ ═══════════ */
+var HORO_sign=0;
+const HORO_POOL={
+  energy:['Энергия дня на твоей стороне — начатое сегодня получит разгон.','День просит размеренного темпа: сила в спокойствии, а не в спешке.','Утро задаёт тон: одно смелое действие до полудня окрасит весь день.','Сегодня твоя интуиция громче логики — прислушайся к первому импульсу.','Волна дня переменчива: гибкость принесёт больше, чем упрямство.','Отличный день, чтобы закрыть хвосты — завершения дадут прилив сил.','Космос подсвечивает новое: пробуй то, чего ещё не делал.','Твоя харизма сегодня заметнее обычного — используй её в переговорах.','День наблюдателя: лучшие ходы придут, если сначала осмотреться.','Внутренний огонь ровный и сильный — бери задачи, которые откладывал.'],
+  money:['В финансах день аккуратной точности: пересчитай, прежде чем соглашаться.','Возможна приятная мелочь — бонус, скидка или возврат, который забылся.','Не лучший день для крупных трат, зато отличный для планирования.','Деньги любят сегодня системность: одна маленькая привычка сбережёт многое.','Хороший день обсудить доход: разговор, отложенный давно, пройдёт легче.','Импульсивная покупка будет манить — дай ей сутки на раздумье.','Финансовая идея, записанная сегодня, через месяц покажет свою цену.','Звёзды за бережливость: сэкономленное сегодня удвоит завтрашние возможности.','Неожиданный совет о деньгах окажется дельным — выслушай.','День щедрости: небольшой подарок близкому вернётся сторицей.'],
+  heart:['В отношениях день тёплых мелочей: одно сообщение изменит чей-то день.','Старый друг вспомнит о тебе — или вспомни первым.','Искренность сегодня обезоруживает: говори просто, без брони.','Домашний вечер даст больше сил, чем шумная компания.','Чьё-то молчание — не холод, а усталость. Прояви терпение.','Комплимент, сказанный вслух, запустит цепочку хорошего.','День семьи: общее дело, даже маленькое, сблизит сильнее слов.','Новое знакомство может оказаться неслучайным — будь открыт.','Прощение, даже мысленное, снимет камень с плеч.','Слушай сегодня вдвое больше, чем говоришь — узнаешь важное.'],
+  advice:['Совет дня: одна страница книги лучше часа ленты.','Совет дня: выпей воды и выйди на 15 минут под небо.','Совет дня: запиши три вещи, за которые благодарен.','Совет дня: наведи порядок в одном ящике — в мыслях тоже прояснится.','Совет дня: позвони тому, о ком подумал прямо сейчас.','Совет дня: сделай сложное дело первым — остальное покажется лёгким.','Совет дня: сегодня хорошо мечтать письменно — план начинается с фантазии.','Совет дня: улыбнись незнакомцу — эхо вернётся.','Совет дня: отложи телефон за час до сна, звёзды оценят.','Совет дня: маленький шаг к большой цели важнее идеального плана.']
+};
+function HORO_seedRng(seed){let x=seed>>>0;return()=>{x=(x*1664525+1013904223)>>>0;return x/4294967296;};}
+function HORO_text(sign){
+  const now=new Date();
+  const doy=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
+  const rng=HORO_seedRng(sign*7919+doy*104729+now.getFullYear());
+  const pick=a=>a[Math.floor(rng()*a.length)];
+  const ph=QA_moonPhase(now),ms=QA_moonSign(now);
+  const l=L();
+  const lucky=[];while(lucky.length<3){const n=1+Math.floor(rng()*l.mB);if(!lucky.includes(n))lucky.push(n);}
+  lucky.sort((a,b)=>a-b);
+  return{
+    moon:ph.emoji+' '+ph.name+' · Луна в знаке '+QA_ZODIAC[ms][1],
+    energy:pick(HORO_POOL.energy),money:pick(HORO_POOL.money),heart:pick(HORO_POOL.heart),advice:pick(HORO_POOL.advice),
+    lucky
+  };
+}
+function HORO_open(sign){
+  HORO_sign=(sign!=null?sign:(QA_getSign()||0));
+  document.getElementById('horo-signs').innerHTML=QA_ZODIAC.map((z,i)=>'<div class="horo-schip'+(i===HORO_sign?' on':'')+'" onclick="HORO_open('+i+')">'+z[0]+'</div>').join('');
+  document.getElementById('horo-glyph').textContent=QA_ZODIAC[HORO_sign][0];
+  document.getElementById('horo-title').textContent=QA_ZODIAC[HORO_sign][1];
+  document.getElementById('horo-date').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+  const t=HORO_text(HORO_sign);
+  document.getElementById('horo-body').innerHTML=
+    '<div class="horo-sec"><div class="horo-sec-t">🌙 Небо сегодня</div><div class="horo-sec-b">'+t.moon+'</div></div>'+
+    '<div class="horo-sec"><div class="horo-sec-t">⚡ Энергия</div><div class="horo-sec-b">'+t.energy+'</div></div>'+
+    '<div class="horo-sec"><div class="horo-sec-t">💰 Финансы</div><div class="horo-sec-b">'+t.money+'</div></div>'+
+    '<div class="horo-sec"><div class="horo-sec-t">💛 Отношения</div><div class="horo-sec-b">'+t.heart+'</div></div>'+
+    '<div class="horo-sec"><div class="horo-sec-t">✨ Совет</div><div class="horo-sec-b">'+t.advice+'</div></div>'+
+    '<div class="horo-sec"><div class="horo-sec-t">🍀 Числа удачи</div><div class="horo-lucky">'+t.lucky.map(n=>'<div class="horo-lball">'+n+'</div>').join('')+'</div></div>';
+  document.getElementById('horo-ov').classList.add('show');
+}
+function HORO_close(){document.getElementById('horo-ov').classList.remove('show');}
+function HORO_share(){
+  const t=HORO_text(HORO_sign);
+  shareText('Гороскоп · '+QA_ZODIAC[HORO_sign][1],
+    '📜 '+QA_ZODIAC[HORO_sign][0]+' '+QA_ZODIAC[HORO_sign][1]+' · '+new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'\n'+
+    t.moon+'\n\n⚡ '+t.energy+'\n💰 '+t.money+'\n💛 '+t.heart+'\n'+t.advice+'\n🍀 Числа удачи: '+t.lucky.join(' '));
 }
 
 </script>

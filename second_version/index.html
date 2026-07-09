@@ -5310,13 +5310,33 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(btn.dataset.dir!==dir)btn.dataset.dir=dir;
     });
   };
+  /* Собственная плавная прокрутка: видимые шары, стоп касанием */
+  let saAnim=0;
+  const SA_stop=()=>{if(saAnim){cancelAnimationFrame(saAnim);saAnim=0;saUpd();}};
+  ['touchstart','pointerdown','wheel'].forEach(ev=>window.addEventListener(ev,e=>{
+    if(saAnim&&!(e.target&&e.target.closest&&e.target.closest('.sa-btn')))SA_stop();
+  },{passive:true}));
   window.SA_go=function(){
+    SA_stop();
     const btn=document.getElementById('sa-btn');
     const doc=document.documentElement;
     const full=Math.max(doc.scrollHeight,document.body.scrollHeight);
     const maxTop=Math.max(0,full-window.innerHeight);
-    window.scrollTo({top:btn&&btn.dataset.dir==='down'?maxTop:0,behavior:'smooth'});
-    setTimeout(saUpd,450);
+    const from=window.scrollY||doc.scrollTop||0;
+    const to=btn&&btn.dataset.dir==='down'?maxTop:0;
+    const dist=Math.abs(to-from);
+    if(dist<2)return;
+    /* скорость ~6000 px/с с мягким въездом-выездом; длинная база едет заметно, но не вечно */
+    const dur=Math.max(650,Math.min(4200,dist/6));
+    const t0=performance.now();
+    const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+    const step=now=>{
+      const p=Math.min(1,(now-t0)/dur);
+      window.scrollTo(0,from+(to-from)*ease(p));
+      if(p<1)saAnim=requestAnimationFrame(step);
+      else{saAnim=0;saUpd();}
+    };
+    saAnim=requestAnimationFrame(step);
   };
   window.addEventListener('scroll',saUpd,{passive:true});
   window.addEventListener('resize',saUpd);

@@ -883,6 +883,43 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 .horo-btns .btn-draw{background:linear-gradient(140deg,#C9952B,#8A5E15)!important;border:none!important}
 .horo-btns .btn-exp{background:rgba(255,250,235,.55)!important;border-color:#C9A55A!important;color:#6B4A0E!important}
 .horo-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:11px;border:1.5px solid #C9A55A;background:rgba(255,250,235,.6);color:#6B4A0E;font-size:16px;font-weight:900;cursor:pointer}
+
+/* уголки-орнаменты пергамента */
+.horo-corner{position:absolute;width:36px;height:36px;pointer-events:none}
+.horo-corner:before{content:'';position:absolute;inset:0;border:2px solid #B08A3E;opacity:.65}
+.horo-corner:after{content:'';position:absolute;width:12px;height:12px;border:2px solid #B08A3E;border-radius:50%;opacity:.55}
+.horo-corner.tl{top:10px;left:10px}.horo-corner.tl:before{border-right:none;border-bottom:none;border-radius:14px 0 0 0}.horo-corner.tl:after{right:-3px;bottom:-3px;border-left:none;border-top:none}
+.horo-corner.tr{top:10px;right:10px}.horo-corner.tr:before{border-left:none;border-bottom:none;border-radius:0 14px 0 0}.horo-corner.tr:after{left:-3px;bottom:-3px;border-right:none;border-top:none}
+.horo-corner.bl{bottom:10px;left:10px}.horo-corner.bl:before{border-right:none;border-top:none;border-radius:0 0 0 14px}.horo-corner.bl:after{right:-3px;top:-3px;border-left:none;border-bottom:none}
+.horo-corner.br{bottom:10px;right:10px}.horo-corner.br:before{border-left:none;border-top:none;border-radius:0 0 14px 0}.horo-corner.br:after{left:-3px;top:-3px;border-right:none;border-bottom:none}
+/* шпагат */
+.horo-twine{position:relative;height:14px;margin:20px -22px 6px}
+.horo-twine:before{content:'';position:absolute;left:0;right:0;top:4px;height:6px;
+  background:repeating-linear-gradient(115deg,#C9B08A 0 4px,#A8906B 4px 8px,#BFA57E 8px 12px);
+  box-shadow:0 2px 4px rgba(90,60,20,.35),0 -1px 2px rgba(255,250,235,.6);border-radius:3px}
+.horo-twine:after{content:'';position:absolute;left:0;right:0;top:11px;height:4px;
+  background:repeating-linear-gradient(115deg,#C9B08A 0 4px,#A8906B 4px 8px);opacity:.7;border-radius:2px;transform:rotate(-.6deg)}
+/* сургучная печать */
+.horo-seal{position:relative;width:86px;height:86px;margin:-52px auto 4px;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 34% 28%,#E85A4A,#B3261E 52%,#7A1410 88%);
+  border-radius:47% 53% 50% 50%/52% 48% 55% 45%;
+  box-shadow:0 6px 16px rgba(90,10,5,.45),inset 0 3px 8px rgba(255,160,140,.5),inset 0 -5px 10px rgba(60,5,0,.55),
+    22px 30px 0 -32px #9A1B14,-26px 26px 0 -33px #9A1B14; /* капли воска */
+  transform:rotate(-6deg);z-index:2}
+.horo-seal:before{content:'';position:absolute;inset:9px;border-radius:inherit;border:2px solid rgba(255,180,160,.35);box-shadow:inset 0 2px 6px rgba(60,5,0,.5)}
+.horo-seal span{font-size:34px;color:#5A0E08;text-shadow:0 1px 0 rgba(255,170,150,.55),0 -1px 2px rgba(40,3,0,.8);transform:rotate(6deg)}
+/* ═══ 2. Бонус-шары генератора — изумрудные, всегда одним цветом ═══ */
+.qa-ball.bonus{background:radial-gradient(circle at 32% 26%,#C8F5DD,#3DBB8A 58%,#14614A)!important}
+
+/* филигранные уголки и усиленный кант */
+.horo-sheet{box-shadow:inset 0 0 0 3px rgba(138,107,46,.55),inset 0 0 0 5px rgba(251,243,220,.8),inset 0 0 0 7px rgba(138,107,46,.35),inset 0 0 60px rgba(140,100,30,.18),0 -18px 60px rgba(0,0,0,.45)!important}
+.horo-fil{position:absolute;width:58px;height:58px;pointer-events:none;opacity:.9}
+.horo-fil.tl{top:9px;left:9px}
+.horo-fil.tr{top:9px;right:9px;transform:scaleX(-1)}
+.horo-fil.bl{bottom:9px;left:9px;transform:scaleY(-1)}
+.horo-fil.br{bottom:9px;right:9px;transform:scale(-1,-1)}
+.horo-ribbon{margin:-2px -10px 0}
+.horo-ribbon svg{width:100%;height:auto;display:block;filter:drop-shadow(0 3px 5px rgba(90,60,10,.28))}
 </style>
 </head>
 <body class="locked">
@@ -1351,12 +1388,28 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 
 <div class="horo-ov" id="horo-ov" onclick="if(event.target===this)HORO_close()">
   <div class="horo-sheet">
+    <svg class="horo-fil tl" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
+    <svg class="horo-fil tr" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
+    <svg class="horo-fil bl" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
+    <svg class="horo-fil br" viewBox="0 0 64 64" fill="none"><path d="M4,62 V18 Q4,4 18,4 H62" stroke="#8A6B2E" stroke-width="2.6"/><path d="M18,4 Q34,4 34,17 Q34,28 25,28 Q17,28 17,20.5 Q17,15 22,15" stroke="#8A6B2E" stroke-width="2"/><path d="M4,18 Q4,34 17,34 Q28,34 28,25 Q28,17 20.5,17 Q15,17 15,22" stroke="#8A6B2E" stroke-width="2"/><circle cx="43" cy="10" r="2.6" fill="#8A6B2E"/><circle cx="10" cy="43" r="2.6" fill="#8A6B2E"/><path d="M50,10 Q58,10 58,4" stroke="#8A6B2E" stroke-width="1.6"/><path d="M10,50 Q10,58 4,58" stroke="#8A6B2E" stroke-width="1.6"/></svg>
     <button class="horo-close" onclick="HORO_close()">✕</button>
     <div class="horo-glyph" id="horo-glyph">♌</div>
-    <div class="horo-title" id="horo-title">Лев</div>
+    <div class="horo-ribbon">
+      <svg viewBox="0 0 320 74" preserveAspectRatio="xMidYMid meet">
+        <path d="M52,14 L14,6 L28,37 L14,68 L52,60 Z" fill="#D9BE84" stroke="#6B4A0E" stroke-width="2.5"/>
+        <path d="M268,14 L306,6 L292,37 L306,68 L268,60 Z" fill="#D9BE84" stroke="#6B4A0E" stroke-width="2.5"/>
+        <path d="M52,14 L52,60 L62,52 L62,22 Z" fill="#A8894E" stroke="#6B4A0E" stroke-width="2"/>
+        <path d="M268,14 L268,60 L258,52 L258,22 Z" fill="#A8894E" stroke="#6B4A0E" stroke-width="2"/>
+        <path d="M62,10 H258 Q270,10 270,24 V50 Q270,64 258,64 H62 Q50,64 50,50 V24 Q50,10 62,10 Z" fill="#FBF3DC" stroke="#6B4A0E" stroke-width="3"/>
+        <path d="M66,16 H254 Q264,16 264,26 V48 Q264,58 254,58 H66 Q56,58 56,48 V26 Q56,16 66,16 Z" fill="none" stroke="#B08A3E" stroke-width="1.5"/>
+        <text id="horo-title" x="160" y="46" text-anchor="middle" font-size="26" font-weight="900" fill="#6B4A0E" style="font-family:'Unbounded',sans-serif">Лев</text>
+      </svg>
+    </div>
     <div class="horo-date" id="horo-date"></div>
     <div class="horo-signs" id="horo-signs"></div>
     <div id="horo-body"></div>
+    <div class="horo-twine"></div>
+    <div class="horo-seal"><span id="horo-seal-glyph">♌</span></div>
     <div class="horo-note">Гороскоп — развлечение и вдохновение, а не руководство и не прогноз. 📜</div>
     <div class="horo-btns">
       <button class="btn-draw euro" onclick="HORO_share()">📤 Поделиться гороскопом</button>
@@ -5475,9 +5528,9 @@ async function QA_go(){
   res.innerHTML=rows.map((r,ri)=>
     '<div class="qa-row"><div class="qa-balls">'+
     r.m.map((n,i)=>'<div class="qa-ball '+(r.tags[i]==='z'?'zres':(r.tags[i]==='m'?'mres':'qb'))+'" style="animation-delay:'+(ri*0.12+i*0.07).toFixed(2)+'s,'+(ri*0.12+i*0.07+0.5).toFixed(2)+'s">'+n+'</div>').join('')+
-    (r.b.length?'<div style="width:6px"></div>'+r.b.map((n,bi)=>'<div class="qa-ball qb" style="width:34px;height:34px;font-size:13px;animation-delay:'+(ri*0.12+(r.m.length+bi)*0.07).toFixed(2)+'s,'+(ri*0.12+(r.m.length+bi)*0.07+0.5).toFixed(2)+'s">'+n+'</div>').join(''):'')+
+    (r.b.length?'<div style="width:6px"></div>'+r.b.map((n,bi)=>'<div class="qa-ball bonus" style="width:34px;height:34px;font-size:13px;animation-delay:'+(ri*0.12+(r.m.length+bi)*0.07).toFixed(2)+'s,'+(ri*0.12+(r.m.length+bi)*0.07+0.5).toFixed(2)+'s">'+n+'</div>').join(''):'')+
     '</div></div>').join('')+
-    '<div class="qa-legend"><span><span class="qa-dot" style="background:#E9B44C"></span>твой знак</span><span><span class="qa-dot" style="background:#6BB8E8"></span>Луна тиража</span><span><span class="qa-dot" style="background:#E86BA8"></span>личный резонанс</span><span><span class="qa-dot" style="background:#9B6BE8"></span>чистый квант</span></div>'+
+    '<div class="qa-legend"><span><span class="qa-dot" style="background:#3DBB8A"></span>звёздные/бонус</span><span><span class="qa-dot" style="background:#E9B44C"></span>твой знак</span><span><span class="qa-dot" style="background:#6BB8E8"></span>Луна тиража</span><span><span class="qa-dot" style="background:#E86BA8"></span>личный резонанс</span><span><span class="qa-dot" style="background:#9B6BE8"></span>чистый квант</span></div>'+
     '<div class="qa-pass">🪪 <b>Звёздный паспорт</b><br>Знак: '+QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+' · Луна тиража: '+ph.emoji+' '+ph.name+' ('+ph.illum+'%) в '+QA_ZODIAC[ms][1]+
     (rows.meta.natal?'<br>Натальная Луна: '+QA_ZODIAC[rows.meta.natal.moonSign][0]+' '+QA_ZODIAC[rows.meta.natal.moonSign][1]+(rows.meta.natal.hasTime?' (по времени рождения)':' (~полдень)')+' · Число судьбы: '+rows.meta.natal.lifePath:'')+
     '<br>Тираж: '+drawDate.toLocaleString('ru-RU',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'<br>Источник случайности: '+src+'</div>'+
@@ -5601,11 +5654,25 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 /* ═══════════ ГОРОСКОП НА ПЕРГАМЕНТЕ ═══════════ */
 var HORO_sign=0;
+const HORO_FLAVOR=[
+ ['Твой огонь Овна сегодня — двигатель:','Импульс первопроходца ведёт тебя:','Марс подмигивает Овну:','Твоя овенская прямота — сила дня:'],
+ ['Упорство Тельца — твой якорь:','Земная основательность Тельца шепчет:','Венера греет Тельца:','Твоё телецкое терпение окупается:'],
+ ['Живой ум Близнецов искрит:','Две твои стороны сегодня заодно:','Меркурий разгоняет мысли Близнецов:','Лёгкость Близнецов открывает двери:'],
+ ['Интуиция Рака сегодня — компас:','Лунная чуткость Рака слышит больше слов:','Домашний огонь Рака греет:','Забота Рака возвращается к тебе:'],
+ ['Львиное сердце сегодня на троне:','Солнце подсвечивает Льва:','Твоя львиная щедрость заразительна:','Гордость Льва — в достоинстве, не в громкости:'],
+ ['Точность Девы сегодня — суперсила:','Дева видит деталь, которую все пропустили:','Меркурий наводит порядок для Девы:','Скромная работа Девы даёт громкий результат:'],
+ ['Весы держат баланс там, где другие падают:','Твоя весовская дипломатия творит чудеса:','Венера красит день Весов:','Гармония Весов — заразительна:'],
+ ['Глубина Скорпиона видит суть:','Скорпионья воля сегодня непробиваема:','Плутон даёт Скорпиону второе дыхание:','Тихая сила Скорпиона громче криков:'],
+ ['Стрела Стрельца летит дальше обычного:','Оптимизм Стрельца — топливо дня:','Юпитер расширяет горизонты Стрельца:','Свобода Стрельца — в лёгком шаге:'],
+ ['Козерог строит там, где другие мечтают:','Твоя козерожья дисциплина — тихий козырь:','Сатурн уважает упорство Козерога:','Вершина ближе, чем кажется Козерогу:'],
+ ['Водолей видит завтра раньше всех:','Твоя водолейская странность — это дар:','Уран искрит идеями для Водолея:','Свежий взгляд Водолея нужен именно сегодня:'],
+ ['Рыбы чувствуют течение дня без карты:','Нептун шепчет Рыбам верное направление:','Мягкость Рыб — не слабость, а мудрость:','Воображение Рыб сегодня пророческое:']
+];
 const HORO_POOL={
-  energy:['Энергия дня на твоей стороне — начатое сегодня получит разгон.','День просит размеренного темпа: сила в спокойствии, а не в спешке.','Утро задаёт тон: одно смелое действие до полудня окрасит весь день.','Сегодня твоя интуиция громче логики — прислушайся к первому импульсу.','Волна дня переменчива: гибкость принесёт больше, чем упрямство.','Отличный день, чтобы закрыть хвосты — завершения дадут прилив сил.','Космос подсвечивает новое: пробуй то, чего ещё не делал.','Твоя харизма сегодня заметнее обычного — используй её в переговорах.','День наблюдателя: лучшие ходы придут, если сначала осмотреться.','Внутренний огонь ровный и сильный — бери задачи, которые откладывал.'],
-  money:['В финансах день аккуратной точности: пересчитай, прежде чем соглашаться.','Возможна приятная мелочь — бонус, скидка или возврат, который забылся.','Не лучший день для крупных трат, зато отличный для планирования.','Деньги любят сегодня системность: одна маленькая привычка сбережёт многое.','Хороший день обсудить доход: разговор, отложенный давно, пройдёт легче.','Импульсивная покупка будет манить — дай ей сутки на раздумье.','Финансовая идея, записанная сегодня, через месяц покажет свою цену.','Звёзды за бережливость: сэкономленное сегодня удвоит завтрашние возможности.','Неожиданный совет о деньгах окажется дельным — выслушай.','День щедрости: небольшой подарок близкому вернётся сторицей.'],
-  heart:['В отношениях день тёплых мелочей: одно сообщение изменит чей-то день.','Старый друг вспомнит о тебе — или вспомни первым.','Искренность сегодня обезоруживает: говори просто, без брони.','Домашний вечер даст больше сил, чем шумная компания.','Чьё-то молчание — не холод, а усталость. Прояви терпение.','Комплимент, сказанный вслух, запустит цепочку хорошего.','День семьи: общее дело, даже маленькое, сблизит сильнее слов.','Новое знакомство может оказаться неслучайным — будь открыт.','Прощение, даже мысленное, снимет камень с плеч.','Слушай сегодня вдвое больше, чем говоришь — узнаешь важное.'],
-  advice:['Совет дня: одна страница книги лучше часа ленты.','Совет дня: выпей воды и выйди на 15 минут под небо.','Совет дня: запиши три вещи, за которые благодарен.','Совет дня: наведи порядок в одном ящике — в мыслях тоже прояснится.','Совет дня: позвони тому, о ком подумал прямо сейчас.','Совет дня: сделай сложное дело первым — остальное покажется лёгким.','Совет дня: сегодня хорошо мечтать письменно — план начинается с фантазии.','Совет дня: улыбнись незнакомцу — эхо вернётся.','Совет дня: отложи телефон за час до сна, звёзды оценят.','Совет дня: маленький шаг к большой цели важнее идеального плана.']
+  energy:['Энергия дня на твоей стороне — начатое сегодня получит разгон.','День просит размеренного темпа: сила в спокойствии, а не в спешке.','Утро задаёт тон: одно смелое действие до полудня окрасит весь день.','Сегодня твоя интуиция громче логики — прислушайся к первому импульсу.','Волна дня переменчива: гибкость принесёт больше, чем упрямство.','Отличный день, чтобы закрыть хвосты — завершения дадут прилив сил.','Космос подсвечивает новое: пробуй то, чего ещё не делал.','Твоя харизма сегодня заметнее обычного — используй её в переговорах.','День наблюдателя: лучшие ходы придут, если сначала осмотреться.','Внутренний огонь ровный и сильный — бери задачи, которые откладывал.','Пик твоей энергии — после обеда: планируй главное туда.','Сегодня побеждает не скорость, а точность первого шага.','Прилив сил придёт от завершённого маленького дела.','Тело просит движения — десять минут прогулки перезагрузят день.','Твоё спокойствие сегодня — заразительное: им ты ведёшь других.','Смена обстановки на час даст идей на неделю.'],
+  money:['В финансах день аккуратной точности: пересчитай, прежде чем соглашаться.','Возможна приятная мелочь — бонус, скидка или возврат, который забылся.','Не лучший день для крупных трат, зато отличный для планирования.','Деньги любят сегодня системность: одна маленькая привычка сбережёт многое.','Хороший день обсудить доход: разговор, отложенный давно, пройдёт легче.','Импульсивная покупка будет манить — дай ей сутки на раздумье.','Финансовая идея, записанная сегодня, через месяц покажет свою цену.','Звёзды за бережливость: сэкономленное сегодня удвоит завтрашние возможности.','Неожиданный совет о деньгах окажется дельным — выслушай.','День щедрости: небольшой подарок близкому вернётся сторицей.','Пересмотри одну подписку — найдёшь утечку, о которой забыл.','Хороший день сравнить цены: разница удивит.','Отложи сегодня символическую сумму — привычка дороже суммы.','Разговор о деньгах веди письменно: цифры любят точность.','Твоя вещь, лежащая без дела, может стать чьей-то находкой — и твоей выгодой.','Инвестиция в знание сегодня надёжнее любой другой.'],
+  heart:['В отношениях день тёплых мелочей: одно сообщение изменит чей-то день.','Старый друг вспомнит о тебе — или вспомни первым.','Искренность сегодня обезоруживает: говори просто, без брони.','Домашний вечер даст больше сил, чем шумная компания.','Чьё-то молчание — не холод, а усталость. Прояви терпение.','Комплимент, сказанный вслух, запустит цепочку хорошего.','День семьи: общее дело, даже маленькое, сблизит сильнее слов.','Новое знакомство может оказаться неслучайным — будь открыт.','Прощение, даже мысленное, снимет камень с плеч.','Слушай сегодня вдвое больше, чем говоришь — узнаешь важное.','Общий ужин без телефонов сблизит больше, чем выходные порознь.','Скажи «спасибо» конкретно — за что именно, и увидишь глаза.','Старший родственник ждёт звонка, даже если не признаётся.','Небольшая уступка сегодня — большая победа отношений.','Смех — твой мост сегодня: поделись смешным с близким.','Чужой успех рядом — повод порадоваться, а не сравнивать.'],
+  advice:['Совет дня: одна страница книги лучше часа ленты.','Совет дня: выпей воды и выйди на 15 минут под небо.','Совет дня: запиши три вещи, за которые благодарен.','Совет дня: наведи порядок в одном ящике — в мыслях тоже прояснится.','Совет дня: позвони тому, о ком подумал прямо сейчас.','Совет дня: сделай сложное дело первым — остальное покажется лёгким.','Совет дня: сегодня хорошо мечтать письменно — план начинается с фантазии.','Совет дня: улыбнись незнакомцу — эхо вернётся.','Совет дня: отложи телефон за час до сна, звёзды оценят.','Совет дня: маленький шаг к большой цели важнее идеального плана.','Совет дня: съешь что-то зелёное и хрустящее — телу понравится.','Совет дня: разгрузи голову — выпиши всё в один список.','Совет дня: сделай фото момента, который хочется запомнить.','Совет дня: одна страница дневника вечером соберёт день воедино.','Совет дня: похвали себя за то, что уже сделано.','Совет дня: тишина 10 минут — лучший подарок нервной системе.']
 };
 function HORO_seedRng(seed){let x=seed>>>0;return()=>{x=(x*1664525+1013904223)>>>0;return x/4294967296;};}
 function HORO_text(sign){
@@ -5617,9 +5684,12 @@ function HORO_text(sign){
   const l=L();
   const lucky=[];while(lucky.length<3){const n=1+Math.floor(rng()*l.mB);if(!lucky.includes(n))lucky.push(n);}
   lucky.sort((a,b)=>a-b);
+  const flavor=HORO_FLAVOR[sign][Math.floor(rng()*HORO_FLAVOR[sign].length)];
+  const en=pick(HORO_POOL.energy);
   return{
     moon:ph.emoji+' '+ph.name+' · Луна в знаке '+QA_ZODIAC[ms][1],
-    energy:pick(HORO_POOL.energy),money:pick(HORO_POOL.money),heart:pick(HORO_POOL.heart),advice:pick(HORO_POOL.advice),
+    energy:flavor+' '+en.charAt(0).toLowerCase()+en.slice(1),
+    money:pick(HORO_POOL.money),heart:pick(HORO_POOL.heart),advice:pick(HORO_POOL.advice),
     lucky
   };
 }
@@ -5627,6 +5697,7 @@ function HORO_open(sign){
   HORO_sign=(sign!=null?sign:(QA_getSign()||0));
   document.getElementById('horo-signs').innerHTML=QA_ZODIAC.map((z,i)=>'<div class="horo-schip'+(i===HORO_sign?' on':'')+'" onclick="HORO_open('+i+')">'+z[0]+'</div>').join('');
   document.getElementById('horo-glyph').textContent=QA_ZODIAC[HORO_sign][0];
+  const sg=document.getElementById('horo-seal-glyph');if(sg)sg.textContent=QA_ZODIAC[HORO_sign][0];
   document.getElementById('horo-title').textContent=QA_ZODIAC[HORO_sign][1];
   document.getElementById('horo-date').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
   const t=HORO_text(HORO_sign);

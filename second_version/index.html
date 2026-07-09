@@ -911,6 +911,11 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 
 .horo-flourish{display:flex;justify-content:center;margin:10px 0 2px;opacity:.75}
 .horo-flourish svg{width:190px;height:20px}
+
+/* ══ РЕЖИМ ПОЛЁТА ЯКОРЯ: дешёвая отрисовка, плитки успевают ══ */
+body.sa-flight .mb,body.sa-flight .if-rball,body.sa-flight .qa-ball,body.sa-flight .nb{box-shadow:none!important;animation:none!important;text-shadow:none!important}
+body.sa-flight *{transition:none!important}
+body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:none!important}
 </style>
 </head>
 <body class="locked">
@@ -5312,7 +5317,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   };
   /* Собственная плавная прокрутка: видимые шары, стоп касанием */
   let saAnim=0;
-  const SA_stop=()=>{if(saAnim){cancelAnimationFrame(saAnim);saAnim=0;saUpd();}};
+  const SA_stop=()=>{if(saAnim){cancelAnimationFrame(saAnim);saAnim=0;document.body.classList.remove('sa-flight');saUpd();}};
   ['touchstart','pointerdown','wheel'].forEach(ev=>window.addEventListener(ev,e=>{
     if(saAnim&&!(e.target&&e.target.closest&&e.target.closest('.sa-btn')))SA_stop();
   },{passive:true}));
@@ -5326,15 +5331,25 @@ document.addEventListener('DOMContentLoaded',()=>{
     const to=btn&&btn.dataset.dir==='down'?maxTop:0;
     const dist=Math.abs(to-from);
     if(dist<2)return;
-    /* скорость ~6000 px/с с мягким въездом-выездом; длинная база едет заметно, но не вечно */
-    const dur=Math.max(650,Math.min(4200,dist/6));
+    /* постоянная крейсерская скорость: мобильный рендер успевает рисовать */
+    const V=3.0;                       /* px за мс ≈ 3000 px/с */
+    const ramp=260;                    /* мс мягкого разгона и торможения */
+    const dur=Math.max(600,Math.min(12000,dist/V+ramp));
     const t0=performance.now();
-    const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+    const pos=t=>{                     /* трапеция скорости: разгон-крейсер-торможение */
+      if(dur<=2*ramp){const x=t/dur;return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;}
+      const a=ramp/dur, plateau=1-2*a, vNorm=1/(plateau+a);
+      const x=t/dur;
+      if(x<a)return vNorm*(x*x)/(2*a);
+      if(x>1-a){const y=1-x;return 1-vNorm*(y*y)/(2*a);}
+      return vNorm*(x-a/2);
+    };
+    document.body.classList.add('sa-flight'); /* лёгкая графика на время полёта */
     const step=now=>{
-      const p=Math.min(1,(now-t0)/dur);
-      window.scrollTo(0,from+(to-from)*ease(p));
-      if(p<1)saAnim=requestAnimationFrame(step);
-      else{saAnim=0;saUpd();}
+      const t=Math.min(dur,now-t0);
+      window.scrollTo(0,from+(to-from)*pos(t));
+      if(t<dur)saAnim=requestAnimationFrame(step);
+      else{saAnim=0;document.body.classList.remove('sa-flight');saUpd();}
     };
     saAnim=requestAnimationFrame(step);
   };

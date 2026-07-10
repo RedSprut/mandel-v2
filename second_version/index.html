@@ -121,7 +121,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
   radial-gradient(70% 34% at 18% -6%,var(--curtain-glow) 0,transparent 55%),
   radial-gradient(70% 34% at 82% -6%,var(--curtain-glow) 0,transparent 55%),
   var(--bg)}
-body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov,body.locked>#wc-ov,body.locked>#sup-ov,body.locked>#period-ov,body.locked>#cele-ov,body.locked>#ticket-ov,body.locked>#qa-ov,body.locked>#qab-ov,body.locked>#horo-ov,body.locked>.scroll-anchors{display:none!important}
+body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov,body.locked>#wc-ov,body.locked>#sup-ov,body.locked>#period-ov,body.locked>#genn-ov,body.locked>#adv-ov,body.locked>#supc-ov,body.locked>#cele-ov,body.locked>#busy-ov,body.locked>#ticket-ov,body.locked>#qa-ov,body.locked>#qab-ov,body.locked>#horo-ov,body.locked>.scroll-anchors{display:none!important}
 
 /* ══ ЭКРАН-ЗАМОК: билет за кулисами ══ */
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;color:#F6EEE4;background:
@@ -347,7 +347,7 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .bn.on .bn-lbl{color:var(--gold)}
 
 .sec-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:14px 14px 0;background:var(--tab-bg);border-radius:16px;padding:4px}
-.st{min-width:0;padding:13px 8px;border-radius:12px;border:none;background:transparent;font-size:15px;font-weight:800;color:var(--sub);cursor:pointer;transition:all .18s;white-space:normal;line-height:1.18;text-align:center;font-family:'Manrope',sans-serif}
+.st{flex:1 0 auto;min-width:30%;padding:12px 10px;font-size:13.5px;font-weight:800;border-radius:14px;border:1px solid var(--srow-border);background:var(--bg2);color:var(--sub);cursor:pointer;white-space:nowrap}
 .st.on{background:var(--tab-on);font-weight:800;color:var(--fg);box-shadow:0 2px 8px rgba(0,0,0,.16)}
 .tab-content{display:none}.tab-content.vis{display:block}
 #pg-ana .card{font-size:17px;line-height:1.55}
@@ -916,6 +916,40 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 body.sa-flight .mb,body.sa-flight .if-rball,body.sa-flight .qa-ball,body.sa-flight .nb{box-shadow:none!important;animation:none!important;text-shadow:none!important}
 body.sa-flight *{transition:none!important}
 body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:none!important}
+
+/* подсветка перенесённых рядов */
+@keyframes rowsFlash{0%,100%{box-shadow:none}25%,60%{box-shadow:0 0 0 3px var(--gold),0 0 26px rgba(233,180,76,.55)}}
+.rows-flash{animation:rowsFlash 1.7s ease;border-radius:18px}
+
+/* ══ ИНДИКАТОР ГЕНЕРАЦИИ ══ */
+.busy-ov{position:fixed;inset:0;background:rgba(10,4,8,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:700;display:none;align-items:center;justify-content:center;padding:24px}
+.busy-ov.show{display:flex}
+.busy-box{width:100%;max-width:320px;background:var(--modal-bg);border:1.5px solid var(--gold);border-radius:22px;padding:24px 20px;text-align:center;box-shadow:0 18px 60px rgba(0,0,0,.5)}
+.busy-hg{font-size:44px;display:inline-block;animation:hgFlip 1.3s ease-in-out infinite}
+@keyframes hgFlip{0%,18%{transform:rotate(0)}45%,68%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
+.busy-label{font-family:'Unbounded',sans-serif;font-weight:900;font-size:15px;margin-top:10px}
+.busy-bar{height:8px;border-radius:4px;background:var(--bg2);border:1px solid var(--srow-border);margin-top:14px;overflow:hidden}
+.busy-fill{height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,#E9B44C,#F5CE7B,#E9B44C);background-size:200% 100%;animation:busyShimmer 1.1s linear infinite;transition:width .25s ease}
+@keyframes busyShimmer{from{background-position:0% 0}to{background-position:200% 0}}
+.busy-sub{font-size:11.5px;color:var(--sub2);margin-top:9px}
+
+/* ══ СОВЕТ МОДЕЛИ ══ */
+.sg-adv{flex:0 0 auto;margin-left:auto;padding:7px 11px;border-radius:10px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:11px;font-weight:900;cursor:pointer;white-space:nowrap}
+.sg-algo{display:flex;align-items:center;gap:10px}
+.adv-draw{margin:10px 0 2px;padding:11px 13px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(150deg,rgba(233,180,76,.12),transparent);font-size:13px;line-height:1.6;font-weight:700}
+.adv-row{margin-top:10px;padding:10px 12px;border:1px solid var(--srow-border);border-radius:14px;background:var(--bg2)}
+.adv-swap{box-shadow:0 0 0 2.5px #E9B44C,0 0 14px rgba(233,180,76,.55)!important;position:relative}
+.adv-invest{margin-top:12px;padding:12px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 12px 12px 0;font-size:12.5px;line-height:1.65}
+.adv-invest b{color:var(--gold)}
+
+/* ══ КАБИНЕТ СУДЬИ ══ */
+.supc-card{display:flex;gap:12px;align-items:center;padding:13px 14px;margin-bottom:10px;border:1.5px solid var(--gold);border-radius:16px;cursor:pointer;background:linear-gradient(150deg,rgba(233,180,76,.14),transparent)}
+.supc-card:active{transform:scale(.98)}
+.supc-signs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.supc-sign{border:1px solid var(--srow-border);border-radius:11px;padding:8px 2px;text-align:center;cursor:pointer;background:var(--bg2);font-size:17px}
+.supc-sign .zn{font-size:8px;font-weight:800;color:var(--sub2);margin-top:1px}
+.supc-sign.on{border-color:var(--gold);box-shadow:0 0 12px rgba(233,180,76,.4)}
+.supc-route{margin-top:12px;padding:13px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(150deg,rgba(233,180,76,.1),transparent);font-size:13px;line-height:1.65}
 </style>
 </head>
 <body class="locked">
@@ -1055,7 +1089,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
       <div class="ndb-l"><div class="ndb-title">🔮 Квантово-астральный <span class="qa-badge">PREMIUM</span></div><div class="ndb-sub">Квантовая случайность ANU + твой знак + Луна на дату тиража</div></div>
       <div style="font-size:20px">✨</div>
     </button>
-    <button class="ndb euro" id="wheel-btn" onclick="applyWheelMatrix()">
+    <button class="ndb euro" id="wheel-btn" onclick="GENN_open('wheel')">
       <div class="ndb-l"><div class="ndb-title">Колесная матрица</div><div class="ndb-sub" id="wheel-sub">10 рядов · покрытие пар</div></div>
       <div style="font-size:20px">⠿</div>
     </button>
@@ -1258,8 +1292,9 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 
 <!-- SMART GEN MODAL -->
 <div class="sg-ov" id="sg-ov" onclick="sgOut(event)">
-  <div class="sg-sheet">
+  <div class="sg-sheet" style="position:relative">
     <div class="sg-hndl"></div>
+    <button class="btn-close2" onclick="closeSG()" style="position:absolute;top:14px;right:14px;width:38px;height:38px;padding:0;margin:0;border-radius:11px;font-size:16px;font-weight:900;z-index:2">✕</button>
     <div class="sg-header"><div class="sg-icon" id="sg-icon">🎯</div><div class="sg-title" id="sg-name">EUROJACKPOT</div><div class="sg-sub">Умная генерация · математический анализ</div></div>
     <div class="sg-cd euro" id="sg-cd">
       <div class="sg-cd-lbl">Следующий розыгрыш</div>
@@ -1272,6 +1307,15 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
       <div class="if-winrow" onclick="PERIOD_open()" style="cursor:pointer">
         <div><div class="if-winlbl">Период анализа</div><div class="if-winsub" id="if-win-note">Вся доступная база выбранной лотереи</div></div>
         <div class="if-winsel" id="if-win-btn" style="width:auto;padding:9px 14px;border:1.5px solid var(--gold);border-radius:12px;font-weight:800;font-size:13px;color:var(--gold)">Вся база ▾</div>
+      </div>
+      <div class="if-winrow" onclick="GENN_open('sg')" style="cursor:pointer;margin-bottom:10px">
+        <div><div class="if-winlbl">Сколько рядов</div><div class="if-winsub" id="sg-count-note">Применяется ко всем моделям</div></div>
+        <div class="if-winsel" id="sg-count-btn" style="width:auto;padding:9px 14px;border:1.5px solid var(--gold);border-radius:12px;font-weight:800;font-size:13px;color:var(--gold)">10 ▾</div>
+      </div>
+      <div class="supc-card" onclick="SUPC_open()">
+        <div style="font-size:22px">⚖️</div>
+        <div><div style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:13.5px">Персональный совет судьи</div>
+        <div style="font-size:11.5px;color:var(--sub2);margin-top:2px">Знает звёзды, вашу натальную карту и базу тиражей. Выпишет направление к модели и вынесет решающий вердикт.</div></div>
       </div>
       <div class="if-note" style="margin:0 0 10px">Каждая модель — свой способ читать историю тиражей за выбранный период: одни ищут частоту, другие связи пар, третьи пропуски и циклы. Ни одна не предсказывает будущее — они показывают структуру прошлого, из которой ты собираешь свою стратегию.</div>
       <div class="sg-algo" id="al-freq" onclick="selAlgo('freq')"><div class="sg-algo-icon">🔥</div><div><div class="sg-algo-name">Частотный анализ</div><div class="sg-algo-desc">Числа которые чаще выпадали в базе тиражей</div></div></div>
@@ -1471,6 +1515,46 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
   </div>
 </div>
 
+<div class="lang-ov" id="supc-ov" onclick="if(event.target===this)SUPC_close()">
+  <div class="lang-box" style="position:relative">
+    <button class="horo-close" style="background:var(--bg2);border-color:var(--srow-border);color:var(--sub)" onclick="SUPC_close()">✕</button>
+    <div class="lang-title">⚖️ Кабинет судьи</div>
+    <div class="if-note" style="margin:0 0 10px">Прежде чем советовать, я должен узнать вас: звёзды говорят о характере стратегии, а база — о состоянии поля.</div>
+    <div class="if-seclbl" style="margin-top:0">Ваш знак зодиака</div>
+    <div class="supc-signs" id="supc-signs"></div>
+    <div class="qa-birthline" id="supc-birthline" onclick="QAB_open()" style="border-color:var(--srow-border);color:var(--sub2)">🎂 Дата рождения: <b id="supc-birthval" style="color:var(--gold)">не указана</b> · настроить</div>
+    <button class="btn-draw euro" style="margin-top:12px" onclick="SUPC_route()">Получить направление</button>
+    <div id="supc-result"></div>
+  </div>
+</div>
+
+<div class="if-ov" id="adv-ov">
+  <div class="if-sheet" style="position:relative">
+    <button class="btn-close2" onclick="ADV_close()" style="position:absolute;top:14px;right:14px;width:38px;height:38px;padding:0;margin:0;border-radius:11px;font-size:16px;font-weight:900;z-index:2">✕</button>
+    <div class="if-hdr"><div><div class="if-title" id="adv-title">💬 Совет модели</div><div class="if-sub" id="adv-sub"></div></div></div>
+    <div class="adv-draw" id="adv-draw"></div>
+    <div class="if-seclbl">Сколько рядов совета</div>
+    <div class="pick-counts" id="adv-counts" style="grid-template-columns:repeat(5,1fr)"></div>
+    <button class="btn-draw euro" id="adv-go" style="margin-top:12px" onclick="ADV_go()">💬 Дать совет</button>
+    <div id="adv-result"></div>
+    <div class="if-note" style="margin-top:12px">Гарантий победы не существует и существовать не может — вероятность тиража не меняется никаким анализом. Это исследовательский совет по структуре прошлого.</div>
+  </div>
+</div>
+
+<div class="lang-ov" id="genn-ov" onclick="if(event.target===this)GENN_close()">
+  <div class="lang-box">
+    <div class="lang-title">📐 Сколько рядов сгенерировать</div>
+    <div class="if-note" style="margin:0 0 10px;text-align:center" id="genn-note"></div>
+    <div class="pick-counts" id="genn-chips" style="grid-template-columns:repeat(5,1fr)"></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <input type="number" class="num-inp" id="genn-custom" min="1" max="50" placeholder="или своё: 1–50" style="flex:1">
+      <button class="btn-exp" style="margin:0;width:auto;padding:0 16px" onclick="GENN_custom()">ОК</button>
+    </div>
+    <button class="btn-draw euro" style="margin-top:12px" id="genn-go" onclick="GENN_go()">Сформировать</button>
+    <button class="btn-close2" onclick="GENN_close()">Закрыть</button>
+  </div>
+</div>
+
 <div class="lang-ov" id="period-ov" onclick="if(event.target===this)PERIOD_close()">
   <div class="lang-box">
     <div class="lang-title">🗓 Период анализа</div>
@@ -1488,6 +1572,15 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
       <button class="btn-exp" style="margin:0;width:auto;padding:0 18px" onclick="PERIOD_custom()">ОК</button>
     </div>
     <button class="btn-close2" onclick="PERIOD_close()">Закрыть</button>
+  </div>
+</div>
+
+<div class="busy-ov" id="busy-ov">
+  <div class="busy-box">
+    <div class="busy-hg">⏳</div>
+    <div class="busy-label" id="busy-label">Генерация…</div>
+    <div class="busy-bar"><div class="busy-fill" id="busy-fill"></div></div>
+    <div class="busy-sub">Считаю по базе тиражей — секунду</div>
   </div>
 </div>
 
@@ -2228,8 +2321,8 @@ function fillAll(){
 const GEN_COUNT_KEY='md2_gen_count';
 function getGenCount(){
   const el=document.getElementById('gen-count');
-  const raw=el?+el.value:+localStorage.getItem(GEN_COUNT_KEY)||10;
-  return Math.max(1,Math.min(MAX_ROWS,Number.isFinite(raw)?raw:10));
+  const raw=(el&&el.value!=='')?+el.value:(+localStorage.getItem(GEN_COUNT_KEY)||10);
+  return Math.max(1,Math.min(MAX_ROWS,Number.isFinite(raw)&&raw>0?raw:10));
 }
 function onGenCountChange(){
   const c=getGenCount();
@@ -2246,6 +2339,8 @@ function initGenControls(){
 }
 function updateGenCountUI(){
   const c=getGenCount(),sel=document.getElementById('gen-count'),sub=document.getElementById('wheel-sub');
+  const sgBtn=document.getElementById('sg-count-btn');
+  if(sgBtn)sgBtn.textContent=c+' ▾';
   if(sel)sel.value=String(c);
   if(sub)sub.textContent=`${c} ${rowWord(c)} · покрытие пар`;
 }
@@ -2284,6 +2379,7 @@ function setGeneratedRows(gen,status){
   renderSim();
   resetBanner();
   showGenStatus(status);
+  goToRows();
   return revealResult(document.getElementById('rows-c'),'start');
 }
 function showGenStatus(msg){
@@ -2292,13 +2388,17 @@ function showGenStatus(msg){
   el.style.display='';
   el.textContent=msg;
 }
-function genBonus(l,draws,mode='rnd'){
+function genBonus(l,draws,mode='bayes'){
   const dBo=drawBonusCount(l);
   if(!dBo||!l.bB)return[];
   const bf=draws.length>=5?buildFreq(draws,'bonus',l.bB):null;
   if(mode==='freq'&&bf){
     const top=[...bf.entries()].sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
     return shufSlice(top,dBo);
+  }
+  if(mode==='bayes'&&bf){ /* сглаживание Лапласа α=2: данные ведут, но не диктуют */
+    const w=rangeNums(l.bB).map(n=>(bf.get(n)||0)+2);
+    return weightedDistinct(w,dBo,l.bB);
   }
   return rnd(l.bB,dBo);
 }
@@ -2467,30 +2567,48 @@ async function generateRowsByAlgo(algo,count){
     /* цепи Маркова: частоты переходов «тираж N → тираж N+1», условие — последний тираж */
     const T=new Map();
     for(let i=draws.length-2;i>=0;i--){
-      const prev=draws[i+1]?.m||[],next=draws[i]?.m||[];
+      const prev=draws[i+1]?.main||[],next=draws[i]?.main||[];
       prev.forEach(a=>{next.forEach(b=>{const k2=a+'-'+b;T.set(k2,(T.get(k2)||0)+1);});});
     }
-    const last=draws[0]?.m||[];
+    const last=draws[0]?.main||[];
     const w=rangeNums(l.mB).map(n=>1+last.reduce((s,a)=>s+(T.get(a+'-'+n)||0),0));
     for(let i=0;i<count;i++)out.push({m:weightedDistinct(w,l.pM,l.mB),b:genBonus(l,draws)});
   }else if(algo==='gauss'){
     /* ЦПТ: сумма ряда — в пике колокола нормального распределения сумм */
-    const mu=l.pM*(l.mB+1)/2;
-    const sigma=Math.sqrt(l.pM*(l.mB+1)*(l.mB-l.pM)/12)||1;
+    let mu=l.pM*(l.mB+1)/2;
+    let sigma=Math.sqrt(l.pM*(l.mB+1)*(l.mB-l.pM)/12)||1;
+    if(hasHist){ /* эмпирическое распределение сумм реальных тиражей */
+      const sums=draws.map(d=>(d.main||[]).reduce((a,b)=>a+b,0)).filter(x=>x>0);
+      if(sums.length>=5){
+        mu=sums.reduce((a,b)=>a+b,0)/sums.length;
+        sigma=Math.sqrt(sums.reduce((a,b)=>a+(b-mu)*(b-mu),0)/sums.length)||sigma;
+      }
+    }
+    /* цель обязана уважать активный фильтр сумм — иначе ряды молча заменит рандом */
+    try{const f=getFilterSettings();if(f&&f.sum&&isFinite(f.min)&&isFinite(f.max))mu=Math.max(f.min,Math.min(f.max,mu));}catch(e){}
+    /* конструктивно: веса-гауссиана вокруг целевого среднего шара + выбор лучшего по сумме */
+    const target=mu/l.pM, spread=Math.max(3,sigma/Math.sqrt(l.pM)*1.6);
+    const gw=rangeNums(l.mB).map(n=>Math.exp(-((n-target)*(n-target))/(2*spread*spread))+.02);
     for(let i=0;i<count;i++){
-      let m=rnd(l.mB,l.pM),guard=0;
-      while(Math.abs(m.reduce((a,b)=>a+b,0)-mu)>sigma*.6&&guard++<400)m=rnd(l.mB,l.pM);
-      out.push({m,b:genBonus(l,draws)});
+      let best=null,bd=Infinity;
+      for(let t=0;t<40;t++){
+        const cand=weightedDistinct(gw,l.pM,l.mB);
+        const d=Math.abs(cand.reduce((a,b)=>a+b,0)-mu);
+        if(d<bd){bd=d;best=cand;}
+        if(d<=sigma*.5)break;
+      }
+      out.push({m:best,b:genBonus(l,draws)});
     }
   }else if(algo==='delta'){
     /* дельта-метод: генерация через типичные разности соседних чисел из базы */
-    const pool=[];
-    draws.slice(0,120).forEach(d=>{const s=[...(d.m||[])].sort((a,b)=>a-b);for(let i=1;i<s.length;i++)pool.push(s[i]-s[i-1]);});
+    const pool=[],starts=[];
+    draws.slice(0,120).forEach(d=>{const s=[...(d.main||[])].sort((a,b)=>a-b);if(s.length){starts.push(s[0]);for(let i=1;i<s.length;i++)pool.push(s[i]-s[i-1]);}});
     if(!pool.length)pool.push(1,2,3,4,5,6);
+    if(!starts.length)starts.push(1,2,3,5,8);
     for(let i=0;i<count;i++){
       let m=[],guard=0;
       while(guard++<300){
-        m=[1+Math.floor(Math.random()*Math.max(1,l.mB-l.pM*3))];
+        m=[starts[Math.floor(Math.random()*starts.length)]];
         while(m.length<l.pM){const d=pool[Math.floor(Math.random()*pool.length)];const n=m[m.length-1]+d;if(n>l.mB)break;m.push(n);}
         if(m.length===l.pM)break;
       }
@@ -2504,13 +2622,13 @@ async function generateRowsByAlgo(algo,count){
   }else if(algo==='overdue'){
     /* gap-анализ: вес растёт с числом тиражей без выпадения относительно ожидаемого интервала */
     const expGap=Math.max(1,l.mB/l.pM);
-    const gapOf=n=>{const idx=draws.findIndex(d=>(d.m||[]).includes(n));return idx<0?draws.length+expGap:idx;};
+    const gapOf=n=>{const idx=draws.findIndex(d=>(d.main||[]).includes(n));return idx<0?draws.length+expGap:idx;};
     const w=rangeNums(l.mB).map(n=>Math.pow(gapOf(n)/expGap,1.6)+.15);
     for(let i=0;i<count;i++)out.push({m:weightedDistinct(w,l.pM,l.mB),b:genBonus(l,draws)});
   }else if(algo==='phys'){
-    for(let i=0;i<count;i++)out.push({m:physicsDraw(l.mB,l.pM),b:genBonus(l,draws)});
+    for(let i=0;i<count;i++)out.push({m:physicsDraw(l.mB,l.pM),b:genBonus(l,draws,'rnd')});
   }else if(algo==='chaos'){
-    for(let i=0;i<count;i++)out.push({m:chaosDraw(l.mB,l.pM),b:genBonus(l,draws)});
+    for(let i=0;i<count;i++)out.push({m:chaosDraw(l.mB,l.pM),b:genBonus(l,draws,'rnd')});
   }else if(algo==='quantum'){
     /* квантовый коллапс: истинная случайность + «туннелирование» холодных чисел через частотный барьер */
     const q=await quantumStream(count*l.pM*6);
@@ -2519,14 +2637,16 @@ async function generateRowsByAlgo(algo,count){
     const w=rangeNums(l.mB).map(n=>Math.exp(-1.15*(freq.get(n)||0)/avg)+.02);
     for(let i=0;i<count;i++)out.push({m:weightedDistinct(w,l.pM,l.mB,q.next),b:genBonus(l,draws)});
   }else{
-    for(let i=0;i<count;i++)out.push({m:rnd(l.mB,l.pM),b:genBonus(l,draws)});
+    for(let i=0;i<count;i++)out.push({m:rnd(l.mB,l.pM),b:genBonus(l,draws,'rnd')});
   }
   return filterGeneratedRows(out,count,l,draws);
 }
 async function generateSelectedRows(){
+  if(GEN_BUSY)return;
   const algo=document.getElementById('direct-algo')?.value||'freq';
   const count=getGenCount();
-  const gen=await generateRowsByAlgo(algo,count);
+  const gen=await withBusy('Генерация '+count+' '+rowWord(count),()=>generateRowsByAlgo(algo,count));
+  if(!gen)return;
   const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'Мандель-сегменты',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль',markov:'цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'дельта-метод',bayes:'Байесовский',overdue:'gap-анализ (просроченные)',phys:'физика лототрона',chaos:'детерминированный хаос',quantum:'квантовый коллапс'};
   const dur=setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`);
   setTimeout(()=>showFeedback('Ряды готовы',`Сгенерировано ${count} ${rowWord(count)}.\nМетод: ${labels[algo]||algo}.`,'🎯',2200),dur+150);
@@ -2883,13 +3003,16 @@ async function buildWheelGenerated(rowCount){
 }
 
 async function applyWheelMatrix(){
+  if(GEN_BUSY&&!applyWheelMatrix._inner)return;
   const count=getGenCount(),l=L(),draws=await loadD(cur);
-  const built=await buildWheelGenerated(count);
+  const built=await withBusy('Колёсная матрица · '+count+' '+rowWord(count),()=>buildWheelGenerated(count));
+  if(!built)return;
   rows=filterGeneratedRows(built.rows,count,l,draws);
   if(!rows.length)rows=[nr()];
   act=0;
   renderSim();
   resetBanner();
+  goToRows();
   const dur=revealResult(document.getElementById('rows-c'),'start');
   setTimeout(()=>showFeedback('Матрица готова',`Сгенерировано ${rows.length} ${rowWord(rows.length)}.\nМетод: колёсная матрица · покрытие пар ${built.cov.covered}/${built.cov.total}.`,'📐',2400),dur+150);
   const el=document.getElementById('wheel-status');
@@ -3191,7 +3314,8 @@ async function useFav(i){
   const favs=await loadFav();
   if(!favs[i])return;
   rows=normalizeGeneratedRows(favs[i].rows,L());
-  act=0;renderSim();resetBanner();
+  act=0;renderSim();
+  goToRows();resetBanner();
   showFeedback('Загружено','Комбинации из Избранного снова поставлены в симулятор.','✅');
 }
 
@@ -4165,10 +4289,12 @@ async function openSG(){
 }
 
 async function selAlgo(id){
+  if(GEN_BUSY)return;
   sgAlgo=id;
   document.querySelectorAll('.sg-algo').forEach(a=>a.classList.remove('sel'));
   document.getElementById('al-'+id).classList.add('sel');
-  await generateCombos();
+  const name=(document.querySelector('#al-'+id+' .sg-algo-name')||{}).textContent||'Модель';
+  await withBusy(name,generateCombos);
   const useBtn=document.getElementById('sg-use');if(useBtn)useBtn.style.display='';
   const res=document.getElementById('sg-result');
   if(res)setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'start'}),60);
@@ -4323,6 +4449,8 @@ function useGen(){
   rows=sgGen.map(g=>({m:[...g.m],b:[...g.b]}));
   if(!rows.length)rows=[nr()];
   act=0;closeSG();renderSim();resetBanner();
+  goToRows();
+  showGenStatus('Числа перенесены в билет — удачи! 🍀');
 }
 
 function sgOut(e){if(e.target===document.getElementById('sg-ov'))closeSG();}
@@ -5483,6 +5611,12 @@ async function QA_rows(count,opts){
   }
   let qi=0;const u=()=>{const v=q[qi++%q.length]/65536;qi===q.length&&(qi=0);return v;};
   const moonBoost=0.10+0.20*(ph.illum/100); /* полнолуние усиливает лунный резонанс */
+  /* резонанс базы: сила поля из истории тиражей выбранного периода */
+  let baseA=null,baseN=0;
+  try{
+    const dws=IF_window(await loadD(cur));
+    if(dws.length>=5){baseA=IF_scores(dws,'main',l.mB,l.pM);baseN=dws.length;}
+  }catch(e){}
   /* натальный слой: Луна при рождении, число судьбы, день рождения */
   const birth=QA_birth();
   let natal=null;
@@ -5508,6 +5642,7 @@ async function QA_rows(count,opts){
         if(digitSum(n)===natal.lifePath)w[n]+=0.18; /* число судьбы */
         if(n===natal.day||n===((natal.day-1)%l.mB)+1)w[n]+=0.12; /* день рождения */
       }
+      if(baseA)w[n]+=0.15*(((baseA.scores[n-1]||{}).score||0)/100); /* резонанс базы тиражей */
     }
     const m=[],tags=[];
     while(m.length<l.pM){
@@ -5529,7 +5664,7 @@ async function QA_rows(count,opts){
     }
     rows.push({m:idx.map(i=>m[i]),tags:idx.map(i=>tags[i]),b});
   }
-  return Object.assign(rows,{meta:{ph,ms,zs,src,drawDate,natal}});
+  return Object.assign(rows,{meta:{ph,ms,zs,src,drawDate,natal,baseN}});
 }
 function QA_open(){
   const l=L();
@@ -5575,7 +5710,8 @@ async function QA_go(){
     '<div class="qa-legend"><span><span class="qa-dot" style="background:#3DBB8A"></span>звёздные/бонус</span><span><span class="qa-dot" style="background:#E9B44C"></span>твой знак</span><span><span class="qa-dot" style="background:#6BB8E8"></span>Луна тиража</span><span><span class="qa-dot" style="background:#E86BA8"></span>личный резонанс</span><span><span class="qa-dot" style="background:#9B6BE8"></span>чистый квант</span></div>'+
     '<div class="qa-pass">🪪 <b>Звёздный паспорт</b><br>Знак: '+QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+' · Луна тиража: '+ph.emoji+' '+ph.name+' ('+ph.illum+'%) в '+QA_ZODIAC[ms][1]+
     (rows.meta.natal?'<br>Натальная Луна: '+QA_ZODIAC[rows.meta.natal.moonSign][0]+' '+QA_ZODIAC[rows.meta.natal.moonSign][1]+(rows.meta.natal.hasTime?' (по времени рождения)':' (~полдень)')+' · Число судьбы: '+rows.meta.natal.lifePath:'')+
-    '<br>Тираж: '+drawDate.toLocaleString('ru-RU',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'<br>Источник случайности: '+src+'</div>'+
+    '<br>Тираж: '+drawDate.toLocaleString('ru-RU',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'<br>Источник случайности: '+src+
+    (rows.meta.baseN?'<br>Резонанс базы: сила поля из '+rows.meta.baseN+' тиражей вплетена в веса':'')+'</div>'+
     '<button class="btn-draw euro qa-go" style="margin-top:12px" onclick="QA_use()">Использовать в симуляторе</button>'+
     '<button class="btn-exp" style="margin-top:8px;border-color:#C9A55A;color:#F5CE7B" onclick="HORO_open()">📜 Гороскоп на сегодня</button>'+
     '<button class="btn-exp" style="margin-top:8px;border-color:#6B4BA8;color:#E8DEFA" onclick="QA_share()">📤 Поделиться со Вселенной</button>';
@@ -5758,6 +5894,292 @@ function HORO_share(){
   shareText('Гороскоп · '+QA_ZODIAC[HORO_sign][1],
     '📜 '+QA_ZODIAC[HORO_sign][0]+' '+QA_ZODIAC[HORO_sign][1]+' · '+new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'\n'+
     t.moon+'\n\n⚡ '+t.energy+'\n💰 '+t.money+'\n💛 '+t.heart+'\n'+t.advice+'\n🍀 Числа удачи: '+t.lucky.join(' '));
+}
+
+
+/* ═══ После любой генерации/загрузки — на главный экран к рядам ═══ */
+function goToRows(){
+  try{
+    if(typeof curPage!=='undefined'&&curPage!=='sim'&&typeof selPage==='function')selPage('sim');
+    const land=()=>{
+      const el=document.getElementById('rows-c');
+      if(!el)return;
+      const top=el.getBoundingClientRect().top+(window.scrollY||0)-100;
+      window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+    };
+    setTimeout(()=>{
+      land();
+      const el=document.getElementById('rows-c');
+      if(el){el.classList.remove('rows-flash');void el.offsetWidth;el.classList.add('rows-flash');setTimeout(()=>el.classList.remove('rows-flash'),1800);}
+    },150);
+    setTimeout(land,700); /* докоррекция после закрытия листа и анимаций */
+  }catch(e){}
+}
+
+
+/* ═══ Выбор количества рядов (1–50) для колеса и моделей ═══ */
+var GENN_mode='wheel';
+function setGenCount(n){
+  n=Math.max(1,Math.min(MAX_ROWS,parseInt(n)||10));
+  localStorage.setItem(GEN_COUNT_KEY,String(n));
+  const sel=document.getElementById('gen-count');
+  if(sel){
+    if(![...sel.options].some(o=>o.value===String(n))){
+      const o=document.createElement('option');
+      o.value=String(n);o.textContent=n+' '+rowWord(n);
+      /* вставляем по порядку */
+      const after=[...sel.options].find(x=>+x.value>n);
+      sel.insertBefore(o,after||null);
+    }
+    sel.value=String(n);
+  }
+  updateGenCountUI();
+  return n;
+}
+function GENN_open(mode){
+  GENN_mode=mode||'wheel';
+  const cur=getGenCount();
+  document.getElementById('genn-note').textContent=GENN_mode==='wheel'?'Колёсная матрица построит покрытие пар на выбранное число рядов.':'Количество применится ко всем моделям генерации.';
+  document.getElementById('genn-chips').innerHTML=[1,3,5,10,15,20,30,40,50].map(n=>'<button class="pick-cnt'+(n===cur?' on':'')+'" onclick="GENN_set('+n+',this)">'+n+'</button>').join('');
+  document.getElementById('genn-custom').value='';
+  document.getElementById('genn-go').textContent=GENN_mode==='wheel'?'📐 Сформировать матрицу':'Применить';
+  document.getElementById('genn-ov').classList.add('show');
+}
+function GENN_close(){document.getElementById('genn-ov').classList.remove('show');}
+function GENN_set(n,el){
+  setGenCount(n);
+  document.querySelectorAll('#genn-chips .pick-cnt').forEach(b=>b.classList.toggle('on',b===el));
+}
+function GENN_custom(){
+  const v=parseInt(document.getElementById('genn-custom').value);
+  if(!isFinite(v)||v<1||v>50){showCopyToast('Число от 1 до 50');return;}
+  setGenCount(v);
+  document.querySelectorAll('#genn-chips .pick-cnt').forEach(b=>b.classList.toggle('on',+b.textContent===v));
+  showCopyToast('Рядов: '+v);
+}
+function GENN_go(){
+  GENN_close();
+  if(GENN_mode==='wheel')applyWheelMatrix();
+  else if(document.getElementById('sg-ov').classList.contains('show'))onGenCountChange();
+}
+
+
+/* ═══ Занятость генерации: песочные часы, прогресс, защита от двойного тапа ═══ */
+var GEN_BUSY=false,BUSY_t0=0,BUSY_timer=null;
+function BUSY_show(label){
+  BUSY_t0=performance.now();
+  document.getElementById('busy-label').textContent=label||'Генерация…';
+  const fill=document.getElementById('busy-fill');
+  fill.style.width='4%';
+  clearInterval(BUSY_timer);
+  let p=4;
+  BUSY_timer=setInterval(()=>{p=Math.min(90,p+(92-p)*0.16);fill.style.width=p.toFixed(0)+'%';},140);
+  document.getElementById('busy-ov').classList.add('show');
+}
+async function BUSY_hide(){
+  clearInterval(BUSY_timer);
+  document.getElementById('busy-fill').style.width='100%';
+  const shown=performance.now()-BUSY_t0;
+  await new Promise(r=>setTimeout(r,Math.max(220,480-shown))); /* минимум показа — глазом видно */
+  document.getElementById('busy-ov').classList.remove('show');
+}
+async function withBusy(label,fn){
+  if(GEN_BUSY)return; /* двойной тап игнорируем — генерация уже идёт */
+  GEN_BUSY=true;
+  BUSY_show(label);
+  try{return await fn();}
+  finally{GEN_BUSY=false;await BUSY_hide();}
+}
+
+
+/* ═══════════ СОВЕТ МОДЕЛИ НА СЛЕДУЮЩИЙ ТИРАЖ + ВЕРДИКТ СУДЬИ-СЛЕДОВАТЕЛЯ ═══════════ */
+var ADV_state=null;
+const ADV_NAMES={freq:'Частотный анализ',bal:'Сбалансированный',man:'Мандель-сегменты',markov:'Цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'Дельта-метод',bayes:'Байесовский',overdue:'Gap-анализ',phys:'Физика лототрона',chaos:'Детерминированный хаос',quantum:'Квантовый коллапс',rnd:'Pure random','world-hot':'Мировой горячий','world-mix':'Мировой смешанный',qastro:'Квантово-астральный',wheel:'Колёсная матрица'};
+function ADV_injectButtons(){
+  document.querySelectorAll('.sg-algo').forEach(card=>{
+    if(card.querySelector('.sg-adv'))return;
+    const id=(card.id||'').replace(/^al-/,'');
+    if(!id)return;
+    const b=document.createElement('button');
+    b.className='sg-adv';b.textContent='💬 Совет';
+    b.onclick=e=>{e.stopPropagation();ADV_open(id);};
+    card.appendChild(b);
+  });
+}
+document.addEventListener('DOMContentLoaded',()=>setTimeout(ADV_injectButtons,400));
+async function ADV_open(algo){
+  const l=L();
+  ADV_state={algo,n:Math.min(5,getGenCount()),rows:null,verdict:null};
+  document.getElementById('adv-title').textContent='💬 Совет · '+(ADV_NAMES[algo]||algo);
+  const dd=QA_nextDrawDate();
+  const days=Math.round((dd-new Date())/86400000);
+  const when=days<=0?'сегодня':days===1?'завтра':'через '+days+' дн.';
+  document.getElementById('adv-draw').innerHTML='🎯 Совет строго на следующий тираж:<br><b>'+dd.toLocaleString('ru-RU',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})+'</b> · '+when;
+  const draws=IF_window(await loadD(cur));
+  document.getElementById('adv-sub').textContent=l.name+' · анализ по '+draws.length+' тиражам выбранного периода';
+  document.getElementById('adv-counts').innerHTML=[1,2,3,5,10].map(n=>'<button class="pick-cnt'+(n===ADV_state.n?' on':'')+'" onclick="ADV_setN('+n+',this)">'+n+'</button>').join('');
+  document.getElementById('adv-result').innerHTML='';
+  document.getElementById('adv-go').style.display='';
+  document.getElementById('adv-ov').classList.add('show');
+}
+function ADV_setN(n,el){ADV_state.n=n;document.querySelectorAll('#adv-counts .pick-cnt').forEach(b=>b.classList.toggle('on',b===el));}
+function ADV_close(){document.getElementById('adv-ov').classList.remove('show');}
+function ADV_ballsHtml(r,l,swaps){
+  return '<div class="if-rowballs">'+
+    r.m.map(n=>'<div class="if-rball rb-m-'+l.cls+(swaps&&swaps.has(n)?' adv-swap':'')+'">'+n+'</div>').join('')+
+    ((r.b&&r.b.length)?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>';
+}
+async function ADV_go(){
+  const st=ADV_state;if(!st)return;
+  const l=L();
+  const rows=await withBusy((ADV_NAMES[st.algo]||st.algo)+' · совет',()=>generateRowsByAlgo(st.algo,st.n));
+  if(!rows)return;
+  st.rows=rows;st.verdict=null;
+  const dd=QA_nextDrawDate();
+  document.getElementById('adv-go').style.display='none';
+  if(SUPC_pending&&SUPC_pending.algo===st.algo){
+    /* пришли по направлению судьи — автоматически в его кабинет */
+    setTimeout(()=>{showCopyToast('⚖️ Переношу дело в кабинет судьи…');ADV_judge();},900);
+  }
+  document.getElementById('adv-result').innerHTML=
+    '<div class="if-seclbl">Совет модели · '+rows.length+' '+rowWord(rows.length)+'</div>'+
+    rows.map(r=>'<div class="adv-row">'+ADV_ballsHtml(r,l)+'</div>').join('')+
+    '<div class="if-note" style="margin-top:8px">«'+(ADV_NAMES[st.algo]||st.algo)+'» советую применить эти числа на тираж '+dd.toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'short'})+'.</div>'+
+    '<button class="btn-draw '+l.cls+'" style="margin-top:12px" onclick="ADV_use()">Использовать в билете</button>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
+    '<button class="btn-exp" style="margin:0" onclick="ADV_share()">📤 Поделиться</button>'+
+    '<button class="btn-exp" style="margin:0" onclick="ADV_judge()">⚖️ Вердикт судьи</button></div>';
+}
+/* Судья-следователь: проверяет каждое число совета силой поля и исправляет слабые */
+async function ADV_judge(){
+  const st=ADV_state;if(!st||!st.rows)return;
+  const l=L();
+  const verdictData=await withBusy('Судья расследует…',async()=>{
+    const draws=IF_window(await loadD(cur));
+    if(draws.length<5)return{err:'Мало данных: судье нужно минимум 5 тиражей.'};
+    const A=IF_scores(draws,'main',l.mB,l.pM);
+    const score=n=>((A.scores[n-1]||{}).score||0);
+    const all=rangeNums(l.mB).map(n=>score(n)).sort((a,b)=>a-b);
+    const threshold=all[Math.floor(all.length*0.35)]; /* нижние 35% по полю — под подозрением */
+    const verdict=[],swapsLog=[];
+    for(const r of st.rows){
+      const m=[...r.m];
+      const weak=m.filter(n=>score(n)<threshold).sort((a,b)=>score(a)-score(b));
+      const strongPool=rangeNums(l.mB).filter(n=>!m.includes(n)).sort((a,b)=>score(b)-score(a));
+      const swapped=new Set();
+      /* исправляем максимум половину ряда — судья корректирует, а не переписывает */
+      weak.slice(0,Math.floor(l.pM/2)).forEach(w0=>{
+        const repl=strongPool.shift();
+        if(repl!=null&&score(repl)>score(w0)){
+          m[m.indexOf(w0)]=repl;swapped.add(repl);
+          swapsLog.push({from:w0,to:repl,sf:Math.round(score(w0)),st:Math.round(score(repl))});
+        }
+      });
+      verdict.push({m:m.sort((a,b)=>a-b),b:[...(r.b||[])],swapped});
+    }
+    return{verdict,swapsLog,drawsN:draws.length,checked:st.rows.length*l.pM,threshold:Math.round(threshold)};
+  });
+  if(!verdictData)return;
+  if(verdictData.err){showFeedback('Судья',verdictData.err,'⚖️',3200);return;}
+  st.verdict=verdictData.verdict;
+  const agreed=verdictData.checked-verdictData.swapsLog.length;
+  const uniq=new Set();st.verdict.forEach(r=>r.m.forEach(n=>uniq.add(n)));
+  const covPct=Math.round(uniq.size/l.mB*100);
+  const covLine=' Ваши '+st.verdict.length+' '+rowWord(st.verdict.length)+' покрывают '+uniq.size+' из '+l.mB+' чисел ('+covPct+'%) — '+(covPct>=45?'широкое покрытие, разумный выбор количества.':covPct>=22?'умеренное покрытие; 5–10 рядов раскрыли бы поле шире.':'узкое покрытие: один-два ряда — это точечная ставка, для охвата поля берите больше рядов.');
+  const intro=(SUPC_pending&&SUPC_pending.algo===st.algo)?'<b>⚖️ Кабинет судьи.</b> Вы вернулись по моему направлению — рассматриваю дело лично. '+SUPC_pending.reason+'<br><br>':'';
+  if(SUPC_pending&&SUPC_pending.algo===st.algo)SUPC_pending=null;
+  const invest=intro+'<b>Расследование судьи.</b> Проверил '+verdictData.checked+' чисел совета по силе поля из '+verdictData.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Порог доверия: сила '+verdictData.threshold+'.<br>'+
+    'Согласен с <b>'+agreed+'</b> числами. '+
+    (verdictData.swapsLog.length?('Исправляю <b>'+verdictData.swapsLog.length+'</b>: '+verdictData.swapsLog.slice(0,8).map(x=>x.from+'→'+x.to+' <span style="color:var(--sub2)">(сила '+x.sf+'→'+x.st+')</span>').join(', ')+(verdictData.swapsLog.length>8?' и ещё '+(verdictData.swapsLog.length-8):'')+'.'):'Возражений нет — совет модели выдержал проверку поля полностью. ✅')+covLine;
+  document.getElementById('adv-result').innerHTML=
+    '<div class="if-seclbl">⚖️ Вердикт судьи · '+st.verdict.length+' '+rowWord(st.verdict.length)+'</div>'+
+    st.verdict.map(r=>'<div class="adv-row">'+ADV_ballsHtml(r,L(),r.swapped)+'</div>').join('')+
+    '<div class="adv-invest">'+invest+'</div>'+
+    '<div class="if-note" style="margin-top:8px">Золотым кольцом отмечены исправленные судьёй числа.</div>'+
+    '<button class="btn-draw '+L().cls+'" style="margin-top:12px" onclick="ADV_useVerdict()">Использовать вердикт</button>'+
+    '<button class="btn-exp" style="margin-top:8px" onclick="ADV_shareVerdict()">📤 Поделиться вердиктом</button>';
+}
+function ADV_use(){
+  const st=ADV_state;if(!st||!st.rows)return;
+  ADV_close();closeSG();
+  setGeneratedRows(st.rows.map(r=>({m:r.m,b:r.b})),'Совет «'+(ADV_NAMES[st.algo]||st.algo)+'» перенесён в билет. Гарантий нет — удачи есть! 🍀');
+}
+function ADV_useVerdict(){
+  const st=ADV_state;if(!st||!st.verdict)return;
+  ADV_close();closeSG();
+  setGeneratedRows(st.verdict.map(r=>({m:r.m,b:r.b})),'Вердикт судьи перенесён в билет. ⚖️🍀');
+}
+function ADV_share(){
+  const st=ADV_state;if(!st||!st.rows)return;
+  const dd=QA_nextDrawDate();
+  shareText('Совет · '+L().name,'💬 Совет «'+(ADV_NAMES[st.algo]||st.algo)+'» на тираж '+dd.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+' · '+L().name+'\n'+rowsAsText(st.rows,L())+'\nГарантий нет — это исследование истории.');
+}
+function ADV_shareVerdict(){
+  const st=ADV_state;if(!st||!st.verdict)return;
+  shareText('Вердикт судьи · '+L().name,'⚖️ Вердикт судьи на тираж '+QA_nextDrawDate().toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+' · '+L().name+'\n'+rowsAsText(st.verdict,L()));
+}
+
+
+/* ═══════════ ПЕРСОНАЛЬНЫЙ СОВЕТ СУДЬИ: звёзды + натал + база → направление → вердикт ═══════════ */
+var SUPC_pending=null; /* {algo, reason} — активное направление судьи */
+function SUPC_open(){
+  const zs=QA_getSign();
+  document.getElementById('supc-signs').innerHTML=QA_ZODIAC.map((z,i)=>'<div class="supc-sign'+(i===zs?' on':'')+'" onclick="SUPC_setSign('+i+',this)"><div>'+z[0]+'</div><div class="zn">'+z[1]+'</div></div>').join('');
+  const b=QA_birth();
+  document.getElementById('supc-birthval').textContent=b?(String(b.d).padStart(2,'0')+'.'+String(b.m).padStart(2,'0')+'.'+b.y+(b.hh!=null?' · '+String(b.hh).padStart(2,'0')+':'+String(b.mm).padStart(2,'0'):'')):'не указана';
+  document.getElementById('supc-result').innerHTML='';
+  document.getElementById('supc-ov').classList.add('show');
+}
+function SUPC_close(){document.getElementById('supc-ov').classList.remove('show');}
+function SUPC_setSign(i,el){
+  localStorage.setItem('md2_zsign',i);
+  document.querySelectorAll('.supc-sign').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  if(!QA_birth()){QA_skipSession=false;setTimeout(QAB_open,300);}
+}
+const SUPC_ELEMENTS=[['огня','смелые стратегии против течения'],['земли','основательные стратегии по данным'],['воздуха','стратегии связей и покрытия'],['воды','интуитивные стратегии распределений']];
+async function SUPC_route(){
+  const zs=QA_getSign();
+  if(zs===null){showCopyToast('⚖️ Сначала выберите знак зодиака');return;}
+  const l=L();
+  const data=await withBusy('Судья изучает вас и базу…',async()=>{
+    const draws=IF_window(await loadD(cur));
+    let cv=0;
+    if(draws.length>=5){
+      const A=IF_scores(draws,'main',l.mB,l.pM);
+      const sc=A.scores.map(x=>x.score||0);
+      const mean=sc.reduce((a,b)=>a+b,0)/sc.length||1;
+      cv=Math.sqrt(sc.reduce((a,b)=>a+(b-mean)*(b-mean),0)/sc.length)/mean;
+    }
+    return{draws:draws.length,cv};
+  });
+  if(!data)return;
+  const elem=zs%4; /* стихия знака */
+  const birth=QA_birth();
+  const lp=birth?QA_lifePath(birth.d,birth.m,birth.y):null;
+  const ph=QA_moonPhase(QA_nextDrawDate());
+  const structured=data.cv>0.28; /* поле выражено или ровное */
+  /* направление: стихия × состояние поля × луна/число судьбы */
+  const routes={
+    0:structured?['overdue','поле неровное — история дала зацепки, а знак огня любит идти против толпы: берём просроченные числа']:['quantum','поле ровное — зацепок мало, огню подойдёт чистая смелость квантового коллапса'],
+    1:structured?['freq','поле выражено — земля доверяет фактам: частотный анализ по вашей базе']:['bayes','поле ровное — земле подойдёт байесовская осторожность: данные ведут, но не диктуют'],
+    2:structured?['markov','поле неровное — воздух читает связи: цепи Маркова по переходам тиражей']:['wheel','поле ровное — воздуху важна широта: колёсная матрица покроет пары'],
+    3:structured?['delta','поле выражено — вода чувствует ритм: дельта-метод по разностям базы']:['gauss','поле ровное — воде подойдёт колокол распределения сумм: Гаусс']
+  };
+  let[algo,why]=routes[elem];
+  if(lp&&(lp===7||lp===11)&&!structured){algo='qastro';why='ваше число судьбы '+lp+' — знак глубокой интуиции: направляю к Квантово-астральному';}
+  const reason='Вы — '+QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+', знак '+SUPC_ELEMENTS[elem][0]+': вам идут '+SUPC_ELEMENTS[elem][1]+'.'+
+    (birth?' Натальная Луна в '+QA_ZODIAC[QA_moonSign(QA_birthDateObj(birth))][1]+(lp?', число судьбы '+lp:'')+'.':' (дата рождения углубила бы анализ)')+
+    ' База: '+data.draws+' тиражей, вариация силы поля '+(data.cv*100).toFixed(0)+'% — '+(structured?'структура выражена':'поле ровное')+'. Луна тиража: '+ph.emoji+' '+ph.name+'.';
+  SUPC_pending={algo,reason};
+  document.getElementById('supc-result').innerHTML=
+    '<div class="supc-route"><b>⚖️ Моё направление: '+(ADV_NAMES[algo]||algo)+'</b><br>'+reason+'<br><br>'+why.charAt(0).toUpperCase()+why.slice(1)+'.<br><br>Идите к этой модели, выберите количество рядов, получите её совет — и <b>возвращайтесь ко мне за решающим вердиктом</b>: я рассмотрю дело сам.</div>'+
+    '<button class="btn-draw '+l.cls+'" style="margin-top:12px" onclick="SUPC_goModel()">Перейти к модели →</button>';
+}
+function SUPC_goModel(){
+  if(!SUPC_pending)return;
+  SUPC_close();
+  ADV_open(SUPC_pending.algo);
 }
 
 </script>

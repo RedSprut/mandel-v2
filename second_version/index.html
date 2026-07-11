@@ -2201,7 +2201,8 @@ function selLot(id){
 // ═══════════════════════════════════════════════
 function initRows(){rows=[nr(),nr()];act=0;}
 const nr=()=>({m:[],b:[]});
-function drawBonusCount(l){return l.offBo||l.pBo||0;}
+function drawBonusCount(l){return l.pBo||0;} /* БИЛЕТ: сколько доп-чисел ОТМЕЧАЕТ ИГРОК (lotto/superenalotto/lottomax = 0) */
+function drawnBonusCount(l){return l.offBo||l.pBo||0;} /* ТИРАЖ: сколько доп-чисел ВЫТЯГИВАЕТСЯ (tillegg/jolly/bonus) */
 
 function renderSim(){updatePickLabels();renderRows();renderMainGrid();renderBonusCol();renderSimBtns();updateHdr();}
 
@@ -3039,7 +3040,7 @@ async function applyWheelMatrix(){
 // ═══════════════════════════════════════════════
 function doDraw(){
   const l=L();fillAll();
-  const dM=rnd(l.mB,l.pM),dB=drawBonusCount(l)>0?rnd(l.bB,drawBonusCount(l)):[];
+  const dM=rnd(l.mB,l.pM),dB=drawnBonusCount(l)>0?rnd(l.bB,drawnBonusCount(l)):[];
   lastDraw={main:dM,bonus:dB};
   showBanner(dM,dB);renderSim();
   // track ROI: add spending
@@ -3181,7 +3182,7 @@ function runLifeSim(){
   };
   const step=()=>{
     for(let x=0;x<batch&&done<total;x++,done++){
-      const dM=rnd(l.mB,l.pM),dB=drawBonusCount(l)>0?rnd(l.bB,drawBonusCount(l)):[];
+      const dM=rnd(l.mB,l.pM),dB=drawnBonusCount(l)>0?rnd(l.bB,drawnBonusCount(l)):[];
       spent+=ticket.length*l.price;
       ticket.forEach(row=>{
         const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l);
@@ -3952,6 +3953,7 @@ async function renderChi(){
   const obs=[...freq.values()],tot=obs.reduce((s,v)=>s+v,0),exp=tot/l.mB;
   const chi2=obs.reduce((s,o)=>s+Math.pow(o-exp,2)/exp,0);
   const df=l.mB-1,p=chi2pvalue(chi2,df);
+  const pos=POSQ_audit(draws,l);
   let css,icon,verdict;
   if(p>0.05){css='ok';icon='✅';verdict='Лотерея статистически честная';}
   else if(p>0.01){css='warn';icon='⚠️';verdict='Незначительное отклонение';}
@@ -3961,6 +3963,15 @@ async function renderChi(){
   <div class="srow"><span>Степени свободы:</span><span>${df}</span></div>
   <div class="srow"><span>p-value:</span><span>${p.toFixed(4)}</span></div>
   <div class="srow"><span>Ожид. частота:</span><span>${exp.toFixed(2)}</span></div>`;
+  if(pos){
+    const rowsT=pos.ybar.map((y,i)=>'<tr><td style="padding:3px 8px">Y('+(i+1)+')</td><td style="padding:3px 8px">'+pos.mu[i].toFixed(2)+'</td><td style="padding:3px 8px">'+y.toFixed(2)+'</td></tr>').join('');
+    const verdict=pos.p>0.05?'согласуется с честной ✅':(pos.p>0.01?'отклонение ⚠️':'сильное отклонение 🚨');
+    c.innerHTML+='<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--srow-border)">'+
+      '<div style="font-weight:900;font-size:13px">Позиционный аудит (Q-тест)</div>'+
+      '<div style="font-size:11px;color:var(--sub2);margin:3px 0 8px">Многомерный тест средних позиций по Coronel-Brizio et al., arXiv:0806.4595: у честной '+pos.k+'/'+L().mB+' i-е по возрастанию число обязано иметь среднее (N+1)·i/(k+1).</div>'+
+      '<table style="font-size:11.5px;border-collapse:collapse"><tr style="color:var(--sub2)"><td style="padding:3px 8px">Позиция</td><td style="padding:3px 8px">Теория</td><td style="padding:3px 8px">Факт ('+pos.m+' тир.)</td></tr>'+rowsT+'</table>'+
+      '<div style="margin-top:8px;font-size:12.5px">Q = <b>'+pos.Q.toFixed(2)+'</b> · p = <b>'+(pos.p<0.0001?'<0.0001':pos.p.toFixed(4))+'</b> → '+verdict+'</div></div>';
+  }
 }
 
 // ─── COMPARISON TABLE ─────────────────────────
@@ -5540,7 +5551,7 @@ async function crowdStats(){
     tiers=getPrizeTiers(l).map(t=>{
       const mm=parseInt(t.match),bb=t.match.includes('+')?parseInt(t.match.split('+')[1]):null;
       const pr={name:t.label,lvl:0,m:mm,b:bb};
-      const bonusDrawn=drawBonusCount(l);
+      const bonusDrawn=drawnBonusCount(l);
       const pMain=comb(l.pM,mm)*comb(l.mB-l.pM,l.pM-mm)/comb(l.mB,l.pM);
       const pBon=(bb===null||!l.bB||!bonusDrawn)?1:comb(bonusDrawn,bb)*comb(l.bB-bonusDrawn,(l.pBo||bonusDrawn)-bb)/comb(l.bB,l.pBo||bonusDrawn);
       const prob=pMain*(isFinite(pBon)?pBon:1);
@@ -6305,6 +6316,50 @@ function HIST_filter(){
     el.style.display=hit?'':'none';
     if(hit)shown++;
   });
+}
+
+
+/* ═══ Позиционный аудит честности: Coronel-Brizio, Hernández-Montoya, Rapallo, Scalas (arXiv:0806.4595) ═══
+   У честной k/N-лотереи i-е по возрастанию число имеет E[Y(i)]=(N+1)i/(k+1),
+   Cov[Y(i),Y(j)]=i(k−j+1)(N+1)(N−k)/((k+1)²(k+2)), i≤j.
+   Q = m·(ȳ−μ)ᵀV⁻¹(ȳ−μ) ~ χ²(k). */
+function POSQ_invert(A){
+  const n=A.length,M=A.map((row,i)=>[...row,...row.map((_,j)=>i===j?1:0)]);
+  for(let c=0;c<n;c++){
+    let piv=c;
+    for(let r=c+1;r<n;r++)if(Math.abs(M[r][c])>Math.abs(M[piv][c]))piv=r;
+    [M[c],M[piv]]=[M[piv],M[c]];
+    const d=M[c][c];if(Math.abs(d)<1e-12)return null;
+    for(let j=0;j<2*n;j++)M[c][j]/=d;
+    for(let r=0;r<n;r++){if(r===c)continue;const f=M[r][c];for(let j=0;j<2*n;j++)M[r][j]-=f*M[c][j];}
+  }
+  return M.map(row=>row.slice(n));
+}
+function POSQ_audit(draws,l){
+  const k=l.pM,N=l.mB,m=draws.length;
+  if(m<30)return null;
+  const ybar=new Array(k).fill(0);
+  let used=0;
+  for(const d of draws){
+    const a=[...(d.main||[])].sort((x,y)=>x-y);
+    if(a.length!==k)continue;
+    used++;
+    for(let i=0;i<k;i++)ybar[i]+=a[i];
+  }
+  if(used<30)return null;
+  for(let i=0;i<k;i++)ybar[i]/=used;
+  const mu=Array.from({length:k},(_,i)=>(N+1)*(i+1)/(k+1));
+  const V=Array.from({length:k},(_,ii)=>Array.from({length:k},(_,jj)=>{
+    const i=Math.min(ii,jj)+1,j=Math.max(ii,jj)+1;
+    return i*(k-j+1)*(N+1)*(N-k)/((k+1)*(k+1)*(k+2));
+  }));
+  const Vi=POSQ_invert(V);
+  if(!Vi)return null;
+  const dlt=ybar.map((y,i)=>y-mu[i]);
+  let Q=0;
+  for(let i=0;i<k;i++)for(let j=0;j<k;j++)Q+=dlt[i]*Vi[i][j]*dlt[j];
+  Q*=used;
+  return{Q,p:chi2pvalue(Q,k),k,m:used,ybar,mu};
 }
 
 </script>

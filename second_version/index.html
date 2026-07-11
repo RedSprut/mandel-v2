@@ -1174,8 +1174,8 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
       <div class="sub-banner" onclick="openSubInfo()">
         <div class="sub-badge">PREMIUM</div>
         <div class="sub-title">Mandel World Pro</div>
-        <div class="sub-desc">Полные базы с 2012 · Квантово-астральный · безлимит Консенсуса и Судьи · импорт/экспорт</div>
-        <div class="sub-price" id="sub-price-line">$4.99/мес <span>или $34.99/год · −42%</span></div>
+        <div class="sub-desc">Максимально полная база каждой игры · Квантово-астральный · безлимит Судьи и Консенсуса</div>
+        <div class="sub-price" id="sub-price-line">$4.99/мес <span>· 3 мес $12.99 · 6 мес $22.99 · год $34.99</span></div>
         <div class="sub-cta">Узнать подробнее →</div>
       </div>
       <button class="btn-exp" id="notify-btn" onclick="toggleWinNotify()" style="margin:0 0 8px">🔔 Уведомлять о выигрышах: выкл</button>
@@ -1188,6 +1188,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
     </div>
     <div class="card">
       <div class="card-t" id="hist-title">История (0 тиражей)</div>
+      <input class="num-inp" id="hist-search" placeholder="🔍 Поиск: дата, год или число (напр. 2023, 07 апр, 44)" style="width:100%;margin:8px 0 10px" oninput="HIST_filter()">
       <div id="hist-list"><div class="empty">📭 Тиражей нет</div></div>
       <button class="btn-exp" onclick="doExport()">📤 Экспорт JSON</button>
       <button class="btn-exp" onclick="doImport()" style="margin-top:4px">📥 Импорт JSON (файл)</button>
@@ -1519,11 +1520,23 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
   <div class="lang-box" style="position:relative">
     <button class="horo-close" style="background:var(--bg2);border-color:var(--srow-border);color:var(--sub)" onclick="SUPC_close()">✕</button>
     <div class="lang-title">⚖️ Кабинет судьи</div>
-    <div class="if-note" style="margin:0 0 10px">Прежде чем советовать, я должен узнать вас: звёзды говорят о характере стратегии, а база — о состоянии поля.</div>
+    <div class="if-note" style="margin:0 0 10px">Выберите путь совета:</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <button class="pick-mode" id="supc-way-astro" onclick="SUPC_way('astro')" style="text-align:center"><div style="font-size:20px">🔮</div><div class="pick-mode-t">Через звёзды</div><div style="font-size:10px;color:var(--sub2)">знак · натал · Луна · база</div></button>
+      <button class="pick-mode" id="supc-way-db" onclick="SUPC_way('db')" style="text-align:center"><div style="font-size:20px">📊</div><div class="pick-mode-t">Только база</div><div style="font-size:10px;color:var(--sub2)">лидеры пар · троек · четвёрок</div></button>
+    </div>
+    <div id="supc-astro-block">
     <div class="if-seclbl" style="margin-top:0">Ваш знак зодиака</div>
     <div class="supc-signs" id="supc-signs"></div>
     <div class="qa-birthline" id="supc-birthline" onclick="QAB_open()" style="border-color:var(--srow-border);color:var(--sub2)">🎂 Дата рождения: <b id="supc-birthval" style="color:var(--gold)">не указана</b> · настроить</div>
     <button class="btn-draw euro" style="margin-top:12px" onclick="SUPC_route()">Получить направление</button>
+    </div>
+    <div id="supc-db-block" style="display:none">
+      <div class="if-note" style="margin:0 0 10px">Без астрологии: судья находит лидеров совместных выпадений в базе — пары, тройки и четвёрки главных чисел (и пары звёздных, где их две) — и собирает ряды вокруг них.</div>
+      <div class="if-seclbl" style="margin-top:0">Сколько рядов</div>
+      <div class="pick-counts" id="supcdb-counts" style="grid-template-columns:repeat(5,1fr)"></div>
+      <button class="btn-draw euro" style="margin-top:12px" onclick="SUPC_db()">📊 Совет по лидерам базы</button>
+    </div>
     <div id="supc-result"></div>
   </div>
 </div>
@@ -2985,16 +2998,17 @@ async function buildWheelGenerated(rowCount){
   const mainRows=buildCoverageWheel(mainPool,l.pM,rowCount);
   let bonusRows=Array.from({length:mainRows.length},()=>[]);
 
-  if(l.pBo>0){
+  const dBo=drawBonusCount(l); /* как у всех моделей: догадка на вытягиваемый бонус (tillegg/jolly/звёзды) */
+  if(dBo>0&&l.bB){
     const bonusFreq=draws.length>=5?buildFreq(draws,'bonus',l.bB):null;
-    const bonusPoolSize=l.pBo===1?l.bB:Math.min(l.bB,l.pBo+6);
-    const bonusPool=buildWheelPool(l.bB,l.pBo,bonusPoolSize,selectedNums('b',l.bB),bonusFreq);
-    if(l.pBo===1){
+    const bonusPoolSize=dBo===1?l.bB:Math.min(l.bB,dBo+6);
+    const bonusPool=buildWheelPool(l.bB,dBo,bonusPoolSize,selectedNums('b',l.bB),bonusFreq);
+    if(dBo===1){
       const shuffled=shufSlice(bonusPool,bonusPool.length);
       bonusRows=mainRows.map((_,i)=>[shuffled[i%shuffled.length]]);
     }else{
-      bonusRows=buildCoverageWheel(bonusPool,l.pBo,mainRows.length);
-      while(bonusRows.length<mainRows.length)bonusRows.push(rnd(l.bB,l.pBo));
+      bonusRows=buildCoverageWheel(bonusPool,dBo,mainRows.length);
+      while(bonusRows.length<mainRows.length)bonusRows.push(rnd(l.bB,dBo));
     }
   }
 
@@ -3760,6 +3774,7 @@ async function renderHistory(){
     div.innerHTML=`<div class="hist-main"><div class="hist-date">${dy} ${ms[+mo-1]} ${y}${src}</div><div class="hist-balls">${balls}</div></div><button class="btn-del" onclick="delDraw('${d.date}')">🗑</button>`;
     c.appendChild(div);
   });
+  try{HIST_filter();}catch(e){}
 }
 
 async function delDraw(date){
@@ -5491,7 +5506,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 /* ═══ ПОДПИСКА (инфо-модал; оплата подключится на этапе мобильной сборки) ═══ */
 function openSubInfo(){
   showFeedback('👑 Mandel World Pro',
-'Бесплатно навсегда:\n· симулятор всех 9 лотерей\n· база последних 30 тиражей каждой игры\n· умная генерация — 3 запуска в неделю\n· Поле, Консенсус и Квантово-астральный — по 3 пробы\n\nPro · $4.99/мес или $34.99/год (−42%):\n· полные исторические базы (с 2012)\n· безлимитные Консенсус, Поле, Судья и Квантово-астральный с натальной картой\n· произвольный период анализа\n· импорт и экспорт баз\n· автопроверка избранного и уведомления\n\nЦена в валюте твоего магазина приложений (USD/NOK/EUR) определится автоматически при оплате.','👑',12000);
+'Бесплатно:\n· симулятор всех 9 лотерей без ограничений\n· официальные результаты операторов — последние тиражи (обычно 15–30)\n· умная генерация — 3 запуска в неделю\n· Поле, Консенсус, Судья и Квантово-астральный — по 3 пробы\n\nPro — максимально полная база каждой игры:\n· вся собранная история (Eurojackpot с 2012 · Powerball 1372 тиража · EuroMillions 1021 и др.)\n· безлимитные Консенсус, Поле, Судья (обе роли) и Астрал с натальной картой\n· произвольный период и диапазон дат\n· импорт и экспорт баз · автопроверка и уведомления\n\nПодписка: 1 мес $4.99 · 3 мес $12.99 · 6 мес $22.99 · 12 мес $34.99.\nЦена в валюте твоего магазина определится автоматически.','👑',12000);
 }
 
 
@@ -6123,6 +6138,7 @@ function ADV_shareVerdict(){
 /* ═══════════ ПЕРСОНАЛЬНЫЙ СОВЕТ СУДЬИ: звёзды + натал + база → направление → вердикт ═══════════ */
 var SUPC_pending=null; /* {algo, reason} — активное направление судьи */
 function SUPC_open(){
+  setTimeout(()=>SUPC_way('astro'),30);
   const zs=QA_getSign();
   document.getElementById('supc-signs').innerHTML=QA_ZODIAC.map((z,i)=>'<div class="supc-sign'+(i===zs?' on':'')+'" onclick="SUPC_setSign('+i+',this)"><div>'+z[0]+'</div><div class="zn">'+z[1]+'</div></div>').join('');
   const b=QA_birth();
@@ -6180,6 +6196,115 @@ function SUPC_goModel(){
   if(!SUPC_pending)return;
   SUPC_close();
   ADV_open(SUPC_pending.algo);
+}
+
+
+/* ═══ Судья: две роли. Роль «Только база» — лидеры пар/троек/четвёрок ═══ */
+var SUPC_dbN=3;
+function SUPC_way(w){
+  document.getElementById('supc-astro-block').style.display=w==='astro'?'':'none';
+  document.getElementById('supc-db-block').style.display=w==='db'?'':'none';
+  document.getElementById('supc-way-astro').classList.toggle('on',w==='astro');
+  document.getElementById('supc-way-db').classList.toggle('on',w==='db');
+  document.getElementById('supc-result').innerHTML='';
+  if(w==='db'){
+    document.getElementById('supcdb-counts').innerHTML=[1,2,3,5,10].map(n=>'<button class="pick-cnt'+(n===SUPC_dbN?' on':'')+'" onclick="SUPC_dbSetN('+n+',this)">'+n+'</button>').join('');
+  }
+}
+function SUPC_dbSetN(n,el){SUPC_dbN=n;document.querySelectorAll('#supcdb-counts .pick-cnt').forEach(b=>b.classList.toggle('on',b===el));}
+function SUPC_kTuples(draws,k){
+  const M=new Map();
+  for(const d of draws){
+    const a=[...(d.main||[])].sort((x,y)=>x-y);
+    const comb=(start,cur)=>{
+      if(cur.length===k){const key=cur.join('-');M.set(key,(M.get(key)||0)+1);return;}
+      for(let i=start;i<a.length;i++)comb(i+1,[...cur,a[i]]);
+    };
+    comb(0,[]);
+  }
+  return[...M.entries()].sort((x,y)=>y[1]-x[1]);
+}
+async function SUPC_db(){
+  const l=L();
+  const data=await withBusy('Судья ищет лидеров базы…',async()=>{
+    const draws=IF_window(await loadD(cur));
+    if(draws.length<10)return{err:'Нужно минимум 10 тиражей в выбранном периоде.'};
+    const pairs=SUPC_kTuples(draws,2);
+    const triples=SUPC_kTuples(draws,3);
+    const quads=l.pM>=5?SUPC_kTuples(draws,4).filter(q=>q[1]>=2):[];
+    const pairMap=new Map(pairs.map(([k,c])=>[k,c]));
+    const pc=(a,b)=>pairMap.get(a<b?a+'-'+b:b+'-'+a)||0;
+    const dBo=drawBonusCount(l);
+    let bonusPairs=[],bonusTop=[];
+    if(dBo>=2){
+      const BM=new Map();
+      draws.forEach(d=>{const b=[...(d.bonus||[])].sort((x,y)=>x-y);for(let i=0;i<b.length;i++)for(let j=i+1;j<b.length;j++){const k2=b[i]+'-'+b[j];BM.set(k2,(BM.get(k2)||0)+1);}});
+      bonusPairs=[...BM.entries()].sort((x,y)=>y[1]-x[1]);
+    }else if(dBo===1){
+      const bf=buildFreq(draws,'bonus',l.bB);
+      bonusTop=[...bf.entries()].sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
+    }
+    /* сборка рядов вокруг лидеров: четвёрка → тройки → пары */
+    const seeds=[];
+    quads.slice(0,2).forEach(q=>seeds.push(q[0].split('-').map(Number)));
+    triples.slice(0,6).forEach(t=>seeds.push(t[0].split('-').map(Number)));
+    pairs.slice(0,12).forEach(pr=>seeds.push(pr[0].split('-').map(Number)));
+    const rows=[];
+    for(let i=0;i<SUPC_dbN;i++){
+      const m=[...(seeds[i%seeds.length]||[])];
+      while(m.length<l.pM){
+        let best=null,bs=-1;
+        for(let n=1;n<=l.mB;n++){
+          if(m.includes(n))continue;
+          const sc=m.reduce((a,x)=>a+pc(n,x),0)+Math.random()*0.5;
+          if(sc>bs){bs=sc;best=n;}
+        }
+        m.push(best);
+      }
+      let b=[];
+      if(dBo>=2&&bonusPairs.length)b=bonusPairs[i%bonusPairs.length][0].split('-').map(Number);
+      else if(dBo===1&&bonusTop.length)b=[bonusTop[i%Math.min(3,bonusTop.length)]];
+      else if(dBo>0)b=rnd(l.bB,dBo);
+      rows.push({m:m.sort((a,b)=>a-b),b});
+    }
+    return{rows,pairs:pairs.slice(0,3),triples:triples.slice(0,2),quads:quads.slice(0,1),bonusPairs:bonusPairs.slice(0,2),drawsN:draws.length,dBo};
+  });
+  if(!data)return;
+  if(data.err){showFeedback('Судья',data.err,'⚖️',3200);return;}
+  window.SUPC_dbRows=data.rows;
+  const lead=[];
+  if(data.quads.length)lead.push('четвёрка <b>'+data.quads[0][0].split('-').join('·')+'</b> ('+data.quads[0][1]+' раз)');
+  data.triples.forEach(t=>lead.push('тройка <b>'+t[0].split('-').join('·')+'</b> ('+t[1]+')'));
+  data.pairs.forEach(pr=>lead.push('пара <b>'+pr[0].split('-').join('·')+'</b> ('+pr[1]+')'));
+  if(data.bonusPairs.length)lead.push('звёздная пара <b>'+data.bonusPairs[0][0].split('-').join('·')+'</b> ('+data.bonusPairs[0][1]+')');
+  document.getElementById('supc-result').innerHTML=
+    '<div class="supc-route"><b>📊 Расследование по базе.</b> Изучил '+data.drawsN+' тиражей. Лидеры совместных выпадений: '+lead.join(', ')+'. Собираю ряды вокруг лидеров, достраивая числами с сильнейшими парными связями.</div>'+
+    '<div class="if-seclbl">Совет судьи · '+data.rows.length+' '+rowWord(data.rows.length)+'</div>'+
+    data.rows.map(r=>'<div class="adv-row">'+ADV_ballsHtml(r,l)+'</div>').join('')+
+    '<div class="if-note" style="margin-top:8px">Лидеры прошлого не повышают шанс будущего тиража — гарантий не существует. Это исследование структуры базы.</div>'+
+    '<button class="btn-draw '+l.cls+'" style="margin-top:12px" onclick="SUPC_dbUse()">Использовать в билете</button>'+
+    '<button class="btn-exp" style="margin-top:8px" onclick="SUPC_dbShare()">📤 Поделиться</button>';
+}
+function SUPC_dbUse(){
+  if(!window.SUPC_dbRows)return;
+  SUPC_close();closeSG();
+  setGeneratedRows(window.SUPC_dbRows.map(r=>({m:r.m,b:r.b})),'Совет судьи по лидерам базы перенесён в билет. 📊🍀');
+}
+function SUPC_dbShare(){
+  if(!window.SUPC_dbRows)return;
+  shareText('Совет судьи · '+L().name,'⚖️📊 Совет судьи по лидерам базы · '+L().name+' · тираж '+QA_nextDrawDate().toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+'\n'+rowsAsText(window.SUPC_dbRows,L()));
+}
+/* ═══ Поиск по истории ═══ */
+function HIST_filter(){
+  const q=(document.getElementById('hist-search')?.value||'').trim().toLowerCase();
+  const list=document.getElementById('hist-list');
+  if(!list)return;
+  let shown=0;
+  [...list.children].forEach(el=>{
+    const hit=!q||el.textContent.toLowerCase().includes(q);
+    el.style.display=hit?'':'none';
+    if(hit)shown++;
+  });
 }
 
 </script>

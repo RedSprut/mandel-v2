@@ -123,7 +123,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
   radial-gradient(70% 34% at 18% -6%,var(--curtain-glow) 0,transparent 55%),
   radial-gradient(70% 34% at 82% -6%,var(--curtain-glow) 0,transparent 55%),
   var(--bg)}
-body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov,body.locked>#wc-ov,body.locked>#sup-ov,body.locked>#period-ov,body.locked>#genn-ov,body.locked>#adv-ov,body.locked>#supc-ov,body.locked>#cele-ov,body.locked>#busy-ov,body.locked>#ticket-ov,body.locked>#qa-ov,body.locked>#qab-ov,body.locked>#horo-ov,body.locked>#pdx-ov,body.locked>.scroll-anchors{display:none!important}
+body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov,body.locked>#wc-ov,body.locked>#sup-ov,body.locked>#period-ov,body.locked>#genn-ov,body.locked>#adv-ov,body.locked>#supc-ov,body.locked>#cele-ov,body.locked>#busy-ov,body.locked>#ticket-ov,body.locked>#qa-ov,body.locked>#qab-ov,body.locked>#horo-ov,body.locked>#pdx-ov,body.locked>#jc-ov,body.locked>#pro-ov,body.locked>.scroll-anchors{display:none!important}
 
 /* ══ ЭКРАН-ЗАМОК: билет за кулисами ══ */
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;color:#F6EEE4;background:
@@ -142,16 +142,28 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 
 /* ══ ШАПКА: бархатная афиша ══ */
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;position:sticky;top:0;z-index:260;color:#F9F2E7;background:
-  radial-gradient(130% 200% at 50% -80%,rgba(255,255,255,.14) 0,transparent 52%),
-  linear-gradient(165deg,var(--curtain-a),var(--curtain-b));
-  border-bottom:1px solid rgba(233,180,76,.5);box-shadow:0 8px 24px rgba(0,0,0,.24)}
+  radial-gradient(130% 200% at 50% -80%,rgba(255,255,255,.16) 0,transparent 52%),
+  linear-gradient(100deg,var(--hdr-a,var(--curtain-a)) 0%,var(--hdr-b,var(--curtain-a)) 52%,var(--hdr-c,var(--curtain-b)) 100%);
+  border-bottom:1px solid rgba(233,180,76,.5);box-shadow:0 8px 24px rgba(0,0,0,.3);transition:background .45s ease}
+/* ── ГРАДИЕНТ ШАПКИ И МОДАЛОК ПО ВЫБРАННОЙ ИГРЕ ── */
+body[data-game="lotto"]{--hdr-a:#B81B44;--hdr-b:#7A0E2B;--hdr-c:#4A0919;--game-glow:rgba(184,27,68,.5);--gm:#CC2060;--gm-hi:#F06091;--gm-lo:#7E0F3A;--gm-txt:#FFF;--gb:#F4F0E8;--gb-hi:#FFF;--gb-lo:#B7AD9D;--gb-txt:#171018}
+body[data-game="viking"]{--hdr-a:#2A4BD8;--hdr-b:#1E7FC8;--hdr-c:#0FBFA6;--game-glow:rgba(30,110,200,.5);--gm:#2146C7;--gm-hi:#6685F3;--gm-lo:#0E236D;--gm-txt:#FFF;--gb:#111B45;--gb-hi:#46558F;--gb-lo:#05091C;--gb-txt:#FFF}
+body[data-game="euro"]{--hdr-a:#0E7A50;--hdr-b:#0E4B4E;--hdr-c:#123A44;--game-glow:rgba(16,120,80,.5);--gm:#F3C316;--gm-hi:#FFE98A;--gm-lo:#A96D00;--gm-txt:#172340;--gb:#194F90;--gb-hi:#6AA1DD;--gb-lo:#0B2858;--gb-txt:#FFF}
+body[data-game="powerball"]{--hdr-a:#B5162B;--hdr-b:#7A1250;--hdr-c:#12327E;--game-glow:rgba(120,30,110,.5);--gm:#F6F7F8;--gm-hi:#FFF;--gm-lo:#B7BCC2;--gm-txt:#15171A;--gb:#D71E28;--gb-hi:#F9656D;--gb-lo:#7D0B12;--gb-txt:#FFF}
+body[data-game="mega"]{--hdr-a:#C09018;--hdr-b:#6A5A2A;--hdr-c:#124A7E;--game-glow:rgba(160,120,40,.5);--gm:#F7F7F5;--gm-hi:#FFF;--gm-lo:#B8BCC2;--gm-txt:#16191D;--gb:#F2B705;--gb-hi:#FFE477;--gb-lo:#9B6700;--gb-txt:#231700}
+body[data-game="euromillions"]{--hdr-a:#123C8E;--hdr-b:#3A2A8E;--hdr-c:#6C1E8E;--game-glow:rgba(80,40,140,.5);--gm:#17499E;--gm-hi:#6C9DEB;--gm-lo:#0A2457;--gm-txt:#FFF;--gb:#F1C40F;--gb-hi:#FFE980;--gb-lo:#A46C00;--gb-txt:#1F1800}
+body[data-game="superenalotto"]{--hdr-a:#0E7A3C;--hdr-b:#6A6020;--hdr-c:#B5162B;--game-glow:rgba(60,110,50,.5);--gm:#098B4A;--gm-hi:#62D89C;--gm-lo:#044B28;--gm-txt:#FFF;--gb:#D42136;--gb-hi:#F56A78;--gb-lo:#78101D;--gb-txt:#FFF}
+body[data-game="lottomax"]{--hdr-a:#C4182F;--hdr-b:#8A1030;--hdr-c:#5E0C22;--game-glow:rgba(180,24,45,.5);--gm:#1B4FB8;--gm-hi:#6B91E8;--gm-lo:#0B2865;--gm-txt:#FFF;--gb:#D41F3A;--gb-hi:#F46D82;--gb-lo:#790D20;--gb-txt:#FFF}
+body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--game-glow:rgba(140,42,160,.5);--gm:#2548BA;--gm-hi:#718FEA;--gm-lo:#102462;--gm-txt:#FFF;--gb:#7B239B;--gb-hi:#C46ADE;--gb-lo:#3D0E50;--gb-txt:#FFF}
 .hdr-back,.hdr-icon{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.22);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);color:#F9F2E7;flex-shrink:0;backdrop-filter:blur(6px)}
 .hdr-title{font-size:15px;font-weight:700;text-align:center;flex:1;min-width:0;padding:0 4px;line-height:1.25;font-family:'Unbounded',sans-serif;letter-spacing:.1px;text-shadow:0 2px 8px rgba(0,0,0,.3)}
 .hdr-title .hdr-main{display:block;white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis}
 .hdr-title .hdr-sub{display:block;font-size:11px;font-weight:700;color:rgba(249,242,231,.72);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Manrope',sans-serif;letter-spacing:.8px;text-transform:uppercase}
 
 /* ══ ВЫБОР ЛОТЕРЕИ ══ */
-.lot-tabs{display:flex;gap:8px;padding:14px 14px 2px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.lot-tabs{display:flex;width:100%;max-width:100vw;gap:8px;padding:14px 14px 5px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x;cursor:grab;user-select:none}
+.lot-tabs.dragging,.sched-strip.dragging{cursor:grabbing;scroll-snap-type:none}
+.lot-tabs.dragging .lt,.sched-strip.dragging .ss-item{pointer-events:none}
 .lot-tabs::-webkit-scrollbar{display:none}
 .lt{flex:0 0 118px;padding:11px 4px;border-radius:16px;border:1.5px solid var(--lt-border);background:var(--lt-bg);cursor:pointer;text-align:center;transition:all .18s;scroll-snap-align:start;box-shadow:var(--card-shadow)}
 .lt.ol{border-color:#cc2060;background:var(--cd-lotto);box-shadow:0 4px 16px rgba(204,32,96,.22)}.lt.ol .lt-name{color:#cc2060}
@@ -161,9 +173,10 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .lt-flag{font-size:23px}.lt-name{font-size:11px;font-weight:800;margin-top:5px;color:var(--sub);letter-spacing:.4px;font-family:'Manrope',sans-serif;text-transform:uppercase}
 
 /* расписание */
-.sched-strip{display:flex;margin:10px 14px 0;border-radius:14px;overflow-x:auto;border:1px solid var(--strip-border);background:var(--strip-bg);-webkit-overflow-scrolling:touch;box-shadow:var(--card-shadow)}
+.sched-strip{display:flex;margin:10px 14px 0;border-radius:14px;overflow-x:auto;overflow-y:hidden;border:1px solid var(--strip-border);background:var(--strip-bg);scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x;cursor:grab;user-select:none;box-shadow:var(--card-shadow)}
 .sched-strip::-webkit-scrollbar{display:none}
 .ss-item{flex:0 0 118px;padding:9px 6px;text-align:center;cursor:pointer;transition:background .15s}
+.ss-item.on{background:linear-gradient(160deg,rgba(233,180,76,.2),rgba(233,180,76,.04));box-shadow:inset 0 -3px 0 var(--gold)}
 .ss-div{width:1px;background:var(--border)}
 .ss-name{font-size:12px;font-weight:800}.ss-day{font-size:12px;color:var(--sub);margin-top:2px}.ss-price{font-size:13px;font-weight:800;color:var(--gold)}
 
@@ -205,21 +218,24 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:18px;margin:12px 14px 0;box-shadow:var(--card-shadow);font-size:16px;line-height:1.5}
 .card-t{font-size:13px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:14px;color:var(--gold);line-height:1.3;font-family:'Manrope',sans-serif}
 
-/* ══ МАТЕРИАЛ ШАРА: глянцевая сфера лототрона ══ */
-.rb,.dball,.mb,.hball,.sg-cball,.hc-ball{font-family:'Unbounded',sans-serif;position:relative;
-  background-image:radial-gradient(circle at 32% 25%,rgba(255,255,255,.92) 0,rgba(255,255,255,.34) 11%,rgba(255,255,255,0) 30%),radial-gradient(circle at 50% 42%,var(--ball-hi,#fff) 0,var(--ball,#ccc) 58%,var(--ball-lo,#888) 105%);
+/* ══ МАТЕРИАЛ ШАРА: глянцевая перламутровая сфера лототрона ══ */
+.rb,.dball,.mb,.hball,.sg-cball,.hc-ball,.if-rball{font-family:'Unbounded',sans-serif;position:relative;font-weight:800;
+  background-image:
+    radial-gradient(circle at 30% 22%,rgba(255,255,255,.98) 0,rgba(255,255,255,.55) 8%,rgba(255,255,255,0) 26%),
+    radial-gradient(circle at 68% 82%,rgba(255,255,255,.16) 0,rgba(255,255,255,0) 30%),
+    radial-gradient(circle at 50% 42%,var(--ball-hi,#fff) 0,var(--ball,#ccc) 56%,var(--ball-lo,#888) 106%);
   background-color:var(--ball,#ccc);
-  box-shadow:inset 0 -.34em .5em rgba(0,0,0,.3),inset 0 .1em .18em rgba(255,255,255,.42),0 .22em .45em rgba(0,0,0,.28);
-  text-shadow:0 1px 2px rgba(0,0,0,.3)}
+  box-shadow:inset 0 -.36em .5em rgba(0,0,0,.32),inset 0 .12em .2em rgba(255,255,255,.55),0 .24em .5em rgba(0,0,0,.3);
+  text-shadow:0 1px 2px rgba(0,0,0,.42),0 0 1px rgba(0,0,0,.3)}
 /* ряды */
-.mine-tall{font-size:19px;font-weight:800;margin-bottom:12px;font-family:'Unbounded',sans-serif}
-.ticket-row{display:flex;align-items:center;gap:5px;border-radius:16px;padding:7px 10px;margin-bottom:6px;min-height:48px;border:1.5px solid var(--border);cursor:pointer;transition:border-color .15s,box-shadow .15s;background:var(--row-bg)}
+.mine-tall{font-size:20px;font-weight:800;margin-bottom:12px;font-family:'Unbounded',sans-serif}
+.ticket-row{display:flex;align-items:center;gap:5px;border-radius:16px;padding:8px 10px;margin-bottom:6px;min-height:56px;border:1.5px solid var(--border);cursor:pointer;transition:border-color .15s,box-shadow .15s;background:var(--row-bg)}
 .ticket-row.on-lotto{border-color:#cc2060;box-shadow:0 0 0 1px #cc2060,0 4px 14px rgba(204,32,96,.2)}
 .ticket-row.on-viking{border-color:#1e3fbe;box-shadow:0 0 0 1px #1e3fbe,0 4px 14px rgba(30,63,190,.2)}
 .ticket-row.on-euro{border-color:#f0a500;box-shadow:0 0 0 1px #f0a500,0 4px 14px rgba(240,165,0,.2)}
-.rn{font-size:13px;font-weight:800;min-width:18px;flex-shrink:0;color:var(--sub);font-family:'Unbounded',sans-serif}
-.rballs{display:flex;gap:4px;flex:1;align-items:center;overflow:hidden}
-.rb{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;flex-shrink:0}
+.rn{font-size:14px;font-weight:800;min-width:20px;flex-shrink:0;color:var(--sub);font-family:'Unbounded',sans-serif}
+.rballs{display:flex;gap:4px;flex:1;align-items:center;overflow:hidden;flex-wrap:nowrap}
+.rb{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
 .rb,.dball,.mb,.hball,.sg-cball,.hc-ball,.heat-cell,.wheel-num{animation:ballPop .3s cubic-bezier(.34,1.4,.55,1) both}
 .ticket-row,.sg-combo,.hist-item{animation:fadeLift .18s ease both}
 /* пустые слоты — лунки в лотке, не шары */
@@ -251,7 +267,8 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .picker-wrap{display:flex;gap:8px;align-items:flex-start}
 .main-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;flex:1}
 .bonus-col{display:grid;gap:5px;grid-template-columns:repeat(2,1fr)}
-.nb{aspect-ratio:1;border-radius:50%;border:1px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s;width:100%;color:var(--fg);font-family:'Unbounded',sans-serif;box-shadow:inset 0 2px 5px rgba(0,0,0,.14)}
+.nb{aspect-ratio:1;border-radius:50%;border:1px solid var(--border);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s;width:100%;color:var(--fg);font-family:'Unbounded',sans-serif;box-shadow:inset 0 2px 5px rgba(0,0,0,.14)}
+@media(min-width:700px){.picker-wrap{max-width:560px;margin-left:auto;margin-right:auto}.nb{font-size:17px}}
 .nb:active{transform:scale(.87)}
 .nb.nb-lotto{background:var(--nb-lotto)}.nb.nb-viking{background:var(--nb-viking)}.nb.nb-euro{background:var(--nb-euro);color:#D8CCE0}
 .nb.dis{opacity:.3;cursor:default;pointer-events:none}
@@ -316,14 +333,14 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .draw-check-row{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
 
 /* ══ ШАРЫ ТИРАЖА ══ */
-.dball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.dball{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
 .dball.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
 .dball.lotto-b{--ball:#F2ECE1;--ball-hi:#FFFFFF;--ball-lo:#B9AF9E;color:#141018;font-weight:800}
 .dball.viking-m{--ball:#1e3fbe;--ball-hi:#5a76e8;--ball-lo:#0e1f66;color:#fff}
 .dball.viking-b{--ball:#10183a;--ball-hi:#3a4570;--ball-lo:#05081a;color:#fff}
 .dball.euro-m{--ball:#7ecfc0;--ball-hi:#b2ece2;--ball-lo:#3f9184;color:#123230}
 .dball.euro-b{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
-.mb{width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.mb{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex:0 0 auto}
 
 .mb[class*="miss-"]{--ball:var(--miss-ball);--ball-hi:var(--miss-hi);--ball-lo:var(--miss-lo);color:var(--miss-txt)}
 .mb.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
@@ -346,14 +363,14 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .bn.on .bn-icon{filter:none;transform:translateY(-1px)}
 .bn.on .bn-lbl{color:var(--gold)}
 
-.sec-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 14px 4px;background:transparent;border-radius:0;padding:0}
-.st{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;padding:15px 8px;font-size:13px;font-weight:800;letter-spacing:.2px;border-radius:16px;border:1.5px solid var(--border);background:var(--bg2);color:var(--sub2);cursor:pointer;white-space:nowrap;font-family:'Manrope',sans-serif;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
-.st .st-ic{font-size:22px;line-height:1;filter:saturate(.72);transition:transform .18s,filter .18s}
+.sec-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 14px 6px;background:transparent;border-radius:0;padding:0}
+.st{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:0;min-height:94px;padding:12px 7px;font-size:13.5px;font-weight:800;letter-spacing:0;border-radius:16px;border:1.5px solid var(--border);background:var(--bg2);color:var(--sub2);cursor:pointer;white-space:nowrap;font-family:'Manrope',sans-serif;box-shadow:var(--card-shadow);position:relative;overflow:hidden;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}
+.st .st-ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:29px;line-height:1;background:var(--bg3);border:1px solid var(--border);filter:saturate(.82);transition:transform .18s,filter .18s,background .18s,border-color .18s,box-shadow .18s}
 .st .st-tx{line-height:1}
-.st.on{color:var(--fg);border-color:var(--gold);background:linear-gradient(160deg,rgba(233,180,76,.16),rgba(233,180,76,.03)),var(--bg2);box-shadow:0 6px 18px rgba(0,0,0,.18),0 0 0 1px rgba(233,180,76,.5) inset}
-.st.on .st-ic{filter:none;transform:translateY(-1px) scale(1.08)}
-.st.on::after{content:"";position:absolute;left:50%;bottom:7px;transform:translateX(-50%);width:20px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--gold2),var(--gold))}
-@media(min-width:700px){.sec-tabs{max-width:720px;margin-left:auto;margin-right:auto;grid-template-columns:repeat(6,minmax(0,1fr))}.st{padding:16px 8px;font-size:13px}.st .st-ic{font-size:23px}}
+.st.on{color:var(--fg);border-color:var(--gold);transform:translateY(-2px);background:linear-gradient(160deg,rgba(233,180,76,.24),rgba(233,180,76,.05)),var(--bg2);box-shadow:0 9px 22px rgba(0,0,0,.2),0 0 0 1px rgba(233,180,76,.62) inset}
+.st.on .st-ic{filter:none;transform:scale(1.1);border-color:rgba(255,255,255,.3);background:linear-gradient(145deg,var(--hdr-a,var(--gold2)),var(--hdr-c,var(--gold)));box-shadow:0 6px 14px var(--game-glow,rgba(184,134,11,.28))}
+.st.on::after{content:"";position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:34px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold2),var(--gold))}
+@media(min-width:700px){.sec-tabs{max-width:840px;margin-left:auto;margin-right:auto;grid-template-columns:repeat(6,minmax(0,1fr))}.st{min-height:104px;padding:15px 8px;font-size:14px}.st .st-ic{width:48px;height:48px;font-size:32px}}
 .tab-content{display:none}.tab-content.vis{display:block}
 #pg-ana .card{font-size:17px;line-height:1.55}
 #pg-ana .card [style*="font-size:13px"]{font-size:16px!important}
@@ -387,7 +404,7 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .hc-lbl{font-size:14px;font-weight:900;margin-bottom:10px;font-family:'Unbounded',sans-serif}
 .hc-lbl.hot{color:#e8556a}.hc-lbl.cold{color:#5B9DF7}
 .hc-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.hc-ball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex-shrink:0}
+.hc-ball{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
 
 /* χ² */
 .chi2-box{padding:14px;border-radius:14px;text-align:center;margin-bottom:12px}
@@ -399,20 +416,20 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .chi2-desc{font-size:15px;color:var(--chi-text);line-height:1.55}
 
 /* история */
-.hist-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--hist-border)}
-.hist-main{min-width:0;overflow:visible}
+.hist-item{position:relative;display:block;padding:12px 0;border-bottom:1px solid var(--hist-border)}
+.hist-main{min-width:0;overflow:hidden}
 .hist-date{font-size:15px;color:var(--sub);margin-bottom:8px;line-height:1.35}
-.hist-balls{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow:visible}
+.hist-balls{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain}
 .hist-balls::-webkit-scrollbar{display:none}
 .hist-sep{font-size:9px;opacity:.4;margin:0 2px;flex:0 0 auto}
-.hball{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex:0 0 auto}
+.hball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex:0 0 auto}
 .hball.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
 .hball.lotto-b{--ball:#F2ECE1;--ball-hi:#FFFFFF;--ball-lo:#B9AF9E;color:#141018;font-weight:800}
 .hball.viking-m{--ball:#1e3fbe;--ball-hi:#5a76e8;--ball-lo:#0e1f66;color:#fff}
 .hball.viking-b{--ball:#10183a;--ball-hi:#3a4570;--ball-lo:#05081a;color:#fff}
 .hball.euro-m{--ball:#7ecfc0;--ball-hi:#b2ece2;--ball-lo:#3f9184;color:#123230}
 .hball.euro-b{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
-.btn-del{background:none;border:none;color:#e8556a;font-size:18px;cursor:pointer;padding:4px 5px;min-width:28px}
+.btn-del{position:absolute;top:7px;right:0;width:34px;height:34px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);color:#e8556a;font-size:17px;cursor:pointer;padding:0;display:grid;place-items:center}
 
 /* строки статистики */
 .srow{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--srow-border);font-size:16px;line-height:1.45}
@@ -448,9 +465,10 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 
 /* избранное */
 .fav-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--hist-border)}
-.fav-main{min-width:0;overflow:visible}
+.fav-main{min-width:0;overflow:hidden}
 .fav-rows{display:flex;flex-direction:column;gap:4px}
-.fav-rowballs{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap;overflow:visible}
+.fav-rowballs{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.fav-rowballs::-webkit-scrollbar{display:none}
 .fav-balls{display:flex;gap:4px;flex-wrap:nowrap}
 .fav-name{font-size:15px;color:var(--sub);margin-bottom:7px}
 .btn-fav-del{background:none;border:none;color:#e8556a;font-size:16px;cursor:pointer;padding:2px 6px}
@@ -478,7 +496,7 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 @media(min-width:1080px){.cmp-hint{display:none}}
 
 /* ══ МОДАЛ УМНОЙ ГЕНЕРАЦИИ ══ */
-.sg-ov{position:fixed;inset:0;background:rgba(10,4,8,.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
+.sg-ov{position:fixed;inset:0;background:linear-gradient(180deg,var(--game-glow,rgba(166,21,57,.4)) 0,rgba(10,4,8,.82) 32%,rgba(10,4,8,.82) 100%);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
 .sg-ov.show{opacity:1;pointer-events:all}
 .sg-sheet{background:var(--modal-bg);border-radius:26px 26px 0 0;border-top:1px solid rgba(233,180,76,.4);padding:20px 20px 44px;width:100%;max-width:430px;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
 .sg-ov.show .sg-sheet{transform:translateY(0)}
@@ -505,7 +523,7 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .sg-algo-desc{font-size:14px;color:var(--sub2);margin-top:3px;line-height:1.45}
 .sg-combo{background:var(--sg-combo-bg);border-radius:14px;padding:12px 14px;margin-bottom:8px;border:1.5px solid var(--sg-combo-border)}
 .sg-combo-lbl{font-size:10px;color:var(--sub);font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px}
-.sg-cball{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700}
+.sg-cball{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800}
 .sg-cball.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
 .sg-cball.lotto-b{--ball:#F2ECE1;--ball-hi:#FFFFFF;--ball-lo:#B9AF9E;color:#141018}
 .sg-cball.viking-m{--ball:#1e3fbe;--ball-hi:#5a76e8;--ball-lo:#0e1f66;color:#fff}
@@ -554,12 +572,12 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .if-winsel{width:150px;flex-shrink:0}
 .if-card{border-color:rgba(233,180,76,.5)!important}
 .if-badge{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(160deg,#F5CE7B,#E9B44C);color:#2A1608;padding:2px 7px;border-radius:10px;vertical-align:2px;margin-left:4px}
-.if-ov{position:fixed;inset:0;background:rgba(10,4,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:560;display:none;padding:0}
+.if-ov{position:fixed;inset:0;background:linear-gradient(180deg,var(--game-glow,rgba(166,21,57,.4)) 0,rgba(10,4,8,.78) 30%,rgba(10,4,8,.78) 100%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:560;display:none;padding:0}
 .if-ov.show{display:flex;align-items:flex-end;justify-content:center}
 .if-sheet{width:100%;max-width:720px;height:94dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--modal-bg);border:1px solid rgba(233,180,76,.35);border-radius:26px 26px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom))}
 .if-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .if-title{font-family:'Unbounded',sans-serif;font-size:19px;font-weight:900}
-.if-sub{font-size:13px;color:var(--sub2);margin-top:3px}
+.if-sub{font-size:14px;color:var(--sub2);margin-top:3px}
 .if-ctx{margin-top:10px;font-size:12.5px;font-weight:800;color:var(--gold);letter-spacing:.3px}
 .if-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
 .if-sumcard{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:10px 12px}
@@ -572,20 +590,24 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .if-ball{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:800;font-size:12px;cursor:pointer;position:relative;text-shadow:0 1px 2px rgba(0,0,0,.3);
   background-image:radial-gradient(circle at 32% 25%,rgba(255,255,255,.92) 0,rgba(255,255,255,.34) 11%,rgba(255,255,255,0) 30%),radial-gradient(circle at 50% 42%,var(--ball-hi) 0,var(--ball) 58%,var(--ball-lo) 105%);
   box-shadow:inset 0 -.3em .45em rgba(0,0,0,.28),inset 0 .1em .16em rgba(255,255,255,.4)}
-.if-seclbl{font-weight:800;font-size:13px;margin:16px 0 8px;color:var(--sub2);text-transform:uppercase;letter-spacing:1px}
+.if-seclbl{font-weight:800;font-size:14px;margin:16px 0 8px;color:var(--sub2);text-transform:uppercase;letter-spacing:1px}
 .if-pair{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--srow-border);font-size:14px}
 .if-pair b{font-family:'Unbounded',sans-serif;font-weight:800}
 .if-bar{height:6px;border-radius:3px;background:var(--bg3);overflow:hidden;flex:1;margin:0 12px}
 .if-bar>i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#E9B44C,#F5CE7B)}
-.if-note{font-size:12.5px;line-height:1.55;color:var(--sub2);margin-top:10px}
+.if-note{font-size:14px;line-height:1.6;color:var(--sub2);margin-top:10px}
 .if-rowcard{border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:10px;background:var(--bg3)}
 .if-rowtype{font-weight:800;font-size:13.5px}
 .if-rowscore{font-size:11.5px;color:var(--gold);font-weight:800}
-.if-rowballs{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 6px}
-.if-rball{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:800;font-size:10.5px;text-shadow:0 1px 2px rgba(0,0,0,.3);
-  background-image:radial-gradient(circle at 32% 25%,rgba(255,255,255,.92) 0,rgba(255,255,255,.34) 11%,rgba(255,255,255,0) 30%),radial-gradient(circle at 50% 42%,var(--ball-hi) 0,var(--ball) 58%,var(--ball-lo) 105%);
-  box-shadow:inset 0 -.3em .45em rgba(0,0,0,.28),inset 0 .1em .16em rgba(255,255,255,.4)}
-.if-rowexp{font-size:12.5px;color:var(--sub2);line-height:1.5}
+.if-rowballs{display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0 6px;padding-bottom:2px;scrollbar-width:none}
+.if-rowballs::-webkit-scrollbar{display:none}
+.if-rball{width:42px;height:42px;flex:0 0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px}
+/* Узнаваемая палитра текущей лотереи применяется ко всем основным результатам. */
+body[data-game] :is(.rb[class*="rb-m-"],.dball[class$="-m"],.mb:not([class*="miss-"])[class$="-m"],.hball[class$="-m"],.sg-cball[class$="-m"],.if-rball[class*="rb-m-"],.if-ball[class*="rb-m-"],.nb[class*="sm-"]){--ball:var(--gm);--ball-hi:var(--gm-hi);--ball-lo:var(--gm-lo);color:var(--gm-txt);text-shadow:0 1px 2px rgba(0,0,0,.34)}
+body[data-game] :is(.rb[class*="rb-b-"],.dball[class$="-b"],.mb:not([class*="miss-"])[class$="-b"],.hball[class$="-b"],.sg-cball[class$="-b"],.if-rball[class*="rb-b-"],.if-ball[class*="rb-b-"],.nb[class*="sb-"]){--ball:var(--gb);--ball-hi:var(--gb-hi);--ball-lo:var(--gb-lo);color:var(--gb-txt);text-shadow:0 1px 2px rgba(0,0,0,.28)}
+body[data-game="powerball"] :is(.rb[class*="rb-m-"],.dball[class$="-m"],.mb[class$="-m"],.hball[class$="-m"],.sg-cball[class$="-m"],.if-rball[class*="rb-m-"],.if-ball[class*="rb-m-"],.nb[class*="sm-"]),body[data-game="mega"] :is(.rb[class*="rb-m-"],.dball[class$="-m"],.mb[class$="-m"],.hball[class$="-m"],.sg-cball[class$="-m"],.if-rball[class*="rb-m-"],.if-ball[class*="rb-m-"],.nb[class*="sm-"]){text-shadow:none}
+body[data-game] .qa-ball.bonus{color:var(--gb-txt);background:radial-gradient(circle at 32% 26%,var(--gb-hi),var(--gb) 58%,var(--gb-lo))!important;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.if-rowexp{font-size:13.5px;color:var(--sub2);line-height:1.55}
 .if-legal{margin-top:16px;padding-top:12px;border-top:1px solid var(--srow-border);font-size:11.5px;line-height:1.55;color:var(--sub2);text-align:center}
 .if-empty{text-align:center;padding:40px 16px;color:var(--sub2);font-size:14.5px;line-height:1.6}
 .if-status{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:800;background:var(--bg3);border:1px solid var(--gold);color:var(--gold)}
@@ -607,7 +629,7 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .fb-ov{position:fixed;inset:0;background:rgba(10,4,8,.55);display:flex;align-items:center;justify-content:center;z-index:520;opacity:0;pointer-events:none;transition:opacity .2s;padding:20px}
 
 /* ══ ВЫБОР ЯЗЫКА ══ */
-.lang-ov{position:fixed;inset:0;background:rgba(10,4,8,.66);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:540;opacity:0;pointer-events:none;transition:opacity .2s;padding:18px}
+.lang-ov{position:fixed;inset:0;background:linear-gradient(180deg,var(--game-glow,rgba(166,21,57,.4)) 0,rgba(10,4,8,.72) 34%,rgba(10,4,8,.72) 100%);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:540;opacity:0;pointer-events:none;transition:opacity .2s;padding:18px}
 .lang-ov.show{opacity:1;pointer-events:all}
 .lang-box{width:100%;max-width:400px;max-height:82vh;overflow-y:auto;background:var(--modal-bg);border:1px solid rgba(233,180,76,.35);border-radius:24px;padding:18px;box-shadow:0 24px 70px rgba(0,0,0,.5)}
 .lang-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:900;text-align:center;color:var(--gold);margin-bottom:14px;letter-spacing:.3px}
@@ -627,7 +649,7 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .fb-ov.show .fb-box{transform:scale(1)}
 .fb-icon{font-size:42px;margin-bottom:8px}
 .fb-title{font-size:20px;font-weight:900;color:var(--fg);margin-bottom:6px;font-family:'Unbounded',sans-serif}
-.fb-msg{font-size:15px;line-height:1.5;color:var(--sub2);margin-bottom:16px;white-space:pre-line}
+.fb-msg{font-size:15.5px;line-height:1.55;color:var(--sub2);margin-bottom:16px;white-space:pre-line}
 .fb-btn{width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(160deg,var(--gold2),var(--gold));color:#2A1608;font-size:15px;font-weight:800;cursor:pointer;font-family:'Unbounded',sans-serif}
 
 /* тосты */
@@ -665,34 +687,45 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 /* ══ АДАПТИВ ══ */
 @media (max-width:380px){
   body{max-width:none}
-  .rb{width:29px;height:29px;font-size:9.5px}
-  .ticket-row{padding:8px;gap:3px}
+  .rb{width:clamp(30px,8.45vw,33px);height:clamp(30px,8.45vw,33px);font-size:11.5px}
+  .ticket-row{padding:7px 8px;gap:3px}
   .main-grid{grid-template-columns:repeat(7,1fr)}
   .sec-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .st{min-width:0;font-size:13px;padding:12px 5px}
+  .st{min-width:0;min-height:90px;font-size:12.5px;padding:10px 4px}
+  .st .st-ic{width:41px;height:41px;font-size:27px}
   .hdr-title{font-size:13.5px}.hdr-title .hdr-sub{font-size:10px}
 }
 @media (max-width:430px){
   body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
   .gen-grid,.gen-actions{grid-template-columns:1fr}
-  .ticket-row{min-height:42px;padding:5px 8px;margin-bottom:5px;gap:4px;border-radius:13px}
-  .rb{width:29px;height:29px;font-size:9.5px}
+  .ticket-row{min-height:50px;padding:7px 8px;margin-bottom:6px;gap:4px;border-radius:13px}
+  .rballs{gap:2px}
+  .rb{width:clamp(30px,8.45vw,35px);height:clamp(30px,8.45vw,35px);font-size:clamp(11.5px,3.15vw,13px)}
+  body:not([data-game="powerballau"]) .rb{width:clamp(31px,8.8vw,36px);height:clamp(31px,8.8vw,36px)}
+  body[data-game="powerballau"] .rballs{gap:1px}
+  body[data-game="powerballau"] .rpipe{margin:0 1px}
+  .rn{min-width:18px;font-size:13px}
+  .ract{width:30px;height:30px}
   .mine-tall{font-size:17px;margin-bottom:8px}
   .bnav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);max-width:430px;margin:0;border-radius:18px 18px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.16)}
   .sec-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
   .st{min-width:0}
-  .hist-item{gap:7px}
-  .hist-date{font-size:13px;margin-bottom:6px}
-  .hball{width:28px;height:28px;font-size:9.5px}
-  .hist-balls{gap:2px}
+  .hist-date{font-size:14px;margin-bottom:6px;padding-right:40px}
+  .hball{width:34px;height:34px;font-size:12.5px}
+  .hist-balls{gap:3px}
   .hist-sep{margin:0 1px}
-  .btn-del{padding:4px 5px}
+  .btn-del{top:6px;width:32px;height:32px}
   .btn-fav-use,.btn-fav-copy{width:34px;height:32px;font-size:13px}
+  .dball{width:46px;height:46px;font-size:16px}
+  .mb{width:36px;height:36px;font-size:13.5px}
+  .sg-cball{width:46px;height:46px;font-size:15px}
+  .if-rball{width:40px;height:40px;font-size:14.5px}
+  .qa-ball{width:44px;height:44px;font-size:16px}
   .matrix-actions{grid-template-columns:1fr}
   .matrix-copy{width:100%}
 }
 @media (max-width:360px){
-  .hball{width:26px;height:26px;font-size:9px}
+  .hball{width:32px;height:32px;font-size:11.5px}
 }
 
 /* ── ПЛАНШЕТ И БРАУЗЕР: резиновая сетка ── */
@@ -700,7 +733,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   body{max-width:none;padding-bottom:110px}
   .lot-tabs,.sched-strip,.win-banner,.sec-tabs,.hero{max-width:720px;margin-left:auto;margin-right:auto}
   .page>.card,.page>div[style*="padding:14px"]{max-width:720px;margin-left:auto;margin-right:auto}
-  .lot-tabs{justify-content:center;flex-wrap:wrap;overflow:visible}
+  .lot-tabs{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto}
   .lt{flex:0 0 128px}
   /* шапка — лента во всю ширину, контент по центру */
   .hdr{padding-left:max(16px,calc((100vw - 1320px)/2));padding-right:max(16px,calc((100vw - 1320px)/2))}
@@ -722,7 +755,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .lot-tabs{max-width:1280px}
   #pg-sim.show{display:grid;grid-template-columns:400px minmax(0,1fr);gap:0 18px;align-items:start;max-width:1280px;margin:0 auto;padding:0 20px 20px}
   #pg-sim .hero{grid-column:1/-1;max-width:none;margin:12px 0 0;padding:34px 24px 24px}
-  #pg-sim .sched-strip{grid-column:1/-1;max-width:none;margin:10px 0 0}
+  #pg-sim .sched-strip{grid-column:1/-1;max-width:none;margin:10px 0 0;justify-content:center}
+  #pg-sim .sched-strip .ss-item{flex:1 1 0;min-width:104px;max-width:150px}
   #pg-sim .win-banner{grid-column:1;max-width:none;margin:12px 0 0;position:sticky;top:96px;z-index:5;max-height:calc(100dvh - 120px);overflow:hidden;display:flex;flex-direction:column}#pg-sim .win-banner #wb-body{min-height:0;display:flex;flex-direction:column}#pg-sim #wb-rows{flex:1}
   #pg-sim>div[style*="padding:14px"]{grid-column:2;max-width:none;margin:0}
   #pg-ana .sec-tabs{max-width:960px}
@@ -732,6 +766,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-ana .tab-content.vis>*:not(.card){grid-column:1/-1}
   .card{font-size:16px}
 }
+@media (min-width:1240px){.lot-tabs{justify-content:center}}
 
 /* ── ОЧЕНЬ ШИРОКИЕ ЭКРАНЫ И ТВ ── */
 @media (min-width:1700px){
@@ -832,7 +867,7 @@ body.light .mb[class*="miss-"]{text-shadow:none}
 .qa-go{background:linear-gradient(140deg,#7A4BD8,#B07E1F)!important;border:none!important}
 .qa-row{margin-top:12px;padding:12px;border:1px solid #6B4BA8;border-radius:16px;background:rgba(20,10,40,.5)}
 .qa-balls{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
-.qa-ball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;position:relative;background:radial-gradient(circle at 32% 26%,#C9A8FF,#7A4BD8 60%,#3A1B7A);animation:qaGlow 2.2s ease-in-out infinite alternate}
+.qa-ball{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;position:relative;background:radial-gradient(circle at 32% 26%,#C9A8FF,#7A4BD8 60%,#3A1B7A);animation:qaGlow 2.2s ease-in-out infinite alternate}
 .qa-ball.zres{background:radial-gradient(circle at 32% 26%,#FFE9B8,#E9B44C 60%,#8A5E15)}
 .qa-ball.mres{background:radial-gradient(circle at 32% 26%,#D8F2FF,#6BB8E8 60%,#2B5B8A)}
 .qa-ball.qb{background:radial-gradient(circle at 32% 26%,#EAD8FF,#9B6BE8 55%,#4A2B9A)}
@@ -917,8 +952,52 @@ body.light .mb[class*="miss-"]{text-shadow:none}
   transform:rotate(-6deg);z-index:2}
 .horo-seal:before{content:'';position:absolute;inset:9px;border-radius:inherit;border:2px solid rgba(255,180,160,.35);box-shadow:inset 0 2px 6px rgba(60,5,0,.5)}
 .horo-seal span{font-size:34px;color:#5A0E08;text-shadow:0 1px 0 rgba(255,170,150,.55),0 -1px 2px rgba(40,3,0,.8);transform:rotate(6deg)}
-/* ═══ 2. Бонус-шары генератора — изумрудные, всегда одним цветом ═══ */
-.qa-ball.bonus{background:radial-gradient(circle at 32% 26%,#C8F5DD,#3DBB8A 58%,#14614A)!important}
+/* ═══ MANDEL WORLD PRO · пергаментный свиток ═══ */
+.pro-ov{position:fixed;inset:0;background:linear-gradient(180deg,var(--game-glow,rgba(166,21,57,.4)) 0,rgba(10,4,8,.82) 32%,rgba(10,4,8,.82) 100%);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:635;display:none;align-items:flex-end;justify-content:center}
+.pro-ov.show{display:flex}
+@media(min-width:700px){.pro-ov{align-items:center}}
+.pro-sheet{position:relative;width:100%;max-width:540px;max-height:90dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:26px 26px 0 0;padding:26px 22px calc(28px + env(safe-area-inset-bottom));
+  background:radial-gradient(140% 70% at 20% 8%,rgba(120,80,20,.10),transparent 60%),radial-gradient(120% 60% at 85% 90%,rgba(120,80,20,.12),transparent 55%),radial-gradient(2px 2px at 28% 36%,rgba(90,60,20,.16) 50%,transparent 51%),radial-gradient(2px 2px at 72% 66%,rgba(90,60,20,.13) 50%,transparent 51%),linear-gradient(165deg,#F9F0D4,#F1E2B2 55%,#E9D69C);
+  box-shadow:inset 0 0 0 3px rgba(138,107,46,.5),inset 0 0 0 5px rgba(251,243,220,.85),inset 0 0 0 7px rgba(138,107,46,.3),inset 0 0 60px rgba(140,100,30,.16),0 -18px 60px rgba(0,0,0,.5)}
+@media(min-width:700px){.pro-sheet{border-radius:26px}}
+.pro-crown{width:84px;height:84px;margin:2px auto 6px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:44px;
+  background:radial-gradient(circle at 32% 26%,#FBE7B2,#E9B44C 55%,#8A5E15);box-shadow:0 0 26px rgba(233,180,76,.55),inset 0 -6px 14px rgba(90,60,10,.35);text-shadow:0 2px 6px rgba(90,60,10,.5)}
+.pro-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:25px;text-align:center;background:linear-gradient(175deg,#9A6B15,#6B4A0E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:2px}
+.pro-tag{text-align:center;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#8A6B2E;margin-bottom:14px}
+.pro-sec{margin-top:16px}
+.pro-sec-t{display:inline-block;font-family:'Unbounded',sans-serif;font-weight:900;font-size:14px;color:#5A3E0C;background:linear-gradient(160deg,rgba(233,180,76,.5),rgba(201,149,43,.25));padding:5px 14px;border-radius:20px;border:1.5px solid #C9A55A;margin-bottom:10px}
+.pro-li{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;line-height:1.5;color:#3E2C12;font-weight:600;margin:9px 2px}
+.pro-li .pro-ic{flex:0 0 auto;color:#9A6B15;font-weight:900;margin-top:1px}
+.pro-li b{color:#6B120C;font-weight:800}
+.pro-prices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px}
+.pro-price{position:relative;width:100%;border-radius:16px;padding:14px 10px;text-align:center;background:linear-gradient(165deg,#FFF7E0,#F0DDA8);border:2px solid #C9A55A;color:#3E2C12;cursor:pointer;font:inherit;box-shadow:0 4px 12px rgba(120,80,20,.18),inset 0 1px 2px rgba(255,255,255,.6);transition:transform .16s,border-color .16s,box-shadow .16s}
+.pro-price:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(120,80,20,.24),inset 0 1px 2px rgba(255,255,255,.7)}
+.pro-price:focus-visible{outline:3px solid rgba(179,38,30,.32);outline-offset:2px}
+.pro-price[aria-pressed="true"]{border-color:#B3261E;box-shadow:0 0 0 2px rgba(179,38,30,.18),0 8px 20px rgba(120,20,10,.22)}
+.pro-price .pro-per{font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#8A6B2E}
+.pro-price .pro-amt{font-family:'Unbounded',sans-serif;font-weight:900;font-size:26px;line-height:1.1;margin-top:5px;background:linear-gradient(175deg,#B8860B,#7A5410);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.pro-price.best{border-color:#B3261E;box-shadow:0 6px 18px rgba(120,20,10,.24),inset 0 1px 2px rgba(255,255,255,.6)}
+.pro-price.best:after{content:"выгодно";position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#fff;background:linear-gradient(160deg,#E85A4A,#B3261E);padding:2px 10px;border-radius:20px;white-space:nowrap;box-shadow:0 2px 6px rgba(120,20,10,.4)}
+.pro-fine{font-size:12.5px;line-height:1.55;color:#6B4A0E;text-align:center;margin-top:14px;font-weight:600}
+.pro-sheet .btn-draw{background:linear-gradient(140deg,#E9B44C,#B8860B)!important;color:#2A1608!important;border:none!important;margin-top:18px;font-size:16px}
+.pro-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:11px;border:1.5px solid #C9A55A;background:rgba(255,250,235,.7);color:#6B4A0E;font-size:16px;font-weight:900;cursor:pointer;z-index:2}
+.pro-step[hidden]{display:none!important}
+.pro-back{display:inline-flex;align-items:center;gap:7px;border:0;background:transparent;color:#6B4A0E;font-size:14px;font-weight:900;cursor:pointer;padding:6px 0 10px}
+.pro-checkout-title{font-family:'Unbounded',sans-serif;font-size:21px;font-weight:900;color:#5A3E0C;margin-bottom:4px}
+.pro-checkout-sub{font-size:14px;line-height:1.45;color:#6B4A0E;margin-bottom:14px}
+.pro-order{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1.5px solid #C9A55A;border-radius:16px;background:rgba(255,250,235,.58);color:#3E2C12}
+.pro-order-name{font-size:14px;font-weight:900}.pro-order-price{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:#7A5410;white-space:nowrap}
+.pro-field{display:block;margin-top:14px;color:#5A3E0C;font-size:13px;font-weight:900}
+.pro-field input{display:block;width:100%;margin-top:6px;padding:13px 14px;border-radius:12px;border:1.5px solid #C9A55A;background:rgba(255,252,242,.86);color:#2A1608;font:700 16px 'Manrope',sans-serif;outline:none}
+.pro-field input:focus{border-color:#9A6B15;box-shadow:0 0 0 3px rgba(201,165,90,.24)}
+.pro-pay-label{margin-top:15px;color:#5A3E0C;font-size:13px;font-weight:900}
+.pro-methods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:7px}
+.pro-method{min-height:58px;padding:8px 5px;border-radius:12px;border:1.5px solid #C9A55A;background:rgba(255,250,235,.58);color:#5A3E0C;font-size:12px;font-weight:900;cursor:pointer;line-height:1.25}
+.pro-method[aria-pressed="true"]{border-color:#B3261E;background:linear-gradient(160deg,#FFF5D7,#F0D59C);box-shadow:0 0 0 1px rgba(179,38,30,.2) inset}
+.pro-consent{display:flex;align-items:flex-start;gap:9px;margin-top:14px;color:#5A3E0C;font-size:12.5px;line-height:1.45;font-weight:700;cursor:pointer}
+.pro-consent input{margin-top:3px;accent-color:#9A6B15;transform:scale(1.12)}
+.pro-pay-status{min-height:20px;margin-top:9px;text-align:center;color:#7A1410;font-size:12.5px;font-weight:800;line-height:1.4}
+@media(max-width:380px){.pro-methods{grid-template-columns:1fr}.pro-method{min-height:46px}.pro-prices{gap:8px}.pro-price{padding:13px 6px}}
 
 /* кант пергамента */
 .horo-sheet{box-shadow:inset 0 0 0 3px rgba(138,107,46,.5),inset 0 0 0 5px rgba(251,243,220,.85),inset 0 0 0 7px rgba(138,107,46,.3),inset 0 0 60px rgba(140,100,30,.16),0 -18px 60px rgba(0,0,0,.45)!important}
@@ -954,7 +1033,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 .adv-draw{margin:10px 0 2px;padding:11px 13px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(150deg,rgba(233,180,76,.12),transparent);font-size:13px;line-height:1.6;font-weight:700}
 .adv-row{margin-top:10px;padding:10px 12px;border:1px solid var(--srow-border);border-radius:14px;background:var(--bg2)}
 .adv-swap{box-shadow:0 0 0 2.5px #E9B44C,0 0 14px rgba(233,180,76,.55)!important;position:relative}
-.adv-invest{margin-top:12px;padding:12px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 12px 12px 0;font-size:12.5px;line-height:1.65}
+.adv-invest{margin-top:12px;padding:12px 14px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 12px 12px 0;font-size:14px;line-height:1.7}
 .adv-invest b{color:var(--gold)}
 
 /* ══ СИСТЕМА ПАРАДОКСОВ + РАЗБОР СУДЬИ ══ */
@@ -964,11 +1043,11 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 .pdx-row{margin-top:10px;padding:12px 13px;border:1px solid var(--srow-border);border-radius:16px;background:var(--bg2)}
 .pdx-rlbl{font-family:'Unbounded',sans-serif;font-weight:800;font-size:13px;color:var(--gold);display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 .pdx-rtag{font-family:'Manrope',sans-serif;font-weight:700;font-size:11px;color:var(--sub2);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:2px 9px;text-transform:none;letter-spacing:0}
-.pdx-rnote{font-size:12.5px;line-height:1.6;color:var(--sub2);margin-top:2px}
+.pdx-rnote{font-size:14px;line-height:1.6;color:var(--sub2);margin-top:2px}
 .pdx-jrow{margin-top:10px;padding:11px 12px;border:1px solid var(--srow-border);border-radius:14px;background:var(--bg2)}
 .pdx-jhead{font-family:'Unbounded',sans-serif;font-weight:800;font-size:12px;color:var(--sub2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
 .pdx-swaps{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
-.pdx-swap{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:12px;border:1.5px dashed var(--border);background:var(--bg3);color:var(--sub2);font-family:'Unbounded',sans-serif;font-weight:800;font-size:12.5px;cursor:pointer;transition:transform .1s}
+.pdx-swap{display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:12px;border:1.5px dashed var(--border);background:var(--bg3);color:var(--sub2);font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;cursor:pointer;transition:transform .1s}
 .pdx-swap:active{transform:scale(.95)}
 .pdx-swap.on{border-style:solid;border-color:var(--gold);color:var(--fg);background:linear-gradient(160deg,rgba(233,180,76,.18),transparent),var(--bg2);box-shadow:0 0 0 1px var(--gold) inset}
 .pdx-swap .pdx-sd{font-family:'Manrope',sans-serif;font-weight:600;font-size:10.5px;color:var(--sub);letter-spacing:0}
@@ -1135,6 +1214,10 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
       <div class="ndb-l"><div class="ndb-title">♾️ Система парадоксов</div><div class="ndb-sub">С базой или без · 1–10 рядов · разбор Верховного судьи</div></div>
       <div style="font-size:20px">→</div>
     </button>
+    <button class="ndb euro" id="jc-btn" onclick="JC_open()">
+      <div class="ndb-l"><div class="ndb-title">⚖️ Разбор моей комбинации</div><div class="ndb-sub">Что судья думает о выбранных рядах на следующий тираж</div></div>
+      <div style="font-size:20px">→</div>
+    </button>
     <button class="ndb euro" id="wheel-btn" onclick="GENN_open('wheel')">
       <div class="ndb-l"><div class="ndb-title">Колесная матрица</div><div class="ndb-sub" id="wheel-sub">10 рядов · покрытие пар</div></div>
       <div style="font-size:20px">⠿</div>
@@ -1189,12 +1272,12 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 <!-- ══ ANALYTICS PAGE ══ -->
 <div class="page" id="pg-ana">
   <div class="sec-tabs">
-    <button class="st on" id="st-inp" onclick="selAT('inp')"><span class="st-ic">➕</span><span class="st-tx">Ввод</span></button>
-    <button class="st" id="st-freq" onclick="selAT('freq')"><span class="st-ic">📊</span><span class="st-tx">Частоты</span></button>
-    <button class="st" id="st-chi" onclick="selAT('chi')"><span class="st-ic">🔬</span><span class="st-tx">χ²&nbsp;тест</span></button>
-    <button class="st" id="st-cmp" onclick="selAT('cmp')"><span class="st-ic">⚖️</span><span class="st-tx">Сравнение</span></button>
-    <button class="st" id="st-prize" onclick="selAT('prize')"><span class="st-ic">💵</span><span class="st-tx">Призы</span></button>
-    <button class="st" id="st-man" onclick="selAT('man')"><span class="st-ic">📐</span><span class="st-tx">Мандель</span></button>
+    <button type="button" class="st on" id="st-inp" aria-pressed="true" onclick="selAT('inp')"><span class="st-ic">➕</span><span class="st-tx">Ввод</span></button>
+    <button type="button" class="st" id="st-freq" aria-pressed="false" onclick="selAT('freq')"><span class="st-ic">📊</span><span class="st-tx">Частоты</span></button>
+    <button type="button" class="st" id="st-chi" aria-pressed="false" onclick="selAT('chi')"><span class="st-ic">🔬</span><span class="st-tx">χ²&nbsp;тест</span></button>
+    <button type="button" class="st" id="st-cmp" aria-pressed="false" onclick="selAT('cmp')"><span class="st-ic">⚖️</span><span class="st-tx">Сравнение</span></button>
+    <button type="button" class="st" id="st-prize" aria-pressed="false" onclick="selAT('prize')"><span class="st-ic">💵</span><span class="st-tx">Призы</span></button>
+    <button type="button" class="st" id="st-man" aria-pressed="false" onclick="selAT('man')"><span class="st-ic">📐</span><span class="st-tx">Мандель</span></button>
   </div>
 
   <!-- INPUT -->
@@ -1598,6 +1681,79 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
     <button class="btn-draw euro" id="adv-go" style="margin-top:12px" onclick="ADV_go()">💬 Дать совет</button>
     <div id="adv-result"></div>
     <div class="if-note" style="margin-top:12px">Гарантий победы не существует и существовать не может — вероятность тиража не меняется никаким анализом. Это исследовательский совет по структуре прошлого.</div>
+  </div>
+</div>
+
+<!-- MANDEL WORLD PRO -->
+<div class="pro-ov" id="pro-ov" onclick="if(event.target===this)PRO_close()">
+  <div class="pro-sheet">
+    <button class="pro-close" onclick="PRO_close()">✕</button>
+    <div class="pro-crown">👑</div>
+    <div class="pro-title">Mandel World Pro</div>
+    <div class="pro-tag">Твоя лаборатория тиражей</div>
+
+    <div class="pro-step" id="pro-plans-step">
+      <div class="pro-sec">
+        <div class="pro-sec-t">✨ Бесплатно</div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Симулятор всех <b>9 лотерей</b> без ограничений</span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Официальные результаты операторов — <b>свежие тиражи</b></span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Умная генерация — <b>3 запуска</b> в неделю</span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Поле, Консенсус, Судья, Парадоксы и Квантово-астральный — по <b>3 пробы</b></span></div>
+      </div>
+
+      <div class="pro-sec">
+        <div class="pro-sec-t">👑 Pro · полная лаборатория</div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Вся собранная <b>история каждой лотереи</b></span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>База <b>обновляется автоматически</b> — свежие тиражи подтягиваются сами</span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span><b>Безлимитные</b> Консенсус, Поле, Судья (обе роли), Парадоксы и Астрал с натальной картой</span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Произвольный период и <b>диапазон дат</b></span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Импорт и экспорт баз · автопроверка и уведомления</span></div>
+      </div>
+
+      <div class="pro-sec">
+        <div class="pro-sec-t">💰 Выбери подписку</div>
+        <div class="pro-prices">
+          <button type="button" class="pro-price" data-plan="m1" aria-pressed="false" onclick="PRO_selectPlan('m1')"><div class="pro-per">1 месяц</div><div class="pro-amt">$4.99</div></button>
+          <button type="button" class="pro-price" data-plan="m3" aria-pressed="false" onclick="PRO_selectPlan('m3')"><div class="pro-per">3 месяца</div><div class="pro-amt">$12.99</div></button>
+          <button type="button" class="pro-price" data-plan="m6" aria-pressed="false" onclick="PRO_selectPlan('m6')"><div class="pro-per">6 месяцев</div><div class="pro-amt">$22.99</div></button>
+          <button type="button" class="pro-price best" data-plan="m12" aria-pressed="false" onclick="PRO_selectPlan('m12')"><div class="pro-per">12 месяцев</div><div class="pro-amt">$34.99</div></button>
+        </div>
+        <div class="pro-fine">Нажми на тариф, чтобы перейти к оформлению. Итоговая валюта определяется платёжным магазином.</div>
+      </div>
+    </div>
+
+    <div class="pro-step" id="pro-checkout-step" hidden>
+      <button type="button" class="pro-back" onclick="PRO_showPlans()">← Изменить тариф</button>
+      <div class="pro-checkout-title">Оформление подписки</div>
+      <div class="pro-checkout-sub">Проверь заказ и выбери удобный способ безопасной оплаты.</div>
+      <div class="pro-order">
+        <div><div class="pro-order-name" id="pro-order-name">Mandel World Pro</div><div style="font-size:12px;color:#8A6B2E;margin-top:2px">Автопродление можно отменить в любое время</div></div>
+        <div class="pro-order-price" id="pro-order-price">$4.99</div>
+      </div>
+      <label class="pro-field">E-mail для чека
+        <input type="email" id="pro-email" autocomplete="email" inputmode="email" placeholder="name@example.com" required>
+      </label>
+      <div class="pro-pay-label">Способ оплаты</div>
+      <div class="pro-methods" role="group" aria-label="Способ оплаты">
+        <button type="button" class="pro-method" data-method="card" aria-pressed="true" onclick="PRO_selectMethod('card')">💳<br>Карта</button>
+        <button type="button" class="pro-method" data-method="apple" aria-pressed="false" onclick="PRO_selectMethod('apple')"> Pay<br>Apple Pay</button>
+        <button type="button" class="pro-method" data-method="google" aria-pressed="false" onclick="PRO_selectMethod('google')">G Pay<br>Google Pay</button>
+      </div>
+      <label class="pro-consent"><input type="checkbox" id="pro-consent"><span>Я принимаю условия подписки и понимаю, что она продлевается автоматически до отмены.</span></label>
+      <button type="button" class="btn-draw" id="pro-pay-btn" onclick="PRO_continueCheckout()">🔒 Перейти к безопасной оплате</button>
+      <div class="pro-pay-status" id="pro-pay-status" aria-live="polite"></div>
+      <div class="pro-fine">Данные карты не вводятся и не сохраняются на этом сайте: оплата должна завершаться на защищённой странице платёжного провайдера.</div>
+    </div>
+  </div>
+</div>
+
+<!-- РАЗБОР МОЕЙ КОМБИНАЦИИ -->
+<div class="if-ov" id="jc-ov">
+  <div class="if-sheet" style="position:relative">
+    <button class="btn-close2" onclick="JC_close()" style="position:absolute;top:14px;right:14px;width:38px;height:38px;padding:0;margin:0;border-radius:11px;font-size:16px;font-weight:900;z-index:2">✕</button>
+    <div class="if-hdr"><div><div class="if-title">⚖️ Разбор моей комбинации</div><div class="if-sub" id="jc-sub"></div></div></div>
+    <div id="jc-mount"><div class="if-empty">Судья изучает твои ряды…</div></div>
+    <div class="if-note" style="margin-top:14px">Судья оценивает структуру твоих рядов по истории выбранного периода. Это не прогноз и не гарантия — вероятность каждого тиража одинакова для любой комбинации.</div>
   </div>
 </div>
 
@@ -2026,19 +2182,50 @@ function formatPrice(l){
   if(!l.price)return '—';
   return `${l.price} ${l.currency||'NOK'}`;
 }
+function enableHorizontalScroller(el){
+  if(!el||el.dataset.dragReady==='1')return;
+  el.dataset.dragReady='1';
+  let dragging=false,moved=false,suppressUntil=0,startX=0,startLeft=0,pointerId=null;
+  el.addEventListener('pointerdown',e=>{
+    if(e.pointerType!=='mouse'||e.button!==0)return;
+    dragging=true;moved=false;pointerId=e.pointerId;startX=e.clientX;startLeft=el.scrollLeft;
+  });
+  el.addEventListener('pointermove',e=>{
+    if(!dragging||e.pointerId!==pointerId)return;
+    const dx=e.clientX-startX;
+    if(!moved&&Math.abs(dx)>4){
+      moved=true;el.classList.add('dragging');
+      try{el.setPointerCapture(pointerId);}catch(err){}
+    }
+    if(moved){e.preventDefault();el.scrollLeft=startLeft-dx;}
+  },{passive:false});
+  const finish=e=>{
+    if(!dragging||e.pointerId!==pointerId)return;
+    suppressUntil=moved?Date.now()+120:0;dragging=false;pointerId=null;el.classList.remove('dragging');
+    try{el.releasePointerCapture(e.pointerId);}catch(err){}
+  };
+  el.addEventListener('pointerup',finish);
+  el.addEventListener('pointercancel',finish);
+  el.addEventListener('click',e=>{if(Date.now()<suppressUntil){e.preventDefault();e.stopPropagation();}},{capture:true});
+  el.addEventListener('wheel',e=>{
+    if(el.scrollWidth<=el.clientWidth||Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;
+    e.preventDefault();el.scrollLeft+=e.deltaY;
+  },{passive:false});
+}
 function renderLotteryNav(){
   const tabs=document.getElementById('lot-tabs'),strip=document.getElementById('sched-strip');
   if(tabs){
     tabs.innerHTML=Object.entries(LOTS).map(([id,l])=>`
-      <div class="lt ${id===cur?(l.activeClass||'ow'):''}" id="lt-${id}" onclick="initLottery('${id}')">
+      <div class="lt ${id===cur?(l.activeClass||'ow'):''}" id="lt-${id}" role="button" tabindex="0" aria-current="${id===cur?'true':'false'}" onclick="initLottery('${id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();initLottery('${id}');}">
         <div class="lt-flag">${l.flag||'🎲'}</div>
         <div class="lt-name">${l.short||l.name}</div>
       </div>`).join('');
+    requestAnimationFrame(()=>document.getElementById('lt-'+cur)?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}));
   }
   if(strip){
     strip.innerHTML=Object.entries(LOTS).map(([id,l],i)=>`
       ${i?'<div class="ss-div"></div>':''}
-      <div class="ss-item" onclick="initLottery('${id}')">
+      <div class="ss-item ${id===cur?'on':''}" role="button" tabindex="0" aria-current="${id===cur?'true':'false'}" onclick="initLottery('${id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();initLottery('${id}');}">
         <div class="ss-name" style="color:${mColor(l.cls)}">${l.short||l.name}</div>
         <div class="ss-day">${l.day} · до ${l.dl}</div>
         <div class="ss-price">${formatPrice(l)}/ряд</div>
@@ -2245,6 +2432,7 @@ function selLot(id){
   if(!LOTS[id])return;
   syncRulesFromConfig(id);
   cur=id;lastDraw=null;CROWD_cache=null;const _wc=document.getElementById('wb-crowd');if(_wc)_wc.innerHTML='';
+  document.body.setAttribute('data-game',id);
   setTimeout(()=>{try{PERIOD_refreshLabel();}catch(e){}},50);
   IF_reset();CONS_reset();
   renderLotteryNav();
@@ -3516,8 +3704,9 @@ async function selAT(id){
   curAT=id;
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('vis'));
   document.getElementById('at-'+id).classList.add('vis');
-  document.querySelectorAll('.st').forEach(t=>t.classList.remove('on'));
-  document.getElementById('st-'+id).classList.add('on');
+  document.querySelectorAll('.st').forEach(t=>{t.classList.remove('on');t.setAttribute('aria-pressed','false');});
+  const activeTab=document.getElementById('st-'+id);
+  activeTab.classList.add('on');activeTab.setAttribute('aria-pressed','true');
   await renderAna();
 }
 
@@ -4518,8 +4707,16 @@ if(!I18N[curLang])curLang='en';
 function t(k){return (I18N[curLang]&&I18N[curLang][k])||I18N.ru[k]||k;}
 function applyLang(){
   const set=(sel,key)=>{const el=document.querySelector(sel);if(el)el.textContent=t(key);};
+  const setTab=(sel,key)=>{
+    const el=document.querySelector(sel);if(!el)return;
+    const value=t(key),split=value.indexOf(' ');
+    const icon=document.createElement('span'),label=document.createElement('span');
+    icon.className='st-ic';icon.textContent=split<0?'':value.slice(0,split);
+    label.className='st-tx';label.textContent=split<0?value:value.slice(split+1);
+    el.replaceChildren(icon,label);
+  };
   set('#bn-sim .bn-lbl','sim');set('#bn-ana .bn-lbl','ana');
-  set('#st-inp','tabInp');set('#st-freq','tabFreq');set('#st-chi','tabChi');set('#st-cmp','tabCmp');set('#st-prize','tabPrize');set('#st-man','tabMan');
+  setTab('#st-inp','tabInp');setTab('#st-freq','tabFreq');setTab('#st-chi','tabChi');setTab('#st-cmp','tabCmp');setTab('#st-prize','tabPrize');setTab('#st-man','tabMan');
   set('#btn-draw','simulate');
   set('button[onclick="generateSelectedRows()"]','generate');
   set('button[onclick="renderWorldAnalysis()"]','world');
@@ -5604,6 +5801,8 @@ showBanner=function(dM,dB){
 };
 /* хуки */
 document.addEventListener('DOMContentLoaded',()=>{
+  enableHorizontalScroller(document.getElementById('lot-tabs'));
+  enableHorizontalScroller(document.getElementById('sched-strip'));
   setTimeout(()=>{PERIOD_refreshLabel();initNotifyBtn();},500);
   setTimeout(autoCheckFavorites,4500);
   let saRaf=0;
@@ -5671,10 +5870,56 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 
-/* ═══ ПОДПИСКА (инфо-модал; оплата подключится на этапе мобильной сборки) ═══ */
+/* ═══ ПОДПИСКА: выбор тарифа и передача в защищённый hosted checkout ═══ */
+const PRO_PLANS=Object.freeze({
+  m1:{name:'Mandel World Pro · 1 месяц',price:'$4.99'},
+  m3:{name:'Mandel World Pro · 3 месяца',price:'$12.99'},
+  m6:{name:'Mandel World Pro · 6 месяцев',price:'$22.99'},
+  m12:{name:'Mandel World Pro · 12 месяцев',price:'$34.99'}
+});
+/* Вставьте hosted checkout URL платёжного провайдера для каждого тарифа.
+   Допустимы строка URL или объект {default,card,apple,google}. */
+const PRO_CHECKOUT_URLS=Object.assign({m1:'',m3:'',m6:'',m12:''},window.MANDEL_PRO_CHECKOUT_URLS||{});
+let PRO_selectedPlan='m12',PRO_selectedMethod='card';
 function openSubInfo(){
-  showFeedback('👑 Mandel World Pro',
-'Бесплатно:\n· симулятор всех 9 лотерей без ограничений\n· официальные результаты операторов — свежие тиражи\n· умная генерация — 3 запуска в неделю\n· Поле, Консенсус, Судья и Квантово-астральный — по 3 пробы\n\nPro — максимально полная база каждой игры:\n· вся собранная история каждой лотереи\n· база обновляется автоматически — свежие тиражи подтягиваются сами\n· безлимитные Консенсус, Поле, Судья (обе роли) и Астрал с натальной картой\n· произвольный период и диапазон дат\n· импорт и экспорт баз · автопроверка и уведомления\n\nПодписка: 1 мес $4.99 · 3 мес $12.99 · 6 мес $22.99 · 12 мес $34.99.\nЦена в валюте твоего магазина определится автоматически.','👑',0);
+  PRO_showPlans();
+  document.getElementById('pro-ov').classList.add('show');
+}
+function PRO_close(){document.getElementById('pro-ov').classList.remove('show');}
+function PRO_showPlans(){
+  const plans=document.getElementById('pro-plans-step'),checkout=document.getElementById('pro-checkout-step');
+  if(plans)plans.hidden=false;if(checkout)checkout.hidden=true;
+  document.querySelector('.pro-sheet')?.scrollTo({top:0,behavior:'smooth'});
+}
+function PRO_selectPlan(id){
+  const plan=PRO_PLANS[id];if(!plan)return;
+  PRO_selectedPlan=id;
+  document.querySelectorAll('.pro-price').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.plan===id)));
+  document.getElementById('pro-order-name').textContent=plan.name;
+  document.getElementById('pro-order-price').textContent=plan.price;
+  document.getElementById('pro-plans-step').hidden=true;
+  document.getElementById('pro-checkout-step').hidden=false;
+  document.getElementById('pro-pay-status').textContent='';
+  document.querySelector('.pro-sheet')?.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>document.getElementById('pro-email')?.focus({preventScroll:true}),260);
+}
+function PRO_selectMethod(method){
+  PRO_selectedMethod=method;
+  document.querySelectorAll('.pro-method').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.method===method)));
+  document.getElementById('pro-pay-status').textContent='';
+}
+function PRO_continueCheckout(){
+  const email=document.getElementById('pro-email'),consent=document.getElementById('pro-consent'),status=document.getElementById('pro-pay-status');
+  if(!email.value.trim()||!email.checkValidity()){
+    status.textContent='Укажите действующий e-mail для чека.';email.reportValidity();email.focus();return;
+  }
+  if(!consent.checked){status.textContent='Подтвердите условия подписки перед оплатой.';consent.focus();return;}
+  const plan=PRO_PLANS[PRO_selectedPlan],entry=PRO_CHECKOUT_URLS[PRO_selectedPlan];
+  const target=typeof entry==='string'?entry:(entry?.[PRO_selectedMethod]||entry?.default||'');
+  const pending={plan:PRO_selectedPlan,planName:plan.name,price:plan.price,email:email.value.trim(),method:PRO_selectedMethod,createdAt:new Date().toISOString()};
+  try{localStorage.setItem('md2_pro_pending_checkout',JSON.stringify(pending));}catch(err){}
+  if(target){window.location.assign(target);return;}
+  status.textContent='Экран оформления готов. Для запуска оплаты осталось подключить защищённую платёжную ссылку для этого тарифа.';
 }
 
 
@@ -6237,50 +6482,27 @@ async function ADV_go(){
 async function ADV_judge(){
   const st=ADV_state;if(!st||!st.rows)return;
   const l=L();
-  const verdictData=await withBusy('Судья расследует…',async()=>{
+  const data=await withBusy('Судья расследует…',async()=>{
     const draws=IF_window(await loadD(cur));
     if(draws.length<5)return{err:'Мало данных: судье нужно минимум 5 тиражей.'};
-    const A=IF_scores(draws,'main',l.mB,l.pM);
-    const score=n=>((A.scores[n-1]||{}).score||0);
-    const all=rangeNums(l.mB).map(n=>score(n)).sort((a,b)=>a-b);
-    const threshold=all[Math.floor(all.length*0.35)]; /* нижние 35% по полю — под подозрением */
-    const verdict=[],swapsLog=[];
-    for(const r of st.rows){
-      const m=[...r.m];
-      const weak=m.filter(n=>score(n)<threshold).sort((a,b)=>score(a)-score(b));
-      const strongPool=rangeNums(l.mB).filter(n=>!m.includes(n)).sort((a,b)=>score(b)-score(a));
-      const swapped=new Set();
-      /* исправляем максимум половину ряда — судья корректирует, а не переписывает */
-      weak.slice(0,Math.floor(l.pM/2)).forEach(w0=>{
-        const repl=strongPool.shift();
-        if(repl!=null&&score(repl)>score(w0)){
-          m[m.indexOf(w0)]=repl;swapped.add(repl);
-          swapsLog.push({from:w0,to:repl,sf:Math.round(score(w0)),st:Math.round(score(repl))});
-        }
-      });
-      verdict.push({m:m.sort((a,b)=>a-b),b:[...(r.b||[])],swapped});
-    }
-    return{verdict,swapsLog,drawsN:draws.length,checked:st.rows.length*l.pM,threshold:Math.round(threshold)};
+    return{plan:JUDGE_plan(st.rows.map(r=>({m:r.m,b:r.b})),l,draws),drawsN:draws.length};
   });
-  if(!verdictData)return;
-  if(verdictData.err){showFeedback('Судья',verdictData.err,'⚖️',3200);return;}
-  st.verdict=verdictData.verdict;
-  const agreed=verdictData.checked-verdictData.swapsLog.length;
-  const uniq=new Set();st.verdict.forEach(r=>r.m.forEach(n=>uniq.add(n)));
+  if(!data)return;
+  if(data.err){showFeedback('Судья',data.err,'⚖️',3200);return;}
+  const proposed=data.plan.reduce((s,p)=>s+p.swaps.length,0);
+  const checked=st.rows.length*l.pM;
+  const agreed=checked-proposed;
+  const uniq=new Set();data.plan.forEach(p=>p.orig.forEach(n=>uniq.add(n)));
   const covPct=Math.round(uniq.size/l.mB*100);
-  const covLine=' Ваши '+st.verdict.length+' '+rowWord(st.verdict.length)+' покрывают '+uniq.size+' из '+l.mB+' чисел ('+covPct+'%) — '+(covPct>=45?'широкое покрытие, разумный выбор количества.':covPct>=22?'умеренное покрытие; 5–10 рядов раскрыли бы поле шире.':'узкое покрытие: один-два ряда — это точечная ставка, для охвата поля берите больше рядов.');
-  const intro=(SUPC_pending&&SUPC_pending.algo===st.algo)?'<b>⚖️ Кабинет судьи.</b> Вы вернулись по моему направлению — рассматриваю дело лично. '+SUPC_pending.reason+'<br><br>':'';
-  if(SUPC_pending&&SUPC_pending.algo===st.algo)SUPC_pending=null;
-  const invest=intro+'<b>Расследование судьи.</b> Проверил '+verdictData.checked+' чисел совета по силе поля из '+verdictData.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Порог доверия: сила '+verdictData.threshold+'.<br>'+
-    'Согласен с <b>'+agreed+'</b> числами. '+
-    (verdictData.swapsLog.length?('Исправляю <b>'+verdictData.swapsLog.length+'</b>: '+verdictData.swapsLog.slice(0,8).map(x=>x.from+'→'+x.to+' <span style="color:var(--sub2)">(сила '+x.sf+'→'+x.st+')</span>').join(', ')+(verdictData.swapsLog.length>8?' и ещё '+(verdictData.swapsLog.length-8):'')+'.'):'Возражений нет — совет модели выдержал проверку поля полностью. ✅')+covLine;
-  document.getElementById('adv-result').innerHTML=
-    '<div class="if-seclbl">⚖️ Вердикт судьи · '+st.verdict.length+' '+rowWord(st.verdict.length)+'</div>'+
-    st.verdict.map(r=>'<div class="adv-row">'+ADV_ballsHtml(r,L(),r.swapped)+'</div>').join('')+
-    '<div class="adv-invest">'+invest+'</div>'+
-    '<div class="if-note" style="margin-top:8px">Золотым кольцом отмечены исправленные судьёй числа.</div>'+
-    '<button class="btn-draw '+L().cls+'" style="margin-top:12px" onclick="ADV_useVerdict()">Использовать вердикт</button>'+
-    '<button class="btn-exp" style="margin-top:8px" onclick="ADV_shareVerdict()">📤 Поделиться вердиктом</button>';
+  const swapsList=[];data.plan.forEach(p=>p.swaps.forEach(s=>swapsList.push(s)));
+  const covLine=' Ваши '+st.rows.length+' '+rowWord(st.rows.length)+' покрывают '+uniq.size+' из '+l.mB+' чисел ('+covPct+'%) — '+(covPct>=45?'широкое покрытие.':covPct>=22?'умеренное покрытие; 5–10 рядов раскрыли бы поле шире.':'узкое покрытие: для охвата поля берите больше рядов.');
+  let intro='';
+  if(SUPC_pending&&SUPC_pending.algo===st.algo){intro='<b>⚖️ Кабинет судьи.</b> Вы вернулись по моему направлению. '+SUPC_pending.reason+'<br><br>';SUPC_pending=null;}
+  intro+='<b>Расследование судьи.</b> Проверил '+checked+' чисел по силе поля из '+data.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). '+
+    'Согласен с <b>'+agreed+'</b>. '+(proposed?('Предлагаю заменить <b>'+proposed+'</b>: '+swapsList.slice(0,8).map(x=>x.from+'→'+x.to).join(', ')+(proposed>8?' и ещё '+(proposed-8):'')+'. Реши сам, какие замены применить.'):'Возражений нет — совет выдержал проверку поля полностью. ✅')+covLine;
+  JUDGE_state['adv']={plan:data.plan,l,drawsN:data.drawsN,mountId:'adv-result',intro,applyLabel:'Использовать в билете',onApply:finalRows=>{ADV_close();closeSG();setGeneratedRows(finalRows,'Вердикт судьи перенесён в билет. ⚖️🍀');}};
+  JUDGE_render('adv');
+  const mp=document.getElementById('adv-result');if(mp)try{mp.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
 }
 function ADV_use(){
   const st=ADV_state;if(!st||!st.rows)return;
@@ -6554,8 +6776,9 @@ function JUDGE_render(ns){
   const st=JUDGE_state[ns];if(!st)return;const l=st.l;
   const proposed=st.plan.reduce((s,p)=>s+p.swaps.length,0);
   const active=st.plan.reduce((s,p)=>s+p.swaps.filter(x=>x.apply).length,0);
-  let html='<div class="if-seclbl">⚖️ Разбор Верховного судьи</div>'+
-    '<div class="if-note" style="margin:0 0 12px">Судья проверил каждый шар силой поля из '+st.drawsN+' тиражей (частота, пары, пропуски, зоны). Ниже — какие шары и в каких рядах он предлагает заменить. Реши сам: нажми на замену, чтобы включить или отключить её. Золотом отмечены изменённые числа. Гарантий это не даёт.</div>';
+  let html=(st.intro?'<div class="adv-invest" style="margin-top:0 0 4px">'+st.intro+'</div>':'')+
+    '<div class="if-seclbl">⚖️ Разбор Верховного судьи</div>'+
+    '<div class="if-note" style="margin:0 0 12px">Судья проверил каждый шар силой поля из '+st.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Ниже — какие шары и в каких рядах он предлагает заменить. Реши сам: нажми на замену, чтобы включить или отключить её. Можно поменять только одну, а остальное оставить. Золотом отмечены изменённые числа. Гарантий это не даёт.</div>';
   st.plan.forEach((p,ri)=>{
     html+='<div class="pdx-jrow"><div class="pdx-jhead">Ряд '+(ri+1)+'</div>'+JUDGE_ballsHtml(p,l);
     if(p.swaps.length){
@@ -6565,15 +6788,22 @@ function JUDGE_render(ns){
     }
     html+='</div>';
   });
-  html+='<div style="margin-top:14px"><button class="btn-draw '+l.cls+'" onclick="JUDGE_apply(\''+ns+'\')">Применить выбор ('+active+' из '+proposed+' замен)</button>'+
-    '<button class="btn-exp" style="margin-top:8px" onclick="JUDGE_keepAll(\''+ns+'\')">Оставить всё как есть</button></div>';
+  html+='<div style="position:sticky;bottom:0;padding-top:12px;margin-top:14px;background:linear-gradient(0deg,var(--modal-bg) 72%,transparent)">'+
+    '<button class="btn-draw '+l.cls+'" onclick="JUDGE_apply(\''+ns+'\')">✅ '+(st.applyLabel||'Применить в билете')+' ('+active+' из '+proposed+' замен)</button>';
+  if(proposed>0){
+    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
+      '<button class="btn-exp" style="margin:0" onclick="JUDGE_setAll(\''+ns+'\',true)">Включить все замены</button>'+
+      '<button class="btn-exp" style="margin:0" onclick="JUDGE_setAll(\''+ns+'\',false)">Снять все замены</button></div>';
+  }
+  html+='</div>';
   document.getElementById(st.mountId).innerHTML=html;
 }
 function JUDGE_toggle(ns,ri,si){const s=JUDGE_state[ns]?.plan?.[ri]?.swaps?.[si];if(!s)return;s.apply=!s.apply;JUDGE_render(ns);}
+function JUDGE_setAll(ns,val){const st=JUDGE_state[ns];if(!st)return;st.plan.forEach(p=>p.swaps.forEach(s=>s.apply=val));JUDGE_render(ns);}
 function JUDGE_finalRows(ns){return JUDGE_state[ns].plan.map(p=>{const e=JUDGE_effective(p);return{m:e.m,b:p.b};});}
 function JUDGE_apply(ns){const st=JUDGE_state[ns];if(st&&st.onApply)st.onApply(JUDGE_finalRows(ns));}
-function JUDGE_keepAll(ns){const st=JUDGE_state[ns];if(!st)return;st.plan.forEach(p=>p.swaps.forEach(s=>s.apply=false));if(st.onApply)st.onApply(JUDGE_finalRows(ns));}
-async function JUDGE_open(ns,rows,mountId,onApply){
+async function JUDGE_open(ns,rows,mountId,onApply,opts){
+  opts=opts||{};
   const l=L();
   const data=await withBusy('Судья изучает ряды…',async()=>{
     const draws=IF_window(await loadD(cur));
@@ -6582,8 +6812,9 @@ async function JUDGE_open(ns,rows,mountId,onApply){
   });
   if(!data)return;
   if(data.err){showFeedback('Верховный судья',data.err,'⚖️',3800);return;}
-  JUDGE_state[ns]={plan:data.plan,l,drawsN:data.drawsN,mountId,onApply};
+  JUDGE_state[ns]={plan:data.plan,l,drawsN:data.drawsN,mountId,onApply,intro:opts.intro||'',applyLabel:opts.applyLabel||''};
   JUDGE_render(ns);
+  const mp=document.getElementById(mountId);if(mp&&mp.scrollIntoView)try{mp.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
 }
 
 /* ═══════════════ СИСТЕМА ПАРАДОКСОВ · модальное окно ═══════════════ */
@@ -6662,6 +6893,41 @@ function PDX_judge(){
     const dur=setGeneratedRows(finalRows,'Парадоксы с решением судьи перенесены в билет. ⚖️♾️ Гарантий нет.');
     setTimeout(()=>showFeedback('Готово','Ряды с учётом твоего выбора перенесены в билет.','⚖️',2600),dur+150);
   });
+}
+
+/* ═══ РАЗБОР МОЕЙ КОМБИНАЦИИ · судья о выбранных рядах ═══ */
+function JC_close(){document.getElementById('jc-ov').classList.remove('show');}
+async function JC_open(){
+  const l=L();fillAll();
+  const good=rows.filter(r=>r.m.length===l.pM);
+  if(!good.length){showFeedback('Пусто','Сначала заполни хотя бы один ряд в билете — тогда судья сможет его разобрать.','✋',2800);return;}
+  const nd=(typeof QA_nextDrawDate==='function')?QA_nextDrawDate():new Date();
+  document.getElementById('jc-sub').textContent=l.name+' · твоя комбинация на тираж '+nd.toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'short'});
+  document.getElementById('jc-mount').innerHTML='<div class="if-empty">Судья изучает твои ряды…</div>';
+  document.getElementById('jc-ov').classList.add('show');
+  const data=await withBusy('Судья изучает вашу комбинацию…',async()=>{
+    const draws=IF_window(await loadD(cur));
+    if(draws.length<5)return{err:'Судье нужно минимум 5 тиражей выбранного периода. Обнови результаты во вкладке «Аналитика» или расширь окно анализа.'};
+    return{plan:JUDGE_plan(good.map(r=>({m:r.m,b:r.b})),l,draws),drawsN:draws.length};
+  });
+  if(!data)return;
+  if(data.err){document.getElementById('jc-mount').innerHTML='<div class="if-empty">⚖️ '+data.err+'</div>';return;}
+  const proposed=data.plan.reduce((s,p)=>s+p.swaps.length,0);
+  const checked=good.length*l.pM;
+  const agreed=checked-proposed;
+  const uniq=new Set();data.plan.forEach(p=>p.orig.forEach(n=>uniq.add(n)));
+  const covPct=Math.round(uniq.size/l.mB*100);
+  const swapsList=[];data.plan.forEach(p=>p.swaps.forEach(s=>swapsList.push(s)));
+  let verdict;
+  if(proposed===0)verdict='<b>Вердикт: оставить как есть.</b> Все твои числа сидят в сильной зоне поля — переделывать нечего.';
+  else if(proposed<=Math.max(1,Math.round(checked*0.18)))verdict='<b>Вердикт: почти идеально.</b> Достаточно точечной правки '+proposed+' '+(proposed===1?'числа':'чисел')+', остальное трогать не советую.';
+  else if(proposed<=Math.round(checked*0.4))verdict='<b>Вердикт: крепкая основа, но есть слабые места.</b> Предлагаю заменить '+proposed+' чисел — реши сам, что применить.';
+  else verdict='<b>Вердикт: стоит пересобрать.</b> Слабых по полю чисел много ('+proposed+'). Замени часть вручную ниже или собери ряды заново умной генерацией.';
+  const covLine=' Твои '+good.length+' '+rowWord(good.length)+' покрывают '+uniq.size+' из '+l.mB+' чисел поля ('+covPct+'%) — '+(covPct>=45?'широкий охват.':covPct>=22?'умеренный охват; больше рядов раскрыли бы поле шире.':'узкий охват: для покрытия поля возьми больше рядов.');
+  const intro='<b>Дело о твоей комбинации.</b> Проверил '+checked+' чисел по силе поля из '+data.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Согласен с <b>'+agreed+'</b>. '+
+    (proposed?('Под подозрением <b>'+proposed+'</b>: '+swapsList.slice(0,8).map(x=>x.from+'→'+x.to).join(', ')+(proposed>8?' и ещё '+(proposed-8):'')+'.'):'Возражений нет.')+covLine+'<br><br>'+verdict;
+  JUDGE_state['jc']={plan:data.plan,l,drawsN:data.drawsN,mountId:'jc-mount',intro,applyLabel:'Применить в билете',onApply:finalRows=>{JC_close();const dur=setGeneratedRows(finalRows,'Комбинация с решением судьи применена в билете. ⚖️');setTimeout(()=>showFeedback('Готово','Твои ряды обновлены по решению судьи.','⚖️',2400),dur+150);}};
+  JUDGE_render('jc');
 }
 </script>
 <div class="scroll-anchors" id="scroll-anchors">

@@ -234,7 +234,7 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .ticket-row.on-viking{border-color:#1e3fbe;box-shadow:0 0 0 1px #1e3fbe,0 4px 14px rgba(30,63,190,.2)}
 .ticket-row.on-euro{border-color:#f0a500;box-shadow:0 0 0 1px #f0a500,0 4px 14px rgba(240,165,0,.2)}
 .rn{font-size:14px;font-weight:800;min-width:20px;flex-shrink:0;color:var(--sub);font-family:'Unbounded',sans-serif}
-.rballs{display:flex;gap:4px;flex:1;align-items:center;overflow:hidden;flex-wrap:nowrap}
+.rballs{display:flex;gap:4px;flex:1;min-width:0;align-items:center;overflow:visible;flex-wrap:nowrap}
 .rb{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
 .rb,.dball,.mb,.hball,.sg-cball,.hc-ball,.heat-cell,.wheel-num{animation:ballPop .3s cubic-bezier(.34,1.4,.55,1) both}
 .ticket-row,.sg-combo,.hist-item{animation:fadeLift .18s ease both}
@@ -417,10 +417,9 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 
 /* история */
 .hist-item{position:relative;display:block;padding:12px 0;border-bottom:1px solid var(--hist-border)}
-.hist-main{min-width:0;overflow:hidden}
+.hist-main{min-width:0;overflow:visible}
 .hist-date{font-size:15px;color:var(--sub);margin-bottom:8px;line-height:1.35}
-.hist-balls{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain}
-.hist-balls::-webkit-scrollbar{display:none}
+.hist-balls{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow:visible;padding:3px 0 5px}
 .hist-sep{font-size:9px;opacity:.4;margin:0 2px;flex:0 0 auto}
 .hball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex:0 0 auto}
 .hball.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
@@ -465,10 +464,9 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 
 /* избранное */
 .fav-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--hist-border)}
-.fav-main{min-width:0;overflow:hidden}
+.fav-main{min-width:0;overflow:visible}
 .fav-rows{display:flex;flex-direction:column;gap:4px}
-.fav-rowballs{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.fav-rowballs::-webkit-scrollbar{display:none}
+.fav-rowballs{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap;overflow:visible}
 .fav-balls{display:flex;gap:4px;flex-wrap:nowrap}
 .fav-name{font-size:15px;color:var(--sub);margin-bottom:7px}
 .btn-fav-del{background:none;border:none;color:#e8556a;font-size:16px;cursor:pointer;padding:2px 6px}
@@ -498,7 +496,8 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 /* ══ МОДАЛ УМНОЙ ГЕНЕРАЦИИ ══ */
 .sg-ov{position:fixed;inset:0;background:linear-gradient(180deg,var(--game-glow,rgba(166,21,57,.4)) 0,rgba(10,4,8,.82) 32%,rgba(10,4,8,.82) 100%);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
 .sg-ov.show{opacity:1;pointer-events:all}
-.sg-sheet{background:var(--modal-bg);border-radius:26px 26px 0 0;border-top:1px solid rgba(233,180,76,.4);padding:20px 20px 44px;width:100%;max-width:430px;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
+.sg-sheet{background:var(--modal-bg);border-radius:26px 26px 0 0;border-top:1px solid rgba(233,180,76,.4);padding:20px 20px 44px;width:100%;max-width:430px;max-height:92vh;overflow-y:auto;scrollbar-width:none;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
+.sg-sheet::-webkit-scrollbar{display:none}
 .sg-ov.show .sg-sheet{transform:translateY(0)}
 .sg-hndl{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px}
 .sg-header{text-align:center;margin-bottom:16px}
@@ -574,7 +573,8 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .if-badge{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(160deg,#F5CE7B,#E9B44C);color:#2A1608;padding:2px 7px;border-radius:10px;vertical-align:2px;margin-left:4px}
 .if-ov{position:fixed;inset:0;background:linear-gradient(180deg,var(--game-glow,rgba(166,21,57,.4)) 0,rgba(10,4,8,.78) 30%,rgba(10,4,8,.78) 100%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:560;display:none;padding:0}
 .if-ov.show{display:flex;align-items:flex-end;justify-content:center}
-.if-sheet{width:100%;max-width:720px;height:94dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--modal-bg);border:1px solid rgba(233,180,76,.35);border-radius:26px 26px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom))}
+.if-sheet{width:100%;max-width:720px;height:94dvh;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;background:var(--modal-bg);border:1px solid rgba(233,180,76,.35);border-radius:26px 26px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom));scroll-padding-top:18px;scroll-padding-bottom:24px}
+.if-sheet::-webkit-scrollbar{display:none}
 .if-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .if-title{font-family:'Unbounded',sans-serif;font-size:19px;font-weight:900}
 .if-sub{font-size:14px;color:var(--sub2);margin-top:3px}
@@ -599,8 +599,8 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .if-rowcard{border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:10px;background:var(--bg3)}
 .if-rowtype{font-weight:800;font-size:13.5px}
 .if-rowscore{font-size:11.5px;color:var(--gold);font-weight:800}
-.if-rowballs{display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0 6px;padding-bottom:2px;scrollbar-width:none}
-.if-rowballs::-webkit-scrollbar{display:none}
+.if-rowballs{display:flex;gap:5px;flex-wrap:nowrap;align-items:center;overflow:visible;width:100%;margin:8px 0 6px;padding:3px 0}
+.if-rowballs.if-ball-list{flex-wrap:wrap}
 .if-rball{width:42px;height:42px;flex:0 0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px}
 /* Узнаваемая палитра текущей лотереи применяется ко всем основным результатам. */
 body[data-game] :is(.rb[class*="rb-m-"],.dball[class$="-m"],.mb:not([class*="miss-"])[class$="-m"],.hball[class$="-m"],.sg-cball[class$="-m"],.if-rball[class*="rb-m-"],.if-ball[class*="rb-m-"],.nb[class*="sm-"]){--ball:var(--gm);--ball-hi:var(--gm-hi);--ball-lo:var(--gm-lo);color:var(--gm-txt);text-shadow:0 1px 2px rgba(0,0,0,.34)}
@@ -611,7 +611,7 @@ body[data-game] .qa-ball.bonus{color:var(--gb-txt);background:radial-gradient(ci
 .if-legal{margin-top:16px;padding-top:12px;border-top:1px solid var(--srow-border);font-size:11.5px;line-height:1.55;color:var(--sub2);text-align:center}
 .if-empty{text-align:center;padding:40px 16px;color:var(--sub2);font-size:14.5px;line-height:1.6}
 .if-status{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:800;background:var(--bg3);border:1px solid var(--gold);color:var(--gold)}
-@media(min-width:700px){.if-ov.show{align-items:center}.if-sheet{height:auto;max-height:92dvh;border-radius:26px}}
+@media(min-width:700px){.if-ov.show{align-items:center}.if-sheet{height:auto;max-width:min(1040px,calc(100vw - 48px));max-height:92dvh;border-radius:26px;padding:22px 24px 28px}}
 .pick-counts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .pick-cnt{padding:10px 4px;border-radius:12px;border:1.5px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:800;font-family:'Unbounded',sans-serif;font-size:14px;cursor:pointer;text-align:center}
 .pick-cnt.on{border-color:var(--gold);background:var(--sg-algo-sel-bg);box-shadow:0 0 0 1px var(--gold)}
@@ -687,7 +687,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 /* ══ АДАПТИВ ══ */
 @media (max-width:380px){
   body{max-width:none}
-  .rb{width:clamp(30px,8.45vw,33px);height:clamp(30px,8.45vw,33px);font-size:11.5px}
+  .rb{width:clamp(28px,8.45vw,33px);height:clamp(28px,8.45vw,33px);font-size:clamp(10.5px,3vw,11.5px)}
   .ticket-row{padding:7px 8px;gap:3px}
   .main-grid{grid-template-columns:repeat(7,1fr)}
   .sec-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -700,8 +700,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .gen-grid,.gen-actions{grid-template-columns:1fr}
   .ticket-row{min-height:50px;padding:7px 8px;margin-bottom:6px;gap:4px;border-radius:13px}
   .rballs{gap:2px}
-  .rb{width:clamp(30px,8.45vw,35px);height:clamp(30px,8.45vw,35px);font-size:clamp(11.5px,3.15vw,13px)}
-  body:not([data-game="powerballau"]) .rb{width:clamp(31px,8.8vw,36px);height:clamp(31px,8.8vw,36px)}
+  .rb{width:clamp(28px,8.45vw,35px);height:clamp(28px,8.45vw,35px);font-size:clamp(10.5px,3.15vw,13px)}
+  body:not([data-game="powerballau"]) .rb{width:clamp(29px,8.8vw,36px);height:clamp(29px,8.8vw,36px)}
   body[data-game="powerballau"] .rballs{gap:1px}
   body[data-game="powerballau"] .rpipe{margin:0 1px}
   .rn{min-width:18px;font-size:13px}
@@ -711,21 +711,42 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .sec-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
   .st{min-width:0}
   .hist-date{font-size:14px;margin-bottom:6px;padding-right:40px}
-  .hball{width:34px;height:34px;font-size:12.5px}
+  .hball{width:clamp(30px,8.7vw,36px);height:clamp(30px,8.7vw,36px);font-size:clamp(11px,3.2vw,13px)}
   .hist-balls{gap:3px}
   .hist-sep{margin:0 1px}
   .btn-del{top:6px;width:32px;height:32px}
   .btn-fav-use,.btn-fav-copy{width:34px;height:32px;font-size:13px}
-  .dball{width:46px;height:46px;font-size:16px}
-  .mb{width:36px;height:36px;font-size:13.5px}
-  .sg-cball{width:46px;height:46px;font-size:15px}
-  .if-rball{width:40px;height:40px;font-size:14.5px}
-  .qa-ball{width:44px;height:44px;font-size:16px}
+  .dball{width:clamp(36px,10vw,46px);height:clamp(36px,10vw,46px);font-size:clamp(13px,4vw,16px)}
+  .mb{width:clamp(30px,8.8vw,36px);height:clamp(30px,8.8vw,36px);font-size:clamp(11px,3.4vw,13.5px)}
+  .sg-cball{width:clamp(36px,10.2vw,46px);height:clamp(36px,10.2vw,46px);font-size:clamp(13px,3.8vw,15px)}
+  .if-rowballs{gap:2px}
+  .if-rowballs>div[style*="width:6px"]{width:2px!important;flex:0 0 2px}
+  .if-rball{width:clamp(30px,9vw,38px);height:clamp(30px,9vw,38px);font-size:clamp(11px,3.5vw,14.5px)}
+  .qa-balls{flex-wrap:nowrap;gap:5px}
+  .qa-ball{width:clamp(30px,9.2vw,44px);height:clamp(30px,9.2vw,44px);flex:0 0 auto;font-size:clamp(11px,3.6vw,16px)}
+  .fav-item{grid-template-columns:1fr;gap:7px}
+  .fav-actions{flex-direction:row;justify-content:flex-end;align-items:center}
+  #wb-drawn,.prize-draw-balls{flex-wrap:nowrap!important}
+  #wb-rows .check-result-row{display:block;padding:10px 0}
+  #wb-rows .check-result-row>div:first-child>div{flex-wrap:nowrap!important;gap:2px!important}
+  #wb-rows .badge{display:inline-block;margin:7px 0 0 22px}
   .matrix-actions{grid-template-columns:1fr}
   .matrix-copy{width:100%}
 }
 @media (max-width:360px){
-  .hball{width:32px;height:32px;font-size:11.5px}
+  .hball{width:clamp(29px,8.6vw,31px);height:clamp(29px,8.6vw,31px);font-size:11px}
+}
+@media (max-width:340px){
+  .ticket-row{position:relative;min-height:64px;padding:8px 8px 8px 38px}
+  .ticket-row .rn{position:absolute;left:11px;top:8px;min-width:0}
+  .ticket-row .ract{position:absolute;left:7px;right:auto;bottom:6px;width:24px;height:24px;font-size:12px}
+  .ticket-row .rballs{gap:1px;width:100%}
+  .ticket-row .rb{width:clamp(26.5px,8.4vw,28px);height:clamp(26.5px,8.4vw,28px);font-size:10px}
+  .pdx-jrow{padding-left:10px;padding-right:10px}
+  .if-rball{width:clamp(27px,8.65vw,30px);height:clamp(27px,8.65vw,30px);font-size:clamp(10px,3.3vw,11.5px)}
+  .picker-wrap{gap:5px}
+  .main-grid{min-width:0;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+  .bonus-col{width:54px;min-width:0;flex:0 0 54px;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
 }
 
 /* ── ПЛАНШЕТ И БРАУЗЕР: резиновая сетка ── */
@@ -736,14 +757,14 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .lot-tabs{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto}
   .lt{flex:0 0 128px}
   /* шапка — лента во всю ширину, контент по центру */
-  .hdr{padding-left:max(16px,calc((100vw - 1320px)/2));padding-right:max(16px,calc((100vw - 1320px)/2))}
+  .hdr{padding-left:max(16px,calc((100vw - 1760px)/2));padding-right:max(16px,calc((100vw - 1760px)/2))}
   /* навигация — плавающая «таблетка» */
   .bnav{bottom:16px;width:auto;max-width:none;min-width:340px;border-radius:999px;border:1px solid rgba(233,180,76,.4);box-shadow:0 14px 44px rgba(0,0,0,.35);padding:5px 10px calc(5px + env(safe-area-inset-bottom)/2)}
   .bn{flex:0 0 auto;flex-direction:row;gap:8px;padding:9px 22px;border-radius:999px;min-height:0}
   .bn.on{background:rgba(233,180,76,.14)}
   .bn-icon{font-size:19px}
   .bn-lbl{font-size:13px}
-  .sg-sheet{max-width:640px;border-radius:26px;padding-left:24px;padding-right:24px;align-self:center}
+  .sg-sheet{max-width:min(900px,calc(100vw - 48px));border-radius:26px;padding-left:24px;padding-right:24px;align-self:center}
   .sg-ov{align-items:center}
   .sg-algos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
   .main-grid{grid-template-columns:repeat(10,1fr)}
@@ -752,28 +773,31 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 
 /* ── ШИРОКИЙ БРАУЗЕР: двухколоночная рабочая область ── */
 @media (min-width:1080px){
-  .lot-tabs{max-width:1280px}
-  #pg-sim.show{display:grid;grid-template-columns:400px minmax(0,1fr);gap:0 18px;align-items:start;max-width:1280px;margin:0 auto;padding:0 20px 20px}
+  .lot-tabs{max-width:1760px}
+  #pg-sim.show{display:grid;grid-template-columns:minmax(360px,430px) minmax(0,1fr);gap:0 18px;align-items:start;width:100%;max-width:1760px;margin:0 auto;padding:0 20px 20px}
   #pg-sim .hero{grid-column:1/-1;max-width:none;margin:12px 0 0;padding:34px 24px 24px}
   #pg-sim .sched-strip{grid-column:1/-1;max-width:none;margin:10px 0 0;justify-content:center}
   #pg-sim .sched-strip .ss-item{flex:1 1 0;min-width:104px;max-width:150px}
-  #pg-sim .win-banner{grid-column:1;max-width:none;margin:12px 0 0;position:sticky;top:96px;z-index:5;max-height:calc(100dvh - 120px);overflow:hidden;display:flex;flex-direction:column}#pg-sim .win-banner #wb-body{min-height:0;display:flex;flex-direction:column}#pg-sim #wb-rows{flex:1}
+  #pg-sim .win-banner{grid-column:1;max-width:none;margin:12px 0 0;position:static;max-height:none;overflow:visible;display:block}
   #pg-sim>div[style*="padding:14px"]{grid-column:2;max-width:none;margin:0}
-  #pg-ana .sec-tabs{max-width:960px}
-  #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:14px;align-items:start;max-width:1280px;margin:0 auto;padding:14px 20px 20px}
+  #pg-ana .sec-tabs{max-width:1040px}
+  #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:16px;align-items:start;width:100%;max-width:1760px;margin:0 auto;padding:14px 20px 20px}
   #pg-ana .tab-content.vis>.card{margin:0;max-width:none;min-width:0}
   #pg-ana .tab-content.vis>.card-wide{grid-column:1/-1}
   #pg-ana .tab-content.vis>*:not(.card){grid-column:1/-1}
+  #pg-ana #at-inp.vis{grid-template-columns:minmax(300px,.9fr) minmax(360px,1.1fr)}
+  #pg-ana #at-inp.vis>.card:nth-child(3){grid-column:1/-1}
+  #pg-ana #at-inp .hist-item{display:grid;grid-template-columns:minmax(170px,.65fr) minmax(0,1.35fr) 38px;align-items:center;gap:16px;padding:14px 0}
+  #pg-ana #at-inp .hist-main{display:contents}
+  #pg-ana #at-inp .hist-date{margin:0;padding:0;font-weight:700}
+  #pg-ana #at-inp .hist-balls{min-width:0;padding:4px 0}
+  #pg-ana #at-inp .btn-del{position:static;justify-self:end}
   .card{font-size:16px}
 }
 @media (min-width:1240px){.lot-tabs{justify-content:center}}
-
-/* ── ОЧЕНЬ ШИРОКИЕ ЭКРАНЫ И ТВ ── */
-@media (min-width:1700px){
-  body{zoom:1.18}
-}
-@media (min-width:2300px){
-  body{zoom:1.4}
+@media (min-width:1400px){
+  #pg-ana #at-inp.vis{grid-template-columns:minmax(320px,.8fr) minmax(360px,.9fr) minmax(560px,1.55fr)}
+  #pg-ana #at-inp.vis>.card:nth-child(3){grid-column:auto}
 }
 @media (prefers-reduced-motion:reduce){
   button,.lt,.ss-item,.ticket-row,.sg-algo,.bn,.nb,.ndb,.st,.wheel-num,.heat-cell,.pair-cell,.fbar,.btn-s,.btn-draw,.btn-add,.btn-exp,.btn-del,.btn-fav-use,.btn-fav-del,.btn-close2,.sg-use,.cc-btn,.fb-btn,.filter-check,.fb-box{transition:none!important}
@@ -804,9 +828,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 /* ══ ОБЪЁМНЫЕ ПРИГЛУШЁННЫЕ MISS-ШАРЫ ══ */
 .mb[class*="miss-"]{font-family:'Unbounded',sans-serif;font-weight:800;opacity:1;text-shadow:0 1px 1.5px rgba(0,0,0,.25)}
 body.light .mb[class*="miss-"]{text-shadow:none}
-/* ══ БИЛЕТ: внутренний скролл на десктопе + намёк на кликабельность ══ */
-#wb-rows{max-height:46vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
-@media(min-width:1080px){#wb-rows{max-height:52vh}}
+/* ══ БИЛЕТ: все строки всегда раскрыты, без внутреннего окна прокрутки ══ */
+#wb-rows{max-height:none;overflow:visible;padding-right:0}
 #win-banner:active{transform:scale(.995)}
 /* ══ ЯКОРЯ ПРОКРУТКИ ══ */
 .scroll-anchors{position:fixed;right:14px;bottom:110px;display:none;flex-direction:column;gap:8px;z-index:450}
@@ -818,7 +841,6 @@ body.light .mb[class*="miss-"]{text-shadow:none}
   ::-webkit-scrollbar{width:10px;height:10px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#E9B44C,#B07E1F);border-radius:5px;border:2px solid var(--bg)}
-  #wb-rows::-webkit-scrollbar{width:6px}
 }
 
 /* ══ БАННЕР ПОДПИСКИ ══ */
@@ -1052,6 +1074,14 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 .pdx-swap.on{border-style:solid;border-color:var(--gold);color:var(--fg);background:linear-gradient(160deg,rgba(233,180,76,.18),transparent),var(--bg2);box-shadow:0 0 0 1px var(--gold) inset}
 .pdx-swap .pdx-sd{font-family:'Manrope',sans-serif;font-weight:600;font-size:10.5px;color:var(--sub);letter-spacing:0}
 .pdx-ok{font-size:12.5px;color:#34c759;font-weight:700;margin-top:8px}
+.judge-choice-summary{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:12px 14px;margin-top:16px;border-top:1.5px solid var(--gold);border-bottom:1px solid var(--srow-border);background:linear-gradient(90deg,rgba(233,180,76,.14),transparent)}
+.judge-choice-summary b{display:block;font-family:'Unbounded',sans-serif;font-size:13px;color:var(--fg)}
+.judge-choice-summary span{display:block;margin-top:3px;font-size:12.5px;line-height:1.45;color:var(--sub2)}
+.judge-choice-count{flex:0 0 auto;padding:5px 10px;border-radius:999px;background:var(--gold);color:#2A1608;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:900;white-space:nowrap}
+.judge-action-panel{margin-top:10px;padding-bottom:4px;background:var(--modal-bg)}
+.judge-action-panel .btn-draw{margin-top:10px}
+.judge-bulk{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:430px){.judge-choice-summary{gap:8px;padding:11px 10px}.judge-choice-summary b{font-size:12px}.judge-choice-summary span{font-size:11.5px}.judge-bulk{grid-template-columns:1fr}.judge-bulk .btn-exp{min-height:46px}}
 
 /* ══ КАБИНЕТ СУДЬИ ══ */
 .supc-card{display:flex;gap:12px;align-items:center;padding:13px 14px;margin-bottom:10px;border:1.5px solid var(--gold);border-radius:16px;cursor:pointer;background:linear-gradient(150deg,rgba(233,180,76,.14),transparent)}
@@ -5212,8 +5242,8 @@ function IF_tab(t){
     const topN=S.slice(0,8),lowN=S.slice(-8).reverse();
     const goodP=[...A.pairs.lift.values()].sort((a,b)=>b.obs-a.obs).slice(0,5);
     const total=l.mB*(l.mB-1)/2,covered=A.pairs.lift.size;
-    body.innerHTML='<div class="if-seclbl">Представлены сильнее</div><div class="if-rowballs">'+topN.map(s=>'<div class="if-rball '+ballCls+'">'+s.n+'</div>').join('')+'</div>'+
-      '<div class="if-seclbl">Представлены слабее</div><div class="if-rowballs">'+lowN.map(s=>'<div class="if-rball '+ballCls+'" style="opacity:.55">'+s.n+'</div>').join('')+'</div>'+
+    body.innerHTML='<div class="if-seclbl">Представлены сильнее</div><div class="if-rowballs if-ball-list">'+topN.map(s=>'<div class="if-rball '+ballCls+'">'+s.n+'</div>').join('')+'</div>'+
+      '<div class="if-seclbl">Представлены слабее</div><div class="if-rowballs if-ball-list">'+lowN.map(s=>'<div class="if-rball '+ballCls+'" style="opacity:.55">'+s.n+'</div>').join('')+'</div>'+
       '<div class="if-seclbl">Хорошо покрытые пары</div>'+goodP.map(p=>'<div class="if-pair"><b>'+p.a+' — '+p.b+'</b><span style="color:var(--sub2);font-size:12px">встречались ×'+p.obs+'</span></div>').join('')+
       '<div class="if-seclbl">Покрытие пар периода</div><div class="if-pair"><b>'+covered+' / '+total+'</b><div class="if-bar"><i style="width:'+(covered/total*100)+'%"></i></div><span style="color:var(--sub2);font-size:12px">'+Math.round(covered/total*100)+'%</span></div>'+
       '<div class="if-note">Следующая строка улучшит разнообразие, если добавит числа из слабо представленной группы и новые, ещё не встречавшиеся пары — так работает «Поле покрытия».</div>';
@@ -6776,32 +6806,63 @@ function JUDGE_render(ns){
   const st=JUDGE_state[ns];if(!st)return;const l=st.l;
   const proposed=st.plan.reduce((s,p)=>s+p.swaps.length,0);
   const active=st.plan.reduce((s,p)=>s+p.swaps.filter(x=>x.apply).length,0);
-  let html=(st.intro?'<div class="adv-invest" style="margin-top:0 0 4px">'+st.intro+'</div>':'')+
+  let html=(st.intro?'<div class="adv-invest" style="margin:0 0 4px">'+st.intro+'</div>':'')+
     '<div class="if-seclbl">⚖️ Разбор Верховного судьи</div>'+
     '<div class="if-note" style="margin:0 0 12px">Судья проверил каждый шар силой поля из '+st.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Ниже — какие шары и в каких рядах он предлагает заменить. Реши сам: нажми на замену, чтобы включить или отключить её. Можно поменять только одну, а остальное оставить. Золотом отмечены изменённые числа. Гарантий это не даёт.</div>';
   st.plan.forEach((p,ri)=>{
     html+='<div class="pdx-jrow"><div class="pdx-jhead">Ряд '+(ri+1)+'</div>'+JUDGE_ballsHtml(p,l);
     if(p.swaps.length){
-      html+='<div class="pdx-swaps">'+p.swaps.map((s,si)=>'<button class="pdx-swap'+(s.apply?' on':'')+'" onclick="JUDGE_toggle(\''+ns+'\','+ri+','+si+')">'+(s.apply?'✓ ':'')+s.from+' → '+s.to+'<span class="pdx-sd">поле '+s.sf+'→'+s.st+'</span></button>').join('')+'</div>';
+      html+='<div class="pdx-swaps">'+p.swaps.map((s,si)=>'<button class="pdx-swap'+(s.apply?' on':'')+'" aria-pressed="'+(s.apply?'true':'false')+'" onclick="JUDGE_toggle(\''+ns+'\','+ri+','+si+')">'+(s.apply?'✓ ':'')+s.from+' → '+s.to+'<span class="pdx-sd">поле '+s.sf+'→'+s.st+'</span></button>').join('')+'</div>';
     }else{
       html+='<div class="pdx-ok">Возражений нет — ряд выдержал проверку поля ✅</div>';
     }
     html+='</div>';
   });
-  html+='<div style="position:sticky;bottom:0;padding-top:12px;margin-top:14px;background:linear-gradient(0deg,var(--modal-bg) 72%,transparent)">'+
-    '<button class="btn-draw '+l.cls+'" onclick="JUDGE_apply(\''+ns+'\')">✅ '+(st.applyLabel||'Применить в билете')+' ('+active+' из '+proposed+' замен)</button>';
+  let choiceTitle,choiceText,applyText;
+  if(proposed===0){
+    choiceTitle='Изменений не требуется';
+    choiceText='Судья оставляет исходные числа. Можно перенести проверенные ряды на главный экран.';
+    applyText='✅ '+(st.applyLabel||'Использовать проверенные ряды');
+  }else if(active===0){
+    choiceTitle='Все замены отключены';
+    choiceText='Исходные числа останутся без изменений.';
+    applyText='↩ Оставить ряды без замен и открыть билет';
+  }else if(active===proposed){
+    choiceTitle='Выбраны все предложенные замены';
+    choiceText='Будут применены все предложенные изменения: '+proposed+'.';
+    applyText='✅ Применить все изменения ('+proposed+') и открыть билет';
+  }else{
+    choiceTitle='Частичная замена';
+    choiceText='Будут применены только выбранные изменения: '+active+' из '+proposed+'. Остальные числа останутся исходными.';
+    applyText='✅ Применить выбранные изменения ('+active+' из '+proposed+') и открыть билет';
+  }
+  html+='<div class="judge-choice-summary"><div><b>'+choiceTitle+'</b><span>'+choiceText+'</span></div><div class="judge-choice-count">'+active+' / '+proposed+'</div></div>'+
+    '<div class="judge-action-panel">';
   if(proposed>0){
-    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
+    html+='<div class="judge-bulk">'+
       '<button class="btn-exp" style="margin:0" onclick="JUDGE_setAll(\''+ns+'\',true)">Включить все замены</button>'+
       '<button class="btn-exp" style="margin:0" onclick="JUDGE_setAll(\''+ns+'\',false)">Снять все замены</button></div>';
   }
+  html+='<button class="btn-draw '+l.cls+'" onclick="JUDGE_apply(\''+ns+'\')">'+applyText+'</button>';
   html+='</div>';
   document.getElementById(st.mountId).innerHTML=html;
 }
-function JUDGE_toggle(ns,ri,si){const s=JUDGE_state[ns]?.plan?.[ri]?.swaps?.[si];if(!s)return;s.apply=!s.apply;JUDGE_render(ns);}
-function JUDGE_setAll(ns,val){const st=JUDGE_state[ns];if(!st)return;st.plan.forEach(p=>p.swaps.forEach(s=>s.apply=val));JUDGE_render(ns);}
+function JUDGE_rerender(ns,change){
+  const st=JUDGE_state[ns];if(!st)return;
+  const mount=document.getElementById(st.mountId),scroller=mount?.closest('.if-sheet,.sg-sheet');
+  const top=scroller?scroller.scrollTop:0;
+  change();JUDGE_render(ns);
+  if(scroller)requestAnimationFrame(()=>{scroller.scrollTop=top;});
+}
+function JUDGE_toggle(ns,ri,si){const s=JUDGE_state[ns]?.plan?.[ri]?.swaps?.[si];if(!s)return;JUDGE_rerender(ns,()=>{s.apply=!s.apply;});}
+function JUDGE_setAll(ns,val){const st=JUDGE_state[ns];if(!st)return;JUDGE_rerender(ns,()=>{st.plan.forEach(p=>p.swaps.forEach(s=>s.apply=val));});}
 function JUDGE_finalRows(ns){return JUDGE_state[ns].plan.map(p=>{const e=JUDGE_effective(p);return{m:e.m,b:p.b};});}
-function JUDGE_apply(ns){const st=JUDGE_state[ns];if(st&&st.onApply)st.onApply(JUDGE_finalRows(ns));}
+function JUDGE_apply(ns){
+  const st=JUDGE_state[ns];if(!st||!st.onApply)return;
+  const proposed=st.plan.reduce((sum,p)=>sum+p.swaps.length,0);
+  const active=st.plan.reduce((sum,p)=>sum+p.swaps.filter(s=>s.apply).length,0);
+  st.onApply(JUDGE_finalRows(ns),{active,proposed,partial:active>0&&active<proposed});
+}
 async function JUDGE_open(ns,rows,mountId,onApply,opts){
   opts=opts||{};
   const l=L();

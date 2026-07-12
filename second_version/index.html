@@ -54,6 +54,7 @@ window.addEventListener('unhandledrejection',function(e){
   --rb-e-lotto:#F0E4E4; --rb-e-viking:#E4E7F0; --rb-e-euro:#3A2E40;
   --rb-e-col-lotto:#B78F98; --rb-e-col-viking:#8F9AB7; --rb-e-col-euro:#8E8296;
   --miss-lotto:#F0E4E4; --miss-lotto-c:#B78F98; --miss-viking:#E4E7F0; --miss-viking-c:#8F9AB7; --miss-euro:#3A2E40; --miss-euro-c:#9B8FA3;
+  --miss-ball:#DED3D9; --miss-hi:#FFFFFF; --miss-lo:#AD9FA9; --miss-txt:#3A2A34;
   --tab-bg:#E7DECD; --tab-on:#FFFCF5;
   --info-lotto:rgba(255,252,245,.85); --info-viking:rgba(255,252,245,.85); --info-euro:#2E2233;
   --lt-bg:rgba(255,252,245,.82); --lt-border:#E2D6C2;
@@ -92,6 +93,7 @@ body.dark{
   --rb-e-lotto:#3A1626; --rb-e-viking:#1A1F3A; --rb-e-euro:#33283A;
   --rb-e-col-lotto:#9A5C72; --rb-e-col-viking:#6A78B0; --rb-e-col-euro:#9B8FA3;
   --miss-lotto:#3A1626; --miss-lotto-c:#9A5C72; --miss-viking:#1A1F3A; --miss-viking-c:#6A78B0; --miss-euro:#33283A; --miss-euro-c:#9B8FA3;
+  --miss-ball:#6E5768; --miss-hi:#9C8494; --miss-lo:#3C2A38; --miss-txt:#F6ECF2;
   --tab-bg:#2C1826; --tab-on:#3E2236;
   --info-lotto:#241220; --info-viking:#241220; --info-euro:#241220;
   --lt-bg:#241220; --lt-border:#3D2434;
@@ -121,7 +123,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
   radial-gradient(70% 34% at 18% -6%,var(--curtain-glow) 0,transparent 55%),
   radial-gradient(70% 34% at 82% -6%,var(--curtain-glow) 0,transparent 55%),
   var(--bg)}
-body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov,body.locked>#wc-ov,body.locked>#sup-ov,body.locked>#period-ov,body.locked>#genn-ov,body.locked>#adv-ov,body.locked>#supc-ov,body.locked>#cele-ov,body.locked>#busy-ov,body.locked>#ticket-ov,body.locked>#qa-ov,body.locked>#qab-ov,body.locked>#horo-ov,body.locked>.scroll-anchors{display:none!important}
+body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.lang-ov,body.locked>.toast-root,body.locked>.src-ov,body.locked>.if-ov,body.locked>#cons-ov,body.locked>#pick-ov,body.locked>#matrix-ov,body.locked>#wc-ov,body.locked>#sup-ov,body.locked>#period-ov,body.locked>#genn-ov,body.locked>#adv-ov,body.locked>#supc-ov,body.locked>#cele-ov,body.locked>#busy-ov,body.locked>#ticket-ov,body.locked>#qa-ov,body.locked>#qab-ov,body.locked>#horo-ov,body.locked>#pdx-ov,body.locked>.scroll-anchors{display:none!important}
 
 /* ══ ЭКРАН-ЗАМОК: билет за кулисами ══ */
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;color:#F6EEE4;background:
@@ -321,11 +323,9 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .dball.viking-b{--ball:#10183a;--ball-hi:#3a4570;--ball-lo:#05081a;color:#fff}
 .dball.euro-m{--ball:#7ecfc0;--ball-hi:#b2ece2;--ball-lo:#3f9184;color:#123230}
 .dball.euro-b{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
-.mb{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700}
+.mb{width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
 
-.mb.miss-lotto{background-color:var(--miss-lotto);color:var(--miss-lotto-c)}
-.mb.miss-viking{background-color:var(--miss-viking);color:var(--miss-viking-c)}
-.mb.miss-euro{background-color:var(--miss-euro);color:var(--miss-euro-c)}
+.mb[class*="miss-"]{--ball:var(--miss-ball);--ball-hi:var(--miss-hi);--ball-lo:var(--miss-lo);color:var(--miss-txt)}
 .mb.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
 .mb.lotto-b{--ball:#F2ECE1;--ball-hi:#FFFFFF;--ball-lo:#B9AF9E;color:#141018;font-weight:800}
 .mb.viking-m{--ball:#1e3fbe;--ball-hi:#5a76e8;--ball-lo:#0e1f66;color:#fff}
@@ -346,9 +346,14 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .bn.on .bn-icon{filter:none;transform:translateY(-1px)}
 .bn.on .bn-lbl{color:var(--gold)}
 
-.sec-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:14px 14px 0;background:var(--tab-bg);border-radius:16px;padding:4px}
-.st{flex:1 0 auto;min-width:30%;padding:12px 10px;font-size:13.5px;font-weight:800;border-radius:14px;border:1px solid var(--srow-border);background:var(--bg2);color:var(--sub);cursor:pointer;white-space:nowrap}
-.st.on{background:var(--tab-on);font-weight:800;color:var(--fg);box-shadow:0 2px 8px rgba(0,0,0,.16)}
+.sec-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 14px 4px;background:transparent;border-radius:0;padding:0}
+.st{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;padding:15px 8px;font-size:13px;font-weight:800;letter-spacing:.2px;border-radius:16px;border:1.5px solid var(--border);background:var(--bg2);color:var(--sub2);cursor:pointer;white-space:nowrap;font-family:'Manrope',sans-serif;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+.st .st-ic{font-size:22px;line-height:1;filter:saturate(.72);transition:transform .18s,filter .18s}
+.st .st-tx{line-height:1}
+.st.on{color:var(--fg);border-color:var(--gold);background:linear-gradient(160deg,rgba(233,180,76,.16),rgba(233,180,76,.03)),var(--bg2);box-shadow:0 6px 18px rgba(0,0,0,.18),0 0 0 1px rgba(233,180,76,.5) inset}
+.st.on .st-ic{filter:none;transform:translateY(-1px) scale(1.08)}
+.st.on::after{content:"";position:absolute;left:50%;bottom:7px;transform:translateX(-50%);width:20px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--gold2),var(--gold))}
+@media(min-width:700px){.sec-tabs{max-width:720px;margin-left:auto;margin-right:auto;grid-template-columns:repeat(6,minmax(0,1fr))}.st{padding:16px 8px;font-size:13px}.st .st-ic{font-size:23px}}
 .tab-content{display:none}.tab-content.vis{display:block}
 #pg-ana .card{font-size:17px;line-height:1.55}
 #pg-ana .card [style*="font-size:13px"]{font-size:16px!important}
@@ -458,11 +463,19 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .check-inp-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
 .check-result-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--hist-border)}
 
-/* таблица сравнения */
-.cmp-table{width:100%;border-collapse:collapse;font-size:15px}
-.cmp-table th{padding:10px 7px;text-align:left;font-size:11px;color:var(--gold);border-bottom:1px solid var(--border);font-weight:800;letter-spacing:1px;text-transform:uppercase}
-.cmp-table td{padding:10px 7px;border-bottom:1px solid var(--srow-border);vertical-align:top;line-height:1.4}
+/* таблица сравнения — собственный горизонтальный скролл внутри карточки */
+.cmp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;border-radius:12px;scrollbar-width:thin}
+.cmp-wrap::-webkit-scrollbar{height:8px}
+.cmp-wrap::-webkit-scrollbar-track{background:var(--bg3);border-radius:8px}
+.cmp-wrap::-webkit-scrollbar-thumb{background:var(--gold);border-radius:8px;opacity:.7}
+.cmp-table{width:max-content;min-width:100%;border-collapse:collapse;font-size:15px}
+.cmp-table th{padding:10px 9px;text-align:left;font-size:11px;color:var(--gold);border-bottom:1px solid var(--border);font-weight:800;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;position:sticky;top:0;background:var(--bg2);z-index:1}
+.cmp-table td{padding:10px 9px;border-bottom:1px solid var(--srow-border);vertical-align:top;line-height:1.4;white-space:nowrap}
+.cmp-table td:first-child,.cmp-table th:first-child{position:sticky;left:0;background:var(--bg2);z-index:2;box-shadow:1px 0 0 var(--border)}
+.cmp-table th:first-child{z-index:3}
 .cmp-best{color:#34c759;font-weight:800}
+.cmp-hint{font-size:11.5px;color:var(--sub2);text-align:center;margin-top:9px;letter-spacing:.3px}
+@media(min-width:1080px){.cmp-hint{display:none}}
 
 /* ══ МОДАЛ УМНОЙ ГЕНЕРАЦИИ ══ */
 .sg-ov{position:fixed;inset:0;background:rgba(10,4,8,.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
@@ -609,7 +622,8 @@ body.dark .lock-sub{color:rgba(246,238,228,.75)}
 .src-row span{color:var(--sub2)}.src-row b{font-weight:800;text-align:right}
 .src-note{margin-top:12px;font-size:13.5px;line-height:1.55;color:var(--sub2)}
 .fb-ov.show{opacity:1;pointer-events:all}
-.fb-box{width:100%;max-width:360px;background:var(--modal-bg);border:1px solid rgba(233,180,76,.3);border-radius:24px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.5);text-align:center;transform:scale(.96);transition:transform .2s}
+.fb-box{width:100%;max-width:380px;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--modal-bg);border:1px solid rgba(233,180,76,.3);border-radius:24px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.5);text-align:center;transform:scale(.96);transition:transform .2s}
+.fb-box::-webkit-scrollbar{width:6px}.fb-box::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 .fb-ov.show .fb-box{transform:scale(1)}
 .fb-icon{font-size:42px;margin-bottom:8px}
 .fb-title{font-size:20px;font-weight:900;color:var(--fg);margin-bottom:6px;font-family:'Unbounded',sans-serif}
@@ -713,7 +727,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-sim>div[style*="padding:14px"]{grid-column:2;max-width:none;margin:0}
   #pg-ana .sec-tabs{max-width:960px}
   #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:14px;align-items:start;max-width:1280px;margin:0 auto;padding:14px 20px 20px}
-  #pg-ana .tab-content.vis>.card{margin:0;max-width:none}
+  #pg-ana .tab-content.vis>.card{margin:0;max-width:none;min-width:0}
+  #pg-ana .tab-content.vis>.card-wide{grid-column:1/-1}
   #pg-ana .tab-content.vis>*:not(.card){grid-column:1/-1}
   .card{font-size:16px}
 }
@@ -752,7 +767,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 .cele-p{position:absolute;top:-12px;font-size:18px;animation:celeFall linear forwards}
 @keyframes celeFall{to{transform:translateY(120vh) rotate(720deg);opacity:.9}}
 /* ══ ОБЪЁМНЫЕ ПРИГЛУШЁННЫЕ MISS-ШАРЫ ══ */
-.mb.miss-lotto,.mb.miss-viking,.mb.miss-euro{background-image:radial-gradient(circle at 32% 25%,rgba(255,255,255,.5) 0,rgba(255,255,255,.15) 12%,rgba(255,255,255,0) 32%),radial-gradient(circle at 50% 42%,var(--miss-hi,#fff2) 0,transparent 70%);box-shadow:inset 0 -.28em .4em rgba(0,0,0,.22),inset 0 .08em .14em rgba(255,255,255,.28);text-shadow:none;font-family:'Manrope',sans-serif;font-weight:800;opacity:.82}
+.mb[class*="miss-"]{font-family:'Unbounded',sans-serif;font-weight:800;opacity:1;text-shadow:0 1px 1.5px rgba(0,0,0,.25)}
+body.light .mb[class*="miss-"]{text-shadow:none}
 /* ══ БИЛЕТ: внутренний скролл на десктопе + намёк на кликабельность ══ */
 #wb-rows{max-height:46vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
 @media(min-width:1080px){#wb-rows{max-height:52vh}}
@@ -934,13 +950,29 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 .busy-sub{font-size:11.5px;color:var(--sub2);margin-top:9px}
 
 /* ══ СОВЕТ МОДЕЛИ ══ */
-.sg-adv{flex:0 0 auto;margin-left:auto;padding:7px 11px;border-radius:10px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:11px;font-weight:900;cursor:pointer;white-space:nowrap}
-.sg-algo{display:flex;align-items:center;gap:10px}
+.sg-adv{display:block;width:100%;margin-top:9px;padding:8px 10px;border-radius:10px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:11px;font-weight:900;cursor:pointer}
 .adv-draw{margin:10px 0 2px;padding:11px 13px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(150deg,rgba(233,180,76,.12),transparent);font-size:13px;line-height:1.6;font-weight:700}
 .adv-row{margin-top:10px;padding:10px 12px;border:1px solid var(--srow-border);border-radius:14px;background:var(--bg2)}
 .adv-swap{box-shadow:0 0 0 2.5px #E9B44C,0 0 14px rgba(233,180,76,.55)!important;position:relative}
 .adv-invest{margin-top:12px;padding:12px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 12px 12px 0;font-size:12.5px;line-height:1.65}
 .adv-invest b{color:var(--gold)}
+
+/* ══ СИСТЕМА ПАРАДОКСОВ + РАЗБОР СУДЬИ ══ */
+.pdx-modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.pdx-modes .pick-mode{flex-direction:column;align-items:center;gap:2px;margin-bottom:0}
+.pdx-modes .pick-mode.on{border-color:var(--gold);background:linear-gradient(160deg,rgba(233,180,76,.16),transparent),var(--bg3);box-shadow:0 0 0 1px var(--gold) inset}
+.pdx-row{margin-top:10px;padding:12px 13px;border:1px solid var(--srow-border);border-radius:16px;background:var(--bg2)}
+.pdx-rlbl{font-family:'Unbounded',sans-serif;font-weight:800;font-size:13px;color:var(--gold);display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.pdx-rtag{font-family:'Manrope',sans-serif;font-weight:700;font-size:11px;color:var(--sub2);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:2px 9px;text-transform:none;letter-spacing:0}
+.pdx-rnote{font-size:12.5px;line-height:1.6;color:var(--sub2);margin-top:2px}
+.pdx-jrow{margin-top:10px;padding:11px 12px;border:1px solid var(--srow-border);border-radius:14px;background:var(--bg2)}
+.pdx-jhead{font-family:'Unbounded',sans-serif;font-weight:800;font-size:12px;color:var(--sub2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.pdx-swaps{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.pdx-swap{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:12px;border:1.5px dashed var(--border);background:var(--bg3);color:var(--sub2);font-family:'Unbounded',sans-serif;font-weight:800;font-size:12.5px;cursor:pointer;transition:transform .1s}
+.pdx-swap:active{transform:scale(.95)}
+.pdx-swap.on{border-style:solid;border-color:var(--gold);color:var(--fg);background:linear-gradient(160deg,rgba(233,180,76,.18),transparent),var(--bg2);box-shadow:0 0 0 1px var(--gold) inset}
+.pdx-swap .pdx-sd{font-family:'Manrope',sans-serif;font-weight:600;font-size:10.5px;color:var(--sub);letter-spacing:0}
+.pdx-ok{font-size:12.5px;color:#34c759;font-weight:700;margin-top:8px}
 
 /* ══ КАБИНЕТ СУДЬИ ══ */
 .supc-card{display:flex;gap:12px;align-items:center;padding:13px 14px;margin-bottom:10px;border:1.5px solid var(--gold);border-radius:16px;cursor:pointer;background:linear-gradient(150deg,rgba(233,180,76,.14),transparent)}
@@ -950,6 +982,15 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 .supc-sign .zn{font-size:8px;font-weight:800;color:var(--sub2);margin-top:1px}
 .supc-sign.on{border-color:var(--gold);box-shadow:0 0 12px rgba(233,180,76,.4)}
 .supc-route{margin-top:12px;padding:13px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(150deg,rgba(233,180,76,.1),transparent);font-size:13px;line-height:1.65}
+
+/* несовпавшие шары теперь стилизуются через переменные --miss-ball (см. выше) */
+
+/* серпантин и звёзды над итогом 50 лет */
+.life-fest{position:relative;height:34px;margin:4px 0 8px;overflow:hidden;border-radius:12px}
+.life-fest span{position:absolute;top:-8px;animation:festFall linear infinite}
+@keyframes festFall{from{transform:translateY(-20px) rotate(0)}to{transform:translateY(60px) rotate(240deg)}}
+.life-hope{margin-top:12px;padding:12px 14px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(150deg,rgba(233,180,76,.15),transparent);font-size:12.5px;line-height:1.65}
+.life-hope b{color:var(--gold)}
 </style>
 </head>
 <body class="locked">
@@ -1046,6 +1087,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
             <option value="phys">🎱 Физика: лототрон</option>
             <option value="chaos">🌀 Хаос (логист. отображение)</option>
             <option value="quantum">⚛️ Квантовый коллапс</option>
+            <option value="paradox">♾️ Система парадоксов</option>
           </select>
         </div>
       </div>
@@ -1054,13 +1096,13 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
         <button class="btn-exp" onclick="renderWorldAnalysis()" style="margin-top:0">Анализ лото по миру</button>
       </div>
       <div class="filter-grid">
-        <label class="filter-check"><input type="checkbox" id="flt-parity" checked>Исключать все чётные / все нечётные ряды</label>
-        <label class="filter-check"><input type="checkbox" id="flt-sum" checked>Фильтр суммы чисел <span id="sum-hint"></span></label>
+        <label class="filter-check"><input type="checkbox" id="flt-parity">Исключать все чётные / все нечётные ряды</label>
+        <label class="filter-check"><input type="checkbox" id="flt-sum">Фильтр суммы чисел <span id="sum-hint"></span></label>
         <div class="filter-mini">
           <input class="mini-inp" id="sum-min" type="number" placeholder="Мин. сумма">
           <input class="mini-inp" id="sum-max" type="number" placeholder="Макс. сумма">
         </div>
-        <label class="filter-check"><input type="checkbox" id="flt-consec" checked>Запретить больше 3 чисел подряд</label>
+        <label class="filter-check"><input type="checkbox" id="flt-consec">Запретить больше 3 чисел подряд</label>
       </div>
       <button class="btn-exp" id="copy-rows-btn" onclick="copyRowsForNorsk(this)" style="margin-top:10px">📋 Скопировать ряды</button>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
@@ -1088,6 +1130,10 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
     <button class="ndb euro qa-card" id="qa-btn" onclick="QA_open()">
       <div class="ndb-l"><div class="ndb-title">🔮 Квантово-астральный <span class="qa-badge">PREMIUM</span></div><div class="ndb-sub">Квантовая случайность ANU + твой знак + Луна на дату тиража</div></div>
       <div style="font-size:20px">✨</div>
+    </button>
+    <button class="ndb euro" id="pdx-btn" onclick="PDX_open()">
+      <div class="ndb-l"><div class="ndb-title">♾️ Система парадоксов</div><div class="ndb-sub">С базой или без · 1–10 рядов · разбор Верховного судьи</div></div>
+      <div style="font-size:20px">→</div>
     </button>
     <button class="ndb euro" id="wheel-btn" onclick="GENN_open('wheel')">
       <div class="ndb-l"><div class="ndb-title">Колесная матрица</div><div class="ndb-sub" id="wheel-sub">10 рядов · покрытие пар</div></div>
@@ -1143,12 +1189,12 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 <!-- ══ ANALYTICS PAGE ══ -->
 <div class="page" id="pg-ana">
   <div class="sec-tabs">
-    <button class="st on" id="st-inp" onclick="selAT('inp')">➕ Ввод</button>
-    <button class="st" id="st-freq" onclick="selAT('freq')">📊 Частоты</button>
-    <button class="st" id="st-chi" onclick="selAT('chi')">🔬 χ²</button>
-    <button class="st" id="st-cmp" onclick="selAT('cmp')">⚖️ Сравнение</button>
-    <button class="st" id="st-prize" onclick="selAT('prize')">💵 Призы</button>
-    <button class="st" id="st-man" onclick="selAT('man')">📐 Мандель</button>
+    <button class="st on" id="st-inp" onclick="selAT('inp')"><span class="st-ic">➕</span><span class="st-tx">Ввод</span></button>
+    <button class="st" id="st-freq" onclick="selAT('freq')"><span class="st-ic">📊</span><span class="st-tx">Частоты</span></button>
+    <button class="st" id="st-chi" onclick="selAT('chi')"><span class="st-ic">🔬</span><span class="st-tx">χ²&nbsp;тест</span></button>
+    <button class="st" id="st-cmp" onclick="selAT('cmp')"><span class="st-ic">⚖️</span><span class="st-tx">Сравнение</span></button>
+    <button class="st" id="st-prize" onclick="selAT('prize')"><span class="st-ic">💵</span><span class="st-tx">Призы</span></button>
+    <button class="st" id="st-man" onclick="selAT('man')"><span class="st-ic">📐</span><span class="st-tx">Мандель</span></button>
   </div>
 
   <!-- INPUT -->
@@ -1240,9 +1286,10 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 
   <!-- COMPARISON -->
   <div class="tab-content" id="at-cmp">
-    <div class="card">
+    <div class="card card-wide">
       <div class="card-t">⚖️ Сравнение лотерей</div>
-      <table class="cmp-table" id="cmp-table"></table>
+      <div class="cmp-wrap"><table class="cmp-table" id="cmp-table"></table></div>
+      <div class="cmp-hint">← прокрути таблицу вбок, чтобы увидеть все лотереи →</div>
     </div>
     <!-- ROI -->
     <div class="card">
@@ -1551,6 +1598,25 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
     <button class="btn-draw euro" id="adv-go" style="margin-top:12px" onclick="ADV_go()">💬 Дать совет</button>
     <div id="adv-result"></div>
     <div class="if-note" style="margin-top:12px">Гарантий победы не существует и существовать не может — вероятность тиража не меняется никаким анализом. Это исследовательский совет по структуре прошлого.</div>
+  </div>
+</div>
+
+<!-- ПАРАДОКСЫ MODAL -->
+<div class="if-ov" id="pdx-ov">
+  <div class="if-sheet" style="position:relative">
+    <button class="btn-close2" onclick="PDX_close()" style="position:absolute;top:14px;right:14px;width:38px;height:38px;padding:0;margin:0;border-radius:11px;font-size:16px;font-weight:900;z-index:2">✕</button>
+    <div class="if-hdr"><div><div class="if-title">♾️ Система парадоксов</div><div class="if-sub" id="pdx-sub"></div></div></div>
+    <div class="if-note" style="margin:10px 0 4px">Парадокс — это когда интуиция обманывает. В лото есть реальные контринтуитивные явления: их и превращаю в ряды. Вероятность выигрыша это не меняет, но раскрывает структуру иначе, чем обычные модели.</div>
+    <div class="if-seclbl">Источник</div>
+    <div class="pdx-modes">
+      <button class="pick-mode" id="pdx-mode-base" onclick="PDX_setMode(true)" style="text-align:center"><div style="font-size:20px">🗄️</div><div class="pick-mode-t">С базой тиражей</div><div style="font-size:10px;color:var(--sub2)">частоты · пропуски · пары</div></button>
+      <button class="pick-mode" id="pdx-mode-free" onclick="PDX_setMode(false)" style="text-align:center"><div style="font-size:20px">✨</div><div class="pick-mode-t">Без базы</div><div style="font-size:10px;color:var(--sub2)">чистая структура и случай</div></button>
+    </div>
+    <div class="if-seclbl">Сколько рядов</div>
+    <div class="pick-counts" id="pdx-counts" style="grid-template-columns:repeat(5,1fr)"></div>
+    <button class="btn-draw euro" id="pdx-go" style="margin-top:12px" onclick="PDX_go()">♾️ Собрать парадоксы</button>
+    <div id="pdx-result"></div>
+    <div class="if-note" style="margin-top:14px">Ни один метод не увеличивает вероятность выигрыша — тиражи независимы. Парадоксы лишь по-другому раскрывают структуру и снижают шанс делить джекпот с толпой.</div>
   </div>
 </div>
 
@@ -2543,8 +2609,85 @@ async function quantumStream(n){
   let i=0;
   return{src,next:()=>{const v=data[i%data.length]/65536;i++;return(v+Math.random()*1e-6)%1;}};
 }
+/* ═══ СИСТЕМА ПАРАДОКСОВ · контринтуитивные, но реальные явления лото ═══ */
+const PDX_TYPES=[
+  {key:'crowd',  name:'Парадокс толпы',        short:'против популярных чисел',
+   note:'Люди массово берут числа 1–31 (даты) и «красивые» узоры. Это не меняет вероятность, но при выигрыше уменьшает число совладельцев джекпота — делить приз почти не с кем.'},
+  {key:'clash',  name:'Инверсия ошибки игрока', short:'горячее × просроченное',
+   note:'Игрок избегает недавних чисел («уже выпадали»). Но у шара нет памяти. Смешиваю самые частые и самые «просроченные» числа выбранного окна.'},
+  {key:'cluster',name:'Парадокс кластера',      short:'соседняя пара чисел',
+   note:'Соседние числа (напр. 23–24) кажутся «неслучайными», поэтому их избегают. При этом пара соседей встречается почти в половине реальных тиражей.'},
+  {key:'mirror', name:'Парадокс зеркала',       short:'симметрия n ↔ max+1−n',
+   note:'Беру числа и их «отражения» относительно центра диапазона. Симметричные наборы люди почти не отмечают.'},
+  {key:'regress',name:'Регрессия к среднему',   short:'ушедшие от нормы числа',
+   note:'Числа, чья недавняя частота сильнее всего отклонилась от долгой средней — по регрессии их «ждут» обратно. Демонстрация структуры, не прогноз.'}
+];
+function PDX_ctx(l,draws){
+  const hist=draws&&draws.length>=5;
+  const freq=buildFreq(draws||[],'main',l.mB);
+  const gapOf=n=>{const idx=(draws||[]).findIndex(d=>(d.main||[]).includes(n));return idx<0?((draws?draws.length:0)+l.mB/l.pM):idx;};
+  return {hist,freq,gapOf,l,draws:draws||[]};
+}
+function PDX_finish(m,l){
+  m=[...new Set(m)].filter(n=>n>=1&&n<=l.mB);
+  if(m.length>l.pM)m=shufSlice(m,l.pM);
+  while(m.length<l.pM){const n=1+Math.floor(Math.random()*l.mB);if(!m.includes(n))m.push(n);}
+  return m.sort((a,b)=>a-b);
+}
+function PDX_row(type,ctx){
+  const l=ctx.l,pM=l.pM,mB=l.mB;let m=[];
+  if(type==='crowd'){
+    const w=rangeNums(mB).map(n=>{let base=n>31?1.9:0.45;if(n%10===0)base*=1.15;return base+Math.random()*0.6;});
+    m=weightedDistinct(w,pM,mB);
+  }else if(type==='clash'){
+    if(ctx.hist){
+      const sorted=[...ctx.freq.entries()].sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
+      const hot=sorted.slice(0,Math.max(3,Math.ceil(mB*0.18)));
+      const overdue=rangeNums(mB).sort((a,b)=>ctx.gapOf(b)-ctx.gapOf(a)).slice(0,Math.max(3,Math.ceil(mB*0.18)));
+      const hN=Math.ceil(pM/2);
+      m=[...shufSlice(hot,Math.min(hN,hot.length)),...shufSlice(overdue,pM)].slice(0,pM);
+    }else{
+      const lo=rangeNums(Math.max(1,Math.ceil(mB*0.25))),hi=rangeNums(mB).slice(Math.floor(mB*0.75));
+      m=[...shufSlice(lo,Math.ceil(pM/2)),...shufSlice(hi,pM)].slice(0,pM);
+    }
+  }else if(type==='cluster'){
+    const start=1+Math.floor(Math.random()*(mB-1));
+    m=[start,(start+1>mB)?start-1:start+1];
+    m=[...m,...shufSlice(rangeNums(mB).filter(n=>!m.includes(n)),pM)].slice(0,pM);
+  }else if(type==='mirror'){
+    const half=rangeNums(Math.floor(mB/2));
+    shufSlice(half,pM).forEach(n=>{m.push(n);const mir=mB+1-n;if(mir!==n)m.push(mir);});
+  }else if(type==='regress'){
+    if(ctx.hist){
+      const recentW=Math.min(10,ctx.draws.length);
+      const recent=buildFreq(ctx.draws.slice(0,recentW),'main',mB);
+      const dev=rangeNums(mB).map(n=>{const lr=(ctx.freq.get(n)||0)/ctx.draws.length;const rr=(recent.get(n)||0)/recentW;return{n,d:Math.abs(rr-lr)};});
+      dev.sort((a,b)=>b.d-a.d);
+      m=shufSlice(dev.slice(0,pM+3).map(x=>x.n),pM);
+    }else{
+      const per=Math.max(1,Math.ceil(mB/pM));
+      for(let i=0;i<pM;i++){const lo=i*per+1,hi=Math.min(mB,(i+1)*per);if(lo>mB)break;m.push(lo+Math.floor(Math.random()*(hi-lo+1)));}
+    }
+  }
+  return {m:PDX_finish(m,l),type};
+}
+function PDX_generate(count,useBase,l,draws){
+  const ctx=PDX_ctx(l,(useBase?draws:[]));
+  const rows=[],seen=new Set();let guard=0;
+  while(rows.length<count&&guard++<count*40){
+    const t=PDX_TYPES[rows.length%PDX_TYPES.length];
+    const r=PDX_row(t.key,ctx);
+    const key=r.m.join(',');
+    if(seen.has(key))continue;
+    seen.add(key);
+    rows.push({m:r.m,b:genBonus(l,ctx.draws),pdx:PDX_TYPES.find(x=>x.key===r.type)});
+  }
+  return rows;
+}
+
 async function generateRowsByAlgo(algo,count){
   const l=L(),draws=IF_window(await loadD(cur)),hasHist=draws.length>=5;
+  if(algo==='paradox')return filterGeneratedRows(PDX_generate(count,hasHist,l,draws).map(r=>({m:r.m,b:r.b})),count,l,draws);
   if(algo==='qastro')return filterGeneratedRows((await QA_rows(count,{fast:true})).map(r=>({m:r.m,b:r.b})),count,l,draws);
   if(algo==='wheel')return filterGeneratedRows((await buildWheelGenerated(count)).rows,count,l,draws);
   if(algo==='world-hot'||algo==='world-mix')return filterGeneratedRows(await generateWorldRows(algo,count),count,l,draws);
@@ -2661,7 +2804,7 @@ async function generateSelectedRows(){
   const count=getGenCount();
   const gen=await withBusy('Генерация '+count+' '+rowWord(count),()=>generateRowsByAlgo(algo,count));
   if(!gen)return;
-  const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'Мандель-сегменты',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль',markov:'цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'дельта-метод',bayes:'Байесовский',overdue:'gap-анализ (просроченные)',phys:'физика лототрона',chaos:'детерминированный хаос',quantum:'квантовый коллапс'};
+  const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'Мандель-сегменты',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль',markov:'цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'дельта-метод',bayes:'Байесовский',overdue:'gap-анализ (просроченные)',phys:'физика лототрона',chaos:'детерминированный хаос',quantum:'квантовый коллапс',paradox:'система парадоксов'};
   const dur=setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`);
   setTimeout(()=>showFeedback('Ряды готовы',`Сгенерировано ${count} ${rowWord(count)}.\nМетод: ${labels[algo]||algo}.`,'🎯',2200),dur+150);
 }
@@ -3168,6 +3311,12 @@ function runLifeSim(){
         <div class="life-stat"><span>Праздников</span><b>${hits} 🎉</b></div>
       </div>`;
     if(final){
+      /* золотой серпантин со звёздами — праздник самого путешествия */
+      const FEST=['🎊','✨','⭐','🪙','🎉'];
+      html='<div class="life-fest">'+Array.from({length:16},()=>{
+        const e=FEST[Math.floor(Math.random()*FEST.length)];
+        return '<span style="left:'+(Math.random()*96).toFixed(0)+'%;animation-duration:'+(1.6+Math.random()*2).toFixed(2)+'s;animation-delay:'+(Math.random()*1.5).toFixed(2)+'s;font-size:'+(12+Math.random()*10).toFixed(0)+'px">'+e+'</span>';
+      }).join('')+'</div>'+html;
       const top=[...wins].sort((a,b)=>b.v-a.v).slice(0,5);
       if(top.length){
         html+='<div class="life-sec">✨ Лучшие моменты этой жизни</div>'+top.map((w,i)=>
@@ -3175,6 +3324,12 @@ function runLifeSim(){
         const tiers=Object.entries(tierCnt).sort((a,b)=>b[1]-a[1]);
         html+='<div class="life-sec">Все выигрыши за 50 лет</div><div class="life-tiers">'+tiers.map(([n,c])=>`<span class="life-tier">${n} × ${c}</span>`).join('')+'</div>';
       }
+      /* честная надежда: реальный шанс джекпота именно этих рядов за эти 50 лет */
+      const combJ=(N,K)=>{let r=1;for(let i=0;i<K;i++)r=r*(N-i)/(i+1);return r;};
+      const pOne=1/combJ(l.mB,l.pM);
+      const pJack=1-Math.pow(1-pOne,total*ticket.length);
+      const oneIn=Math.round(1/pJack);
+      html+=`<div class="life-hope">💫 <b>А джекпот?</b> В этой симуляции он ${wins.some(w=>w.lvl>=7)?'ВЫПАЛ — ты видел это своими глазами!':'не выпал — как и у большинства.'} Честный шанс сорвать его за эти 50 лет с ${ticket.length} ${rowWord(ticket.length)}: <b>${(pJack*100).toFixed(2)}%</b> (примерно 1 к ${fmtInt(oneIn)}). Мал — но не ноль: в реальном мире почти каждую неделю чья-то жизнь меняется навсегда. Каждый джекпот планеты был чьим-то «а вдруг». 🌠</div>`;
       const perYear=Math.round(hits/50);
       html+=`<div class="life-note">${hits?('В среднем '+(perYear>0?perYear:hits)+' выигрышей в год — маленькие праздники были регулярно. '):''}${net<0?'Но баланс честный: лотерея за 50 лет почти всегда в минусе — она продаёт мечту, а не доход. Играй на сумму мечты, а не бюджета. 💛':'Невероятно: ты в плюсе! Это исключение из правил — 1 случай на тысячи таких жизней. 🍀'}</div>`;
     }else html+=`<div style="margin-top:8px">Лучший приз пока: ${fmtInt(best)} ${l.currency||'NOK'} · рядов: ${ticket.length}</div>`;
@@ -3194,7 +3349,9 @@ function runLifeSim(){
     else{
       lifeRunning=false;
       const jack=wins.find(w=>w.lvl>=7);
-      if(jack)setTimeout(()=>CELE_show('🏆 ДЖЕКПОТ ЗА 50 ЛЕТ!','На году '+Math.max(1,Math.round(jack.yr))+' эти числа взяли '+jack.name+'!\n+'+fmtInt(jack.v)+' '+(l.currency||'NOK'),'🏆'),400);
+      const big=wins.filter(w=>w.lvl>=6).sort((a,b)=>b.v-a.v)[0];
+      if(jack)setTimeout(()=>CELE_show('🏆 ДЖЕКПОТ ЗА 50 ЛЕТ!','На году '+Math.max(1,Math.round(jack.yr))+' эти числа взяли '+jack.name+'!\n+'+fmtInt(jack.v)+' '+(l.currency||'NOK')+'\nЖизнь изменилась бы навсегда. 🌟'),400);
+      else if(big)setTimeout(()=>CELE_show('💎 КРУПНЫЙ ПРИЗ!','Год '+Math.max(1,Math.round(big.yr))+': '+big.name+' · +'+fmtInt(big.v)+' '+(l.currency||'NOK')+'\nБольшие выигрыши случаются! ✨'),400);
     }
   };
   paint(false);
@@ -4458,7 +4615,7 @@ function rollBalls(){
 function renderGen(){
   stopRolls();
   const l=L();
-  const notes={freq:'Топ частых чисел из базы',bal:'Микс горячих и холодных',rnd:'Pure random (теория вероятности)',man:'Мандель: охват сегментов','world-hot':'Мировой горячий профиль','world-mix':'Мировой комбинированный профиль',markov:'Цепи Маркова: переходы от последнего тиража',gauss:'Гаусс/ЦПТ: сумма ряда в пике колокола',delta:'Дельта-метод: типичные интервалы базы',bayes:'Байес: сглаженные частоты (Лаплас α=3)',overdue:'Gap-анализ: просроченные интервалы',phys:'Физика: симуляция лототрона',chaos:'Хаос: логистическое отображение r=3.99',quantum:'Квантовый коллапс · '+(lastQuantumSrc||'истинная случайность')};
+  const notes={freq:'Топ частых чисел из базы',bal:'Микс горячих и холодных',rnd:'Pure random (теория вероятности)',man:'Мандель: охват сегментов','world-hot':'Мировой горячий профиль','world-mix':'Мировой комбинированный профиль',markov:'Цепи Маркова: переходы от последнего тиража',gauss:'Гаусс/ЦПТ: сумма ряда в пике колокола',delta:'Дельта-метод: типичные интервалы базы',bayes:'Байес: сглаженные частоты (Лаплас α=3)',overdue:'Gap-анализ: просроченные интервалы',phys:'Физика: симуляция лототрона',chaos:'Хаос: логистическое отображение r=3.99',quantum:'Квантовый коллапс · '+(lastQuantumSrc||'истинная случайность'),paradox:'Парадоксы: контринтуитивная структура'};
   const bc=l.cls==='euro'?'#f4a0b0':'#10183a',bt2=l.cls==='euro'?'#1c1c1e':'#fff';
   let html='';
   sgGen.forEach((c,i)=>{
@@ -5517,7 +5674,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 /* ═══ ПОДПИСКА (инфо-модал; оплата подключится на этапе мобильной сборки) ═══ */
 function openSubInfo(){
   showFeedback('👑 Mandel World Pro',
-'Бесплатно:\n· симулятор всех 9 лотерей без ограничений\n· официальные результаты операторов — последние тиражи (обычно 15–30)\n· умная генерация — 3 запуска в неделю\n· Поле, Консенсус, Судья и Квантово-астральный — по 3 пробы\n\nPro — максимально полная база каждой игры:\n· вся собранная история (Eurojackpot с 2012 · Powerball 1372 тиража · EuroMillions 1021 и др.)\n· безлимитные Консенсус, Поле, Судья (обе роли) и Астрал с натальной картой\n· произвольный период и диапазон дат\n· импорт и экспорт баз · автопроверка и уведомления\n\nПодписка: 1 мес $4.99 · 3 мес $12.99 · 6 мес $22.99 · 12 мес $34.99.\nЦена в валюте твоего магазина определится автоматически.','👑',12000);
+'Бесплатно:\n· симулятор всех 9 лотерей без ограничений\n· официальные результаты операторов — свежие тиражи\n· умная генерация — 3 запуска в неделю\n· Поле, Консенсус, Судья и Квантово-астральный — по 3 пробы\n\nPro — максимально полная база каждой игры:\n· вся собранная история каждой лотереи\n· база обновляется автоматически — свежие тиражи подтягиваются сами\n· безлимитные Консенсус, Поле, Судья (обе роли) и Астрал с натальной картой\n· произвольный период и диапазон дат\n· импорт и экспорт баз · автопроверка и уведомления\n\nПодписка: 1 мес $4.99 · 3 мес $12.99 · 6 мес $22.99 · 12 мес $34.99.\nЦена в валюте твоего магазина определится автоматически.','👑',0);
 }
 
 
@@ -6020,7 +6177,7 @@ async function withBusy(label,fn){
 
 /* ═══════════ СОВЕТ МОДЕЛИ НА СЛЕДУЮЩИЙ ТИРАЖ + ВЕРДИКТ СУДЬИ-СЛЕДОВАТЕЛЯ ═══════════ */
 var ADV_state=null;
-const ADV_NAMES={freq:'Частотный анализ',bal:'Сбалансированный',man:'Мандель-сегменты',markov:'Цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'Дельта-метод',bayes:'Байесовский',overdue:'Gap-анализ',phys:'Физика лототрона',chaos:'Детерминированный хаос',quantum:'Квантовый коллапс',rnd:'Pure random','world-hot':'Мировой горячий','world-mix':'Мировой смешанный',qastro:'Квантово-астральный',wheel:'Колёсная матрица'};
+const ADV_NAMES={freq:'Частотный анализ',bal:'Сбалансированный',man:'Мандель-сегменты',markov:'Цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'Дельта-метод',bayes:'Байесовский',overdue:'Gap-анализ',phys:'Физика лототрона',chaos:'Детерминированный хаос',quantum:'Квантовый коллапс',rnd:'Pure random','world-hot':'Мировой горячий','world-mix':'Мировой смешанный',qastro:'Квантово-астральный',wheel:'Колёсная матрица',paradox:'Система парадоксов'};
 function ADV_injectButtons(){
   document.querySelectorAll('.sg-algo').forEach(card=>{
     if(card.querySelector('.sg-adv'))return;
@@ -6043,7 +6200,7 @@ async function ADV_open(algo){
   document.getElementById('adv-draw').innerHTML='🎯 Совет строго на следующий тираж:<br><b>'+dd.toLocaleString('ru-RU',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})+'</b> · '+when;
   const draws=IF_window(await loadD(cur));
   document.getElementById('adv-sub').textContent=l.name+' · анализ по '+draws.length+' тиражам выбранного периода';
-  document.getElementById('adv-counts').innerHTML=[1,2,3,5,10].map(n=>'<button class="pick-cnt'+(n===ADV_state.n?' on':'')+'" onclick="ADV_setN('+n+',this)">'+n+'</button>').join('');
+  document.getElementById('adv-counts').innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>'<button class="pick-cnt'+(n===ADV_state.n?' on':'')+'" onclick="ADV_setN('+n+',this)">'+n+'</button>').join('');
   document.getElementById('adv-result').innerHTML='';
   document.getElementById('adv-go').style.display='';
   document.getElementById('adv-ov').classList.add('show');
@@ -6219,7 +6376,7 @@ function SUPC_way(w){
   document.getElementById('supc-way-db').classList.toggle('on',w==='db');
   document.getElementById('supc-result').innerHTML='';
   if(w==='db'){
-    document.getElementById('supcdb-counts').innerHTML=[1,2,3,5,10].map(n=>'<button class="pick-cnt'+(n===SUPC_dbN?' on':'')+'" onclick="SUPC_dbSetN('+n+',this)">'+n+'</button>').join('');
+    document.getElementById('supcdb-counts').innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>'<button class="pick-cnt'+(n===SUPC_dbN?' on':'')+'" onclick="SUPC_dbSetN('+n+',this)">'+n+'</button>').join('');
   }
 }
 function SUPC_dbSetN(n,el){SUPC_dbN=n;document.querySelectorAll('#supcdb-counts .pick-cnt').forEach(b=>b.classList.toggle('on',b===el));}
@@ -6362,6 +6519,150 @@ function POSQ_audit(draws,l){
   return{Q,p:chi2pvalue(Q,k),k,m:used,ybar,mu};
 }
 
+/* ═══════════════ ВЕРХОВНЫЙ СУДЬЯ · интерактивный разбор (для всех систем) ═══════════════
+   Судья оценивает силой поля каждый шар и ПРЕДЛАГАЕТ замены. Решает пользователь:
+   каждую замену можно включить или отключить. Работает с любым набором рядов. */
+const JUDGE_state={};
+function JUDGE_plan(rows,l,draws){
+  const A=IF_scores(draws,'main',l.mB,l.pM);
+  const score=n=>((A.scores[n-1]||{}).score||0);
+  const all=rangeNums(l.mB).map(score).sort((a,b)=>a-b);
+  const threshold=all[Math.floor(all.length*0.35)];
+  return rows.map(r=>{
+    const m=[...r.m];
+    const weak=m.filter(n=>score(n)<threshold).sort((a,b)=>score(a)-score(b));
+    const strongPool=rangeNums(l.mB).filter(n=>!m.includes(n)).sort((a,b)=>score(b)-score(a));
+    const swaps=[],used=new Set();
+    weak.slice(0,Math.max(1,Math.floor(l.pM/2))).forEach(w0=>{
+      const repl=strongPool.find(x=>!used.has(x));
+      if(repl!=null&&score(repl)>score(w0)){used.add(repl);swaps.push({from:w0,to:repl,sf:Math.round(score(w0)),st:Math.round(score(repl)),apply:true});}
+    });
+    return {orig:[...r.m],b:[...(r.b||[])],swaps};
+  });
+}
+function JUDGE_effective(p){
+  const m=[...p.orig],gold=new Set();
+  p.swaps.forEach(s=>{if(s.apply){const i=m.indexOf(s.from);if(i>=0){m[i]=s.to;gold.add(s.to);}}});
+  return {m:m.slice().sort((a,b)=>a-b),gold};
+}
+function JUDGE_ballsHtml(p,l){
+  const e=JUDGE_effective(p);
+  return '<div class="if-rowballs">'+e.m.map(n=>'<div class="if-rball rb-m-'+l.cls+(e.gold.has(n)?' adv-swap':'')+'">'+n+'</div>').join('')+
+    ((p.b&&p.b.length)?'<div style="width:6px"></div>'+p.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>';
+}
+function JUDGE_render(ns){
+  const st=JUDGE_state[ns];if(!st)return;const l=st.l;
+  const proposed=st.plan.reduce((s,p)=>s+p.swaps.length,0);
+  const active=st.plan.reduce((s,p)=>s+p.swaps.filter(x=>x.apply).length,0);
+  let html='<div class="if-seclbl">⚖️ Разбор Верховного судьи</div>'+
+    '<div class="if-note" style="margin:0 0 12px">Судья проверил каждый шар силой поля из '+st.drawsN+' тиражей (частота, пары, пропуски, зоны). Ниже — какие шары и в каких рядах он предлагает заменить. Реши сам: нажми на замену, чтобы включить или отключить её. Золотом отмечены изменённые числа. Гарантий это не даёт.</div>';
+  st.plan.forEach((p,ri)=>{
+    html+='<div class="pdx-jrow"><div class="pdx-jhead">Ряд '+(ri+1)+'</div>'+JUDGE_ballsHtml(p,l);
+    if(p.swaps.length){
+      html+='<div class="pdx-swaps">'+p.swaps.map((s,si)=>'<button class="pdx-swap'+(s.apply?' on':'')+'" onclick="JUDGE_toggle(\''+ns+'\','+ri+','+si+')">'+(s.apply?'✓ ':'')+s.from+' → '+s.to+'<span class="pdx-sd">поле '+s.sf+'→'+s.st+'</span></button>').join('')+'</div>';
+    }else{
+      html+='<div class="pdx-ok">Возражений нет — ряд выдержал проверку поля ✅</div>';
+    }
+    html+='</div>';
+  });
+  html+='<div style="margin-top:14px"><button class="btn-draw '+l.cls+'" onclick="JUDGE_apply(\''+ns+'\')">Применить выбор ('+active+' из '+proposed+' замен)</button>'+
+    '<button class="btn-exp" style="margin-top:8px" onclick="JUDGE_keepAll(\''+ns+'\')">Оставить всё как есть</button></div>';
+  document.getElementById(st.mountId).innerHTML=html;
+}
+function JUDGE_toggle(ns,ri,si){const s=JUDGE_state[ns]?.plan?.[ri]?.swaps?.[si];if(!s)return;s.apply=!s.apply;JUDGE_render(ns);}
+function JUDGE_finalRows(ns){return JUDGE_state[ns].plan.map(p=>{const e=JUDGE_effective(p);return{m:e.m,b:p.b};});}
+function JUDGE_apply(ns){const st=JUDGE_state[ns];if(st&&st.onApply)st.onApply(JUDGE_finalRows(ns));}
+function JUDGE_keepAll(ns){const st=JUDGE_state[ns];if(!st)return;st.plan.forEach(p=>p.swaps.forEach(s=>s.apply=false));if(st.onApply)st.onApply(JUDGE_finalRows(ns));}
+async function JUDGE_open(ns,rows,mountId,onApply){
+  const l=L();
+  const data=await withBusy('Судья изучает ряды…',async()=>{
+    const draws=IF_window(await loadD(cur));
+    if(draws.length<5)return{err:'Судье нужно минимум 5 тиражей выбранного периода. Обнови результаты во вкладке «Аналитика» или расширь окно.'};
+    return{plan:JUDGE_plan(rows,l,draws),drawsN:draws.length};
+  });
+  if(!data)return;
+  if(data.err){showFeedback('Верховный судья',data.err,'⚖️',3800);return;}
+  JUDGE_state[ns]={plan:data.plan,l,drawsN:data.drawsN,mountId,onApply};
+  JUDGE_render(ns);
+}
+
+/* ═══════════════ СИСТЕМА ПАРАДОКСОВ · модальное окно ═══════════════ */
+var PDX_state=null;
+function PDX_open(){
+  const l=L();
+  PDX_state={useBase:true,n:Math.min(5,getGenCount()),rows:null};
+  document.getElementById('pdx-sub').textContent=lotteryName(cur)+' · 5 контринтуитивных парадоксов лото';
+  PDX_renderMode();
+  document.getElementById('pdx-counts').innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>'<button class="pick-cnt'+(n===PDX_state.n?' on':'')+'" onclick="PDX_setN('+n+',this)">'+n+'</button>').join('');
+  document.getElementById('pdx-result').innerHTML='';
+  document.getElementById('pdx-go').style.display='';
+  document.getElementById('pdx-ov').classList.add('show');
+}
+function PDX_close(){document.getElementById('pdx-ov').classList.remove('show');}
+function PDX_setMode(useBase){PDX_state.useBase=useBase;PDX_renderMode();}
+function PDX_renderMode(){
+  const on=PDX_state.useBase;
+  document.getElementById('pdx-mode-base').classList.toggle('on',on);
+  document.getElementById('pdx-mode-free').classList.toggle('on',!on);
+}
+function PDX_setN(n,el){PDX_state.n=n;document.querySelectorAll('#pdx-counts .pick-cnt').forEach(b=>b.classList.toggle('on',b===el));}
+async function PDX_go(){
+  const st=PDX_state;if(!st)return;const l=L();
+  const data=await withBusy('Собираю парадоксы…',async()=>{
+    const draws=IF_window(await loadD(cur));
+    if(st.useBase&&draws.length<5)return{warn:true,draws};
+    return{draws};
+  });
+  if(!data)return;
+  let useBase=st.useBase;
+  if(data.warn){useBase=false;showFeedback('Мало данных для базы','Для «с базой» нужно минимум 5 тиражей. Собираю парадоксы без базы — по чистой структуре.','♾️',3200);st.useBase=false;PDX_renderMode();}
+  st.rows=PDX_generate(st.n,useBase,l,data.draws);
+  document.getElementById('pdx-go').style.display='none';
+  PDX_renderRows();
+}
+function PDX_rowHtml(r,l){
+  return '<div class="pdx-row">'+
+    '<div class="pdx-rlbl">♾️ '+r.pdx.name+' <span class="pdx-rtag">'+r.pdx.short+'</span></div>'+
+    '<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+
+    ((r.b&&r.b.length)?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>'+
+    '<div class="pdx-rnote">'+r.pdx.note+'</div></div>';
+}
+function PDX_renderRows(){
+  const st=PDX_state,l=L();
+  document.getElementById('pdx-result').innerHTML=
+    '<div class="if-seclbl">♾️ Парадоксы · '+st.rows.length+' '+rowWord(st.rows.length)+' '+(st.useBase?'(с базой тиражей)':'(без базы)')+'</div>'+
+    st.rows.map(r=>PDX_rowHtml(r,l)).join('')+
+    '<button class="btn-draw '+l.cls+'" style="margin-top:12px" onclick="PDX_use()">Использовать в билете</button>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
+    '<button class="btn-exp" style="margin:0" onclick="PDX_copy(this)">📋 Копировать</button>'+
+    '<button class="btn-exp" style="margin:0" onclick="PDX_share()">📤 Поделиться</button></div>'+
+    '<button class="btn-exp" style="margin-top:8px" onclick="PDX_judge()">⚖️ Что скажет Верховный судья</button>'+
+    '<div id="pdx-jmount" style="margin-top:6px"></div>'+
+    '<button class="btn-exp" style="margin-top:10px" onclick="PDX_go()">🔄 Пересобрать парадоксы</button>';
+}
+function PDX_use(){
+  const st=PDX_state;if(!st||!st.rows)return;
+  PDX_close();
+  setGeneratedRows(st.rows.map(r=>({m:r.m,b:r.b})),'Парадоксы перенесены в билет. ♾️ Это исследование структуры, а не прогноз — вероятность тиража не меняется.');
+}
+function PDX_copy(btn){
+  const st=PDX_state;if(!st||!st.rows)return;
+  writeClipboardText(rowsToShareText(st.rows.map(r=>({m:r.m,b:r.b})),L(),lotteryName(cur)+' · парадоксы'))
+    .then(()=>{setCopyButtonState(btn);showCopyToast('Скопировано '+st.rows.length+' '+rowWord(st.rows.length));})
+    .catch(()=>showFeedback('Не скопировано','Браузер запретил доступ к буферу обмена.','⚠️',3000));
+}
+function PDX_share(){
+  const st=PDX_state;if(!st||!st.rows)return;
+  shareText(lotteryName(cur)+' · парадоксы',lotteryName(cur)+' · парадоксы\n'+rowsAsText(st.rows.map(r=>({m:r.m,b:r.b})),L()));
+}
+function PDX_judge(){
+  const st=PDX_state;if(!st||!st.rows)return;
+  JUDGE_open('pdx',st.rows.map(r=>({m:r.m,b:r.b})),'pdx-jmount',finalRows=>{
+    PDX_close();
+    const dur=setGeneratedRows(finalRows,'Парадоксы с решением судьи перенесены в билет. ⚖️♾️ Гарантий нет.');
+    setTimeout(()=>showFeedback('Готово','Ряды с учётом твоего выбора перенесены в билет.','⚖️',2600),dur+150);
+  });
+}
 </script>
 <div class="scroll-anchors" id="scroll-anchors">
   <button class="sa-btn" id="sa-btn" onclick="SA_go()">↓</button>

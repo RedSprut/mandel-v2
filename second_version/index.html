@@ -161,11 +161,15 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .hdr-title .hdr-sub{display:block;font-size:11px;font-weight:700;color:rgba(249,242,231,.72);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Manrope',sans-serif;letter-spacing:.8px;text-transform:uppercase}
 
 /* ══ ВЫБОР ЛОТЕРЕИ ══ */
+.lot-nav-shell{position:relative;width:100%;min-width:0}
 .lot-tabs{display:flex;width:100%;max-width:100vw;gap:8px;padding:14px 14px 5px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x;cursor:grab;user-select:none}
 .lot-tabs.dragging,.sched-strip.dragging{cursor:grabbing;scroll-snap-type:none}
 .lot-tabs.dragging .lt,.sched-strip.dragging .ss-item{pointer-events:none}
 .lot-tabs::-webkit-scrollbar{display:none}
-.lt{flex:0 0 118px;padding:11px 4px;border-radius:16px;border:1.5px solid var(--lt-border);background:var(--lt-bg);cursor:pointer;text-align:center;transition:all .18s;scroll-snap-align:start;box-shadow:var(--card-shadow)}
+.lot-scroll-btn{display:none;position:absolute;top:50%;z-index:5;width:34px;height:34px;place-items:center;transform:translateY(-42%);border-radius:50%;border:1px solid rgba(233,180,76,.55);background:rgba(22,10,18,.84);color:#F5CE7B;font-size:24px;line-height:1;box-shadow:0 5px 16px rgba(0,0,0,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.lot-scroll-prev{left:5px}.lot-scroll-next{right:5px}
+.lot-scroll-btn:disabled{opacity:.28;pointer-events:none}
+.lt{flex:0 0 118px;padding:11px 4px;border-radius:16px;border:1.5px solid var(--lt-border);background:var(--lt-bg);cursor:pointer;text-align:center;transition:all .18s;scroll-snap-align:start;box-shadow:var(--card-shadow);touch-action:pan-x}
 .lt.ol{border-color:#cc2060;background:var(--cd-lotto);box-shadow:0 4px 16px rgba(204,32,96,.22)}.lt.ol .lt-name{color:#cc2060}
 .lt.ov{border-color:#1e3fbe;background:var(--cd-viking);box-shadow:0 4px 16px rgba(30,63,190,.22)}.lt.ov .lt-name{color:#5B7CFF}
 .lt.oe{border-color:#f0a500;background:var(--cd-euro);box-shadow:0 4px 16px rgba(240,165,0,.22)}.lt.oe .lt-name{color:#f0a500}
@@ -175,7 +179,7 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 /* расписание */
 .sched-strip{display:flex;margin:10px 14px 0;border-radius:14px;overflow-x:auto;overflow-y:hidden;border:1px solid var(--strip-border);background:var(--strip-bg);scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x;cursor:grab;user-select:none;box-shadow:var(--card-shadow)}
 .sched-strip::-webkit-scrollbar{display:none}
-.ss-item{flex:0 0 118px;padding:9px 6px;text-align:center;cursor:pointer;transition:background .15s}
+.ss-item{flex:0 0 118px;padding:9px 6px;text-align:center;cursor:pointer;transition:background .15s;touch-action:pan-x}
 .ss-item.on{background:linear-gradient(160deg,rgba(233,180,76,.2),rgba(233,180,76,.04));box-shadow:inset 0 -3px 0 var(--gold)}
 .ss-div{width:1px;background:var(--border)}
 .ss-name{font-size:12px;font-weight:800}.ss-day{font-size:12px;color:var(--sub);margin-top:2px}.ss-price{font-size:13px;font-weight:800;color:var(--gold)}
@@ -213,6 +217,7 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .wb-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .wb-icon{font-size:34px}.wb-title{font-size:18px;font-weight:900;font-family:'Unbounded',sans-serif}.wb-sub{font-size:15px;color:var(--sub);margin-top:3px;line-height:1.4}
 .wb-lbl{font-size:12px;color:var(--sub);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;margin-top:12px}
+.sim-workspace{padding:14px}
 
 /* ══ КАРТОЧКИ ══ */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:18px;margin:12px 14px 0;box-shadow:var(--card-shadow);font-size:16px;line-height:1.5}
@@ -268,7 +273,7 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .main-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;flex:1}
 .bonus-col{display:grid;gap:5px;grid-template-columns:repeat(2,1fr)}
 .nb{aspect-ratio:1;border-radius:50%;border:1px solid var(--border);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s;width:100%;color:var(--fg);font-family:'Unbounded',sans-serif;box-shadow:inset 0 2px 5px rgba(0,0,0,.14)}
-@media(min-width:700px){.picker-wrap{max-width:560px;margin-left:auto;margin-right:auto}.nb{font-size:17px}}
+@media(min-width:700px){.picker-wrap{max-width:720px;margin-left:auto;margin-right:auto}.nb{font-size:17px}}
 .nb:active{transform:scale(.87)}
 .nb.nb-lotto{background:var(--nb-lotto)}.nb.nb-viking{background:var(--nb-viking)}.nb.nb-euro{background:var(--nb-euro);color:#D8CCE0}
 .nb.dis{opacity:.3;cursor:default;pointer-events:none}
@@ -282,6 +287,8 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .nb.sb-lotto{--ball:#F2ECE1;--ball-hi:#FFFFFF;--ball-lo:#B9AF9E;color:#141018;text-shadow:none}
 .nb.sb-viking{--ball:#10183a;--ball-hi:#3a4570;--ball-lo:#05081a;color:#fff}
 .nb.sb-euro{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
+.bonus-col .nb[class*="sb-"]{outline:3px solid var(--gold2);outline-offset:2px;transform:translateY(-1px) scale(1.06);box-shadow:inset 0 -.34em .5em rgba(0,0,0,.3),inset 0 .1em .18em rgba(255,255,255,.5),0 0 0 2px rgba(255,255,255,.28),0 0 18px rgba(233,180,76,.75)}
+body[data-game="viking"] .bonus-col .nb.sb-viking{--ball:#183A91;--ball-hi:#8EAEFF;--ball-lo:#07133F;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.65)}
 
 /* ══ КНОПКИ ══ */
 .btns{display:flex;gap:8px;margin-top:12px}
@@ -312,6 +319,7 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .filter-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
 .filter-check{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);font-size:15px;font-weight:700;line-height:1.4;cursor:pointer}
 .filter-check input{margin-top:2px;transform:scale(1.15);accent-color:var(--gold)}
+.filter-check:has(input:checked){border-color:rgba(233,180,76,.62);background:linear-gradient(90deg,rgba(233,180,76,.1),transparent),var(--bg3)}
 .filter-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .mini-inp{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--inp-border);background:var(--inp-bg);color:var(--fg);font-size:16px;font-weight:700;outline:none}
 
@@ -367,10 +375,13 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .st{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:0;min-height:94px;padding:12px 7px;font-size:13.5px;font-weight:800;letter-spacing:0;border-radius:16px;border:1.5px solid var(--border);background:var(--bg2);color:var(--sub2);cursor:pointer;white-space:nowrap;font-family:'Manrope',sans-serif;box-shadow:var(--card-shadow);position:relative;overflow:hidden;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}
 .st .st-ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:29px;line-height:1;background:var(--bg3);border:1px solid var(--border);filter:saturate(.82);transition:transform .18s,filter .18s,background .18s,border-color .18s,box-shadow .18s}
 .st .st-tx{line-height:1}
-.st.on{color:var(--fg);border-color:var(--gold);transform:translateY(-2px);background:linear-gradient(160deg,rgba(233,180,76,.24),rgba(233,180,76,.05)),var(--bg2);box-shadow:0 9px 22px rgba(0,0,0,.2),0 0 0 1px rgba(233,180,76,.62) inset}
-.st.on .st-ic{filter:none;transform:scale(1.1);border-color:rgba(255,255,255,.3);background:linear-gradient(145deg,var(--hdr-a,var(--gold2)),var(--hdr-c,var(--gold)));box-shadow:0 6px 14px var(--game-glow,rgba(184,134,11,.28))}
+.st.on{color:var(--fg);border-color:var(--gold);transform:translateY(-2px);background:linear-gradient(160deg,rgba(233,180,76,.1),rgba(233,180,76,.02)),var(--bg2);box-shadow:0 7px 18px rgba(0,0,0,.16),0 0 0 1px rgba(233,180,76,.42) inset}
+.st.on .st-ic{filter:none;transform:scale(1.04);border-color:var(--gold);background:var(--bg3);color:var(--fg);box-shadow:0 5px 12px rgba(0,0,0,.18)}
+.st .st-ic-plus{font-family:'Unbounded',sans-serif;font-weight:900;font-size:34px;color:var(--sub2)}
+.st.on .st-ic-plus{color:var(--gold2)}
 .st.on::after{content:"";position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:34px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold2),var(--gold))}
-@media(min-width:700px){.sec-tabs{max-width:840px;margin-left:auto;margin-right:auto;grid-template-columns:repeat(6,minmax(0,1fr))}.st{min-height:104px;padding:15px 8px;font-size:14px}.st .st-ic{width:48px;height:48px;font-size:32px}}
+@media(min-width:700px){.sec-tabs{max-width:840px;margin-left:auto;margin-right:auto;grid-template-columns:repeat(3,minmax(0,1fr))}.st{min-height:96px;padding:13px 8px;font-size:14px}.st .st-ic{width:48px;height:48px;font-size:32px}}
+@media(min-width:1000px){.sec-tabs{grid-template-columns:repeat(6,minmax(0,1fr))}.st{min-height:104px;padding:15px 8px}}
 .tab-content{display:none}.tab-content.vis{display:block}
 #pg-ana .card{font-size:17px;line-height:1.55}
 #pg-ana .card [style*="font-size:13px"]{font-size:16px!important}
@@ -748,14 +759,20 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .main-grid{min-width:0;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
   .bonus-col{width:54px;min-width:0;flex:0 0 54px;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
 }
+@media (max-width:699px){
+  .lot-scroll-btn{display:grid}
+  .lot-tabs{padding-left:44px;padding-right:44px;scroll-padding-left:44px;scroll-padding-right:44px}
+}
+@media (min-width:341px) and (max-width:699px){
+  .picker-wrap,.main-grid{min-width:0}
+  .bonus-col{width:clamp(68px,18vw,86px);min-width:0;flex:0 0 clamp(68px,18vw,86px);grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+}
 
 /* ── ПЛАНШЕТ И БРАУЗЕР: резиновая сетка ── */
 @media (min-width:700px){
   body{max-width:none;padding-bottom:110px}
-  .lot-tabs,.sched-strip,.win-banner,.sec-tabs,.hero{max-width:720px;margin-left:auto;margin-right:auto}
-  .page>.card,.page>div[style*="padding:14px"]{max-width:720px;margin-left:auto;margin-right:auto}
-  .lot-tabs{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto}
-  .lt{flex:0 0 128px}
+  .lot-tabs,.sched-strip,.win-banner,.sec-tabs,.hero{width:calc(100% - 32px);max-width:1120px;margin-left:auto;margin-right:auto}
+  .page>.card,.page>.sim-workspace{width:calc(100% - 32px);max-width:1120px;margin-left:auto;margin-right:auto}
   /* шапка — лента во всю ширину, контент по центру */
   .hdr{padding-left:max(16px,calc((100vw - 1760px)/2));padding-right:max(16px,calc((100vw - 1760px)/2))}
   /* навигация — плавающая «таблетка» */
@@ -771,15 +788,35 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .bonus-col{min-width:92px}
 }
 
-/* ── ШИРОКИЙ БРАУЗЕР: двухколоночная рабочая область ── */
+/* ── ШИРОКИЙ БРАУЗЕР: единая центрированная рабочая область ── */
 @media (min-width:1080px){
-  .lot-tabs{max-width:1760px}
-  #pg-sim.show{display:grid;grid-template-columns:minmax(360px,430px) minmax(0,1fr);gap:0 18px;align-items:start;width:100%;max-width:1760px;margin:0 auto;padding:0 20px 20px}
-  #pg-sim .hero{grid-column:1/-1;max-width:none;margin:12px 0 0;padding:34px 24px 24px}
-  #pg-sim .sched-strip{grid-column:1/-1;max-width:none;margin:10px 0 0;justify-content:center}
-  #pg-sim .sched-strip .ss-item{flex:1 1 0;min-width:104px;max-width:150px}
-  #pg-sim .win-banner{grid-column:1;max-width:none;margin:12px 0 0;position:static;max-height:none;overflow:visible;display:block}
-  #pg-sim>div[style*="padding:14px"]{grid-column:2;max-width:none;margin:0}
+  .lot-tabs{width:calc(100% - 40px);max-width:1760px}
+  #pg-sim.show{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;width:100%;max-width:1760px;margin:0 auto;padding:0 20px 28px}
+  #pg-sim .hero{grid-column:1;max-width:none;width:100%;margin:12px 0 0;padding:34px 24px 24px}
+  #pg-sim .sched-strip{grid-column:1;max-width:none;width:100%;margin:10px 0 0;justify-content:center}
+  #pg-sim .win-banner{grid-column:1;max-width:none;width:100%;margin:12px 0 0;padding:24px 30px;position:static;max-height:none;overflow:visible;display:block}
+  #pg-sim .win-banner.none{min-height:132px;display:grid;place-items:center}
+  #pg-sim .win-banner.none .wb-top{justify-content:center;margin:0;text-align:left}
+  #pg-sim .win-banner:not(.none) .wb-top{justify-content:center;text-align:center;margin-bottom:18px}
+  #pg-sim .win-banner:not(.none) #wb-body{display:grid;grid-template-columns:minmax(260px,.55fr) minmax(0,1.45fr);grid-template-rows:auto auto auto;column-gap:30px;align-items:start;width:100%}
+  #pg-sim .wb-drawn-label{grid-column:1;grid-row:1;text-align:center;margin-top:0}
+  #pg-sim #wb-drawn{grid-column:1;grid-row:2;justify-content:center}
+  #pg-sim #wb-bonus-wrap{grid-column:1;grid-row:3;text-align:center}
+  #pg-sim #wb-bonus{justify-content:center}
+  #pg-sim .wb-rows-label{grid-column:2;grid-row:1;text-align:center;margin-top:0}
+  #pg-sim #wb-rows{grid-column:2;grid-row:2 / span 2;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:0 20px;align-content:start}
+  #pg-sim #wb-crowd{grid-column:1/-1;margin-top:18px}
+  #pg-sim .sim-workspace{grid-column:1;width:100%;max-width:none;margin:0;padding:20px 0 28px}
+  #pg-sim .sim-workspace>:not(.hndl){max-width:1240px;margin-left:auto;margin-right:auto}
+  #pg-sim .sim-workspace .pick-labels,#pg-sim .sim-workspace .picker-wrap{max-width:860px}
+  #pg-sim .sim-workspace .picker-wrap{gap:12px}
+  #pg-sim .sim-workspace .bonus-col{min-width:104px}
+  #pg-sim .sim-workspace .ticket-row{min-height:70px;padding:10px 14px}
+  #pg-sim .sim-workspace .rballs{justify-content:center;gap:6px}
+  #pg-sim .sim-workspace .rb{width:46px;height:46px;font-size:16px}
+  #pg-sim .sim-workspace .rn{min-width:34px;text-align:center}
+  #pg-sim .sim-workspace .ract{width:36px;height:36px}
+  #pg-sim .sim-workspace .mine-tall{font-size:24px}
   #pg-ana .sec-tabs{max-width:1040px}
   #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:16px;align-items:start;width:100%;max-width:1760px;margin:0 auto;padding:14px 20px 20px}
   #pg-ana .tab-content.vis>.card{margin:0;max-width:none;min-width:0}
@@ -794,7 +831,20 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-ana #at-inp .btn-del{position:static;justify-self:end}
   .card{font-size:16px}
 }
-@media (min-width:1240px){.lot-tabs{justify-content:center}}
+@media (min-width:700px) and (max-width:1199px){
+  .lot-tabs{display:flex!important;flex-wrap:wrap;justify-content:center;gap:10px;padding:14px 0 5px;overflow:visible;cursor:default}
+  .lot-tabs .lt{flex:0 0 calc(20% - 8px);min-width:0;max-width:190px;scroll-snap-align:none}
+  .sched-strip{display:flex;flex-wrap:wrap;justify-content:center;overflow:visible;cursor:default}
+  .sched-strip .ss-div{display:none}
+  .sched-strip .ss-item{flex:0 0 20%;min-width:0;max-width:190px;min-height:78px;border-right:1px solid var(--strip-border);border-bottom:1px solid var(--strip-border)}
+}
+@media (min-width:1200px){
+  .lot-tabs{display:flex!important;flex-wrap:nowrap;justify-content:center;gap:8px;padding-left:0;padding-right:0;overflow:visible;cursor:default}
+  .lot-tabs .lt{flex:1 1 0;min-width:0;max-width:180px}
+  #pg-sim .sched-strip{flex-wrap:nowrap;overflow:visible}
+  #pg-sim .sched-strip .ss-div{display:block;flex:0 0 1px}
+  #pg-sim .sched-strip .ss-item{flex:1 1 0;min-width:0;max-width:190px}
+}
 @media (min-width:1400px){
   #pg-ana #at-inp.vis{grid-template-columns:minmax(320px,.8fr) minmax(360px,.9fr) minmax(560px,1.55fr)}
   #pg-ana #at-inp.vis>.card:nth-child(3){grid-column:auto}
@@ -1121,7 +1171,11 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
   <button class="hdr-icon" onclick="toggleDark()" id="theme-btn" title="Тема">🌙</button>
 </div>
 
-<div class="lot-tabs" id="lot-tabs">
+<div class="lot-nav-shell" id="lot-nav-shell">
+  <button type="button" class="lot-scroll-btn lot-scroll-prev" id="lot-scroll-prev" aria-label="Предыдущие лотереи" title="Предыдущие лотереи" onclick="scrollLotteryNav(-1)">‹</button>
+  <div class="lot-tabs" id="lot-tabs">
+  </div>
+  <button type="button" class="lot-scroll-btn lot-scroll-next" id="lot-scroll-next" aria-label="Следующие лотереи" title="Следующие лотереи" onclick="scrollLotteryNav(1)">›</button>
 </div>
 
 <!-- ══ SIMULATOR PAGE ══ -->
@@ -1144,16 +1198,16 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
   <div class="win-banner none" id="win-banner" onclick="ticketOrCombo(event)" style="cursor:pointer">
     <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Победная комбинация</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
     <div id="wb-body" style="display:none">
-      <div class="wb-lbl">Выпавшие числа</div>
+      <div class="wb-lbl wb-drawn-label">Выпавшие числа</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px" id="wb-drawn"></div>
       <div id="wb-bonus-wrap"><div class="wb-lbl" id="wb-blbl"></div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px" id="wb-bonus"></div></div>
-      <div class="wb-lbl">Ваши ряды</div>
+      <div class="wb-lbl wb-rows-label">Ваши ряды</div>
       <div id="wb-rows"></div>
         <div id="wb-crowd"></div>
     </div>
   </div>
 
-  <div style="padding:14px">
+  <div class="sim-workspace">
     <div class="mine-tall">Mine tall</div>
     <div id="rows-c"></div>
     <div class="hndl"></div>
@@ -1205,13 +1259,13 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
         <button class="btn-exp" onclick="renderWorldAnalysis()" style="margin-top:0">Анализ лото по миру</button>
       </div>
       <div class="filter-grid">
-        <label class="filter-check"><input type="checkbox" id="flt-parity">Исключать все чётные / все нечётные ряды</label>
-        <label class="filter-check"><input type="checkbox" id="flt-sum">Фильтр суммы чисел <span id="sum-hint"></span></label>
+        <label class="filter-check"><input type="checkbox" id="flt-parity" checked>Исключать все чётные / все нечётные ряды</label>
+        <label class="filter-check"><input type="checkbox" id="flt-sum" checked>Фильтр суммы чисел <span id="sum-hint"></span></label>
         <div class="filter-mini">
           <input class="mini-inp" id="sum-min" type="number" placeholder="Мин. сумма">
           <input class="mini-inp" id="sum-max" type="number" placeholder="Макс. сумма">
         </div>
-        <label class="filter-check"><input type="checkbox" id="flt-consec">Запретить больше 3 чисел подряд</label>
+        <label class="filter-check"><input type="checkbox" id="flt-consec" checked>Запретить больше 3 чисел подряд</label>
       </div>
       <button class="btn-exp" id="copy-rows-btn" onclick="copyRowsForNorsk(this)" style="margin-top:10px">📋 Скопировать ряды</button>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
@@ -1302,7 +1356,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 <!-- ══ ANALYTICS PAGE ══ -->
 <div class="page" id="pg-ana">
   <div class="sec-tabs">
-    <button type="button" class="st on" id="st-inp" aria-pressed="true" onclick="selAT('inp')"><span class="st-ic">➕</span><span class="st-tx">Ввод</span></button>
+    <button type="button" class="st on" id="st-inp" aria-pressed="true" onclick="selAT('inp')"><span class="st-ic st-ic-plus">+</span><span class="st-tx">Ввод</span></button>
     <button type="button" class="st" id="st-freq" aria-pressed="false" onclick="selAT('freq')"><span class="st-ic">📊</span><span class="st-tx">Частоты</span></button>
     <button type="button" class="st" id="st-chi" aria-pressed="false" onclick="selAT('chi')"><span class="st-ic">🔬</span><span class="st-tx">χ²&nbsp;тест</span></button>
     <button type="button" class="st" id="st-cmp" aria-pressed="false" onclick="selAT('cmp')"><span class="st-ic">⚖️</span><span class="st-tx">Сравнение</span></button>
@@ -2195,8 +2249,8 @@ function selPage(p){
   document.getElementById('pg-'+p).classList.add('show');
   document.querySelectorAll('.bn').forEach(x=>x.classList.remove('on'));
   document.getElementById('bn-'+p).classList.add('on');
-  const lt=document.getElementById('lot-tabs');
-  lt.style.display=p==='sim'?'flex':'none';
+  const shell=document.getElementById('lot-nav-shell');
+  if(shell)shell.hidden=p!=='sim';
   if(p==='ana'){updateAnaHdr();renderAna();}
   else{updateHdr();}
 }
@@ -2211,6 +2265,23 @@ async function handleBack(){
 function formatPrice(l){
   if(!l.price)return '—';
   return `${l.price} ${l.currency||'NOK'}`;
+}
+function updateLotteryNavArrows(){
+  const el=document.getElementById('lot-tabs'),prev=document.getElementById('lot-scroll-prev'),next=document.getElementById('lot-scroll-next');
+  if(!el||!prev||!next)return;
+  const max=Math.max(0,el.scrollWidth-el.clientWidth);
+  prev.disabled=max<2||el.scrollLeft<=2;
+  next.disabled=max<2||el.scrollLeft>=max-2;
+}
+function centerNavItem(scroller,item){
+  if(!scroller||!item||scroller.scrollWidth<=scroller.clientWidth+2)return;
+  const left=item.offsetLeft-(scroller.clientWidth-item.offsetWidth)/2;
+  scroller.scrollTo({left:Math.max(0,left),behavior:'smooth'});
+}
+function scrollLotteryNav(dir){
+  const el=document.getElementById('lot-tabs');if(!el)return;
+  el.scrollBy({left:dir*Math.max(150,el.clientWidth*.72),behavior:'smooth'});
+  setTimeout(updateLotteryNavArrows,320);
 }
 function enableHorizontalScroller(el){
   if(!el||el.dataset.dragReady==='1')return;
@@ -2250,17 +2321,21 @@ function renderLotteryNav(){
         <div class="lt-flag">${l.flag||'🎲'}</div>
         <div class="lt-name">${l.short||l.name}</div>
       </div>`).join('');
-    requestAnimationFrame(()=>document.getElementById('lt-'+cur)?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}));
   }
   if(strip){
     strip.innerHTML=Object.entries(LOTS).map(([id,l],i)=>`
       ${i?'<div class="ss-div"></div>':''}
-      <div class="ss-item ${id===cur?'on':''}" role="button" tabindex="0" aria-current="${id===cur?'true':'false'}" onclick="initLottery('${id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();initLottery('${id}');}">
+      <div class="ss-item ${id===cur?'on':''}" id="ss-${id}" role="button" tabindex="0" aria-current="${id===cur?'true':'false'}" onclick="initLottery('${id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();initLottery('${id}');}">
         <div class="ss-name" style="color:${mColor(l.cls)}">${l.short||l.name}</div>
         <div class="ss-day">${l.day} · до ${l.dl}</div>
         <div class="ss-price">${formatPrice(l)}/ряд</div>
       </div>`).join('');
   }
+  requestAnimationFrame(()=>{
+    centerNavItem(tabs,document.getElementById('lt-'+cur));
+    centerNavItem(strip,document.getElementById('ss-'+cur));
+    updateLotteryNavArrows();
+  });
 }
 function updateOfficialControls(){
   const l=L(),provider=getOfficialProvider(cur),source=officialSourceName(l);
@@ -4741,7 +4816,9 @@ function applyLang(){
     const el=document.querySelector(sel);if(!el)return;
     const value=t(key),split=value.indexOf(' ');
     const icon=document.createElement('span'),label=document.createElement('span');
-    icon.className='st-ic';icon.textContent=split<0?'':value.slice(0,split);
+    const isEntry=sel==='#st-inp';
+    icon.className=`st-ic${isEntry?' st-ic-plus':''}`;
+    icon.textContent=isEntry?'+':(split<0?'':value.slice(0,split));
     label.className='st-tx';label.textContent=split<0?value:value.slice(split+1);
     el.replaceChildren(icon,label);
   };
@@ -5831,8 +5908,12 @@ showBanner=function(dM,dB){
 };
 /* хуки */
 document.addEventListener('DOMContentLoaded',()=>{
-  enableHorizontalScroller(document.getElementById('lot-tabs'));
+  const lotTabs=document.getElementById('lot-tabs');
+  enableHorizontalScroller(lotTabs);
   enableHorizontalScroller(document.getElementById('sched-strip'));
+  if(lotTabs)lotTabs.addEventListener('scroll',updateLotteryNavArrows,{passive:true});
+  window.addEventListener('resize',updateLotteryNavArrows,{passive:true});
+  setTimeout(updateLotteryNavArrows,80);
   setTimeout(()=>{PERIOD_refreshLabel();initNotifyBtn();},500);
   setTimeout(autoCheckFavorites,4500);
   let saRaf=0;

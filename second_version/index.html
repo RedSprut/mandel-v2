@@ -217,6 +217,16 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 .wb-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .wb-icon{font-size:34px}.wb-title{font-size:18px;font-weight:900;font-family:'Unbounded',sans-serif}.wb-sub{font-size:15px;color:var(--sub);margin-top:3px;line-height:1.4}
 .wb-lbl{font-size:12px;color:var(--sub);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;margin-top:12px}
+#wb-body{min-width:0}
+.wb-drawn-block{text-align:center;min-width:0}
+.wb-winning-line,#wb-drawn,#wb-bonus-wrap,#wb-bonus{display:flex;align-items:center;flex-wrap:nowrap;white-space:nowrap}
+.wb-winning-line{justify-content:center;gap:8px;min-width:0;padding:4px 0 8px;overflow:visible}
+#wb-drawn,#wb-bonus{gap:5px;margin:0}
+#wb-bonus-wrap{gap:7px;min-width:0}
+.wb-sep{width:1px;height:30px;background:var(--border);flex:0 0 1px}
+.wb-bonus-label{display:none}
+.wb-rows-label{text-align:center}
+#wb-rows,#wb-crowd{min-width:0;width:100%}
 .sim-workspace{padding:14px}
 
 /* ══ КАРТОЧКИ ══ */
@@ -349,6 +359,7 @@ body[data-game="viking"] .bonus-col .nb.sb-viking{--ball:#183A91;--ball-hi:#8EAE
 .dball.euro-m{--ball:#7ecfc0;--ball-hi:#b2ece2;--ball-lo:#3f9184;color:#123230}
 .dball.euro-b{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
 .mb{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex:0 0 auto}
+#wb-rows .mb{width:48px;height:48px;font-size:17px}
 
 .mb[class*="miss-"]{--ball:var(--miss-ball);--ball-hi:var(--miss-hi);--ball-lo:var(--miss-lo);color:var(--miss-txt)}
 .mb.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
@@ -727,8 +738,9 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .hist-sep{margin:0 1px}
   .btn-del{top:6px;width:32px;height:32px}
   .btn-fav-use,.btn-fav-copy{width:34px;height:32px;font-size:13px}
-  .dball{width:clamp(36px,10vw,46px);height:clamp(36px,10vw,46px);font-size:clamp(13px,4vw,16px)}
+  .dball{width:clamp(29px,9vw,42px);height:clamp(29px,9vw,42px);font-size:clamp(12px,3.7vw,16px)}
   .mb{width:clamp(30px,8.8vw,36px);height:clamp(30px,8.8vw,36px);font-size:clamp(11px,3.4vw,13.5px)}
+  #wb-rows .mb{width:clamp(29px,9vw,42px);height:clamp(29px,9vw,42px);font-size:clamp(12px,3.7vw,16px)}
   .sg-cball{width:clamp(36px,10.2vw,46px);height:clamp(36px,10.2vw,46px);font-size:clamp(13px,3.8vw,15px)}
   .if-rowballs{gap:2px}
   .if-rowballs>div[style*="width:6px"]{width:2px!important;flex:0 0 2px}
@@ -737,7 +749,12 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .qa-ball{width:clamp(30px,9.2vw,44px);height:clamp(30px,9.2vw,44px);flex:0 0 auto;font-size:clamp(11px,3.6vw,16px)}
   .fav-item{grid-template-columns:1fr;gap:7px}
   .fav-actions{flex-direction:row;justify-content:flex-end;align-items:center}
-  #wb-drawn,.prize-draw-balls{flex-wrap:nowrap!important}
+  .wb-winning-line,#wb-drawn,#wb-bonus-wrap,#wb-bonus,.prize-draw-balls{flex-wrap:nowrap!important}
+  .wb-winning-line{gap:2px}
+  #wb-drawn,#wb-bonus{gap:2px}
+  #wb-bonus-wrap{gap:3px}
+  .wb-bonus-label{display:none}
+  .wb-sep{height:24px;margin:0 1px}
   #wb-rows .check-result-row{display:block;padding:10px 0}
   #wb-rows .check-result-row>div:first-child>div{flex-wrap:nowrap!important;gap:2px!important}
   #wb-rows .badge{display:inline-block;margin:7px 0 0 22px}
@@ -759,7 +776,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .main-grid{min-width:0;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
   .bonus-col{width:54px;min-width:0;flex:0 0 54px;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
 }
-@media (max-width:699px){
+@media (min-width:431px) and (max-width:699px) and (hover:hover) and (pointer:fine){
   .lot-scroll-btn{display:grid}
   .lot-tabs{padding-left:44px;padding-right:44px;scroll-padding-left:44px;scroll-padding-right:44px}
 }
@@ -786,6 +803,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .sg-algos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
   .main-grid{grid-template-columns:repeat(10,1fr)}
   .bonus-col{min-width:92px}
+  .wheel-grid{grid-template-columns:repeat(8,minmax(54px,72px));justify-content:center;gap:10px}
+  .wheel-num{font-size:17px}
 }
 
 /* ── ШИРОКИЙ БРАУЗЕР: единая центрированная рабочая область ── */
@@ -798,16 +817,21 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-sim .win-banner.none{min-height:132px;display:grid;place-items:center}
   #pg-sim .win-banner.none .wb-top{justify-content:center;margin:0;text-align:left}
   #pg-sim .win-banner:not(.none) .wb-top{justify-content:center;text-align:center;margin-bottom:18px}
-  #pg-sim .win-banner:not(.none) #wb-body{display:grid;grid-template-columns:minmax(260px,.55fr) minmax(0,1.45fr);grid-template-rows:auto auto auto;column-gap:30px;align-items:start;width:100%}
-  #pg-sim .wb-drawn-label{grid-column:1;grid-row:1;text-align:center;margin-top:0}
-  #pg-sim #wb-drawn{grid-column:1;grid-row:2;justify-content:center}
-  #pg-sim #wb-bonus-wrap{grid-column:1;grid-row:3;text-align:center}
-  #pg-sim #wb-bonus{justify-content:center}
-  #pg-sim .wb-rows-label{grid-column:2;grid-row:1;text-align:center;margin-top:0}
-  #pg-sim #wb-rows{grid-column:2;grid-row:2 / span 2;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:0 20px;align-content:start}
-  #pg-sim #wb-crowd{grid-column:1/-1;margin-top:18px}
+  #pg-sim .win-banner:not(.none) #wb-body{display:flex;flex-direction:column;align-items:center;width:100%}
+  #pg-sim .wb-drawn-block{width:100%}
+  #pg-sim .wb-drawn-label,#pg-sim .wb-rows-label{margin-top:0;text-align:center}
+  #pg-sim .wb-winning-line{justify-content:center;gap:10px}
+  #pg-sim #wb-drawn,#pg-sim #wb-bonus{justify-content:center;gap:8px}
+  #pg-sim #wb-rows{display:grid;grid-template-columns:minmax(0,1fr);width:min(100%,1200px);align-content:start}
+  #pg-sim #wb-rows .check-result-row{display:grid;grid-template-columns:minmax(90px,1fr) auto minmax(90px,1fr);align-items:center;gap:12px;padding:12px 0}
+  #pg-sim #wb-rows .check-result-row>div:first-child{grid-column:2;justify-self:center}
+  #pg-sim #wb-rows .check-result-row>.badge{grid-column:3;justify-self:start}
+  #pg-sim #wb-crowd{margin-top:18px}
+  #pg-sim .dball{width:58px;height:58px;font-size:20px}
+  #pg-sim #wb-rows .mb{width:58px;height:58px;font-size:20px}
   #pg-sim .sim-workspace{grid-column:1;width:100%;max-width:none;margin:0;padding:20px 0 28px}
-  #pg-sim .sim-workspace>:not(.hndl){max-width:1240px;margin-left:auto;margin-right:auto}
+  #pg-sim .sim-workspace>:not(.hndl){width:100%;max-width:1240px;margin-left:auto;margin-right:auto}
+  #pg-sim .sim-workspace>#btn-draw{display:block}
   #pg-sim .sim-workspace .pick-labels,#pg-sim .sim-workspace .picker-wrap{max-width:860px}
   #pg-sim .sim-workspace .picker-wrap{gap:12px}
   #pg-sim .sim-workspace .bonus-col{min-width:104px}
@@ -817,13 +841,19 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-sim .sim-workspace .rn{min-width:34px;text-align:center}
   #pg-sim .sim-workspace .ract{width:36px;height:36px}
   #pg-sim .sim-workspace .mine-tall{font-size:24px}
+  #pg-sim .sim-workspace .wheel-grid{grid-template-columns:repeat(10,minmax(58px,76px));justify-content:center;gap:12px}
+  #pg-sim .sim-workspace .wheel-num{font-size:18px}
   #pg-ana .sec-tabs{max-width:1040px}
-  #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:16px;align-items:start;width:100%;max-width:1760px;margin:0 auto;padding:14px 20px 20px}
-  #pg-ana .tab-content.vis>.card{margin:0;max-width:none;min-width:0}
+  #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch;width:100%;max-width:1760px;margin:0 auto;padding:14px 20px 20px}
+  #pg-ana .tab-content.vis>.card,#pg-ana .ana-column>.card{margin:0;max-width:none;min-width:0}
   #pg-ana .tab-content.vis>.card-wide{grid-column:1/-1}
-  #pg-ana .tab-content.vis>*:not(.card){grid-column:1/-1}
-  #pg-ana #at-inp.vis{grid-template-columns:minmax(300px,.9fr) minmax(360px,1.1fr)}
-  #pg-ana #at-inp.vis>.card:nth-child(3){grid-column:1/-1}
+  #pg-ana .ana-column{display:grid;gap:16px;align-content:start;min-width:0}
+  #pg-ana #at-inp.vis{grid-template-columns:minmax(320px,.72fr) minmax(560px,1.55fr)}
+  #pg-ana #at-inp>.ana-input-tools{grid-template-rows:auto auto;align-self:start}
+  #pg-ana #at-inp>.card{height:100%}
+  #pg-ana #at-freq>.ana-column{height:100%}
+  #pg-ana #at-freq>.card,#pg-ana #at-chi>.card,#pg-ana #at-cmp>.card,#pg-ana #at-prize>.card,#pg-ana #at-man>.card{height:100%}
+  #pg-ana #at-man>.card:first-child{grid-row:1 / span 2}
   #pg-ana #at-inp .hist-item{display:grid;grid-template-columns:minmax(170px,.65fr) minmax(0,1.35fr) 38px;align-items:center;gap:16px;padding:14px 0}
   #pg-ana #at-inp .hist-main{display:contents}
   #pg-ana #at-inp .hist-date{margin:0;padding:0;font-weight:700}
@@ -844,10 +874,6 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-sim .sched-strip{flex-wrap:nowrap;overflow:visible}
   #pg-sim .sched-strip .ss-div{display:block;flex:0 0 1px}
   #pg-sim .sched-strip .ss-item{flex:1 1 0;min-width:0;max-width:190px}
-}
-@media (min-width:1400px){
-  #pg-ana #at-inp.vis{grid-template-columns:minmax(320px,.8fr) minmax(360px,.9fr) minmax(560px,1.55fr)}
-  #pg-ana #at-inp.vis>.card:nth-child(3){grid-column:auto}
 }
 @media (prefers-reduced-motion:reduce){
   button,.lt,.ss-item,.ticket-row,.sg-algo,.bn,.nb,.ndb,.st,.wheel-num,.heat-cell,.pair-cell,.fbar,.btn-s,.btn-draw,.btn-add,.btn-exp,.btn-del,.btn-fav-use,.btn-fav-del,.btn-close2,.sg-use,.cc-btn,.fb-btn,.filter-check,.fb-box{transition:none!important}
@@ -1131,6 +1157,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 .judge-action-panel{margin-top:10px;padding-bottom:4px;background:var(--modal-bg)}
 .judge-action-panel .btn-draw{margin-top:10px}
 .judge-bulk{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.matrix-judge-mount:not(:empty){margin-top:16px;padding-top:4px;border-top:1px solid var(--srow-border)}
 @media(max-width:430px){.judge-choice-summary{gap:8px;padding:11px 10px}.judge-choice-summary b{font-size:12px}.judge-choice-summary span{font-size:11.5px}.judge-bulk{grid-template-columns:1fr}.judge-bulk .btn-exp{min-height:46px}}
 
 /* ══ КАБИНЕТ СУДЬИ ══ */
@@ -1150,6 +1177,22 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 @keyframes festFall{from{transform:translateY(-20px) rotate(0)}to{transform:translateY(60px) rotate(240deg)}}
 .life-hope{margin-top:12px;padding:12px 14px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(150deg,rgba(233,180,76,.15),transparent);font-size:12.5px;line-height:1.65}
 .life-hope b{color:var(--gold)}
+
+/* На touch-экранах модальные окна листаются свайпом без декоративной полосы. */
+body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.cele-box){
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:none
+}
+body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.cele-box)::-webkit-scrollbar{display:none}
+.cc-box,.cele-box{max-height:calc(100dvh - 40px)}
+/* MacBook и ПК: постоянно видимая внутренняя полоса для каждого длинного окна. */
+@media(hover:hover) and (pointer:fine){
+  body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box){overflow-y:scroll;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:var(--gold) rgba(233,180,76,.12)}
+  body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box)::-webkit-scrollbar{display:block;width:11px}
+  body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box)::-webkit-scrollbar-track{background:rgba(233,180,76,.1);border-radius:999px}
+  body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box)::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#F5CE7B,#B07E1F);border:2px solid transparent;border-radius:999px;background-clip:padding-box;min-height:44px}
+}
 </style>
 </head>
 <body class="locked">
@@ -1198,12 +1241,16 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
   <div class="win-banner none" id="win-banner" onclick="ticketOrCombo(event)" style="cursor:pointer">
     <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Победная комбинация</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
     <div id="wb-body" style="display:none">
-      <div class="wb-lbl wb-drawn-label">Выпавшие числа</div>
-      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px" id="wb-drawn"></div>
-      <div id="wb-bonus-wrap"><div class="wb-lbl" id="wb-blbl"></div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px" id="wb-bonus"></div></div>
+      <div class="wb-drawn-block">
+        <div class="wb-lbl wb-drawn-label">Выпавшие числа</div>
+        <div class="wb-winning-line">
+          <div id="wb-drawn"></div>
+          <div id="wb-bonus-wrap"><span class="wb-sep" aria-hidden="true"></span><span class="wb-bonus-label" id="wb-blbl"></span><div id="wb-bonus"></div></div>
+        </div>
+      </div>
       <div class="wb-lbl wb-rows-label">Ваши ряды</div>
       <div id="wb-rows"></div>
-        <div id="wb-crowd"></div>
+      <div id="wb-crowd"></div>
     </div>
   </div>
 
@@ -1366,6 +1413,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 
   <!-- INPUT -->
   <div class="tab-content vis" id="at-inp">
+    <div class="ana-column ana-input-tools">
     <div class="card">
       <div class="card-t">Добавить реальный тираж</div>
       <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Дата тиража</div><input class="date-inp" type="date" id="inp-date"></div>
@@ -1399,6 +1447,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
       </div>
       <div id="official-status" class="warn-note" style="display:none"></div>
     </div>
+    </div>
     <div class="card">
       <div class="card-t" id="hist-title">История (0 тиражей)</div>
       <input class="num-inp" id="hist-search" placeholder="🔍 Поиск: дата, год или число (напр. 2023, 07 апр, 44)" style="width:100%;margin:8px 0 10px" oninput="HIST_filter()">
@@ -1421,16 +1470,20 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 
   <!-- FREQ -->
   <div class="tab-content" id="at-freq">
-    <div class="card"><div class="card-t">🔥 Горячие и ❄️ Холодные</div><div class="hc-grid" id="hc-grid"><div class="empty" style="width:100%">Нужно мин. 5 тиражей</div></div></div>
+    <div class="ana-column ana-freq-left">
     <div class="card">
       <div class="card-t">Интерактивная тепловая карта</div>
       <div style="font-size:13px;color:var(--sub2);line-height:1.5;margin-bottom:10px">Красный = чаще выпадало в базе, синий = холоднее. Нажатие добавляет число в текущий ряд симулятора.</div>
       <div class="heatmap-grid" id="heatmap-grid"><div class="empty">Нет данных</div></div>
       <div id="heat-status" class="heat-status"></div>
     </div>
+    <div class="card"><div class="card-t">🎯 Частые комбинации</div><div id="sugg-out"><div class="empty">Нужно мин. 10 тиражей</div></div><div class="warn-note" id="sugg-warn" style="display:none">⚠️ Числа из прошлого НЕ предсказывают будущее. Только для образовательных целей.</div></div>
+    </div>
+    <div class="ana-column ana-freq-right">
+    <div class="card"><div class="card-t">🔥 Горячие и ❄️ Холодные</div><div class="hc-grid" id="hc-grid"><div class="empty" style="width:100%">Нужно мин. 5 тиражей</div></div></div>
     <div class="card"><div class="card-t">Частота главных чисел</div><div class="freq-wrap"><div class="freq-chart" id="fc-main"></div></div></div>
     <div class="card" id="fc-bc" style="display:none"><div class="card-t" id="fc-bt">Бонусные числа</div><div class="freq-wrap"><div class="freq-chart" id="fc-bonus"></div></div></div>
-    <div class="card"><div class="card-t">🎯 Частые комбинации</div><div id="sugg-out"><div class="empty">Нужно мин. 10 тиражей</div></div><div class="warn-note" id="sugg-warn" style="display:none">⚠️ Числа из прошлого НЕ предсказывают будущее. Только для образовательных целей.</div></div>
+    </div>
     <!-- PAIR ANALYSIS -->
     <div class="card">
       <div class="card-t">🔗 Парный анализ (совместная встречаемость)</div>
@@ -1925,10 +1978,11 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
       <button class="btn-draw euro" onclick="MATRIX_use()">Использовать в симуляторе</button>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
         <button class="btn-exp" style="margin:0" onclick="shareMatrix()">📤 Поделиться</button>
-        <button class="btn-exp" style="margin:0" onclick="SUP_open('matrix')">⚖️ Верховный судья</button>
+        <button class="btn-exp" style="margin:0" onclick="MATRIX_judge()">⚖️ Проверить матрицу судьёй</button>
       </div>
       <button class="btn-exp matrix-copy" id="matrix-copy-btn" onclick="MATRIX_copy(this)">📋 Копировать</button>
     </div>
+    <div id="matrix-jmount" class="matrix-judge-mount"></div>
     <div class="if-legal">Важно: это образовательный анализ последних доступных результатов выбранной лотереи. Ни одна модель не делает будущий независимый тираж более предсказуемым.</div>
   </div>
 </div>
@@ -5506,6 +5560,8 @@ async function PICK_go(){
   PICK_close();
   CONS_close();
   const body=document.getElementById('matrix-body');
+  const judgeMount=document.getElementById('matrix-jmount');
+  if(judgeMount)judgeMount.innerHTML='';
   document.getElementById('matrix-ov').classList.add('show');
   const phrases=['Модели передают результаты…','Информационное поле анализирует связи…','Проверяем разнообразие…','Формируем итоговую матрицу…'];
   for(let i=0;i<phrases.length;i++){body.innerHTML='<div class="if-empty">'+phrases[i]+'</div>';await new Promise(r=>setTimeout(r,260));}
@@ -5593,6 +5649,22 @@ function MATRIX_use(){
   MATRIX_close();CONS_close();
   const dur=setGeneratedRows(st.matrix.map(r=>({m:r.m,b:r.b})),'Готово: '+st.matrix.length+' '+rowWord(st.matrix.length)+' · Итоговая матрица консенсуса · '+st.ctx.lotteryName+'.');
   setTimeout(()=>showFeedback('Матрица готова',st.matrix.length+' '+rowWord(st.matrix.length)+' итоговой матрицы консенсуса перенесены в симулятор.','💠',2600),dur+150);
+}
+function MATRIX_judge(){
+  const st=CONS_state;
+  if(!st||!st.matrix||!st.matrix.length){showFeedback('Матрица пуста','Сначала сформируй итоговую матрицу.','✋',2400);return;}
+  JUDGE_open('matrix',st.matrix.map(r=>({m:[...r.m],b:[...(r.b||[])]})),'matrix-jmount',(finalRows,meta)=>{
+    MATRIX_close();CONS_close();
+    let decision='без изменений';
+    if(meta.proposed&&meta.active===meta.proposed)decision='со всеми '+meta.active+' заменами';
+    else if(meta.active)decision='с выбранными '+meta.active+' из '+meta.proposed+' замен';
+    else if(meta.proposed)decision='без выбранных замен';
+    const dur=setGeneratedRows(finalRows,'Проверенная судьёй матрица перенесена в симулятор '+decision+'.');
+    setTimeout(()=>showFeedback('Решение применено','Матрица перенесена на главный экран '+decision+'.','⚖️',2800),dur+150);
+  },{
+    intro:'Судья проверяет уже собранную итоговую матрицу и только предлагает точечные замены. Нажми на любую замену, чтобы принять или отклонить её; остальные строки сохранятся как есть.',
+    applyLabel:'Использовать проверенную матрицу'
+  });
 }
 
 
@@ -6887,6 +6959,7 @@ function JUDGE_render(ns){
   const st=JUDGE_state[ns];if(!st)return;const l=st.l;
   const proposed=st.plan.reduce((s,p)=>s+p.swaps.length,0);
   const active=st.plan.reduce((s,p)=>s+p.swaps.filter(x=>x.apply).length,0);
+  const applyBase=st.applyLabel||'Использовать проверенные ряды';
   let html=(st.intro?'<div class="adv-invest" style="margin:0 0 4px">'+st.intro+'</div>':'')+
     '<div class="if-seclbl">⚖️ Разбор Верховного судьи</div>'+
     '<div class="if-note" style="margin:0 0 12px">Судья проверил каждый шар силой поля из '+st.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Ниже — какие шары и в каких рядах он предлагает заменить. Реши сам: нажми на замену, чтобы включить или отключить её. Можно поменять только одну, а остальное оставить. Золотом отмечены изменённые числа. Гарантий это не даёт.</div>';
@@ -6903,19 +6976,19 @@ function JUDGE_render(ns){
   if(proposed===0){
     choiceTitle='Изменений не требуется';
     choiceText='Судья оставляет исходные числа. Можно перенести проверенные ряды на главный экран.';
-    applyText='✅ '+(st.applyLabel||'Использовать проверенные ряды');
+    applyText='✅ '+applyBase;
   }else if(active===0){
     choiceTitle='Все замены отключены';
     choiceText='Исходные числа останутся без изменений.';
-    applyText='↩ Оставить ряды без замен и открыть билет';
+    applyText='↩ '+applyBase+' без замен';
   }else if(active===proposed){
     choiceTitle='Выбраны все предложенные замены';
     choiceText='Будут применены все предложенные изменения: '+proposed+'.';
-    applyText='✅ Применить все изменения ('+proposed+') и открыть билет';
+    applyText='✅ '+applyBase+' · все замены ('+proposed+')';
   }else{
     choiceTitle='Частичная замена';
     choiceText='Будут применены только выбранные изменения: '+active+' из '+proposed+'. Остальные числа останутся исходными.';
-    applyText='✅ Применить выбранные изменения ('+active+' из '+proposed+') и открыть билет';
+    applyText='✅ '+applyBase+' · '+active+' из '+proposed+' замен';
   }
   html+='<div class="judge-choice-summary"><div><b>'+choiceTitle+'</b><span>'+choiceText+'</span></div><div class="judge-choice-count">'+active+' / '+proposed+'</div></div>'+
     '<div class="judge-action-panel">';

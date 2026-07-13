@@ -349,6 +349,21 @@ body[data-game="viking"] .bonus-col .nb.sb-viking{--ball:#183A91;--ball-hi:#8EAE
 .life-stat span{display:block;font-size:11px;color:var(--sub);font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
 .life-stat b{font-size:17px;font-family:'Unbounded',sans-serif;font-weight:700}
 .draw-check-row{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+.ticket-check-card,.favorite-combos-card{margin:10px 0 0}
+.ticket-check-fields{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;margin:18px auto 16px;padding:4px 0}
+.ticket-check-group{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}
+.ticket-check-label{font-size:13px;font-weight:700;color:var(--sub2);text-align:center;margin:0 0 9px}
+.ticket-check-fields .check-inp-row{justify-content:center;flex-wrap:nowrap;gap:8px;margin:0}
+.ticket-check-fields .binp{width:clamp(44px,12vw,52px);height:clamp(44px,12vw,52px);flex:0 0 auto;font-size:16px}
+.ticket-check-fields .ticket-count-6{gap:5px}
+.ticket-check-fields .ticket-count-6 .binp{width:44px;height:44px;font-size:15px}
+.ticket-check-fields .ticket-count-7{gap:1px}
+.ticket-check-fields .ticket-count-7 .binp{width:clamp(35px,11vw,43px);height:clamp(35px,11vw,43px);font-size:clamp(13px,4vw,16px)}
+@media(min-width:700px){
+  .ticket-check-fields{flex-direction:row;align-items:flex-end;gap:clamp(32px,6vw,88px);min-height:108px}
+  .ticket-check-fields .check-inp-row{gap:12px}
+  .ticket-check-fields .check-inp-row .binp{width:58px;height:58px;font-size:19px}
+}
 
 /* ══ ШАРЫ ТИРАЖА ══ */
 .dball{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
@@ -1374,7 +1389,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       </div>
     </div>
     <!-- CHECK TICKET inline -->
-    <div class="card" style="margin:10px 0 0">
+    <div class="card ticket-check-card">
       <div class="card-t">🔍 Проверить реальный билет</div>
       <div style="font-size:12px;color:var(--sub2);margin-bottom:8px">Введи числа которые выпали в реальном тираже — система проверит твои ряды</div>
       <div class="draw-check-row">
@@ -1382,17 +1397,21 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
         <button class="btn-exp" onclick="checkAgainstSavedDraw()" style="margin-top:0">Проверить против тиража из базы</button>
       </div>
       <div id="draw-check-out" class="draw-check-out"></div>
-      <div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px" id="chk-lbl-m">Выпавшие главные числа</div>
-      <div class="check-inp-row" id="chk-main-inp"></div>
-      <div id="chk-bonus-wrap" style="display:none">
-        <div style="font-size:12px;font-weight:600;color:var(--sub2);margin:8px 0 5px" id="chk-lbl-b">Бонусные числа</div>
-        <div class="check-inp-row" id="chk-bonus-inp"></div>
+      <div class="ticket-check-fields">
+        <div class="ticket-check-group">
+          <div class="ticket-check-label" id="chk-lbl-m">Выпавшие главные числа</div>
+          <div class="check-inp-row" id="chk-main-inp"></div>
+        </div>
+        <div class="ticket-check-group" id="chk-bonus-wrap" style="display:none">
+          <div class="ticket-check-label" id="chk-lbl-b">Бонусные числа</div>
+          <div class="check-inp-row" id="chk-bonus-inp"></div>
+        </div>
       </div>
       <button class="btn-draw euro" id="chk-btn" onclick="checkTicket()" style="margin-top:8px;font-size:14px;padding:12px">🔍 Проверить мой билет</button>
       <div id="chk-result" style="margin-top:8px"></div>
     </div>
     <!-- SAVE COMBO -->
-    <div class="card" style="margin:10px 0 0">
+    <div class="card favorite-combos-card">
       <div class="card-t">⭐ Избранные комбинации</div>
       <div id="fav-list"><div class="empty" style="padding:16px">Нет сохранённых. Добавь кнопкой ниже.</div></div>
       <button class="btn-exp" onclick="saveFav()">⭐ Сохранить текущие ряды</button>
@@ -3712,14 +3731,14 @@ function buildCheckFields(){
   const l=L();
   const dBo=drawBonusCount(l);
   document.getElementById('chk-lbl-m').textContent=`Выпавшие главные числа (${l.pM} из ${l.mB})`;
-  const mi=document.getElementById('chk-main-inp');mi.innerHTML='';
+  const mi=document.getElementById('chk-main-inp');mi.innerHTML='';mi.className=`check-inp-row ticket-count-${l.pM}`;
   for(let i=0;i<l.pM;i++){
     const inp=document.createElement('input');
     inp.type='number';inp.min=1;inp.max=l.mB;inp.className='binp';inp.placeholder='—';inp.id='chk-m'+i;
     inp.oninput=()=>{const v=+inp.value;inp.className='binp'+(v>=1&&v<=l.mB?' fm-'+l.cls:'');};
     mi.appendChild(inp);
   }
-  const bw=document.getElementById('chk-bonus-wrap'),bi=document.getElementById('chk-bonus-inp');bi.innerHTML='';
+  const bw=document.getElementById('chk-bonus-wrap'),bi=document.getElementById('chk-bonus-inp');bi.innerHTML='';bi.className=`check-inp-row ticket-count-${dBo}`;
   if(dBo>0){
     bw.style.display='';
     document.getElementById('chk-lbl-b').textContent=`${bonusLabel(l)} (${dBo} из ${l.bB})`;

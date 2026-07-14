@@ -2,10 +2,15 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>Мандель · Лотерея</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#26121c">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+@media (max-width:430px){input,select,textarea,.date-inp,.num-inp,.mini-inp{font-size:16px!important}.hdr-back,.hdr-icon{width:44px!important;height:44px!important;min-width:44px;min-height:44px}.btn-draw,.btn-exp,.btn-s,.btn-add,.btn-close2,.sg-use,.fb-btn{min-height:44px}}
+.responsible-note{margin:9px 14px 0;padding:8px 11px;border:1px solid var(--border);border-radius:11px;background:var(--bg2);color:var(--sub2);font-size:11px;line-height:1.45;text-align:center}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;max-width:430px;margin:0 auto;padding-bottom:112px;background:var(--bg);color:var(--fg);transition:background .3s,color .3s}
 body.locked>.hdr,body.locked>.lot-tabs,body.locked>.page,body.locked>.bnav,body.locked>.sg-ov,body.locked>.cc-ov,body.locked>.fb-ov,body.locked>.toast-root{display:none!important}
 .lock-ov{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#fff7dc 0,#f2f2f7 42%,#e8edf7 100%);color:#1c1c1e}
@@ -514,9 +519,10 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
 <div class="page show" id="pg-sim">
   <div class="sched-strip" id="sched-strip">
   </div>
+  <div class="responsible-note">18+ · Аналитика и развлечение. Приложение не продаёт билеты, не принимает ставки и не связано с операторами лотерей, Apple или Google. Названия игр используются только для идентификации. Отдельные числа могут повторяться; полная основная комбинация в симуляторе не повторяется до завершения цикла. В реальном независимом тираже повтор возможен.</div>
 
   <div class="win-banner none" id="win-banner">
-    <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Победная комбинация</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
+    <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Результат симуляции</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
     <div id="wb-body" style="display:none">
       <div class="wb-lbl">Выпавшие числа</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px" id="wb-drawn"></div>
@@ -556,7 +562,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
           <select class="gen-select" id="direct-algo">
             <option value="freq">Горячие числа</option>
             <option value="bal">Комбинированный</option>
-            <option value="man">Мандель-сегменты</option>
+            <option value="man">Сегментный охват</option>
             <option value="wheel">Колесная матрица</option>
             <option value="world-hot">Мировой горячий</option>
             <option value="world-mix">Мировой комбинированный</option>
@@ -589,7 +595,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
       <div id="life-out" class="life-out"></div>
     </div>
     <button class="ndb euro" id="ndb" onclick="openSG()">
-      <div class="ndb-l"><div class="ndb-title">🎯 Умная генерация</div><div class="ndb-sub" id="ndb-sub">На следующий тираж · по алгоритму</div></div>
+      <div class="ndb-l"><div class="ndb-title">🎯 Генератор комбинаций</div><div class="ndb-sub" id="ndb-sub">Исследовательские модели · без прогноза выигрыша</div></div>
       <div style="font-size:20px">→</div>
     </button>
     <button class="ndb euro" id="wheel-btn" onclick="applyWheelMatrix()">
@@ -651,7 +657,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
     <button class="st" id="st-chi" onclick="selAT('chi')">🔬 χ²</button>
     <button class="st" id="st-cmp" onclick="selAT('cmp')">⚖️ Сравнение</button>
     <button class="st" id="st-prize" onclick="selAT('prize')">💵 Призы</button>
-    <button class="st" id="st-man" onclick="selAT('man')">📐 Мандель</button>
+    <button class="st" id="st-man" onclick="selAT('man')">📐 Комбинации</button>
   </div>
 
   <!-- INPUT -->
@@ -659,7 +665,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
     <div class="card">
       <div class="card-t">Добавить реальный тираж</div>
       <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Дата тиража</div><input class="date-inp" type="date" id="inp-date"></div>
-      <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Размер джекпота (млн NOK) — необязательно</div><input class="num-inp" type="number" id="inp-jackpot" placeholder="Например: 85"></div>
+      <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Размер джекпота (млн в валюте игры) — необязательно</div><input class="num-inp" type="number" id="inp-jackpot" placeholder="Например: 85"></div>
       <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px" id="lbl-m-inp">Главные числа</div><div style="display:flex;gap:6px;flex-wrap:wrap" id="inp-main"></div></div>
       <div id="inp-bwrap" style="display:none;margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px" id="lbl-b-inp">Бонусные</div><div style="display:flex;gap:6px;flex-wrap:wrap" id="inp-bonus"></div></div>
       <div style="margin-bottom:10px">
@@ -767,10 +773,10 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
   <!-- MANDEL -->
   <div class="tab-content" id="at-man">
     <div class="card">
-      <div class="card-t">Калькулятор Манделя</div>
+      <div class="card-t">Комбинаторный калькулятор</div>
       <div id="man-out"></div>
       <div style="margin-top:12px">
-        <div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Текущий джекпот (млн NOK)</div>
+        <div id="jackpot-currency-label" style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Текущий джекпот (млн в валюте игры)</div>
         <input type="number" class="num-inp" id="jackpot-inp" placeholder="Например: 150" oninput="renderMandel()">
       </div>
     </div>
@@ -789,7 +795,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
 <div class="sg-ov" id="sg-ov" onclick="sgOut(event)">
   <div class="sg-sheet">
     <div class="sg-hndl"></div>
-    <div class="sg-header"><div class="sg-icon" id="sg-icon">🎯</div><div class="sg-title" id="sg-name">EUROJACKPOT</div><div class="sg-sub">Умная генерация · математический анализ</div></div>
+    <div class="sg-header"><div class="sg-icon" id="sg-icon">🎯</div><div class="sg-title" id="sg-name">EUROJACKPOT</div><div class="sg-sub">Генератор комбинаций · исследовательский анализ</div></div>
     <div class="sg-cd euro" id="sg-cd">
       <div class="sg-cd-lbl">Следующий розыгрыш</div>
       <div class="sg-cd-date" id="sg-date">—</div>
@@ -801,13 +807,13 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
       <div class="sg-algo sel" id="al-freq" onclick="selAlgo('freq')"><div class="sg-algo-icon">📊</div><div><div class="sg-algo-name">Частотный анализ</div><div class="sg-algo-desc">Числа которые чаще выпадали в базе тиражей</div></div></div>
       <div class="sg-algo" id="al-bal" onclick="selAlgo('bal')"><div class="sg-algo-icon">⚖️</div><div><div class="sg-algo-name">Балансированный</div><div class="sg-algo-desc">40% горячих + 30% средних + 30% холодных</div></div></div>
       <div class="sg-algo" id="al-rnd" onclick="selAlgo('rnd')"><div class="sg-algo-icon">🎲</div><div><div class="sg-algo-name">Равновероятный (pure random)</div><div class="sg-algo-desc">Единственный метод который теория вероятности считает честным</div></div></div>
-      <div class="sg-algo" id="al-man" onclick="selAlgo('man')"><div class="sg-algo-icon">📐</div><div><div class="sg-algo-name">Метод Манделя</div><div class="sg-algo-desc">Максимальный охват диапазонов — один шар из каждого сегмента</div></div></div>
+      <div class="sg-algo" id="al-man" onclick="selAlgo('man')"><div class="sg-algo-icon">📐</div><div><div class="sg-algo-name">Сегментный охват</div><div class="sg-algo-desc">Равномерный охват диапазона — числа выбираются из разных сегментов</div></div></div>
       <div class="sg-algo" id="al-world-hot" onclick="selAlgo('world-hot')"><div class="sg-algo-icon">🌍</div><div><div class="sg-algo-name">Мировой горячий</div><div class="sg-algo-desc">Профиль всех сохранённых игр, нормализованный под текущую лотерею</div></div></div>
       <div class="sg-algo" id="al-world-mix" onclick="selAlgo('world-mix')"><div class="sg-algo-icon">🌐</div><div><div class="sg-algo-name">Мировой комбинированный</div><div class="sg-algo-desc">Горячие зоны + средние + холодные для каждой строки</div></div></div>
     </div>
     <div id="sg-result"></div>
     <div class="sg-disc">⚠️ <b>Важно:</b> Ни один алгоритм не может предсказать результат лотереи. Каждый тираж независим. Только для образовательных и развлекательных целей.</div>
-    <button class="sg-use euro" id="sg-use" onclick="useGen()">✅ Использовать эти числа</button>
+    <button class="sg-use euro" id="sg-use" onclick="useGen()">✅ Перенести в симулятор</button>
     <button class="btn-close2" onclick="closeSG()">Закрыть</button>
   </div>
 </div>
@@ -894,18 +900,18 @@ const RESULTS_JSON_URL='results.json';
 let resultsJsonCache=null;
 
 const LOTS={
-  lotto:{name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',res:'20:00',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
+  lotto:{id:'lotto',name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',timeZone:'Europe/Oslo',tzLabel:'Oslo',res:'20:00 Oslo',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
     tiers:[{match:'7',label:'7 rette'},{match:'6+1',label:'6 + tillegg'},{match:'6',label:'6 rette'},{match:'5',label:'5 rette'},{match:'4',label:'4 rette'}]},
-  viking:{name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:5,pBo:1,offBo:1,price:8,currency:'NOK',minR:1,day:'Среда',dl:'18:00',res:'21:00',combos:61357560,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
+  viking:{id:'viking',name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:5,pBo:1,offBo:1,price:8,currency:'NOK',minR:2,day:'Среда',dl:'18:00',timeZone:'Europe/Oslo',tzLabel:'Oslo',res:'21:00 Oslo',combos:61357560,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
     tiers:[{match:'6+1',label:'6+1'},{match:'6+0',label:'6+0'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4',label:'4 rette'},{match:'3',label:'3 rette'}]},
-  euro:{name:'EUROJACKPOT',short:'EuroJackpot',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:25,currency:'NOK',minR:1,day:'Вт и Пт',dl:'19:00',res:'после 21:00',combos:139838160,plm:'Velg 5 hovedtall',plb:'2 stjernetall',bonusName:'Звёздные числа',drawDays:[2,5],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'eurojackpot all',officialUrl:'https://www.norsk-tipping.no/lotteri/eurojackpot/resultater',
-    tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'4+0',label:'4+0'},{match:'3+2',label:'3+2'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'}]},
-  powerball:{name:'POWERBALL',short:'Powerball',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'lotto',mB:69,pM:5,bB:26,pBo:1,offBo:1,price:2,currency:'USD',minR:1,day:'Пн, Ср, Сб',dl:'22:00',res:'23:00 ET',combos:292201338,plm:'5 white balls',plb:'1 Powerball',bonusName:'Powerball',drawDays:[1,3,6],officialProvider:'socrata-powerball',officialSourceName:'NY Open Data / Powerball',officialUrl:'https://www.powerball.com/previous-results'},
-  mega:{name:'MEGA MILLIONS',short:'Mega Millions',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'euro',mB:70,pM:5,bB:24,pBo:1,offBo:1,price:5,currency:'USD',minR:1,day:'Вт и Пт',dl:'22:45',res:'23:00 ET',combos:290472336,plm:'5 white balls',plb:'1 Mega Ball',bonusName:'Mega Ball',drawDays:[2,5],officialProvider:'socrata-mega',officialSourceName:'NY Open Data / Mega Millions',officialUrl:'https://www.megamillions.com/'},
-  euromillions:{name:'EUROMILLIONS',short:'EuroMillions',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:2.5,currency:'EUR',minR:1,day:'Вт и Пт',dl:'20:00',res:'после 21:00 CET',combos:139838160,plm:'5 main numbers',plb:'2 Lucky Stars',bonusName:'Lucky Stars',drawDays:[2,5],officialSourceName:'EuroMillions',officialUrl:'https://www.euro-millions.com/'},
-  superenalotto:{name:'SUPERENALOTTO',short:'SuperEnalotto',region:'Italy',flag:'🇮🇹',activeClass:'ow',cls:'lotto',mB:90,pM:6,bB:90,pBo:0,offBo:1,price:1,currency:'EUR',minR:1,day:'Вт, Чт, Сб',dl:'19:30',res:'20:00 CET',combos:622614630,plm:'6 numeri',plb:'Jolly отдельно',bonusName:'Jolly',drawDays:[2,4,6],officialSourceName:'SuperEnalotto',officialUrl:'https://www.superenalotto.it/'},
-  lottomax:{name:'LOTTO MAX',short:'Lotto Max',region:'Canada',flag:'🇨🇦',activeClass:'ow',cls:'viking',mB:52,pM:7,bB:52,pBo:0,offBo:1,price:6,currency:'CAD',minR:1,day:'Вт и Пт',dl:'22:30',res:'после 22:30 ET',combos:133784560,plm:'7 numbers',plb:'Bonus отдельно',bonusName:'Bonus',drawDays:[2,5],officialSourceName:'WCLC Lotto Max',officialUrl:'https://www.wclc.com/winning-numbers/lotto-max-extra.htm'},
-  powerballau:{name:'POWERBALL AUSTRALIA',short:'Powerball AU',region:'Australia',flag:'🇦🇺',activeClass:'ow',cls:'viking',mB:35,pM:7,bB:20,pBo:1,offBo:1,price:1.35,currency:'AUD',minR:1,day:'Четверг',dl:'19:30',res:'20:30 AEST',combos:134490400,plm:'7 main numbers',plb:'1 Powerball',bonusName:'Powerball',drawDays:[4],officialProvider:'thelott-powerball-au',officialSourceName:'The Lott',officialUrl:'https://www.thelott.com/powerball/results'}
+  euro:{id:'euro',name:'EUROJACKPOT',short:'EuroJackpot',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:25,currency:'NOK',minR:1,day:'Вт и Пт',dl:'19:00',timeZone:'Europe/Oslo',tzLabel:'Oslo',res:'после 21:00 Oslo',combos:139838160,plm:'Velg 5 hovedtall',plb:'2 stjernetall',bonusName:'Звёздные числа',drawDays:[2,5],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'eurojackpot all',officialUrl:'https://www.norsk-tipping.no/lotteri/eurojackpot/resultater',
+    tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'3+2',label:'3+2'},{match:'4+0',label:'4+0'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'}]},
+  powerball:{id:'powerball',name:'POWERBALL',short:'Powerball',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'lotto',mB:69,pM:5,bB:26,pBo:1,offBo:1,price:2,currency:'USD',minR:1,day:'Пн, Ср, Сб',dl:'22:00',timeZone:'America/New_York',tzLabel:'ET',res:'23:00 ET',combos:292201338,plm:'5 white balls',plb:'1 Powerball',bonusName:'Powerball',drawDays:[1,3,6],officialProvider:'socrata-powerball',officialSourceName:'NY Open Data / Powerball',officialUrl:'https://www.powerball.com/previous-results',tiers:[{match:'5+1',label:'5+Powerball'},{match:'5+0',label:'5+0'},{match:'4+1',label:'4+Powerball'},{match:'4+0',label:'4+0'},{match:'3+1',label:'3+Powerball'},{match:'3+0',label:'3+0'},{match:'2+1',label:'2+Powerball'},{match:'1+1',label:'1+Powerball'},{match:'0+1',label:'Powerball'}]},
+  mega:{id:'mega',name:'MEGA MILLIONS',short:'Mega Millions',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'euro',mB:70,pM:5,bB:24,pBo:1,offBo:1,price:5,currency:'USD',minR:1,day:'Вт и Пт',dl:'22:45',timeZone:'America/New_York',tzLabel:'ET',res:'23:00 ET',combos:290472336,plm:'5 white balls',plb:'1 Mega Ball',bonusName:'Mega Ball',drawDays:[2,5],officialProvider:'socrata-mega',officialSourceName:'NY Open Data / Mega Millions',officialUrl:'https://www.megamillions.com/',tiers:[{match:'5+1',label:'5+Mega Ball'},{match:'5+0',label:'5+0'},{match:'4+1',label:'4+Mega Ball'},{match:'4+0',label:'4+0'},{match:'3+1',label:'3+Mega Ball'},{match:'3+0',label:'3+0'},{match:'2+1',label:'2+Mega Ball'},{match:'1+1',label:'1+Mega Ball'},{match:'0+1',label:'Mega Ball'}]},
+  euromillions:{id:'euromillions',name:'EUROMILLIONS',short:'EuroMillions',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:2.5,currency:'EUR',minR:1,day:'Вт и Пт',dl:'20:00',timeZone:'Europe/Paris',tzLabel:'CET/CEST',res:'после 21:00 CET/CEST',combos:139838160,plm:'5 main numbers',plb:'2 Lucky Stars',bonusName:'Lucky Stars',drawDays:[2,5],officialSourceName:'EuroMillions',officialUrl:'https://www.euro-millions.com/',tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'3+2',label:'3+2'},{match:'4+0',label:'4+0'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'},{match:'2+0',label:'2+0'}]},
+  superenalotto:{id:'superenalotto',name:'SUPERENALOTTO',short:'SuperEnalotto',region:'Italy',flag:'🇮🇹',activeClass:'ow',cls:'lotto',mB:90,pM:6,bB:90,pBo:0,offBo:1,price:1,currency:'EUR',minR:1,day:'Вт, Чт, Пт, Сб',dl:'19:30',timeZone:'Europe/Rome',tzLabel:'CET/CEST',res:'20:00 CET/CEST',combos:622614630,plm:'6 numeri',plb:'Jolly отдельно',bonusName:'Jolly',drawDays:[2,4,5,6],officialSourceName:'SuperEnalotto',officialUrl:'https://www.superenalotto.it/',tiers:[{match:'6',label:'6'},{match:'5+1',label:'5+Jolly'},{match:'5+0',label:'5'},{match:'4',label:'4'},{match:'3',label:'3'},{match:'2',label:'2'}]},
+  lottomax:{id:'lottomax',name:'LOTTO MAX',short:'Lotto Max',region:'Canada',flag:'🇨🇦',activeClass:'ow',cls:'viking',mB:52,pM:7,bB:52,pBo:0,offBo:1,price:1.5,packagePrice:6,currency:'CAD',minR:4,day:'Вт и Пт',dl:'22:30',timeZone:'America/Toronto',tzLabel:'ET',res:'после 22:30 ET',combos:133784560,plm:'7 numbers',plb:'Bonus отдельно',bonusName:'Bonus',drawDays:[2,5],officialSourceName:'WCLC Lotto Max',officialUrl:'https://www.wclc.com/winning-numbers/lotto-max-extra.htm',tiers:[{match:'7',label:'7/7'},{match:'6+1',label:'6+Bonus'},{match:'6+0',label:'6/7'},{match:'5+1',label:'5+Bonus'},{match:'5+0',label:'5/7'},{match:'4+1',label:'4+Bonus'},{match:'4+0',label:'4/7'},{match:'3+1',label:'3+Bonus'},{match:'3+0',label:'3/7'}]},
+  powerballau:{id:'powerballau',name:'POWERBALL AUSTRALIA',short:'Powerball AU',region:'Australia',flag:'🇦🇺',activeClass:'ow',cls:'viking',mB:35,pM:7,bB:20,pBo:1,offBo:1,price:1.35,currency:'AUD',minR:1,day:'Четверг',dl:'19:30',timeZone:'Australia/Brisbane',tzLabel:'AEST',res:'20:30 AEST',combos:134490400,plm:'7 main numbers',plb:'1 Powerball',bonusName:'Powerball',drawDays:[4],officialProvider:'thelott-powerball-au',officialSourceName:'The Lott',officialUrl:'https://www.thelott.com/powerball/results',tiers:[{match:'7+1',label:'Division 1 · 7+PB'},{match:'7+0',label:'Division 2 · 7+0'},{match:'6+1',label:'Division 3 · 6+PB'},{match:'6+0',label:'Division 4 · 6+0'},{match:'5+1',label:'Division 5 · 5+PB'},{match:'4+1',label:'Division 6 · 4+PB'},{match:'5+0',label:'Division 7 · 5+0'},{match:'3+1',label:'Division 8 · 3+PB'},{match:'2+1',label:'Division 9 · 2+PB'}]}
 };
 function resolveGameKey(gameKey){
   return LOTS[gameKey]?gameKey:LOTTERY_APP_KEYS[gameKey]||null;
@@ -1018,6 +1024,7 @@ function withTimeout(promise,ms=5000){
 function hasSharedStorage(){
   return !!(window.storage&&typeof window.storage.get==='function'&&typeof window.storage.set==='function');
 }
+function storageScopeText(){return hasSharedStorage()?'Данные доступны через подключённое общее хранилище.':'Данные сохранены только на этом устройстве.';}
 function storageGet(key,shared=true){
   if(hasSharedStorage())return window.storage.get(key,shared);
   const value=localStorage.getItem(key);
@@ -1129,7 +1136,7 @@ function renderLotteryNav(){
       ${i?'<div class="ss-div"></div>':''}
       <div class="ss-item" onclick="initLottery('${id}')">
         <div class="ss-name" style="color:${mColor(l.cls)}">${l.short||l.name}</div>
-        <div class="ss-day">${l.day} · до ${l.dl}</div>
+        <div class="ss-day">${l.day} · до ${scheduleTime(l)}</div>
         <div class="ss-price">${formatPrice(l)}/ряд</div>
       </div>`).join('');
   }
@@ -1179,7 +1186,7 @@ function selLot(id){
   renderLotteryNav();
   initRows();renderSim();resetBanner();buildCheckFields();renderFavs();renderWheelBuilder();renderSavedDrawOptions();updateFilterDefaults();
   const nd=nextDraw(id);
-  document.getElementById('ndb-sub').textContent=nd.dateStr+' · '+L().dl;
+  document.getElementById('ndb-sub').textContent=nd.dateStr+' · '+nd.timeLabel;
   document.getElementById('ndb').className='ndb '+L().cls;
   document.getElementById('wheel-btn').className='ndb '+L().cls;
   document.getElementById('btn-draw').className='btn-draw '+L().cls;
@@ -1276,10 +1283,116 @@ function undo(i){const l=L(),r=rows[i];if(l.pBo>0&&r.b.length>0)r.b.pop();else i
 function clrRow(i){clearWheelStatus();rows[i]=nr();renderSim();}
 function addRow(){if(rows.length>=MAX_ROWS)return;rows.push(nr());act=rows.length-1;renderSim();}
 
+function secureUint32(){
+  const a=new Uint32Array(1);
+  if(globalThis.crypto&&typeof globalThis.crypto.getRandomValues==='function')globalThis.crypto.getRandomValues(a);
+  else a[0]=Math.floor(Math.random()*4294967296);
+  return a[0];
+}
+function secureInt(max){
+  max=Math.floor(max);
+  if(max<=1)return 0;
+  const range=4294967296,limit=range-(range%max);let x;
+  do{x=secureUint32();}while(x>=limit);
+  return x%max;
+}
 function rnd(max,cnt,ex=[]){
   const p=[];for(let i=1;i<=max;i++)if(!ex.includes(i))p.push(i);
-  for(let i=p.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[p[i],p[j]]=[p[j],p[i]];}
+  for(let i=p.length-1;i>0;i--){const j=secureInt(i+1);[p[i],p[j]]=[p[j],p[i]];}
   return p.slice(0,cnt).sort((a,b)=>a-b);
+}
+function chooseBig(n,k){
+  if(k<0||k>n)return 0n;
+  k=Math.min(k,n-k);let r=1n;
+  for(let i=1;i<=k;i++)r=r*BigInt(n-k+i)/BigInt(i);
+  return r;
+}
+function gcdBig(a,b){while(b){const t=a%b;a=b;b=t;}return a;}
+function randomBigBelow(limit){
+  if(limit<=1n)return 0n;
+  const range=1n<<32n,cut=range-(range%limit);let x;
+  do{x=BigInt(secureUint32());}while(x>=cut);
+  return x%limit;
+}
+function combinationRank(nums,n,k){
+  const a=[...nums].sort((x,y)=>x-y);let rank=0n,prev=0;
+  for(let i=0;i<k;i++){
+    for(let v=prev+1;v<a[i];v++)rank+=chooseBig(n-v,k-i-1);
+    prev=a[i];
+  }
+  return rank;
+}
+function combinationUnrank(rank,n,k){
+  let r=BigInt(rank),start=1;const out=[];
+  for(let i=0;i<k;i++){
+    for(let v=start;v<=n-(k-i)+1;v++){
+      const block=chooseBig(n-v,k-i-1);
+      if(r<block){out.push(v);start=v+1;break;}
+      r-=block;
+    }
+  }
+  return out;
+}
+const UNIQUE_SEQ_MEMORY={};
+function nextUniqueMain(l,namespace='simulation'){
+  const total=chooseBig(l.mB,l.pM),key='md2_unique_seq_v2_'+namespace+'_'+(l.id||cur);
+  let state=null;
+  try{state=JSON.parse(localStorage.getItem(key)||'null');}catch(e){state=UNIQUE_SEQ_MEMORY[key]||null;}
+  let a,b,pos;
+  try{a=BigInt(state.a);b=BigInt(state.b);pos=BigInt(state.pos);if(BigInt(state.total)!==total)throw 0;}catch(e){
+    do{a=randomBigBelow(total-1n)+1n;}while(gcdBig(a,total)!==1n);
+    b=randomBigBelow(total);pos=0n;
+  }
+  if(pos>=total){
+    do{a=randomBigBelow(total-1n)+1n;}while(gcdBig(a,total)!==1n);
+    b=randomBigBelow(total);pos=0n;
+  }
+  const rank=(a*pos+b)%total;
+  const next={total:String(total),a:String(a),b:String(b),pos:String(pos+1n)};
+  UNIQUE_SEQ_MEMORY[key]=next;
+  try{localStorage.setItem(key,JSON.stringify(next));}catch(e){}
+  return combinationUnrank(rank,l.mB,l.pM);
+}
+const UNIQUE_MODEL_HISTORY_LIMIT=20000;
+function modelHistoryKey(l){return'md2_model_rows_v2_'+(l.id||cur);}
+function loadModelHistory(l){try{return(localStorage.getItem(modelHistoryKey(l))||'').split(',').filter(Boolean).slice(-UNIQUE_MODEL_HISTORY_LIMIT);}catch(e){return[];}}
+function saveModelHistory(l,items){try{localStorage.setItem(modelHistoryKey(l),items.slice(-UNIQUE_MODEL_HISTORY_LIMIT).join(','));}catch(e){}}
+function normalizeUniqueRow(row,l){
+  const m=[...new Set((row&&row.m)||[])].filter(n=>Number.isInteger(n)&&n>=1&&n<=l.mB).slice(0,l.pM).sort((a,b)=>a-b);
+  const b=[...new Set((row&&row.b)||[])].filter(n=>Number.isInteger(n)&&n>=1&&n<=l.bB).slice(0,l.pBo||0).sort((a,b)=>a-b);
+  while(m.length<l.pM){const n=1+secureInt(l.mB);if(!m.includes(n))m.push(n);}
+  while(b.length<(l.pBo||0)){const n=1+secureInt(l.bB);if(!b.includes(n))b.push(n);}
+  return{m:m.sort((a,b)=>a-b),b:b.sort((a,b)=>a-b)};
+}
+function generatedRowKey(row,l){return combinationRank(row.m,l.mB,l.pM).toString(36);}
+function freshGeneratedVariant(row,l,seen){
+  const base=normalizeUniqueRow(row,l);
+  for(let attempt=0;attempt<420;attempt++){
+    let m=[...base.m];const swaps=attempt<240?1:(attempt<360?Math.min(2,l.pM):l.pM);
+    for(let s=0;s<swaps;s++){
+      const idx=secureInt(m.length),available=rangeNums(l.mB).filter(n=>!m.includes(n));
+      if(available.length)m[idx]=available[secureInt(available.length)];
+    }
+    m=[...new Set(m)].sort((a,b)=>a-b);
+    if(m.length!==l.pM)continue;
+    const candidate={...base,m},key=generatedRowKey(candidate,l);
+    if(!seen.has(key))return candidate;
+  }
+  for(let guard=0;guard<2000;guard++){
+    const candidate={...base,m:nextUniqueMain(l,'model-fallback')},key=generatedRowKey(candidate,l);
+    if(!seen.has(key))return candidate;
+  }
+  throw new Error('Не удалось найти новую комбинацию');
+}
+function ensureUniqueGeneratedRows(gen,l=L()){
+  const history=loadModelHistory(l),seen=new Set(history),added=[];
+  const out=(Array.isArray(gen)?gen:[]).slice(0,MAX_ROWS).map(row=>{
+    let candidate=normalizeUniqueRow(row,l),key=generatedRowKey(candidate,l);
+    if(seen.has(key)){candidate=freshGeneratedVariant(candidate,l,seen);key=generatedRowKey(candidate,l);}
+    seen.add(key);added.push(key);return candidate;
+  });
+  saveModelHistory(l,[...history,...added]);
+  return out;
 }
 function fillOne(){
   clearWheelStatus();
@@ -1326,8 +1439,8 @@ function updateGenCountUI(){
   if(sub)sub.textContent=`${c} ${rowWord(c)} · покрытие пар`;
 }
 function rowWord(n){return n===1?'ряд':(n>=2&&n<=4?'ряда':'рядов');}
-function setGeneratedRows(gen,status){
-  rows=gen.slice(0,MAX_ROWS).map(g=>({m:[...g.m],b:[...(g.b||[])]}));
+function setGeneratedRows(gen,status,unique=false){
+  rows=unique?ensureUniqueGeneratedRows(gen,L()):gen.slice(0,MAX_ROWS).map(g=>({m:[...g.m],b:[...(g.b||[])]}));
   if(!rows.length)rows=[nr()];
   act=0;
   renderSim();
@@ -1404,12 +1517,15 @@ function randomFilteredRow(l=L(),draws=[]){
 }
 function filterGeneratedRows(out,count,l=L(),draws=[]){
   const flt=getFilterSettings();
-  const ok=[];
-  (out||[]).forEach(r=>{if(ok.length<count&&passesFilters(r,l,flt))ok.push(r);});
+  const ok=[],seen=new Set();
+  (out||[]).forEach(r=>{
+    const fixed=normalizeUniqueRow(r,l),key=fixed.m.join(',');
+    if(ok.length<count&&!seen.has(key)&&passesFilters(fixed,l,flt)){seen.add(key);ok.push(fixed);}
+  });
   let guard=0;
   while(ok.length<count&&guard++<count*800){
     const row=randomFilteredRow(l,draws);
-    if(!ok.some(x=>x.m.join(',')===row.m.join(',')))ok.push(row);
+    const key=row.m.join(',');if(!seen.has(key)){seen.add(key);ok.push(row);}
   }
   return ok.slice(0,count);
 }
@@ -1455,8 +1571,8 @@ async function generateSelectedRows(){
   const algo=document.getElementById('direct-algo')?.value||'freq';
   const count=getGenCount();
   const gen=await generateRowsByAlgo(algo,count);
-  const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'Мандель-сегменты',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль'};
-  setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`);
+  const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'сегментный охват',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль'};
+  setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`,true);
   showFeedback('Ряды готовы',`Сгенерировано ${count} ${rowWord(count)}.\nМетод: ${labels[algo]||algo}.`,'🎯',1900);
 }
 function rowsToNorskText(){
@@ -1822,7 +1938,7 @@ async function applyWheelMatrix(){
 // ═══════════════════════════════════════════════
 function doDraw(){
   const l=L();fillAll();
-  const dM=rnd(l.mB,l.pM),dB=drawBonusCount(l)>0?rnd(l.bB,drawBonusCount(l)):[];
+  const dM=nextUniqueMain(l,'simulation'),dB=drawBonusCount(l)>0?rnd(l.bB,drawBonusCount(l)):[];
   lastDraw={main:dM,bonus:dB};
   showBanner(dM,dB);renderSim();
   // track ROI: add spending
@@ -1835,7 +1951,7 @@ function resetBanner(){
   const b=document.getElementById('win-banner');
   b.className='win-banner none';
   document.getElementById('wb-icon').textContent='🎯';
-  document.getElementById('wb-title').textContent='Победная комбинация';
+  document.getElementById('wb-title').textContent='Результат симуляции';
   document.getElementById('wb-sub').textContent='Запусти тираж или проверь билет';
   document.getElementById('wb-body').style.display='none';
 }
@@ -1868,12 +1984,12 @@ function showBanner(dM,dB){
   document.getElementById('wb-rows').innerHTML=rowsH;
   document.getElementById('wb-body').style.display='';
   const b=document.getElementById('win-banner');
-  if(best?.name.includes('ДЖЕКПОТ')){b.className='win-banner jackpot';document.getElementById('wb-icon').textContent='🏆';document.getElementById('wb-title').textContent='ДЖЕКПОТ!';document.getElementById('wb-sub').textContent='Метод Манделя сработал!';}
+  if(best?.name.includes('ДЖЕКПОТ')){b.className='win-banner jackpot';document.getElementById('wb-icon').textContent='🏆';document.getElementById('wb-title').textContent='ДЖЕКПОТ!';document.getElementById('wb-sub').textContent='Ряд совпал с выигрышной комбинацией!';}
   else if(best){b.className='win-banner prize';document.getElementById('wb-icon').textContent='🎉';document.getElementById('wb-title').textContent='Есть выигрыш!';document.getElementById('wb-sub').textContent=best.name+' · '+l.name;}
   else{b.className='win-banner miss';document.getElementById('wb-icon').textContent='😔';document.getElementById('wb-title').textContent='Без выигрыша';document.getElementById('wb-sub').textContent='Попробуй ещё раз';}
 }
 
-function checkPrize(m,b,dM,dB,l){
+function checkPrizeLegacy(m,b,dM,dB,l){
   const mh=m.filter(n=>dM.includes(n)).length,bh=b.filter(n=>dB.includes(n)).length;
   const P=(name,lvl)=>({name,lvl});
   if(l.officialGame==='lotto'){
@@ -1894,7 +2010,7 @@ function checkPrize(m,b,dM,dB,l){
   }
   return null;
 }
-function estimatePrizeNok(p,l){
+function estimatePrizeNokLegacy(p,l){
   if(!p)return 0;
   if(p.name.includes('ДЖЕКПОТ'))return l.combos>200000000?50000000:l.combos>100000000?25000000:10000000;
   if(l.officialGame==='lotto'){
@@ -1929,6 +2045,46 @@ function estimatePrizeNok(p,l){
   if(p.lvl>=3)return 100;
   return 0;
 }
+function checkPrize(m,b,dM,dB,l){
+  const mh=m.filter(n=>dM.includes(n)).length,bh=b.filter(n=>dB.includes(n)).length;
+  const addition=dB.length>0&&m.some(n=>dB.includes(n));
+  const P=(key,name,lvl)=>({key,name,lvl});
+  const id=l.id||'';
+  if(id==='lotto'){
+    if(mh===7)return P('7','ДЖЕКПОТ 🏆',7);
+    if(mh===6&&addition)return P('6+1','2-й приз · 6+tillegg',6);
+    if(mh===6)return P('6+0','3-й приз · 6 rette',5);
+    if(mh===5)return P('5','4-й приз · 5 rette',4);
+    if(mh===4)return P('4','5-й приз · 4 rette',3);
+  }else if(id==='viking'){
+    if(mh===6&&bh===1)return P('6+1','ДЖЕКПОТ 🏆',7);
+    if(mh===6)return P('6+0','2-й приз · 6+0',6);
+    if(mh===5&&bh===1)return P('5+1','3-й приз · 5+1',5);
+    if(mh===5)return P('5+0','4-й приз · 5+0',4);
+    if(mh===4)return P('4','5-й приз · 4 rette',3);
+    if(mh===3)return P('3','6-й приз · 3 rette',2);
+  }else if(id==='euro'||id==='euromillions'){
+    const names={'5+2':['ДЖЕКПОТ 🏆',7],'5+1':['2-й приз · 5+1',6],'5+0':['3-й приз · 5+0',5],'4+2':['4-й приз · 4+2',4],'4+1':['5-й приз · 4+1',3],'3+2':['6-й приз · 3+2',2],'4+0':['7-й приз · 4+0',1],'2+2':['8-й приз · 2+2',1],'3+1':['9-й приз · 3+1',1],'3+0':['10-й приз · 3+0',1],'1+2':['11-й приз · 1+2',1],'2+1':['12-й приз · 2+1',1],'2+0':['13-й приз · 2+0',1]};
+    const key=mh+'+'+bh,hit=names[key];if(hit&&(id==='euromillions'||key!=='2+0'))return P(key,hit[0],hit[1]);
+  }else if(id==='powerball'||id==='mega'){
+    const labels={'5+1':['ДЖЕКПОТ 🏆',7],'5+0':['2-й приз · 5+0',6],'4+1':['3-й приз · 4+1',5],'4+0':['4-й приз · 4+0',4],'3+1':['5-й приз · 3+1',3],'3+0':['6-й приз · 3+0',2],'2+1':['7-й приз · 2+1',1],'1+1':['8-й приз · 1+1',1],'0+1':['9-й приз · 0+1',1]};
+    const key=mh+'+'+bh,hit=labels[key];if(hit)return P(key,hit[0],hit[1]);
+  }else if(id==='superenalotto'){
+    if(mh===6)return P('6','ДЖЕКПОТ 🏆',7);if(mh===5&&addition)return P('5+1','2-й приз · 5+Jolly',6);if(mh===5)return P('5+0','3-й приз · 5',5);if(mh===4)return P('4','4-й приз · 4',4);if(mh===3)return P('3','5-й приз · 3',3);if(mh===2)return P('2','6-й приз · 2',2);
+  }else if(id==='lottomax'){
+    const key=mh===7?'7':mh+'+'+(addition?1:0),labels={'7':['ДЖЕКПОТ 🏆',7],'6+1':['2-й приз · 6+Bonus',6],'6+0':['3-й приз · 6/7',5],'5+1':['4-й приз · 5+Bonus',4],'5+0':['5-й приз · 5/7',3],'4+1':['6-й приз · 4+Bonus',2],'4+0':['7-й приз · 4/7',2],'3+1':['8-й приз · 3+Bonus',1],'3+0':['9-й приз · 3/7',1]};const hit=labels[key];if(hit)return P(key,hit[0],hit[1]);
+  }else if(id==='powerballau'){
+    const labels={'7+1':['ДЖЕКПОТ 🏆',7],'7+0':['2-й дивизион · 7+0',6],'6+1':['3-й дивизион · 6+PB',5],'6+0':['4-й дивизион · 6+0',4],'5+1':['5-й дивизион · 5+PB',3],'4+1':['6-й дивизион · 4+PB',2],'5+0':['7-й дивизион · 5+0',2],'3+1':['8-й дивизион · 3+PB',1],'2+1':['9-й дивизион · 2+PB',1]};const key=mh+'+'+bh,hit=labels[key];if(hit)return P(key,hit[0],hit[1]);
+  }
+  return null;
+}
+function megaMultiplier(){const r=Math.random()*32;return r<15?2:r<25?3:r<29?4:r<31?5:10;}
+/* Оценки указаны в валюте выбранной игры; для тиражных разрядов это ориентиры. */
+function estimatePrizeNok(p,l,simulate=false){
+  if(!p)return 0;const id=l.id||'',key=p.key||'';
+  const tables={lotto:{'7':10000000,'6+1':500000,'6':70000,'6+0':70000,'5':1200,'4':50},viking:{'6+1':10000000,'6+0':500000,'5+1':25000,'5+0':2500,'4':250,'3':50},euro:{'5+2':100000000,'5+1':5000000,'5+0':1000000,'4+2':100000,'4+1':8000,'3+2':2500,'4+0':1500,'2+2':400,'3+1':300,'3+0':180,'1+2':120,'2+1':100},powerball:{'5+1':50000000,'5+0':1000000,'4+1':50000,'4+0':100,'3+1':100,'3+0':7,'2+1':7,'1+1':4,'0+1':4},mega:{'5+1':50000000,'5+0':1000000,'4+1':10000,'4+0':500,'3+1':200,'3+0':10,'2+1':10,'1+1':7,'0+1':5},euromillions:{'5+2':17000000,'5+1':150000,'5+0':15000,'4+2':1200,'4+1':120,'3+2':80,'4+0':40,'2+2':20,'3+1':15,'3+0':10,'1+2':9,'2+1':7,'2+0':4},superenalotto:{'6':2000000,'5+1':620000,'5+0':32000,'4':300,'3':25,'2':5},lottomax:{'7':10000000,'6+1':200000,'6+0':5000,'5+1':1000,'5+0':100,'4+1':50,'4+0':20,'3+1':20,'3+0':6},powerballau:{'7+1':3000000,'7+0':100000,'6+1':10000,'6+0':500,'5+1':200,'4+1':100,'5+0':60,'3+1':40,'2+1':15}};
+  let value=tables[id]?.[key]||0;if(id==='mega'&&key!=='5+1'&&value)value*=simulate?megaMultiplier():3;return value;
+}
 function runLifeSim(){
   if(lifeRunning)return;
   const l=L(),out=document.getElementById('life-out');
@@ -1954,7 +2110,7 @@ function runLifeSim(){
       const dM=rnd(l.mB,l.pM),dB=drawBonusCount(l)>0?rnd(l.bB,drawBonusCount(l)):[];
       spent+=ticket.length*l.price;
       ticket.forEach(row=>{
-        const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l);
+        const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l,true);
         if(v>0){won+=v;hits++;best=Math.max(best,v);}
       });
     }
@@ -2664,8 +2820,8 @@ function renderComparison(){
     ['Шанс джекпота',...ids.map(id=>'1 : '+fmtChance(jackpotCombos(LOTS[id])))],
     ['День',...ids.map(id=>LOTS[id].day)],
     ['Дедлайн',...ids.map(id=>LOTS[id].dl)],
-    ['Стоим. всех (Мандель)',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
-    ['Мин. джекпот для Манделя',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])*3/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
+    ['Стоимость всех комбинаций',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
+    ['Консервативный ориентир ×3',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])*3/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
     ['Математика',...ids.map(id=>LOTS[id].combos===jackpotCombos(LOTS[id])?'✅ формула OK':'⚠️ проверить')],
   ];
   let html='<thead><tr>'+rows2[0].map((h,i)=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>';
@@ -2783,7 +2939,7 @@ async function renderJackpotChart(){
     html+=`<div class="fbw" style="width:34px"><div class="fbar" style="height:${Math.max(pct,3)}px;width:26px;background:#f0a500" data-tip="${d.jackpot}М NOK · ${dy}.${mo}"></div><div class="fn">${dy}/${mo}</div></div>`;
   });
   html+='</div></div>';
-  html+=`<div class="srow" style="margin-top:8px"><span>Максимальный джекпот:</span><span>${max} млн NOK</span></div>`;
+  html+=`<div class="srow" style="margin-top:8px"><span>Максимальный джекпот:</span><span>${max} млн ${L().currency||'NOK'}</span></div>`;
   html+=`<div class="srow"><span>Записей:</span><span>${draws.length}</span></div>`;
   c.innerHTML=html;
 }
@@ -2791,28 +2947,31 @@ async function renderJackpotChart(){
 // ─── MANDEL ───────────────────────────────────
 function renderMandel(){
   const l=L();
-  const combos=jackpotCombos(l),totalCostNOK=combos*l.price,totalCostM=(totalCostNOK/1e6).toFixed(1);
-  const minJackpot=(totalCostNOK*3/1e6).toFixed(1);
+  const currency=l.currency||'NOK',combos=jackpotCombos(l),totalCost=combos*l.price,totalCostM=(totalCost/1e6).toFixed(1);
+  const conservativeTarget=(totalCost*3/1e6).toFixed(1);
   const jv=parseFloat(document.getElementById('jackpot-inp').value)||0;
-  const ratio=jv>0?(jv/+totalCostM).toFixed(2):null;
-  const ok=ratio&&+ratio>=3;
+  const ratioNum=jv>0?jv/(totalCost/1e6):null,ratio=ratioNum?ratioNum.toFixed(2):null;
+  const conservative=ratioNum!==null&&ratioNum>=3,breakEven=ratioNum!==null&&ratioNum>=1;
+  const verdict=conservative?'✅ Джекпот покрывает ориентир ×3':breakEven?'⚠️ Джекпот покрывает цену комбинаций, но не гарантирует прибыль':'⏳ Джекпот ниже стоимости всех комбинаций';
+  const jl=document.getElementById('jackpot-currency-label');if(jl)jl.textContent='Текущий джекпот (млн '+currency+')';
   document.getElementById('man-out').innerHTML=`<div class="mbox">
-    <div class="mbox-t">📐 ${l.name} · Анализ Манделя</div>
+    <div class="mbox-t">📐 ${l.name} · Комбинаторный анализ</div>
     <div class="mrow"><span>Комбинаций:</span><span>${fmtInt(combos)}</span></div>
-    <div class="mrow"><span>Цена 1 ряда:</span><span>${l.price} NOK</span></div>
-    <div class="mrow"><span>Мин. покупка:</span><span>${l.minR} ряд = ${l.minR*l.price} NOK</span></div>
-    <div class="mrow"><span>Стоим. ВСЕХ билетов:</span><span>~${totalCostM} млн NOK</span></div>
-    <div class="mrow"><span>Мин. джекпот (×3):</span><span style="color:#ff9f0a">~${minJackpot} млн NOK</span></div>
-    <div class="mrow"><span>Текущий джекпот:</span><span>${jv||'—'} млн NOK</span></div>
-    <div class="mrow"><span>Коэффициент:</span><span style="color:${ok?'#34c759':'#ff9f0a'}">${ratio?ratio+'×':'введи джекпот'}</span></div>
-    <div class="mverdict ${ok?'go':'wait'}">${ok?'✅ Операция выгодна по Манделю!':'⏳ Ждём роста джекпота…'}</div>
+    <div class="mrow"><span>Цена 1 ряда:</span><span>${l.price} ${currency}</span></div>
+    <div class="mrow"><span>Мин. покупка:</span><span>${l.minR} ряд(а) = ${l.minR*l.price} ${currency}</span></div>
+    <div class="mrow"><span>Стоимость ВСЕХ комбинаций:</span><span>~${totalCostM} млн ${currency}</span></div>
+    <div class="mrow"><span>Консервативный ориентир ×3:</span><span style="color:#ff9f0a">~${conservativeTarget} млн ${currency}</span></div>
+    <div class="mrow"><span>Текущий джекпот:</span><span>${jv||'—'} млн ${currency}</span></div>
+    <div class="mrow"><span>Джекпот / стоимость:</span><span style="color:${conservative?'#34c759':'#ff9f0a'}">${ratio?ratio+'×':'введи джекпот'}</span></div>
+    <div class="mverdict ${conservative?'go':'wait'}">${verdict}</div>
+    <div class="warn-note">Без учёта налогов, деления приза между победителями, лимитов продаж и стоимости организации покупки. Расчёт не является гарантией дохода.</div>
   </div>
   <div style="background:var(--bg2);border-radius:14px;padding:14px;border:1.5px solid var(--border);margin-top:12px">
     <div class="card-t">🗓 Расписание ${l.name}</div>
     <div class="info-row"><span>📅 Дни:</span><span>${l.day}</span></div>
-    <div class="info-row"><span>⏰ Spillefrist:</span><span>до ${l.dl}</span></div>
+    <div class="info-row"><span>⏰ Дедлайн:</span><span>до ${scheduleTime(l)}</span></div>
     <div class="info-row"><span>🎰 Trekning:</span><span>${l.res}</span></div>
-    <div class="info-row"><span>💰 Цена ряда:</span><span>${l.price} NOK</span></div>
+    <div class="info-row"><span>💰 Цена ряда:</span><span>${l.price} ${currency}</span></div>
   </div>`;
 }
 
@@ -2900,7 +3059,7 @@ async function handleTextImport(){
     ta.value='';
     await renderHistory();
     await renderSavedDrawOptions();
-    showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\nДанные видны всем по этой ссылке.`,'✅');
+    showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\n${storageScopeText()}`,'✅');
   }catch(err){
     showFeedback('Ошибка сохранения',err.message,'⚠️',4200);
   }
@@ -2940,7 +3099,7 @@ function handleImp(e){
       }
       await renderHistory();
       await renderSavedDrawOptions();
-      showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\nДанные видны всем по этой ссылке.`,'✅');
+      showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\n${storageScopeText()}`,'✅');
     }catch(err){
       showFeedback('Ошибка сохранения',err.message,'⚠️',4200);
     }
@@ -2951,26 +3110,29 @@ function handleImp(e){
 // ═══════════════════════════════════════════════
 //  SMART GEN
 // ═══════════════════════════════════════════════
+function zonedParts(date,timeZone){
+  const out={};
+  new Intl.DateTimeFormat('en-US',{timeZone,year:'numeric',month:'2-digit',day:'2-digit',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(date).forEach(p=>{if(p.type!=='literal')out[p.type]=p.value;});
+  return{year:+out.year,month:+out.month,day:+out.day,weekday:{Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[out.weekday],hour:+out.hour,minute:+out.minute};
+}
+function zonedDateTimeToUtc(year,month,day,hour,minute,timeZone){
+  const target=Date.UTC(year,month-1,day,hour,minute);let guess=new Date(target);
+  for(let i=0;i<3;i++){const p=zonedParts(guess,timeZone),shown=Date.UTC(p.year,p.month-1,p.day,p.hour,p.minute);guess=new Date(guess.getTime()+target-shown);}
+  return guess;
+}
+function scheduleTime(l){return l.dl+(l.tzLabel?' '+l.tzLabel:'');}
 function nextDraw(lotId){
-  const now=new Date();
-  const l=LOTS[lotId],days=l.drawDays;
-  const ms=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-  const dn=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-  const [hh,mm]=l.dl.split(':').map(Number);
-  let nd=null;
-  for(const d of days){
-    let diff=(d-now.getDay()+7)%7;
-    const cand=new Date(now);
-    cand.setDate(now.getDate()+diff);
-    cand.setHours(hh,mm,0,0);
-    if(cand<=now)cand.setDate(cand.getDate()+7);
+  const now=new Date(),l=LOTS[lotId],tz=l.timeZone||Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const local=zonedParts(now,tz),[hh,mm]=l.dl.split(':').map(Number);let nd=null;
+  for(const weekday of l.drawDays){
+    let diff=(weekday-local.weekday+7)%7,base=new Date(Date.UTC(local.year,local.month-1,local.day+diff));
+    let cand=zonedDateTimeToUtc(base.getUTCFullYear(),base.getUTCMonth()+1,base.getUTCDate(),hh,mm,tz);
+    if(cand<=now){base=new Date(Date.UTC(base.getUTCFullYear(),base.getUTCMonth(),base.getUTCDate()+7));cand=zonedDateTimeToUtc(base.getUTCFullYear(),base.getUTCMonth()+1,base.getUTCDate(),hh,mm,tz);}
     if(!nd||cand<nd)nd=cand;
   }
-  const dStr=`${dn[nd.getDay()]}, ${nd.getDate()} ${ms[nd.getMonth()]} ${nd.getFullYear()}`;
-  const msLeft=nd-now;
-  const dLeft=Math.floor(msLeft/86400000),hLeft=Math.floor((msLeft%86400000)/3600000);
-  const countdown=dLeft>0?`⏳ До тиража: ${dLeft} д. ${hLeft} ч.`:`⏳ До тиража: ${hLeft} ч.`;
-  return{dateStr:dStr,countdown};
+  const p=zonedParts(nd,tz),ms=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'],dn=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  const mins=Math.max(0,Math.ceil((nd-now)/60000)),dLeft=Math.floor(mins/1440),hLeft=Math.floor((mins%1440)/60),mLeft=mins%60,left=(dLeft?dLeft+' д. ':'')+(hLeft?hLeft+' ч. ':'')+(!dLeft&&mLeft?mLeft+' мин.':'');
+  return{date:nd,dateStr:`${dn[p.weekday]}, ${p.day} ${ms[p.month-1]} ${p.year}`,countdown:'⏳ До дедлайна: '+left.trim(),timeLabel:scheduleTime(l)};
 }
 
 async function openSG(){
@@ -2982,7 +3144,7 @@ async function openSG(){
   document.getElementById('sg-use').className='sg-use '+l.cls;
   const nd=nextDraw(cur);
   document.getElementById('sg-date').textContent=nd.dateStr;
-  document.getElementById('sg-time').textContent='Spillefrist: до '+l.dl;
+  document.getElementById('sg-time').textContent='Дедлайн: до '+nd.timeLabel;
   document.getElementById('sg-left').textContent=nd.countdown;
   await selAlgo('freq');
   document.getElementById('sg-ov').classList.add('show');
@@ -3004,7 +3166,7 @@ function shufSlice(arr,n){const a=[...arr];for(let i=a.length-1;i>0;i--){const j
 
 function renderGen(){
   const l=L();
-  const notes={freq:'Топ частых чисел из базы',bal:'Микс горячих и холодных',rnd:'Pure random (теория вероятности)',man:'Мандель: охват сегментов','world-hot':'Мировой горячий профиль','world-mix':'Мировой комбинированный профиль'};
+  const notes={freq:'Топ частых чисел из базы',bal:'Микс горячих и холодных',rnd:'Pure random (теория вероятности)',man:'Сегментный охват диапазона','world-hot':'Мировой горячий профиль','world-mix':'Мировой комбинированный профиль'};
   const bc=l.cls==='euro'?'#f4a0b0':'#10183a',bt2=l.cls==='euro'?'#1c1c1e':'#fff';
   let html='';
   sgGen.forEach((c,i)=>{

@@ -23,8 +23,11 @@ window.addEventListener('unhandledrejection',function(e){
 });
 </script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>Мандель · Лотерея</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#26121c">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;600;700;800&display=swap');
 
@@ -162,14 +165,14 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 
 /* ══ ВЫБОР ЛОТЕРЕИ ══ */
 .lot-nav-shell{position:relative;width:100%;min-width:0}
-.lot-tabs{display:flex;width:100%;max-width:100vw;gap:8px;padding:14px 14px 5px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x;cursor:grab;user-select:none}
+.lot-tabs{display:flex;width:100%;max-width:100vw;gap:8px;padding:14px 14px 5px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x;cursor:grab;user-select:none}
 .lot-tabs.dragging,.sched-strip.dragging{cursor:grabbing;scroll-snap-type:none}
 .lot-tabs.dragging .lt,.sched-strip.dragging .ss-item{pointer-events:none}
 .lot-tabs::-webkit-scrollbar{display:none}
 .lot-scroll-btn{display:none;position:absolute;top:50%;z-index:5;width:34px;height:34px;place-items:center;transform:translateY(-42%);border-radius:50%;border:1px solid rgba(233,180,76,.55);background:rgba(22,10,18,.84);color:#F5CE7B;font-size:24px;line-height:1;box-shadow:0 5px 16px rgba(0,0,0,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .lot-scroll-prev{left:5px}.lot-scroll-next{right:5px}
 .lot-scroll-btn:disabled{opacity:.28;pointer-events:none}
-.lt{flex:0 0 118px;padding:11px 4px;border-radius:16px;border:1.5px solid var(--lt-border);background:var(--lt-bg);cursor:pointer;text-align:center;transition:all .18s;scroll-snap-align:start;box-shadow:var(--card-shadow);touch-action:pan-x}
+.lt{flex:0 0 118px;padding:11px 4px;border-radius:16px;border:1.5px solid var(--lt-border);background:var(--lt-bg);cursor:pointer;text-align:center;transition:all .18s;scroll-snap-align:none;box-shadow:var(--card-shadow);touch-action:pan-x}
 .lt.ol{border-color:#cc2060;background:var(--cd-lotto);box-shadow:0 4px 16px rgba(204,32,96,.22)}.lt.ol .lt-name{color:#cc2060}
 .lt.ov{border-color:#1e3fbe;background:var(--cd-viking);box-shadow:0 4px 16px rgba(30,63,190,.22)}.lt.ov .lt-name{color:#5B7CFF}
 .lt.oe{border-color:#f0a500;background:var(--cd-euro);box-shadow:0 4px 16px rgba(240,165,0,.22)}.lt.oe .lt-name{color:#f0a500}
@@ -179,6 +182,7 @@ body[data-game="powerballau"]{--hdr-a:#5A2AC8;--hdr-b:#8A2AB8;--hdr-c:#B5169E;--
 /* расписание */
 .sched-strip{display:flex;margin:10px 14px 0;border-radius:14px;overflow-x:auto;overflow-y:hidden;border:1px solid var(--strip-border);background:var(--strip-bg);scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x;cursor:grab;user-select:none;box-shadow:var(--card-shadow)}
 .sched-strip::-webkit-scrollbar{display:none}
+.responsible-note{margin:9px 14px 0;padding:8px 11px;border:1px solid var(--border);border-radius:11px;background:var(--bg2);color:var(--sub2);font-size:11px;line-height:1.45;text-align:center}
 .ss-item{flex:0 0 118px;padding:9px 6px;text-align:center;cursor:pointer;transition:background .15s;touch-action:pan-x}
 .ss-item.on{background:linear-gradient(160deg,rgba(233,180,76,.2),rgba(233,180,76,.04));box-shadow:inset 0 -3px 0 var(--gold)}
 .ss-div{width:1px;background:var(--border)}
@@ -568,15 +572,16 @@ body[data-game="viking"] .bonus-col .nb.sb-viking{--ball:#183A91;--ball-hi:#8EAE
 .sg-cball.euro-b{--ball:#f4a0b0;--ball-hi:#ffd0da;--ball-lo:#c86a80;color:#4a1220}
 /* белый кружок с номером — как на настоящих шарах лототрона */
 .sg-cball .bnum{width:66%;height:66%;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 36% 30%,#fff 0 55%,#E9E0D2 100%);color:#241226;text-shadow:none;box-shadow:inset 0 -2px 3px rgba(0,0,0,.14);font-size:.86em}
-/* вращение: только transform — плавно на GPU, без мерцания и сжатий */
-.sg-cball.rolling .bnum{animation:spinZ .7s linear infinite;will-change:transform}
+/* Цифра всегда остаётся горизонтальной: во время розыгрыша пульсирует шар, а не текст. */
+.sg-cball.rolling{animation:ballRollPulse .42s ease-in-out infinite;will-change:transform}
+.sg-cball.rolling .bnum{animation:none;transform:rotate(0deg);will-change:auto}
 .sg-cball.landed{animation:ballLand .34s cubic-bezier(.34,1.56,.64,1) both}
 .sg-cball.landed .bnum{animation:numSettle .34s ease-out both}
-@keyframes spinZ{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes ballRollPulse{0%,100%{transform:translateY(0) scale(.96)}50%{transform:translateY(-2px) scale(1.06)}}
 @keyframes ballLand{0%{transform:scale(1.16)}60%{transform:scale(.96)}100%{transform:scale(1)}}
-@keyframes numSettle{from{transform:rotate(42deg)}to{transform:rotate(0deg)}}
+@keyframes numSettle{from{transform:scale(.78);opacity:.6}to{transform:scale(1);opacity:1}}
 /* универсальные состояния вращения для любых шаров (баннер, ряды, история) */
-.ballroll{animation:spinZ .7s linear infinite!important}
+.ballroll{animation:ballRollPulse .42s ease-in-out infinite!important}
 .balllanded{animation:ballLand .34s cubic-bezier(.34,1.56,.64,1) both!important}
 .sg-disc{background:var(--warn-bg);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--warn-c);line-height:1.55;margin-bottom:14px}
 .sg-use{width:100%;padding:15px;border-radius:16px;border:none;font-size:15px;font-weight:800;cursor:pointer;font-family:'Unbounded',sans-serif;letter-spacing:.3px}
@@ -734,6 +739,11 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
 }
 @media (max-width:430px){
   body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  input,select,textarea,.date-inp,.num-inp,.mini-inp{font-size:16px!important}
+  .hdr-back,.hdr-icon,.sa-btn{width:44px;height:44px;min-width:44px;min-height:44px}
+  .ract,.btn-del,.btn-fav-use,.btn-fav-copy{position:relative}
+  .ract::before,.btn-del::before,.btn-fav-use::before,.btn-fav-copy::before{content:"";position:absolute;inset:-6px}
+  .btn-draw,.btn-exp,.btn-s,.btn-add,.btn-close2,.sg-use,.fb-btn{min-height:44px}
   .gen-grid,.gen-actions{grid-template-columns:1fr}
   .ticket-row{min-height:50px;padding:7px 8px;margin-bottom:6px;gap:4px;border-radius:13px}
   .rballs{gap:2px}
@@ -1252,9 +1262,10 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
   </div>
   <div class="sched-strip" id="sched-strip">
   </div>
+  <div class="responsible-note">18+ · Аналитика и развлечение. Приложение не продаёт билеты, не принимает ставки и не связано с операторами лотерей, Apple или Google. Названия игр используются только для их идентификации. Отдельные числа могут повторяться; полная основная комбинация в симуляторе не повторяется до завершения цикла. В реальном независимом тираже повтор возможен.</div>
 
   <div class="win-banner none" id="win-banner" onclick="ticketOrCombo(event)" style="cursor:pointer">
-    <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Победная комбинация</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
+    <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Результат симуляции</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
     <div id="wb-body" style="display:none">
       <div class="wb-drawn-block">
         <div class="wb-lbl wb-drawn-label">Выпавшие числа</div>
@@ -1299,7 +1310,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
           <select class="gen-select" id="direct-algo">
             <option value="freq">Горячие числа</option>
             <option value="bal">Комбинированный</option>
-            <option value="man">Мандель-сегменты</option>
+            <option value="man">Сегментный охват</option>
             <option value="wheel">Колесная матрица</option>
             <option value="world-hot">Мировой горячий</option>
             <option value="world-mix">Мировой комбинированный</option>
@@ -1311,7 +1322,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
             <option value="overdue">⏳ Просроченные (gap-анализ)</option>
             <option value="phys">🎱 Физика: лототрон</option>
             <option value="chaos">🌀 Хаос (логист. отображение)</option>
-            <option value="quantum">⚛️ Квантовый коллапс</option>
+            <option value="quantum">⚛️ Криптослучайность</option>
             <option value="paradox">♾️ Система парадоксов</option>
           </select>
         </div>
@@ -1345,15 +1356,15 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div id="life-out" class="life-out"></div>
     </div>
     <button class="ndb euro" id="ndb" onclick="openSG()">
-      <div class="ndb-l"><div class="ndb-title">🎯 Умная генерация</div><div class="ndb-sub" id="ndb-sub">На следующий тираж · по алгоритму</div></div>
+      <div class="ndb-l"><div class="ndb-title">🎯 Генератор комбинаций</div><div class="ndb-sub" id="ndb-sub">Исследовательские модели · без прогноза выигрыша</div></div>
       <div style="font-size:20px">→</div>
     </button>
     <button class="ndb euro" id="cons-btn" onclick="CONS_run()">
-      <div class="ndb-l"><div class="ndb-title">🧠 Консенсус моделей <span class="if-badge">meta</span></div><div class="ndb-sub">Все модели + Информационное поле как судья</div></div>
+      <div class="ndb-l"><div class="ndb-title">🧠 Консенсус моделей <span class="if-badge">meta</span></div><div class="ndb-sub">Сравнение моделей и структурный анализ результатов</div></div>
       <div style="font-size:20px">→</div>
     </button>
     <button class="ndb euro qa-card" id="qa-btn" onclick="QA_open()">
-      <div class="ndb-l"><div class="ndb-title">🔮 Квантово-астральный <span class="qa-badge">PREMIUM</span></div><div class="ndb-sub">Квантовая случайность ANU + твой знак + Луна на дату тиража</div></div>
+      <div class="ndb-l"><div class="ndb-title">🔮 Астрологический режим <span class="qa-badge">PREMIUM</span></div><div class="ndb-sub">Развлекательная интерпретация: случайные числа + знак + фаза Луны</div></div>
       <div style="font-size:20px">✨</div>
     </button>
     <button class="ndb euro" id="pdx-btn" onclick="PDX_open()">
@@ -1361,7 +1372,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div style="font-size:20px">→</div>
     </button>
     <button class="ndb euro" id="jc-btn" onclick="JC_open()">
-      <div class="ndb-l"><div class="ndb-title">⚖️ Разбор моей комбинации</div><div class="ndb-sub">Что судья думает о выбранных рядах на следующий тираж</div></div>
+      <div class="ndb-l"><div class="ndb-title">⚖️ Разбор моей комбинации</div><div class="ndb-sub">Структурный разбор выбранных рядов без прогноза выигрыша</div></div>
       <div style="font-size:20px">→</div>
     </button>
     <button class="ndb euro" id="wheel-btn" onclick="GENN_open('wheel')">
@@ -1427,7 +1438,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
     <button type="button" class="st" id="st-chi" aria-pressed="false" onclick="selAT('chi')"><span class="st-ic">🔬</span><span class="st-tx">χ²&nbsp;тест</span></button>
     <button type="button" class="st" id="st-cmp" aria-pressed="false" onclick="selAT('cmp')"><span class="st-ic">⚖️</span><span class="st-tx">Сравнение</span></button>
     <button type="button" class="st" id="st-prize" aria-pressed="false" onclick="selAT('prize')"><span class="st-ic">💵</span><span class="st-tx">Призы</span></button>
-    <button type="button" class="st" id="st-man" aria-pressed="false" onclick="selAT('man')"><span class="st-ic">📐</span><span class="st-tx">Мандель</span></button>
+    <button type="button" class="st" id="st-man" aria-pressed="false" onclick="selAT('man')"><span class="st-ic">📐</span><span class="st-tx">Комбинации</span></button>
   </div>
 
   <!-- INPUT -->
@@ -1436,7 +1447,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
     <div class="card">
       <div class="card-t">Добавить реальный тираж</div>
       <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Дата тиража</div><input class="date-inp" type="date" id="inp-date"></div>
-      <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Размер джекпота (млн NOK) — необязательно</div><input class="num-inp" type="number" id="inp-jackpot" placeholder="Например: 85"></div>
+      <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Размер джекпота (млн в валюте игры) — необязательно</div><input class="num-inp" type="number" id="inp-jackpot" placeholder="Например: 85"></div>
       <div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px" id="lbl-m-inp">Главные числа</div><div style="display:flex;gap:6px;flex-wrap:wrap" id="inp-main"></div></div>
       <div id="inp-bwrap" style="display:none;margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px" id="lbl-b-inp">Бонусные</div><div style="display:flex;gap:6px;flex-wrap:wrap" id="inp-bonus"></div></div>
       <div style="margin-bottom:10px">
@@ -1452,11 +1463,11 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div class="card-t" id="official-title">Официальные результаты</div>
       <div id="official-desc" style="font-size:12px;color:var(--sub2);line-height:1.55;margin-bottom:10px">Обновляет последние тиражи из подключённого официального источника или общей базы results.json.</div>
       <div class="sub-banner" onclick="openSubInfo()">
-        <div class="sub-badge">PREMIUM</div>
+        <div class="sub-badge" id="sub-badge">СКОРО</div>
         <div class="sub-title">Mandel World Pro</div>
-        <div class="sub-desc">Максимально полная база каждой игры · Квантово-астральный · безлимит Судьи и Консенсуса</div>
-        <div class="sub-price" id="sub-price-line">$4.99/мес <span>· 3 мес $12.99 · 6 мес $22.99 · год $34.99</span></div>
-        <div class="sub-cta">Узнать подробнее →</div>
+        <div class="sub-desc">Максимально полная доступная база каждой игры · Астрологический режим · безлимит Судьи и Консенсуса</div>
+        <div class="sub-price" id="sub-price-line">Подписка откроется после подключения безопасной оплаты</div>
+        <div class="sub-cta" id="sub-cta">Статус подключения →</div>
       </div>
       <button class="btn-exp" id="notify-btn" onclick="toggleWinNotify()" style="margin:0 0 8px">🔔 Уведомлять о выигрышах: выкл</button>
       <button class="btn-draw euro" id="official-btn" onclick="updateOfficialCurrent()" style="font-size:14px;padding:12px;margin-top:0">↻ Обновить текущую лотерею</button>
@@ -1559,10 +1570,10 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
   <!-- MANDEL -->
   <div class="tab-content" id="at-man">
     <div class="card">
-      <div class="card-t">Калькулятор Манделя</div>
+      <div class="card-t">Комбинаторный калькулятор</div>
       <div id="man-out"></div>
       <div style="margin-top:12px">
-        <div style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Текущий джекпот (млн NOK)</div>
+        <div id="jackpot-currency-label" style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Текущий джекпот (млн в валюте игры)</div>
         <input type="number" class="num-inp" id="jackpot-inp" placeholder="Например: 150" oninput="renderMandel()">
       </div>
     </div>
@@ -1582,7 +1593,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
   <div class="sg-sheet" style="position:relative">
     <div class="sg-hndl"></div>
     <button class="btn-close2" onclick="closeSG()" style="position:absolute;top:14px;right:14px;width:38px;height:38px;padding:0;margin:0;border-radius:11px;font-size:16px;font-weight:900;z-index:2">✕</button>
-    <div class="sg-header"><div class="sg-icon" id="sg-icon">🎯</div><div class="sg-title" id="sg-name">EUROJACKPOT</div><div class="sg-sub">Умная генерация · математический анализ</div></div>
+    <div class="sg-header"><div class="sg-icon" id="sg-icon">🎯</div><div class="sg-title" id="sg-name">EUROJACKPOT</div><div class="sg-sub">Генератор комбинаций · исследовательский анализ</div></div>
     <div class="sg-cd euro" id="sg-cd">
       <div class="sg-cd-lbl">Следующий розыгрыш</div>
       <div class="sg-cd-date" id="sg-date">—</div>
@@ -1608,7 +1619,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div class="sg-algo" id="al-freq" onclick="selAlgo('freq')"><div class="sg-algo-icon">🔥</div><div><div class="sg-algo-name">Частотный анализ</div><div class="sg-algo-desc">Числа которые чаще выпадали в базе тиражей</div></div></div>
       <div class="sg-algo" id="al-bal" onclick="selAlgo('bal')"><div class="sg-algo-icon">⚖️</div><div><div class="sg-algo-name">Балансированный</div><div class="sg-algo-desc">40% горячих + 30% средних + 30% холодных</div></div></div>
       <div class="sg-algo" id="al-rnd" onclick="selAlgo('rnd')"><div class="sg-algo-icon">🎲</div><div><div class="sg-algo-name">Равновероятный (pure random)</div><div class="sg-algo-desc">Единственный метод который теория вероятности считает честным</div></div></div>
-      <div class="sg-algo" id="al-man" onclick="selAlgo('man')"><div class="sg-algo-icon">📐</div><div><div class="sg-algo-name">Метод Манделя</div><div class="sg-algo-desc">Максимальный охват диапазонов — один шар из каждого сегмента</div></div></div>
+      <div class="sg-algo" id="al-man" onclick="selAlgo('man')"><div class="sg-algo-icon">📐</div><div><div class="sg-algo-name">Сегментный охват</div><div class="sg-algo-desc">Равномерный охват диапазона — числа выбираются из разных сегментов</div></div></div>
       <div class="sg-algo" id="al-world-hot" onclick="selAlgo('world-hot')"><div class="sg-algo-icon">🌍</div><div><div class="sg-algo-name">Мировой горячий</div><div class="sg-algo-desc">Профиль всех сохранённых игр, нормализованный под текущую лотерею</div></div></div>
       <div class="sg-algo" id="al-world-mix" onclick="selAlgo('world-mix')"><div class="sg-algo-icon">🌐</div><div><div class="sg-algo-name">Мировой комбинированный</div><div class="sg-algo-desc">Горячие зоны + средние + холодные для каждой строки</div></div></div>
       <div class="sg-algo" id="al-markov" onclick="selAlgo('markov')"><div class="sg-algo-icon">🔗</div><div><div class="sg-algo-name">Цепи Маркова</div><div class="sg-algo-desc">Какие числа чаще выпадают после чисел последнего тиража — матрица переходов по всей базе</div></div></div>
@@ -1618,12 +1629,12 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div class="sg-algo" id="al-overdue" onclick="selAlgo('overdue')"><div class="sg-algo-icon">⏳</div><div><div class="sg-algo-name">Просроченные числа</div><div class="sg-algo-desc">Gap-анализ: вес числа растёт с количеством тиражей без выпадения против ожидаемого интервала</div></div></div>
       <div class="sg-algo" id="al-phys" onclick="selAlgo('phys')"><div class="sg-algo-icon">🎱</div><div><div class="sg-algo-name">Физика: лототрон</div><div class="sg-algo-desc">Честная симуляция: шары в камере, поток воздуха, упругие соударения, выход через люк</div></div></div>
       <div class="sg-algo" id="al-chaos" onclick="selAlgo('chaos')"><div class="sg-algo-icon">🌀</div><div><div class="sg-algo-name">Детерминированный хаос</div><div class="sg-algo-desc">Логистическое отображение x→3.99·x·(1−x): предсказание невозможно даже в детерминированной системе</div></div></div>
-      <div class="sg-algo" id="al-quantum" onclick="selAlgo('quantum')"><div class="sg-algo-icon">⚛️</div><div><div class="sg-algo-name">Квантовый коллапс</div><div class="sg-algo-desc">Истинная квантовая случайность (ANU QRNG) + туннелирование холодных чисел через частотный барьер</div></div></div>
-      <div class="sg-algo if-card" id="al-field" onclick="IF_run()"><div class="sg-algo-icon">🧬</div><div><div class="sg-algo-name">Информационное поле <span class="if-badge">meta</span></div><div class="sg-algo-desc">Авторская модель Mandel World. Анализирует последние доступные тиражи выбранной лотереи, структуру комбинаций, частоты, интервалы, связи между шарами и разнообразие. Создаёт 10 собственных исследовательских строк.</div></div></div>
+      <div class="sg-algo" id="al-quantum" onclick="selAlgo('quantum')"><div class="sg-algo-icon">⚛️</div><div><div class="sg-algo-name">Криптослучайность</div><div class="sg-algo-desc">ANU QRNG при доступности; иначе — криптографический генератор устройства. Холодные числа получают дополнительный вес.</div></div></div>
+      <div class="sg-algo if-card" id="al-field" onclick="IF_run()"><div class="sg-algo-icon">🧬</div><div><div class="sg-algo-name">Структурное поле данных <span class="if-badge">meta</span></div><div class="sg-algo-desc">Исследовательская модель анализирует доступные тиражи, структуру комбинаций, частоты, интервалы, связи между числами и разнообразие. Она не прогнозирует выигрыш и создаёт 10 демонстрационных строк.</div></div></div>
     </div>
     <div id="sg-result"></div>
     <div class="sg-disc">⚠️ <b>Важно:</b> Ни один алгоритм не может предсказать результат лотереи. Каждый тираж независим. Только для образовательных и развлекательных целей.</div>
-    <button class="sg-use euro" id="sg-use" onclick="useGen()">✅ Использовать эти числа</button>
+    <button class="sg-use euro" id="sg-use" onclick="useGen()">✅ Перенести в симулятор</button>
     <button class="btn-close2" onclick="closeSG()">Закрыть</button>
   </div>
 </div>
@@ -1640,7 +1651,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
 <div class="if-ov" id="cons-ov">
   <div class="if-sheet">
     <div class="if-hdr">
-      <div><div class="if-title">🧠 Консенсус моделей</div><div class="if-sub">Модели создали исследовательские строки, а Информационное поле проанализировало их структуру</div></div>
+      <div><div class="if-title">🧠 Консенсус моделей</div><div class="if-sub">Модели создали исследовательские строки, затем выполнен их структурный анализ</div></div>
       <button class="btn-close2" onclick="CONS_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
     </div>
     <div class="if-ctx" id="cons-ctx">—</div>
@@ -1665,7 +1676,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
 
 <div class="lang-ov" id="wc-ov" onclick="if(event.target===this)WC_close()">
   <div class="lang-box">
-    <div class="lang-title" id="wc-title">🎯 Победная комбинация</div>
+    <div class="lang-title" id="wc-title">🎯 Результат симуляции</div>
     <div class="if-ctx" id="wc-date" style="text-align:center;margin:2px 0 10px"></div>
     <div class="if-rowballs" id="wc-balls" style="justify-content:center"></div>
     <div class="if-note" id="wc-info" style="text-align:center"></div>
@@ -1695,7 +1706,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
 <div class="if-ov" id="qa-ov">
   <div class="if-sheet qa-sheet">
     <div class="if-hdr">
-      <div><div class="if-title">🔮 Квантово-астральный генератор</div><div class="if-sub" id="qa-ctx"></div></div>
+      <div><div class="if-title">🔮 Астрологический режим</div><div class="if-sub" id="qa-ctx">Развлекательный, не научный метод и не прогноз выигрыша</div></div>
       <button class="btn-close2" onclick="QA_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
     </div>
     <div class="if-seclbl">Твой знак зодиака</div>
@@ -1706,7 +1717,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
     <div class="pick-counts" id="qa-counts" style="grid-template-columns:repeat(5,1fr)"></div>
     <button class="btn-draw euro qa-go" id="qa-go" onclick="QA_go()">⚛️ Спросить Вселенную</button>
     <div id="qa-result"></div>
-    <div class="if-note" style="margin-top:12px">Вселенная выбрала твои числа — настоящая квантовая случайность и настоящая астрономия. Но шансы она, увы, не меняет: вероятность джекпота остаётся прежней. Это развлечение, а не предсказание. 💜</div>
+    <div class="if-note" style="margin-top:12px">Числа получены из случайного источника и дополнены развлекательной интерпретацией астрономических данных. Это не научный метод и не предсказание: вероятность джекпота остаётся прежней. 💜</div>
   </div>
 </div>
 
@@ -1765,7 +1776,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
   <div class="lang-box qa-sheet" style="border-radius:22px;position:relative">
     <button class="horo-close" style="background:rgba(155,123,216,.25);border-color:#9B7BD8;color:#fff" onclick="QAB_close()">✕</button>
     <div class="lang-title" style="color:#F2EAFF">🎂 Дата рождения</div>
-    <div class="if-note" style="margin:0 0 12px;color:#C9B8E8">Чем точнее данные — тем глубже анализ: натальная Луна, число судьбы, солнечный градус. Всё считается на устройстве и никуда не отправляется.</div>
+    <div class="if-note" style="margin:0 0 12px;color:#C9B8E8">Дополнительные данные персонализируют только развлекательную интерпретацию: положение Луны, числовой профиль и солнечный градус. Всё считается на устройстве и никуда не отправляется.</div>
     <div style="display:grid;grid-template-columns:1fr 1.4fr 1.2fr;gap:8px">
       <input type="number" class="num-inp qab-inp" id="qab-d" min="1" max="31" placeholder="День">
       <select class="num-inp qab-inp" id="qab-m">
@@ -1793,7 +1804,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
   <div class="lang-box">
     <div class="lang-title">⚖️ Верховный судья</div>
     <div class="if-note" id="sup-src" style="margin:0 0 10px;text-align:center"></div>
-    <div class="if-note" style="margin:0 0 10px">Как думает судья: каждое число получает «голоса» из твоих рядов (чем чаще встречается — тем громче голос, 55% веса) и «силу поля» из истории тиражей выбранного периода (частота, пары, пропуски — 45%). Затем судья собирает строки так, чтобы они не повторяли друг друга: уже использованные числа временно теряют вес.</div>
+    <div class="if-note" style="margin:0 0 10px">Как работает судья: каждое число получает «голоса» из твоих рядов (55% веса) и структурный балл по истории выбранного периода (частота, пары и интервалы — 45%). Затем судья собирает разные строки; уже использованные числа временно теряют вес. Это анализ структуры, а не прогноз.</div>
     <div class="if-seclbl" style="margin-top:0">Сколько строк собрать</div>
     <div class="pick-counts" id="sup-counts" style="grid-template-columns:repeat(5,1fr)"></div>
     <button class="btn-draw euro" id="sup-go" style="margin-top:12px" onclick="SUP_go()">Собрать вердикт</button>
@@ -1853,15 +1864,15 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
         <div class="pro-sec-t">✨ Бесплатно</div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>Симулятор всех <b>9 лотерей</b> без ограничений</span></div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>Официальные результаты операторов — <b>свежие тиражи</b></span></div>
-        <div class="pro-li"><span class="pro-ic">◆</span><span>Умная генерация — <b>3 запуска</b> в неделю</span></div>
-        <div class="pro-li"><span class="pro-ic">◆</span><span>Поле, Консенсус, Судья, Парадоксы и Квантово-астральный — по <b>3 пробы</b></span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Генератор комбинаций — <b>3 запуска</b> в неделю</span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span>Структурное поле, Консенсус, Судья, Парадоксы и Астрологический режим — по <b>3 пробы</b></span></div>
       </div>
 
       <div class="pro-sec">
         <div class="pro-sec-t">👑 Pro · полная лаборатория</div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>Вся собранная <b>история каждой лотереи</b></span></div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>База <b>обновляется автоматически</b> — свежие тиражи подтягиваются сами</span></div>
-        <div class="pro-li"><span class="pro-ic">◆</span><span><b>Безлимитные</b> Консенсус, Поле, Судья (обе роли), Парадоксы и Астрал с натальной картой</span></div>
+        <div class="pro-li"><span class="pro-ic">◆</span><span><b>Безлимитные</b> Консенсус, Структурное поле, Судья (обе роли), Парадоксы и развлекательный астрологический режим</span></div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>Произвольный период и <b>диапазон дат</b></span></div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>Импорт и экспорт баз · автопроверка и уведомления</span></div>
       </div>
@@ -1928,7 +1939,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
     <div class="pick-counts" id="pdx-counts" style="grid-template-columns:repeat(5,1fr)"></div>
     <button class="btn-draw euro" id="pdx-go" style="margin-top:12px" onclick="PDX_go()">♾️ Собрать парадоксы</button>
     <div id="pdx-result"></div>
-    <div class="if-note" style="margin-top:14px">Ни один метод не увеличивает вероятность выигрыша — тиражи независимы. Парадоксы лишь по-другому раскрывают структуру и снижают шанс делить джекпот с толпой.</div>
+    <div class="if-note" style="margin-top:14px">Ни один метод не увеличивает вероятность выигрыша — тиражи независимы. Парадоксы лишь по-другому показывают структуру и могут отличаться от популярных человеческих шаблонов; разделение возможного приза это не гарантирует.</div>
   </div>
 </div>
 
@@ -2009,13 +2020,13 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
 <div class="if-ov" id="if-ov">
   <div class="if-sheet">
     <div class="if-hdr">
-      <div><div class="if-title">🧬 Информационное поле</div><div class="if-sub">Карта структуры и связей чисел</div></div>
+      <div><div class="if-title">🧬 Структурное поле данных</div><div class="if-sub">Карта структуры и связей чисел · без прогноза выигрыша</div></div>
       <button class="btn-close2" onclick="IF_close()" style="width:auto;padding:8px 14px;margin:0">✕</button>
     </div>
     <div class="if-ctx" id="if-ctx">—</div>
     <div class="if-summary" id="if-summary"></div>
     <div class="if-tabs">
-      <button class="if-tab on" id="ift-field" onclick="IF_tab('field')">Поле</button>
+      <button class="if-tab on" id="ift-field" onclick="IF_tab('field')">Структура</button>
       <button class="if-tab" id="ift-links" onclick="IF_tab('links')">Связи</button>
       <button class="if-tab" id="ift-div" onclick="IF_tab('div')">Разнообразие</button>
       <button class="if-tab" id="ift-rows" onclick="IF_tab('rows')">10 строк</button>
@@ -2115,18 +2126,18 @@ const RESULTS_JSON_URL='../results.json';
 let resultsJsonCache=null;
 
 const LOTS={
-  lotto:{name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',res:'20:00',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
+  lotto:{id:'lotto',name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',timeZone:'Europe/Oslo',tzLabel:'Oslo',res:'20:00 Oslo',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
     tiers:[{match:'7',label:'7 rette'},{match:'6+1',label:'6 + tillegg'},{match:'6',label:'6 rette'},{match:'5',label:'5 rette'},{match:'4',label:'4 rette'}]},
-  viking:{name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:5,pBo:1,offBo:1,price:8,currency:'NOK',minR:1,day:'Среда',dl:'18:00',res:'21:00',combos:61357560,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
+  viking:{id:'viking',name:'VIKINGLOTTO',short:'Viking',region:'Nordic/Baltic',flag:'🏔️',activeClass:'ov',cls:'viking',mB:48,pM:6,bB:5,pBo:1,offBo:1,price:8,currency:'NOK',minR:2,day:'Среда',dl:'18:00',timeZone:'Europe/Oslo',tzLabel:'Oslo',res:'21:00 Oslo',combos:61357560,plm:'Velg 6 hovedtall',plb:'1 vikingtall',bonusName:'Vikingtall',drawDays:[3],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'vikinglotto',officialUrl:'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater',
     tiers:[{match:'6+1',label:'6+1'},{match:'6+0',label:'6+0'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4',label:'4 rette'},{match:'3',label:'3 rette'}]},
-  euro:{name:'EUROJACKPOT',short:'EuroJackpot',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:25,currency:'NOK',minR:1,day:'Вт и Пт',dl:'19:00',res:'после 21:00',combos:139838160,plm:'Velg 5 hovedtall',plb:'2 stjernetall',bonusName:'Звёздные числа',drawDays:[2,5],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'eurojackpot all',officialUrl:'https://www.norsk-tipping.no/lotteri/eurojackpot/resultater',
-    tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'4+0',label:'4+0'},{match:'3+2',label:'3+2'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'}]},
-  powerball:{name:'POWERBALL',short:'Powerball',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'lotto',mB:69,pM:5,bB:26,pBo:1,offBo:1,price:2,currency:'USD',minR:1,day:'Пн, Ср, Сб',dl:'22:00',res:'23:00 ET',combos:292201338,plm:'5 white balls',plb:'1 Powerball',bonusName:'Powerball',drawDays:[1,3,6],officialProvider:'socrata-powerball',officialSourceName:'NY Open Data / Powerball',officialUrl:'https://www.powerball.com/previous-results'},
-  mega:{name:'MEGA MILLIONS',short:'Mega Millions',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'euro',mB:70,pM:5,bB:24,pBo:1,offBo:1,price:5,currency:'USD',minR:1,day:'Вт и Пт',dl:'22:45',res:'23:00 ET',combos:290472336,plm:'5 white balls',plb:'1 Mega Ball',bonusName:'Mega Ball',drawDays:[2,5],officialProvider:'socrata-mega',officialSourceName:'NY Open Data / Mega Millions',officialUrl:'https://www.megamillions.com/winning-numbers/previous-drawings'},
-  euromillions:{name:'EUROMILLIONS',short:'EuroMillions',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:2.5,currency:'EUR',minR:1,day:'Вт и Пт',dl:'20:00',res:'после 21:00 CET',combos:139838160,plm:'5 main numbers',plb:'2 Lucky Stars',bonusName:'Lucky Stars',drawDays:[2,5],officialSourceName:'EuroMillions',officialUrl:'https://www.euro-millions.com/results'},
-  superenalotto:{name:'SUPERENALOTTO',short:'SuperEnalotto',region:'Italy',flag:'🇮🇹',activeClass:'ow',cls:'lotto',mB:90,pM:6,bB:90,pBo:0,offBo:1,price:1,currency:'EUR',minR:1,day:'Вт, Чт, Сб',dl:'19:30',res:'20:00 CET',combos:622614630,plm:'6 numeri',plb:'Jolly отдельно',bonusName:'Jolly',drawDays:[2,4,6],officialSourceName:'SuperEnalotto',officialUrl:'https://www.superenalotto.it/estrazioni'},
-  lottomax:{name:'LOTTO MAX',short:'Lotto Max',region:'Canada',flag:'🇨🇦',activeClass:'ow',cls:'viking',mB:52,pM:7,bB:52,pBo:0,offBo:1,price:6,currency:'CAD',minR:1,day:'Вт и Пт',dl:'22:30',res:'после 22:30 ET',combos:133784560,plm:'7 numbers',plb:'Bonus отдельно',bonusName:'Bonus',drawDays:[2,5],officialSourceName:'WCLC Lotto Max',officialUrl:'https://www.wclc.com/winning-numbers/lotto-max-extra.htm'},
-  powerballau:{name:'POWERBALL AUSTRALIA',short:'Powerball AU',region:'Australia',flag:'🇦🇺',activeClass:'ow',cls:'viking',mB:35,pM:7,bB:20,pBo:1,offBo:1,price:1.35,currency:'AUD',minR:1,day:'Четверг',dl:'19:30',res:'20:30 AEST',combos:134490400,plm:'7 main numbers',plb:'1 Powerball',bonusName:'Powerball',drawDays:[4],officialProvider:'thelott-powerball-au',officialSourceName:'The Lott',officialUrl:'https://www.thelott.com/powerball/results'}
+  euro:{id:'euro',name:'EUROJACKPOT',short:'EuroJackpot',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:25,currency:'NOK',minR:1,day:'Вт и Пт',dl:'19:00',timeZone:'Europe/Oslo',tzLabel:'Oslo',res:'после 21:00 Oslo',combos:139838160,plm:'Velg 5 hovedtall',plb:'2 stjernetall',bonusName:'Звёздные числа',drawDays:[2,5],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'eurojackpot all',officialUrl:'https://www.norsk-tipping.no/lotteri/eurojackpot/resultater',
+    tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'3+2',label:'3+2'},{match:'4+0',label:'4+0'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'}]},
+  powerball:{id:'powerball',name:'POWERBALL',short:'Powerball',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'lotto',mB:69,pM:5,bB:26,pBo:1,offBo:1,price:2,currency:'USD',minR:1,day:'Пн, Ср, Сб',dl:'22:00',timeZone:'America/New_York',tzLabel:'ET',res:'23:00 ET',combos:292201338,plm:'5 white balls',plb:'1 Powerball',bonusName:'Powerball',drawDays:[1,3,6],officialProvider:'socrata-powerball',officialSourceName:'NY Open Data / Powerball',officialUrl:'https://www.powerball.com/previous-results',tiers:[{match:'5+1',label:'5+Powerball'},{match:'5+0',label:'5+0'},{match:'4+1',label:'4+Powerball'},{match:'4+0',label:'4+0'},{match:'3+1',label:'3+Powerball'},{match:'3+0',label:'3+0'},{match:'2+1',label:'2+Powerball'},{match:'1+1',label:'1+Powerball'},{match:'0+1',label:'Powerball'}]},
+  mega:{id:'mega',name:'MEGA MILLIONS',short:'Mega Millions',region:'USA',flag:'🇺🇸',activeClass:'ow',cls:'euro',mB:70,pM:5,bB:24,pBo:1,offBo:1,price:5,currency:'USD',minR:1,day:'Вт и Пт',dl:'22:45',timeZone:'America/New_York',tzLabel:'ET',res:'23:00 ET',combos:290472336,plm:'5 white balls',plb:'1 Mega Ball',bonusName:'Mega Ball',drawDays:[2,5],officialProvider:'socrata-mega',officialSourceName:'NY Open Data / Mega Millions',officialUrl:'https://www.megamillions.com/winning-numbers/previous-drawings',tiers:[{match:'5+1',label:'5+Mega Ball'},{match:'5+0',label:'5+0'},{match:'4+1',label:'4+Mega Ball'},{match:'4+0',label:'4+0'},{match:'3+1',label:'3+Mega Ball'},{match:'3+0',label:'3+0'},{match:'2+1',label:'2+Mega Ball'},{match:'1+1',label:'1+Mega Ball'},{match:'0+1',label:'Mega Ball'}]},
+  euromillions:{id:'euromillions',name:'EUROMILLIONS',short:'EuroMillions',region:'Europe',flag:'🇪🇺',activeClass:'oe',cls:'euro',mB:50,pM:5,bB:12,pBo:2,offBo:2,price:2.5,currency:'EUR',minR:1,day:'Вт и Пт',dl:'20:00',timeZone:'Europe/Paris',tzLabel:'CET/CEST',res:'после 21:00 CET/CEST',combos:139838160,plm:'5 main numbers',plb:'2 Lucky Stars',bonusName:'Lucky Stars',drawDays:[2,5],officialSourceName:'EuroMillions',officialUrl:'https://www.euro-millions.com/results',tiers:[{match:'5+2',label:'5+2'},{match:'5+1',label:'5+1'},{match:'5+0',label:'5+0'},{match:'4+2',label:'4+2'},{match:'4+1',label:'4+1'},{match:'3+2',label:'3+2'},{match:'4+0',label:'4+0'},{match:'2+2',label:'2+2'},{match:'3+1',label:'3+1'},{match:'3+0',label:'3+0'},{match:'1+2',label:'1+2'},{match:'2+1',label:'2+1'},{match:'2+0',label:'2+0'}]},
+  superenalotto:{id:'superenalotto',name:'SUPERENALOTTO',short:'SuperEnalotto',region:'Italy',flag:'🇮🇹',activeClass:'ow',cls:'lotto',mB:90,pM:6,bB:90,pBo:0,offBo:1,price:1,currency:'EUR',minR:1,day:'Вт, Чт, Пт, Сб',dl:'19:30',timeZone:'Europe/Rome',tzLabel:'CET/CEST',res:'20:00 CET/CEST',combos:622614630,plm:'6 numeri',plb:'Jolly отдельно',bonusName:'Jolly',drawDays:[2,4,5,6],officialSourceName:'SuperEnalotto',officialUrl:'https://www.superenalotto.it/estrazioni',tiers:[{match:'6',label:'6'},{match:'5+1',label:'5+Jolly'},{match:'5+0',label:'5'},{match:'4',label:'4'},{match:'3',label:'3'},{match:'2',label:'2'}]},
+  lottomax:{id:'lottomax',name:'LOTTO MAX',short:'Lotto Max',region:'Canada',flag:'🇨🇦',activeClass:'ow',cls:'viking',mB:52,pM:7,bB:52,pBo:0,offBo:1,price:1.5,packagePrice:6,currency:'CAD',minR:4,day:'Вт и Пт',dl:'22:30',timeZone:'America/Toronto',tzLabel:'ET',res:'после 22:30 ET',combos:133784560,plm:'7 numbers',plb:'Bonus отдельно',bonusName:'Bonus',drawDays:[2,5],officialSourceName:'WCLC Lotto Max',officialUrl:'https://www.wclc.com/winning-numbers/lotto-max-extra.htm',tiers:[{match:'7',label:'7/7'},{match:'6+1',label:'6+Bonus'},{match:'6+0',label:'6/7'},{match:'5+1',label:'5+Bonus'},{match:'5+0',label:'5/7'},{match:'4+1',label:'4+Bonus'},{match:'4+0',label:'4/7'},{match:'3+1',label:'3+Bonus'},{match:'3+0',label:'3/7'}]},
+  powerballau:{id:'powerballau',name:'POWERBALL AUSTRALIA',short:'Powerball AU',region:'Australia',flag:'🇦🇺',activeClass:'ow',cls:'viking',mB:35,pM:7,bB:20,pBo:1,offBo:1,price:1.35,currency:'AUD',minR:1,day:'Четверг',dl:'19:30',timeZone:'Australia/Brisbane',tzLabel:'AEST',res:'20:30 AEST',combos:134490400,plm:'7 main numbers',plb:'1 Powerball',bonusName:'Powerball',drawDays:[4],officialProvider:'thelott-powerball-au',officialSourceName:'The Lott',officialUrl:'https://www.thelott.com/powerball/results',tiers:[{match:'7+1',label:'Division 1 · 7+PB'},{match:'7+0',label:'Division 2 · 7+0'},{match:'6+1',label:'Division 3 · 6+PB'},{match:'6+0',label:'Division 4 · 6+0'},{match:'5+1',label:'Division 5 · 5+PB'},{match:'4+1',label:'Division 6 · 4+PB'},{match:'5+0',label:'Division 7 · 5+0'},{match:'3+1',label:'Division 8 · 3+PB'},{match:'2+1',label:'Division 9 · 2+PB'}]}
 };
 function resolveGameKey(gameKey){
   return LOTS[gameKey]?gameKey:LOTTERY_APP_KEYS[gameKey]||null;
@@ -2239,6 +2250,7 @@ function withTimeout(promise,ms=5000){
 function hasSharedStorage(){
   return !!(window.storage&&typeof window.storage.get==='function'&&typeof window.storage.set==='function');
 }
+function storageScopeText(){return hasSharedStorage()?'Данные доступны через подключённое общее хранилище.':'Данные сохранены только на этом устройстве.';}
 async function storageGet(key,shared=true){
   if(hasSharedStorage()){
     try{ return await window.storage.get(key,shared); }
@@ -2359,24 +2371,25 @@ function scrollLotteryNav(dir){
 function enableHorizontalScroller(el){
   if(!el||el.dataset.dragReady==='1')return;
   el.dataset.dragReady='1';
-  let dragging=false,moved=false,suppressUntil=0,startX=0,startLeft=0,pointerId=null;
+  let dragging=false,moved=false,suppressUntil=0,startX=0,startY=0,startLeft=0,pointerId=null,manual=false;
   el.addEventListener('pointerdown',e=>{
-    if(e.pointerType!=='mouse'||e.button!==0)return;
-    dragging=true;moved=false;pointerId=e.pointerId;startX=e.clientX;startLeft=el.scrollLeft;
+    if(!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0))return;
+    dragging=true;moved=false;manual=e.pointerType==='mouse';pointerId=e.pointerId;startX=e.clientX;startY=e.clientY;startLeft=el.scrollLeft;
   });
   el.addEventListener('pointermove',e=>{
     if(!dragging||e.pointerId!==pointerId)return;
-    const dx=e.clientX-startX;
-    if(!moved&&Math.abs(dx)>4){
-      moved=true;el.classList.add('dragging');
-      try{el.setPointerCapture(pointerId);}catch(err){}
+    const dx=e.clientX-startX,dy=e.clientY-startY;
+    if(!moved&&Math.abs(dx)>(manual?4:8)&&Math.abs(dx)>Math.abs(dy)){
+      moved=true;
+      if(manual){el.classList.add('dragging');try{el.setPointerCapture(pointerId);}catch(err){}}
     }
-    if(moved){e.preventDefault();el.scrollLeft=startLeft-dx;}
+    if(moved&&manual){e.preventDefault();el.scrollLeft=startLeft-dx;}
+    else if(!manual&&Math.abs(dy)>10&&Math.abs(dy)>Math.abs(dx)){dragging=false;pointerId=null;}
   },{passive:false});
   const finish=e=>{
     if(!dragging||e.pointerId!==pointerId)return;
-    suppressUntil=moved?Date.now()+120:0;dragging=false;pointerId=null;el.classList.remove('dragging');
-    try{el.releasePointerCapture(e.pointerId);}catch(err){}
+    suppressUntil=moved?Date.now()+(manual?140:450):0;dragging=false;pointerId=null;el.classList.remove('dragging');
+    if(manual)try{el.releasePointerCapture(e.pointerId);}catch(err){}
   };
   el.addEventListener('pointerup',finish);
   el.addEventListener('pointercancel',finish);
@@ -2400,7 +2413,7 @@ function renderLotteryNav(){
       ${i?'<div class="ss-div"></div>':''}
       <div class="ss-item ${id===cur?'on':''}" id="ss-${id}" role="button" tabindex="0" aria-current="${id===cur?'true':'false'}" onclick="initLottery('${id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();initLottery('${id}');}">
         <div class="ss-name" style="color:${mColor(l.cls)}">${l.short||l.name}</div>
-        <div class="ss-day">${l.day} · до ${l.dl}</div>
+        <div class="ss-day">${l.day} · до ${scheduleTime(l)}</div>
         <div class="ss-price">${formatPrice(l)}/ряд</div>
       </div>`).join('');
   }
@@ -2537,7 +2550,7 @@ async function getJackpot(id){
   }catch(e){}
   /* 0) локальный jackpots.json из репозитория — работает без CORS в любой среде */
   try{
-    const r=await fetch('jackpots.json?t='+Math.floor(now/600000),{cache:'no-store'});
+    const r=await fetch('../jackpots.json?t='+Math.floor(now/600000),{cache:'no-store'});
     if(r.ok){
       const j=await r.json();
       const e=j&&j.values&&j.values[id];
@@ -2570,7 +2583,7 @@ async function renderHero(){
   document.getElementById('hero-brand').textContent=l.name;
   document.getElementById('hero-region').textContent=l.flag+' '+l.region;
   const nd=nextDraw(cur);
-  document.getElementById('hero-deadline').textContent='🗓 '+l.day+' · до '+l.dl;
+  document.getElementById('hero-deadline').textContent='🗓 '+l.day+' · до '+scheduleTime(l);
   document.getElementById('hero-price').textContent='🎫 '+l.price+' '+l.currency+'/ряд';
   document.getElementById('hero-count').textContent=nd.countdown+' · '+nd.dateStr;
   /* мгновенно: шанс, чтобы не мигало пусто */
@@ -2617,7 +2630,7 @@ function selLot(id){
   renderHero();
   initRows();renderSim();resetBanner();buildCheckFields();renderFavs();renderWheelBuilder();renderSavedDrawOptions();updateFilterDefaults();
   const nd=nextDraw(id);
-  document.getElementById('ndb-sub').textContent=nd.dateStr+' · '+L().dl;
+  document.getElementById('ndb-sub').textContent=nd.dateStr+' · '+nd.timeLabel;
   document.getElementById('ndb').className='ndb '+L().cls;
   document.getElementById('wheel-btn').className='ndb '+L().cls;
   document.getElementById('btn-draw').className='btn-draw '+L().cls;
@@ -2737,10 +2750,114 @@ function undo(i){const l=L(),dBo=drawBonusCount(l),r=rows[i];if(dBo>0&&r.b.lengt
 function clrRow(i){clearWheelStatus();rows[i]=nr();renderSim();}
 function addRow(){if(rows.length>=MAX_ROWS)return;rows.push(nr());act=rows.length-1;renderSim();}
 
+function secureUint32(){
+  const a=new Uint32Array(1);
+  if(globalThis.crypto&&typeof globalThis.crypto.getRandomValues==='function')globalThis.crypto.getRandomValues(a);
+  else a[0]=Math.floor(Math.random()*4294967296);
+  return a[0];
+}
+function secureInt(max){
+  max=Math.floor(max);
+  if(max<=1)return 0;
+  const range=4294967296,limit=range-(range%max);let x;
+  do{x=secureUint32();}while(x>=limit);
+  return x%max;
+}
 function rnd(max,cnt,ex=[]){
   const p=[];for(let i=1;i<=max;i++)if(!ex.includes(i))p.push(i);
-  for(let i=p.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[p[i],p[j]]=[p[j],p[i]];}
+  for(let i=p.length-1;i>0;i--){const j=secureInt(i+1);[p[i],p[j]]=[p[j],p[i]];}
   return p.slice(0,cnt).sort((a,b)=>a-b);
+}
+function chooseBig(n,k){
+  if(k<0||k>n)return 0n;
+  k=Math.min(k,n-k);let r=1n;
+  for(let i=1;i<=k;i++)r=r*BigInt(n-k+i)/BigInt(i);
+  return r;
+}
+function gcdBig(a,b){while(b){const t=a%b;a=b;b=t;}return a;}
+function randomBigBelow(limit){
+  if(limit<=1n)return 0n;
+  const range=1n<<32n,cut=range-(range%limit);let x;
+  do{x=BigInt(secureUint32());}while(x>=cut);
+  return x%limit;
+}
+function combinationRank(nums,n,k){
+  const a=[...nums].sort((x,y)=>x-y);let rank=0n,prev=0;
+  for(let i=0;i<k;i++){
+    for(let v=prev+1;v<a[i];v++)rank+=chooseBig(n-v,k-i-1);
+    prev=a[i];
+  }
+  return rank;
+}
+function combinationUnrank(rank,n,k){
+  let r=BigInt(rank),start=1;const out=[];
+  for(let i=0;i<k;i++){
+    for(let v=start;v<=n-(k-i)+1;v++){
+      const block=chooseBig(n-v,k-i-1);
+      if(r<block){out.push(v);start=v+1;break;}
+      r-=block;
+    }
+  }
+  return out;
+}
+const UNIQUE_SEQ_MEMORY={};
+function nextUniqueMain(l,namespace='simulation'){
+  const total=chooseBig(l.mB,l.pM),key='md2_unique_seq_v2_'+namespace+'_'+(l.id||cur);
+  let state=null;
+  try{state=JSON.parse(localStorage.getItem(key)||'null');}catch(e){state=UNIQUE_SEQ_MEMORY[key]||null;}
+  let a,b,pos;
+  try{a=BigInt(state.a);b=BigInt(state.b);pos=BigInt(state.pos);if(BigInt(state.total)!==total)throw 0;}catch(e){
+    do{a=randomBigBelow(total-1n)+1n;}while(gcdBig(a,total)!==1n);
+    b=randomBigBelow(total);pos=0n;
+  }
+  if(pos>=total){
+    do{a=randomBigBelow(total-1n)+1n;}while(gcdBig(a,total)!==1n);
+    b=randomBigBelow(total);pos=0n;
+  }
+  const rank=(a*pos+b)%total;
+  const next={total:String(total),a:String(a),b:String(b),pos:String(pos+1n)};
+  UNIQUE_SEQ_MEMORY[key]=next;
+  try{localStorage.setItem(key,JSON.stringify(next));}catch(e){}
+  return combinationUnrank(rank,l.mB,l.pM);
+}
+const UNIQUE_MODEL_HISTORY_LIMIT=20000;
+function modelHistoryKey(l){return'md2_model_rows_v2_'+(l.id||cur);}
+function loadModelHistory(l){try{return(localStorage.getItem(modelHistoryKey(l))||'').split(',').filter(Boolean).slice(-UNIQUE_MODEL_HISTORY_LIMIT);}catch(e){return[];}}
+function saveModelHistory(l,items){try{localStorage.setItem(modelHistoryKey(l),items.slice(-UNIQUE_MODEL_HISTORY_LIMIT).join(','));}catch(e){}}
+function generatedRowKey(row,l){return combinationRank(row.m,l.mB,l.pM).toString(36);}
+function freshGeneratedVariant(row,l,seen){
+  const original=row&&typeof row==='object'?row:{};
+  const base=normalizeGeneratedRow(row,l);
+  for(let attempt=0;attempt<420;attempt++){
+    let m=base.m.length===l.pM?[...base.m]:rnd(l.mB,l.pM);
+    const swaps=attempt<240?1:(attempt<360?Math.min(2,l.pM):l.pM);
+    for(let s=0;s<swaps;s++){
+      const idx=secureInt(m.length),available=rangeNums(l.mB).filter(n=>!m.includes(n));
+      if(available.length)m[idx]=available[secureInt(available.length)];
+    }
+    m=[...new Set(m)].sort((a,b)=>a-b);
+    if(m.length!==l.pM)continue;
+    const candidate={...original,...base,m},key=generatedRowKey(candidate,l);
+    if(!seen.has(key)){if(Array.isArray(candidate.tags))candidate.tags=m.map(()=>'q');return candidate;}
+  }
+  for(let guard=0;guard<2000;guard++){
+    const candidate={...original,...base,m:nextUniqueMain(l,'model-fallback')},key=generatedRowKey(candidate,l);
+    if(!seen.has(key)){if(Array.isArray(candidate.tags))candidate.tags=candidate.m.map(()=>'q');return candidate;}
+  }
+  throw new Error('Не удалось найти новую комбинацию');
+}
+function ensureUniqueGeneratedRows(gen,l=L()){
+  const history=loadModelHistory(l),seen=new Set(history),added=[];
+  const source=(Array.isArray(gen)?gen:[]).slice(0,MAX_ROWS);
+  const out=normalizeGeneratedRows(source,l).map((row,i)=>{
+    row={...(source[i]||{}),...row};
+    let candidate=row,key=row.m.length===l.pM?generatedRowKey(row,l):'';
+    if(!key||seen.has(key)){candidate=freshGeneratedVariant(row,l,seen);key=generatedRowKey(candidate,l);}
+    candidate._uniqueIssued=true;seen.add(key);added.push(key);return candidate;
+  });
+  if(gen&&gen.meta)out.meta=gen.meta;
+  saveModelHistory(l,[...history,...added]);
+  return out;
 }
 function fillOne(){
   clearWheelStatus();
@@ -2818,8 +2935,9 @@ function normalizeGeneratedRow(row,l=L()){
 function normalizeGeneratedRows(gen,l=L()){
   return (Array.isArray(gen)?gen:[]).slice(0,MAX_ROWS).map(r=>normalizeGeneratedRow(r,l));
 }
-function setGeneratedRows(gen,status){
-  rows=normalizeGeneratedRows(gen,L());
+function setGeneratedRows(gen,status,unique=false){
+  const alreadyIssued=Array.isArray(gen)&&gen.length>0&&gen.every(r=>r&&r._uniqueIssued);
+  rows=unique&&!alreadyIssued?ensureUniqueGeneratedRows(gen,L()):normalizeGeneratedRows(gen,L());
   if(!rows.length)rows=[nr()];
   act=0;
   renderSim();
@@ -2903,12 +3021,15 @@ function randomFilteredRow(l=L(),draws=[]){
 }
 function filterGeneratedRows(out,count,l=L(),draws=[]){
   const flt=getFilterSettings();
-  const ok=[];
-  (out||[]).forEach(r=>{if(ok.length<count&&passesFilters(r,l,flt))ok.push(r);});
+  const ok=[],seen=new Set();
+  (out||[]).forEach(r=>{
+    const fixed=normalizeGeneratedRow(r,l),key=fixed.m.join(',');
+    if(ok.length<count&&!seen.has(key)&&passesFilters(fixed,l,flt)){seen.add(key);ok.push(fixed);}
+  });
   let guard=0;
   while(ok.length<count&&guard++<count*800){
     const row=randomFilteredRow(l,draws);
-    if(!ok.some(x=>x.m.join(',')===row.m.join(',')))ok.push(row);
+    const key=row.m.join(',');if(!seen.has(key)){seen.add(key);ok.push(row);}
   }
   return ok.slice(0,count);
 }
@@ -3170,8 +3291,8 @@ async function generateSelectedRows(){
   const count=getGenCount();
   const gen=await withBusy('Генерация '+count+' '+rowWord(count),()=>generateRowsByAlgo(algo,count));
   if(!gen)return;
-  const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'Мандель-сегменты',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль',markov:'цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'дельта-метод',bayes:'Байесовский',overdue:'gap-анализ (просроченные)',phys:'физика лототрона',chaos:'детерминированный хаос',quantum:'квантовый коллапс',paradox:'система парадоксов'};
-  const dur=setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`);
+  const labels={freq:'горячие числа',bal:'комбинированный анализ',rnd:'pure random',man:'сегментный охват',wheel:'колесная матрица','world-hot':'мировой горячий профиль','world-mix':'мировой комбинированный профиль',markov:'цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'дельта-метод',bayes:'Байесовский',overdue:'gap-анализ (просроченные)',phys:'физика лототрона',chaos:'детерминированный хаос',quantum:'криптослучайность',paradox:'система парадоксов'};
+  const dur=setGeneratedRows(gen,`Готово: ${count} ${rowWord(count)} · ${labels[algo]||algo} · база сохранённых тиражей не очищается при обновлении.`,true);
   setTimeout(()=>showFeedback('Ряды готовы',`Сгенерировано ${count} ${rowWord(count)}.\nМетод: ${labels[algo]||algo}.`,'🎯',2200),dur+150);
 }
 function rowsToNorskText(){
@@ -3549,7 +3670,7 @@ async function applyWheelMatrix(){
 // ═══════════════════════════════════════════════
 function doDraw(){
   const l=L();fillAll();
-  const dM=rnd(l.mB,l.pM),dB=drawnBonusCount(l)>0?rnd(l.bB,drawnBonusCount(l)):[];
+  const dM=nextUniqueMain(l,'simulation'),dB=drawnBonusCount(l)>0?rnd(l.bB,drawnBonusCount(l)):[];
   lastDraw={main:dM,bonus:dB};
   showBanner(dM,dB);renderSim();
   // track ROI: add spending
@@ -3562,7 +3683,7 @@ function resetBanner(){
   const b=document.getElementById('win-banner');
   b.className='win-banner none';
   document.getElementById('wb-icon').textContent='🎯';
-  document.getElementById('wb-title').textContent='Победная комбинация';
+  document.getElementById('wb-title').textContent='Результат симуляции';
   document.getElementById('wb-sub').textContent='Запусти тираж или проверь билет';
   document.getElementById('wb-body').style.display='none';
 }
@@ -3595,13 +3716,13 @@ function showBanner(dM,dB){
   document.getElementById('wb-rows').innerHTML=rowsH;
   document.getElementById('wb-body').style.display='';
   const b=document.getElementById('win-banner');
-  if(best?.name.includes('ДЖЕКПОТ')){b.className='win-banner jackpot';document.getElementById('wb-icon').textContent='🏆';document.getElementById('wb-title').textContent='ДЖЕКПОТ!';document.getElementById('wb-sub').textContent='Метод Манделя сработал!';}
+  if(best?.name.includes('ДЖЕКПОТ')){b.className='win-banner jackpot';document.getElementById('wb-icon').textContent='🏆';document.getElementById('wb-title').textContent='ДЖЕКПОТ!';document.getElementById('wb-sub').textContent='Ряд совпал с выигрышной комбинацией!';}
   else if(best){b.className='win-banner prize';document.getElementById('wb-icon').textContent='🎉';document.getElementById('wb-title').textContent='Есть выигрыш!';document.getElementById('wb-sub').textContent=best.name+' · '+l.name;}
   else{b.className='win-banner miss';document.getElementById('wb-icon').textContent='😔';document.getElementById('wb-title').textContent='Без выигрыша';document.getElementById('wb-sub').textContent='Попробуй ещё раз';}
   revealResult(b,'start');
 }
 
-function checkPrize(m,b,dM,dB,l){
+function checkPrizeLegacy(m,b,dM,dB,l){
   const mh=m.filter(n=>dM.includes(n)).length,bh=b.filter(n=>dB.includes(n)).length;
   const P=(name,lvl)=>({name,lvl});
   if(l.officialGame==='lotto'){
@@ -3622,7 +3743,7 @@ function checkPrize(m,b,dM,dB,l){
   }
   return null;
 }
-function estimatePrizeNok(p,l){
+function estimatePrizeNokLegacy(p,l){
   if(!p)return 0;
   if(p.name.includes('ДЖЕКПОТ'))return l.combos>200000000?50000000:l.combos>100000000?25000000:10000000;
   if(l.officialGame==='lotto'){
@@ -3657,6 +3778,71 @@ function estimatePrizeNok(p,l){
   if(p.lvl>=3)return 100;
   return 0;
 }
+function checkPrize(m,b,dM,dB,l){
+  const mh=m.filter(n=>dM.includes(n)).length,bh=b.filter(n=>dB.includes(n)).length;
+  const addition=dB.length>0&&m.some(n=>dB.includes(n));
+  const P=(key,name,lvl)=>({key,name,lvl});
+  const id=l.id||'';
+  if(id==='lotto'){
+    if(mh===7)return P('7','ДЖЕКПОТ 🏆',7);
+    if(mh===6&&addition)return P('6+1','2-й приз · 6+tillegg',6);
+    if(mh===6)return P('6+0','3-й приз · 6 rette',5);
+    if(mh===5)return P('5','4-й приз · 5 rette',4);
+    if(mh===4)return P('4','5-й приз · 4 rette',3);
+  }else if(id==='viking'){
+    if(mh===6&&bh===1)return P('6+1','ДЖЕКПОТ 🏆',7);
+    if(mh===6)return P('6+0','2-й приз · 6+0',6);
+    if(mh===5&&bh===1)return P('5+1','3-й приз · 5+1',5);
+    if(mh===5)return P('5+0','4-й приз · 5+0',4);
+    if(mh===4)return P('4','5-й приз · 4 rette',3);
+    if(mh===3)return P('3','6-й приз · 3 rette',2);
+  }else if(id==='euro'||id==='euromillions'){
+    const names={'5+2':['ДЖЕКПОТ 🏆',7],'5+1':['2-й приз · 5+1',6],'5+0':['3-й приз · 5+0',5],'4+2':['4-й приз · 4+2',4],'4+1':['5-й приз · 4+1',3],'3+2':['6-й приз · 3+2',2],'4+0':['7-й приз · 4+0',1],'2+2':['8-й приз · 2+2',1],'3+1':['9-й приз · 3+1',1],'3+0':['10-й приз · 3+0',1],'1+2':['11-й приз · 1+2',1],'2+1':['12-й приз · 2+1',1],'2+0':['13-й приз · 2+0',1]};
+    const key=mh+'+'+bh,hit=names[key];
+    if(hit&&(id==='euromillions'||key!=='2+0'))return P(key,hit[0],hit[1]);
+  }else if(id==='powerball'||id==='mega'){
+    const labels={'5+1':['ДЖЕКПОТ 🏆',7],'5+0':['2-й приз · 5+0',6],'4+1':['3-й приз · 4+1',5],'4+0':['4-й приз · 4+0',4],'3+1':['5-й приз · 3+1',3],'3+0':['6-й приз · 3+0',2],'2+1':['7-й приз · 2+1',1],'1+1':['8-й приз · 1+1',1],'0+1':['9-й приз · 0+1',1]};
+    const key=mh+'+'+bh,hit=labels[key];if(hit)return P(key,hit[0],hit[1]);
+  }else if(id==='superenalotto'){
+    if(mh===6)return P('6','ДЖЕКПОТ 🏆',7);
+    if(mh===5&&addition)return P('5+1','2-й приз · 5+Jolly',6);
+    if(mh===5)return P('5+0','3-й приз · 5',5);
+    if(mh===4)return P('4','4-й приз · 4',4);
+    if(mh===3)return P('3','5-й приз · 3',3);
+    if(mh===2)return P('2','6-й приз · 2',2);
+  }else if(id==='lottomax'){
+    const key=mh===7?'7':mh+'+'+(addition?1:0);
+    const labels={'7':['ДЖЕКПОТ 🏆',7],'6+1':['2-й приз · 6+Bonus',6],'6+0':['3-й приз · 6/7',5],'5+1':['4-й приз · 5+Bonus',4],'5+0':['5-й приз · 5/7',3],'4+1':['6-й приз · 4+Bonus',2],'4+0':['7-й приз · 4/7',2],'3+1':['8-й приз · 3+Bonus',1],'3+0':['9-й приз · 3/7',1]};
+    const hit=labels[key];if(hit)return P(key,hit[0],hit[1]);
+  }else if(id==='powerballau'){
+    const labels={'7+1':['ДЖЕКПОТ 🏆',7],'7+0':['2-й дивизион · 7+0',6],'6+1':['3-й дивизион · 6+PB',5],'6+0':['4-й дивизион · 6+0',4],'5+1':['5-й дивизион · 5+PB',3],'4+1':['6-й дивизион · 4+PB',2],'5+0':['7-й дивизион · 5+0',2],'3+1':['8-й дивизион · 3+PB',1],'2+1':['9-й дивизион · 2+PB',1]};
+    const key=mh+'+'+bh,hit=labels[key];if(hit)return P(key,hit[0],hit[1]);
+  }
+  return null;
+}
+function megaMultiplier(){
+  const r=Math.random()*32;
+  return r<15?2:r<25?3:r<29?4:r<31?5:10;
+}
+/* Оценки указаны в валюте выбранной игры; для тиражных разрядов это ориентиры. */
+function estimatePrizeNok(p,l,simulate=false){
+  if(!p)return 0;
+  const id=l.id||'',key=p.key||'';
+  const tables={
+    lotto:{'7':10000000,'6+1':500000,'6':70000,'6+0':70000,'5':1200,'4':50},
+    viking:{'6+1':10000000,'6+0':500000,'5+1':25000,'5+0':2500,'4':250,'3':50},
+    euro:{'5+2':100000000,'5+1':5000000,'5+0':1000000,'4+2':100000,'4+1':8000,'3+2':2500,'4+0':1500,'2+2':400,'3+1':300,'3+0':180,'1+2':120,'2+1':100},
+    powerball:{'5+1':50000000,'5+0':1000000,'4+1':50000,'4+0':100,'3+1':100,'3+0':7,'2+1':7,'1+1':4,'0+1':4},
+    mega:{'5+1':50000000,'5+0':1000000,'4+1':10000,'4+0':500,'3+1':200,'3+0':10,'2+1':10,'1+1':7,'0+1':5},
+    euromillions:{'5+2':17000000,'5+1':150000,'5+0':15000,'4+2':1200,'4+1':120,'3+2':80,'4+0':40,'2+2':20,'3+1':15,'3+0':10,'1+2':9,'2+1':7,'2+0':4},
+    superenalotto:{'6':2000000,'5+1':620000,'5+0':32000,'4':300,'3':25,'2':5},
+    lottomax:{'7':10000000,'6+1':200000,'6+0':5000,'5+1':1000,'5+0':100,'4+1':50,'4+0':20,'3+1':20,'3+0':6},
+    powerballau:{'7+1':3000000,'7+0':100000,'6+1':10000,'6+0':500,'5+1':200,'4+1':100,'5+0':60,'3+1':40,'2+1':15}
+  };
+  let value=tables[id]?.[key]||0;
+  if(id==='mega'&&key!=='5+1'&&value)value*=simulate?megaMultiplier():3;
+  return value;
+}
 function runLifeSim(){
   if(lifeRunning)return;
   const l=L(),out=document.getElementById('life-out');
@@ -3686,18 +3872,18 @@ function runLifeSim(){
       const top=[...wins].sort((a,b)=>b.v-a.v).slice(0,5);
       if(top.length){
         html+='<div class="life-sec">✨ Лучшие моменты этой жизни</div>'+top.map((w,i)=>
-          `<div class="life-moment"><div class="life-yr">${['🥇','🥈','🥉','🎖','🎖'][i]} Год ${Math.max(1,Math.round(w.yr))}</div><div class="life-mname">${w.name}</div><div class="life-mv">+${fmtInt(w.v)} ${l.currency||'NOK'}</div></div>`).join('');
+          `<div class="life-moment"><div class="life-yr">${['🥇','🥈','🥉','🎖','🎖'][i]} Год ${Math.max(1,Math.round(w.yr))}:</div><div class="life-mname">${w.name}</div><div class="life-mv">+${fmtInt(w.v)} ${l.currency||'NOK'}</div></div>`).join('');
         const tiers=Object.entries(tierCnt).sort((a,b)=>b[1]-a[1]);
         html+='<div class="life-sec">Все выигрыши за 50 лет</div><div class="life-tiers">'+tiers.map(([n,c])=>`<span class="life-tier">${n} × ${c}</span>`).join('')+'</div>';
       }
       /* честная надежда: реальный шанс джекпота именно этих рядов за эти 50 лет */
-      const combJ=(N,K)=>{let r=1;for(let i=0;i<K;i++)r=r*(N-i)/(i+1);return r;};
-      const pOne=1/combJ(l.mB,l.pM);
+      const pOne=1/jackpotCombos(l);
       const pJack=1-Math.pow(1-pOne,total*ticket.length);
       const oneIn=Math.round(1/pJack);
-      html+=`<div class="life-hope">💫 <b>А джекпот?</b> В этой симуляции он ${wins.some(w=>w.lvl>=7)?'ВЫПАЛ — ты видел это своими глазами!':'не выпал — как и у большинства.'} Честный шанс сорвать его за эти 50 лет с ${ticket.length} ${rowWord(ticket.length)}: <b>${(pJack*100).toFixed(2)}%</b> (примерно 1 к ${fmtInt(oneIn)}). Мал — но не ноль: в реальном мире почти каждую неделю чья-то жизнь меняется навсегда. Каждый джекпот планеты был чьим-то «а вдруг». 🌠</div>`;
+      const pPct=pJack*100,pPctText=pPct<0.01?pPct.toFixed(4):pPct.toFixed(2);
+      html+=`<div class="life-hope">💫 <b>А джекпот?</b> В этой симуляции он ${wins.some(w=>w.lvl>=7)?'ВЫПАЛ — в этой случайной серии произошло редкое событие.':'не выпал — это ожидаемый результат для большинства таких серий.'} Расчётный шанс получить его за эти 50 лет при ${ticket.length} ${ticket.length===1?'ряде':'рядах'}: <b>${pPctText}%</b> (примерно 1 к ${fmtInt(oneIn)}). Вероятность мала, но не равна нулю; симуляция не повышает вероятность реального выигрыша. 🌠</div>`;
       const perYear=Math.round(hits/50);
-      html+=`<div class="life-note">${hits?('В среднем '+(perYear>0?perYear:hits)+' выигрышей в год — маленькие праздники были регулярно. '):''}${net<0?'Но баланс честный: лотерея за 50 лет почти всегда в минусе — она продаёт мечту, а не доход. Играй на сумму мечты, а не бюджета. 💛':'Невероятно: ты в плюсе! Это исключение из правил — 1 случай на тысячи таких жизней. 🍀'}</div>`;
+      html+=`<div class="life-note">${hits?('Среднее число выигрышей в год: '+(perYear>0?perYear:hits)+'. Маленькие события появлялись регулярно. '):''}${net<0?'Но баланс честный: лотерея за 50 лет почти всегда в минусе — это развлечение, а не доход. Устанавливай заранее небольшой лимит расходов. 💛':'Невероятно: ты в плюсе! Это исключение из правил — один случай на тысячи таких серий. 🍀'}</div>`;
     }else html+=`<div style="margin-top:8px">Лучший приз пока: ${fmtInt(best)} ${l.currency||'NOK'} · рядов: ${ticket.length}</div>`;
     out.innerHTML=html;
   };
@@ -3706,7 +3892,7 @@ function runLifeSim(){
       const dM=rnd(l.mB,l.pM),dB=drawnBonusCount(l)>0?rnd(l.bB,drawnBonusCount(l)):[];
       spent+=ticket.length*l.price;
       ticket.forEach(row=>{
-        const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l);
+        const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l,true);
         if(v>0){won+=v;hits++;best=Math.max(best,v);wins.push({yr:done/52,name:p.name,v,lvl:p.lvl});tierCnt[p.name]=(tierCnt[p.name]||0)+1;}
       });
     }
@@ -3717,7 +3903,7 @@ function runLifeSim(){
       const jack=wins.find(w=>w.lvl>=7);
       const big=wins.filter(w=>w.lvl>=6).sort((a,b)=>b.v-a.v)[0];
       if(jack)setTimeout(()=>CELE_show('🏆 ДЖЕКПОТ ЗА 50 ЛЕТ!','На году '+Math.max(1,Math.round(jack.yr))+' эти числа взяли '+jack.name+'!\n+'+fmtInt(jack.v)+' '+(l.currency||'NOK')+'\nЖизнь изменилась бы навсегда. 🌟'),400);
-      else if(big)setTimeout(()=>CELE_show('💎 КРУПНЫЙ ПРИЗ!','Год '+Math.max(1,Math.round(big.yr))+': '+big.name+' · +'+fmtInt(big.v)+' '+(l.currency||'NOK')+'\nБольшие выигрыши случаются! ✨'),400);
+      else if(big)setTimeout(()=>CELE_show('💎 КРУПНЫЙ ПРИЗ В СИМУЛЯЦИИ','Год '+Math.max(1,Math.round(big.yr))+': '+big.name+' · +'+fmtInt(big.v)+' '+(l.currency||'NOK')+'\nЭто редкий случайный результат, а не прогноз. ✨'),400);
     }
   };
   paint(false);
@@ -4349,6 +4535,27 @@ function comb(n,k){
 function jackpotCombos(l){
   return comb(l.mB,l.pM)*(l.pBo>0?comb(l.bB,l.pBo):1);
 }
+function tierProbability(l,match){
+  const parts=String(match).split('+');
+  const mm=Number(parts[0]),bb=parts.length>1?Number(parts[1]):null;
+  if(!Number.isInteger(mm)||mm<0||mm>l.pM)return 0;
+  const pMain=comb(l.pM,mm)*comb(l.mB-l.pM,l.pM-mm)/comb(l.mB,l.pM);
+  if(l.pBo>0){
+    if(bb===null)return pMain;
+    if(!Number.isInteger(bb)||bb<0||bb>l.pBo)return 0;
+    const pBonus=comb(l.pBo,bb)*comb(l.bB-l.pBo,l.pBo-bb)/comb(l.bB,l.pBo);
+    return pMain*pBonus;
+  }
+  if(l.offBo>0&&bb!==null){
+    const pExtra=(l.pM-mm)/Math.max(1,l.mB-l.pM);
+    return pMain*(bb===1?pExtra:bb===0?1-pExtra:0);
+  }
+  if(l.id==='lotto'&&match==='6'){
+    const pExtra=(l.pM-mm)/Math.max(1,l.mB-l.pM);
+    return pMain*(1-pExtra);
+  }
+  return pMain;
+}
 function fmtInt(n){return Math.round(n).toLocaleString('nb-NO');}
 function fmtChance(n){return n>=1000000?(n/1000000).toFixed(n>=10000000?0:1).replace('.',',')+' млн':fmtInt(n);}
 
@@ -4511,8 +4718,8 @@ function renderComparison(){
     ['Шанс джекпота',...ids.map(id=>'1 : '+fmtChance(jackpotCombos(LOTS[id])))],
     ['День',...ids.map(id=>LOTS[id].day)],
     ['Дедлайн',...ids.map(id=>LOTS[id].dl)],
-    ['Стоим. всех (Мандель)',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
-    ['Мин. джекпот для Манделя',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])*3/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
+    ['Стоимость всех комбинаций',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
+    ['Консервативный ориентир ×3',...ids.map(id=>'~'+fmtInt(allCost(LOTS[id])*3/1000000)+' млн '+(LOTS[id].currency||'NOK'))],
     ['Математика',...ids.map(id=>LOTS[id].combos===jackpotCombos(LOTS[id])?'✅ формула OK':'⚠️ проверить')],
   ];
   let html='<thead><tr>'+rows2[0].map((h,i)=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>';
@@ -4630,7 +4837,7 @@ async function renderJackpotChart(){
     html+=`<div class="fbw" style="width:34px"><div class="fbar" style="height:${Math.max(pct,3)}px;width:26px;background:#f0a500" data-tip="${d.jackpot}М NOK · ${dy}.${mo}"></div><div class="fn">${dy}/${mo}</div></div>`;
   });
   html+='</div></div>';
-  html+=`<div class="srow" style="margin-top:8px"><span>Максимальный джекпот:</span><span>${max} млн NOK</span></div>`;
+  html+=`<div class="srow" style="margin-top:8px"><span>Максимальный джекпот:</span><span>${max} млн ${L().currency||'NOK'}</span></div>`;
   html+=`<div class="srow"><span>Записей:</span><span>${draws.length}</span></div>`;
   c.innerHTML=html;
 }
@@ -4638,28 +4845,31 @@ async function renderJackpotChart(){
 // ─── MANDEL ───────────────────────────────────
 function renderMandel(){
   const l=L();
-  const combos=jackpotCombos(l),totalCostNOK=combos*l.price,totalCostM=(totalCostNOK/1e6).toFixed(1);
-  const minJackpot=(totalCostNOK*3/1e6).toFixed(1);
+  const currency=l.currency||'NOK',combos=jackpotCombos(l),totalCost=combos*l.price,totalCostM=(totalCost/1e6).toFixed(1);
+  const conservativeTarget=(totalCost*3/1e6).toFixed(1);
   const jv=parseFloat(document.getElementById('jackpot-inp').value)||0;
-  const ratio=jv>0?(jv/+totalCostM).toFixed(2):null;
-  const ok=ratio&&+ratio>=3;
+  const ratioNum=jv>0?jv/(totalCost/1e6):null,ratio=ratioNum?ratioNum.toFixed(2):null;
+  const conservative=ratioNum!==null&&ratioNum>=3,breakEven=ratioNum!==null&&ratioNum>=1;
+  const verdict=conservative?'✅ Джекпот покрывает ориентир ×3':breakEven?'⚠️ Джекпот покрывает цену комбинаций, но не гарантирует прибыль':'⏳ Джекпот ниже стоимости всех комбинаций';
+  const jl=document.getElementById('jackpot-currency-label');if(jl)jl.textContent='Текущий джекпот (млн '+currency+')';
   document.getElementById('man-out').innerHTML=`<div class="mbox">
-    <div class="mbox-t">📐 ${l.name} · Анализ Манделя</div>
+    <div class="mbox-t">📐 ${l.name} · Комбинаторный анализ</div>
     <div class="mrow"><span>Комбинаций:</span><span>${fmtInt(combos)}</span></div>
-    <div class="mrow"><span>Цена 1 ряда:</span><span>${l.price} NOK</span></div>
-    <div class="mrow"><span>Мин. покупка:</span><span>${l.minR} ряд = ${l.minR*l.price} NOK</span></div>
-    <div class="mrow"><span>Стоим. ВСЕХ билетов:</span><span>~${totalCostM} млн NOK</span></div>
-    <div class="mrow"><span>Мин. джекпот (×3):</span><span style="color:#ff9f0a">~${minJackpot} млн NOK</span></div>
-    <div class="mrow"><span>Текущий джекпот:</span><span>${jv||'—'} млн NOK</span></div>
-    <div class="mrow"><span>Коэффициент:</span><span style="color:${ok?'#34c759':'#ff9f0a'}">${ratio?ratio+'×':'введи джекпот'}</span></div>
-    <div class="mverdict ${ok?'go':'wait'}">${ok?'✅ Операция выгодна по Манделю!':'⏳ Ждём роста джекпота…'}</div>
+    <div class="mrow"><span>Цена 1 ряда:</span><span>${l.price} ${currency}</span></div>
+    <div class="mrow"><span>Мин. покупка:</span><span>${l.minR} ряд(а) = ${l.minR*l.price} ${currency}</span></div>
+    <div class="mrow"><span>Стоимость ВСЕХ комбинаций:</span><span>~${totalCostM} млн ${currency}</span></div>
+    <div class="mrow"><span>Консервативный ориентир ×3:</span><span style="color:#ff9f0a">~${conservativeTarget} млн ${currency}</span></div>
+    <div class="mrow"><span>Текущий джекпот:</span><span>${jv||'—'} млн ${currency}</span></div>
+    <div class="mrow"><span>Джекпот / стоимость:</span><span style="color:${conservative?'#34c759':'#ff9f0a'}">${ratio?ratio+'×':'введи джекпот'}</span></div>
+    <div class="mverdict ${conservative?'go':'wait'}">${verdict}</div>
+    <div class="warn-note">Без учёта налогов, деления приза между победителями, лимитов продаж и стоимости организации покупки. Расчёт не является гарантией дохода.</div>
   </div>
   <div style="background:var(--bg2);border-radius:14px;padding:14px;border:1.5px solid var(--border);margin-top:12px">
     <div class="card-t">🗓 Расписание ${l.name}</div>
     <div class="info-row"><span>📅 Дни:</span><span>${l.day}</span></div>
-    <div class="info-row"><span>⏰ Spillefrist:</span><span>до ${l.dl}</span></div>
+    <div class="info-row"><span>⏰ Дедлайн:</span><span>до ${scheduleTime(l)}</span></div>
     <div class="info-row"><span>🎰 Trekning:</span><span>${l.res}</span></div>
-    <div class="info-row"><span>💰 Цена ряда:</span><span>${l.price} NOK</span></div>
+    <div class="info-row"><span>💰 Цена ряда:</span><span>${l.price} ${currency}</span></div>
   </div>`;
 }
 
@@ -4747,7 +4957,7 @@ async function handleTextImport(){
     ta.value='';
     await renderHistory();
     await renderSavedDrawOptions();
-    showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\nДанные видны всем по этой ссылке.`,'✅');
+    showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\n${storageScopeText()}`,'✅');
   }catch(err){
     showFeedback('Ошибка сохранения',err.message,'⚠️',4200);
   }
@@ -4787,7 +4997,7 @@ function handleImp(e){
       }
       await renderHistory();
       await renderSavedDrawOptions();
-      showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\nДанные видны всем по этой ссылке.`,'✅');
+      showFeedback('Импорт готов',`Импортировано ${imported} тиражей.\n${storageScopeText()}`,'✅');
     }catch(err){
       showFeedback('Ошибка сохранения',err.message,'⚠️',4200);
     }
@@ -4798,26 +5008,32 @@ function handleImp(e){
 // ═══════════════════════════════════════════════
 //  SMART GEN
 // ═══════════════════════════════════════════════
+function zonedParts(date,timeZone){
+  const out={};
+  new Intl.DateTimeFormat('en-US',{timeZone,year:'numeric',month:'2-digit',day:'2-digit',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(date).forEach(p=>{if(p.type!=='literal')out[p.type]=p.value;});
+  return{year:+out.year,month:+out.month,day:+out.day,weekday:{Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[out.weekday],hour:+out.hour,minute:+out.minute};
+}
+function zonedDateTimeToUtc(year,month,day,hour,minute,timeZone){
+  const target=Date.UTC(year,month-1,day,hour,minute);let guess=new Date(target);
+  for(let i=0;i<3;i++){const p=zonedParts(guess,timeZone),shown=Date.UTC(p.year,p.month-1,p.day,p.hour,p.minute);guess=new Date(guess.getTime()+target-shown);}
+  return guess;
+}
+function scheduleTime(l){return l.dl+(l.tzLabel?' '+l.tzLabel:'');}
 function nextDraw(lotId){
-  const now=new Date();
-  const l=LOTS[lotId],days=l.drawDays;
-  const ms=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-  const dn=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-  const [hh,mm]=l.dl.split(':').map(Number);
+  const now=new Date(),l=LOTS[lotId],tz=l.timeZone||Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const local=zonedParts(now,tz),[hh,mm]=l.dl.split(':').map(Number);
   let nd=null;
-  for(const d of days){
-    let diff=(d-now.getDay()+7)%7;
-    const cand=new Date(now);
-    cand.setDate(now.getDate()+diff);
-    cand.setHours(hh,mm,0,0);
-    if(cand<=now)cand.setDate(cand.getDate()+7);
+  for(const weekday of l.drawDays){
+    let diff=(weekday-local.weekday+7)%7;
+    let base=new Date(Date.UTC(local.year,local.month-1,local.day+diff));
+    let cand=zonedDateTimeToUtc(base.getUTCFullYear(),base.getUTCMonth()+1,base.getUTCDate(),hh,mm,tz);
+    if(cand<=now){base=new Date(Date.UTC(base.getUTCFullYear(),base.getUTCMonth(),base.getUTCDate()+7));cand=zonedDateTimeToUtc(base.getUTCFullYear(),base.getUTCMonth()+1,base.getUTCDate(),hh,mm,tz);}
     if(!nd||cand<nd)nd=cand;
   }
-  const dStr=`${dn[nd.getDay()]}, ${nd.getDate()} ${ms[nd.getMonth()]} ${nd.getFullYear()}`;
-  const msLeft=nd-now;
-  const dLeft=Math.floor(msLeft/86400000),hLeft=Math.floor((msLeft%86400000)/3600000);
-  const countdown=dLeft>0?`⏳ До тиража: ${dLeft} д. ${hLeft} ч.`:`⏳ До тиража: ${hLeft} ч.`;
-  return{dateStr:dStr,countdown};
+  const p=zonedParts(nd,tz),ms=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'],dn=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  const mins=Math.max(0,Math.ceil((nd-now)/60000)),dLeft=Math.floor(mins/1440),hLeft=Math.floor((mins%1440)/60),mLeft=mins%60;
+  const left=(dLeft?dLeft+' д. ':'')+(hLeft?hLeft+' ч. ':'')+(!dLeft&&mLeft?mLeft+' мин.':'');
+  return{date:nd,dateStr:`${dn[p.weekday]}, ${p.day} ${ms[p.month-1]} ${p.year}`,countdown:'⏳ До дедлайна: '+left.trim(),timeLabel:scheduleTime(l)};
 }
 
 async function openSG(){
@@ -4829,7 +5045,7 @@ async function openSG(){
   document.getElementById('sg-use').className='sg-use '+l.cls;
   const nd=nextDraw(cur);
   document.getElementById('sg-date').textContent=nd.dateStr;
-  document.getElementById('sg-time').textContent='Spillefrist: до '+l.dl;
+  document.getElementById('sg-time').textContent='Дедлайн: до '+nd.timeLabel;
   document.getElementById('sg-left').textContent=nd.countdown;
   sgAlgo=null;sgGen=[];
   document.querySelectorAll('.sg-algo').forEach(a=>a.classList.remove('sel'));
@@ -4861,22 +5077,22 @@ function shufSlice(arr,n){const a=[...arr];for(let i=a.length-1;i>0;i--){const j
 let rollTimers=[];
 /* ═══ МУЛЬТИЯЗЫЧНОСТЬ: страны всех лотерей каталога ═══ */
 const I18N={
- ru:{_n:'Русский',sim:'Симулятор',ana:'Аналитика',tabInp:'➕ Ввод',tabFreq:'📊 Частоты',tabChi:'🔬 χ²',tabCmp:'⚖️ Сравнение',tabPrize:'💵 Призы',tabMan:'📐 Мандель',simulate:'🎲 Симулировать тираж',generate:'Сгенерировать',world:'Анализ лото по миру',copy:'📋 Скопировать ряды',smart:'🎯 Умная генерация',smartSub:'На следующий тираж · по алгоритму',use:'✅ Использовать эти числа',close:'Закрыть',pickHint:'👆 Выбери метод — и шары закрутятся прямо здесь',wheelBtn:'Сгенерировать wheel'},
- en:{_n:'English',sim:'Simulator',ana:'Analytics',tabInp:'➕ Entry',tabFreq:'📊 Frequency',tabChi:'🔬 χ²',tabCmp:'⚖️ Compare',tabPrize:'💵 Prizes',tabMan:'📐 Mandel',simulate:'🎲 Simulate draw',generate:'Generate',world:'World lotto analysis',copy:'📋 Copy rows',smart:'🎯 Smart generation',smartSub:'For the next draw · by algorithm',use:'✅ Use these numbers',close:'Close',pickHint:'👆 Pick a method — balls will spin right here',wheelBtn:'Generate wheel'},
- no:{_n:'Norsk',sim:'Simulator',ana:'Analyse',tabInp:'➕ Utfylling',tabFreq:'📊 Frekvens',tabChi:'🔬 χ²',tabCmp:'⚖️ Sammenlign',tabPrize:'💵 Premier',tabMan:'📐 Mandel',simulate:'🎲 Simuler trekning',generate:'Generer',world:'Verdens lotto-analyse',copy:'📋 Kopier rekker',smart:'🎯 Smart generering',smartSub:'Til neste trekning · etter algoritme',use:'✅ Bruk disse tallene',close:'Lukk',pickHint:'👆 Velg metode — kulene spinner her',wheelBtn:'Generer wheel'},
- sv:{_n:'Svenska',sim:'Simulator',ana:'Analys',tabInp:'➕ Ifyllnad',tabFreq:'📊 Frekvens',tabChi:'🔬 χ²',tabCmp:'⚖️ Jämför',tabPrize:'💵 Vinster',tabMan:'📐 Mandel',simulate:'🎲 Simulera dragning',generate:'Generera',world:'Världens lotto-analys',copy:'📋 Kopiera rader',smart:'🎯 Smart generering',smartSub:'Till nästa dragning · efter algoritm',use:'✅ Använd dessa nummer',close:'Stäng',pickHint:'👆 Välj metod — kulorna snurrar här',wheelBtn:'Generera wheel'},
- da:{_n:'Dansk',sim:'Simulator',ana:'Analyse',tabInp:'➕ Udfyldning',tabFreq:'📊 Frekvens',tabChi:'🔬 χ²',tabCmp:'⚖️ Sammenlign',tabPrize:'💵 Præmier',tabMan:'📐 Mandel',simulate:'🎲 Simulér trækning',generate:'Generér',world:'Verdens lotto-analyse',copy:'📋 Kopiér rækker',smart:'🎯 Smart generering',smartSub:'Til næste trækning · efter algoritme',use:'✅ Brug disse tal',close:'Luk',pickHint:'👆 Vælg metode — kuglerne snurrer her',wheelBtn:'Generér wheel'},
- fi:{_n:'Suomi',sim:'Simulaattori',ana:'Analyysi',tabInp:'➕ Syöttö',tabFreq:'📊 Taajuus',tabChi:'🔬 χ²',tabCmp:'⚖️ Vertaa',tabPrize:'💵 Voitot',tabMan:'📐 Mandel',simulate:'🎲 Simuloi arvonta',generate:'Generoi',world:'Maailman lottoanalyysi',copy:'📋 Kopioi rivit',smart:'🎯 Älykäs generointi',smartSub:'Seuraavaan arvontaan · algoritmilla',use:'✅ Käytä näitä numeroita',close:'Sulje',pickHint:'👆 Valitse menetelmä — pallot pyörivät tässä',wheelBtn:'Generoi wheel'},
- de:{_n:'Deutsch',sim:'Simulator',ana:'Analyse',tabInp:'➕ Eingabe',tabFreq:'📊 Häufigkeit',tabChi:'🔬 χ²',tabCmp:'⚖️ Vergleich',tabPrize:'💵 Gewinne',tabMan:'📐 Mandel',simulate:'🎲 Ziehung simulieren',generate:'Generieren',world:'Welt-Lotto-Analyse',copy:'📋 Reihen kopieren',smart:'🎯 Smarte Generierung',smartSub:'Für die nächste Ziehung · per Algorithmus',use:'✅ Diese Zahlen verwenden',close:'Schließen',pickHint:'👆 Methode wählen — die Kugeln drehen sich hier',wheelBtn:'Wheel generieren'},
- fr:{_n:'Français',sim:'Simulateur',ana:'Analyse',tabInp:'➕ Saisie',tabFreq:'📊 Fréquence',tabChi:'🔬 χ²',tabCmp:'⚖️ Comparer',tabPrize:'💵 Gains',tabMan:'📐 Mandel',simulate:'🎲 Simuler le tirage',generate:'Générer',world:'Analyse loto mondiale',copy:'📋 Copier les grilles',smart:'🎯 Génération intelligente',smartSub:'Pour le prochain tirage · par algorithme',use:'✅ Utiliser ces numéros',close:'Fermer',pickHint:'👆 Choisis une méthode — les boules tournent ici',wheelBtn:'Générer le wheel'},
- es:{_n:'Español',sim:'Simulador',ana:'Análisis',tabInp:'➕ Entrada',tabFreq:'📊 Frecuencia',tabChi:'🔬 χ²',tabCmp:'⚖️ Comparar',tabPrize:'💵 Premios',tabMan:'📐 Mandel',simulate:'🎲 Simular sorteo',generate:'Generar',world:'Análisis mundial de loto',copy:'📋 Copiar filas',smart:'🎯 Generación inteligente',smartSub:'Para el próximo sorteo · por algoritmo',use:'✅ Usar estos números',close:'Cerrar',pickHint:'👆 Elige un método — las bolas giran aquí',wheelBtn:'Generar wheel'},
- it:{_n:'Italiano',sim:'Simulatore',ana:'Analisi',tabInp:'➕ Inserimento',tabFreq:'📊 Frequenza',tabChi:'🔬 χ²',tabCmp:'⚖️ Confronta',tabPrize:'💵 Premi',tabMan:'📐 Mandel',simulate:'🎲 Simula estrazione',generate:'Genera',world:'Analisi lotto mondiale',copy:'📋 Copia righe',smart:'🎯 Generazione smart',smartSub:'Per la prossima estrazione · con algoritmo',use:'✅ Usa questi numeri',close:'Chiudi',pickHint:'👆 Scegli un metodo — le palline girano qui',wheelBtn:'Genera wheel'},
- pt:{_n:'Português',sim:'Simulador',ana:'Análise',tabInp:'➕ Entrada',tabFreq:'📊 Frequência',tabChi:'🔬 χ²',tabCmp:'⚖️ Comparar',tabPrize:'💵 Prémios',tabMan:'📐 Mandel',simulate:'🎲 Simular sorteio',generate:'Gerar',world:'Análise mundial de loto',copy:'📋 Copiar linhas',smart:'🎯 Geração inteligente',smartSub:'Para o próximo sorteio · por algoritmo',use:'✅ Usar estes números',close:'Fechar',pickHint:'👆 Escolhe um método — as bolas giram aqui',wheelBtn:'Gerar wheel'},
- pl:{_n:'Polski',sim:'Symulator',ana:'Analiza',tabInp:'➕ Wpis',tabFreq:'📊 Częstość',tabChi:'🔬 χ²',tabCmp:'⚖️ Porównaj',tabPrize:'💵 Wygrane',tabMan:'📐 Mandel',simulate:'🎲 Symuluj losowanie',generate:'Generuj',world:'Analiza lotto na świecie',copy:'📋 Kopiuj wiersze',smart:'🎯 Inteligentne generowanie',smartSub:'Na następne losowanie · algorytmem',use:'✅ Użyj tych liczb',close:'Zamknij',pickHint:'👆 Wybierz metodę — kule zakręcą się tutaj',wheelBtn:'Generuj wheel'},
- nl:{_n:'Nederlands',sim:'Simulator',ana:'Analyse',tabInp:'➕ Invoer',tabFreq:'📊 Frequentie',tabChi:'🔬 χ²',tabCmp:'⚖️ Vergelijk',tabPrize:'💵 Prijzen',tabMan:'📐 Mandel',simulate:'🎲 Trekking simuleren',generate:'Genereren',world:'Wereld lotto-analyse',copy:'📋 Rijen kopiëren',smart:'🎯 Slimme generatie',smartSub:'Voor de volgende trekking · per algoritme',use:'✅ Gebruik deze nummers',close:'Sluiten',pickHint:'👆 Kies een methode — de ballen draaien hier',wheelBtn:'Wheel genereren'},
- et:{_n:'Eesti',sim:'Simulaator',ana:'Analüüs',tabInp:'➕ Sisestus',tabFreq:'📊 Sagedus',tabChi:'🔬 χ²',tabCmp:'⚖️ Võrdle',tabPrize:'💵 Võidud',tabMan:'📐 Mandel',simulate:'🎲 Simuleeri loosimist',generate:'Genereeri',world:'Maailma loto analüüs',copy:'📋 Kopeeri read',smart:'🎯 Nutikas genereerimine',smartSub:'Järgmiseks loosimiseks · algoritmiga',use:'✅ Kasuta neid numbreid',close:'Sulge',pickHint:'👆 Vali meetod — pallid keerlevad siin',wheelBtn:'Genereeri wheel'},
- lv:{_n:'Latviešu',sim:'Simulators',ana:'Analīze',tabInp:'➕ Ievade',tabFreq:'📊 Biežums',tabChi:'🔬 χ²',tabCmp:'⚖️ Salīdzini',tabPrize:'💵 Laimesti',tabMan:'📐 Mandel',simulate:'🎲 Simulēt izlozi',generate:'Ģenerēt',world:'Pasaules loto analīze',copy:'📋 Kopēt rindas',smart:'🎯 Viedā ģenerēšana',smartSub:'Nākamajai izlozei · ar algoritmu',use:'✅ Izmantot šos skaitļus',close:'Aizvērt',pickHint:'👆 Izvēlies metodi — bumbiņas griezīsies šeit',wheelBtn:'Ģenerēt wheel'},
- lt:{_n:'Lietuvių',sim:'Simuliatorius',ana:'Analizė',tabInp:'➕ Įvestis',tabFreq:'📊 Dažnis',tabChi:'🔬 χ²',tabCmp:'⚖️ Palygink',tabPrize:'💵 Laimėjimai',tabMan:'📐 Mandel',simulate:'🎲 Simuliuoti traukimą',generate:'Generuoti',world:'Pasaulio loto analizė',copy:'📋 Kopijuoti eilutes',smart:'🎯 Išmanusis generavimas',smartSub:'Kitam traukimui · pagal algoritmą',use:'✅ Naudoti šiuos skaičius',close:'Uždaryti',pickHint:'👆 Pasirink metodą — kamuoliukai suksis čia',wheelBtn:'Generuoti wheel'}
+ ru:{_n:'Русский',sim:'Симулятор',ana:'Аналитика',tabInp:'➕ Ввод',tabFreq:'📊 Частоты',tabChi:'🔬 χ²',tabCmp:'⚖️ Сравнение',tabPrize:'💵 Призы',tabMan:'📐 Комбинации',simulate:'🎲 Симулировать тираж',generate:'Сгенерировать',world:'Анализ лото по миру',copy:'📋 Скопировать ряды',smart:'🎯 Генератор комбинаций',smartSub:'Исследовательские модели · без прогноза',use:'✅ Перенести в симулятор',close:'Закрыть',pickHint:'👆 Выбери метод — и шары закрутятся прямо здесь',wheelBtn:'Сгенерировать wheel'},
+ en:{_n:'English',sim:'Simulator',ana:'Analytics',tabInp:'➕ Entry',tabFreq:'📊 Frequency',tabChi:'🔬 χ²',tabCmp:'⚖️ Compare',tabPrize:'💵 Prizes',tabMan:'📐 Combinations',simulate:'🎲 Simulate draw',generate:'Generate',world:'World lotto analysis',copy:'📋 Copy rows',smart:'🎯 Combination generator',smartSub:'Research models · no prediction',use:'✅ Move to simulator',close:'Close',pickHint:'👆 Pick a method — balls will spin right here',wheelBtn:'Generate wheel'},
+ no:{_n:'Norsk',sim:'Simulator',ana:'Analyse',tabInp:'➕ Utfylling',tabFreq:'📊 Frekvens',tabChi:'🔬 χ²',tabCmp:'⚖️ Sammenlign',tabPrize:'💵 Premier',tabMan:'📐 Kombinasjoner',simulate:'🎲 Simuler trekning',generate:'Generer',world:'Verdens lotto-analyse',copy:'📋 Kopier rekker',smart:'🎯 Kombinasjonsgenerator',smartSub:'Forskningsmodeller · ingen prognose',use:'✅ Flytt til simulator',close:'Lukk',pickHint:'👆 Velg metode — kulene spinner her',wheelBtn:'Generer wheel'},
+ sv:{_n:'Svenska',sim:'Simulator',ana:'Analys',tabInp:'➕ Ifyllnad',tabFreq:'📊 Frekvens',tabChi:'🔬 χ²',tabCmp:'⚖️ Jämför',tabPrize:'💵 Vinster',tabMan:'📐 Kombinationer',simulate:'🎲 Simulera dragning',generate:'Generera',world:'Världens lotto-analys',copy:'📋 Kopiera rader',smart:'🎯 Kombinationsgenerator',smartSub:'Forskningsmodeller · ingen prognos',use:'✅ Flytta till simulatorn',close:'Stäng',pickHint:'👆 Välj metod — kulorna snurrar här',wheelBtn:'Generera wheel'},
+ da:{_n:'Dansk',sim:'Simulator',ana:'Analyse',tabInp:'➕ Udfyldning',tabFreq:'📊 Frekvens',tabChi:'🔬 χ²',tabCmp:'⚖️ Sammenlign',tabPrize:'💵 Præmier',tabMan:'📐 Kombinationer',simulate:'🎲 Simulér trækning',generate:'Generér',world:'Verdens lotto-analyse',copy:'📋 Kopiér rækker',smart:'🎯 Kombinationsgenerator',smartSub:'Forskningsmodeller · ingen prognose',use:'✅ Flyt til simulator',close:'Luk',pickHint:'👆 Vælg metode — kuglerne snurrer her',wheelBtn:'Generér wheel'},
+ fi:{_n:'Suomi',sim:'Simulaattori',ana:'Analyysi',tabInp:'➕ Syöttö',tabFreq:'📊 Taajuus',tabChi:'🔬 χ²',tabCmp:'⚖️ Vertaa',tabPrize:'💵 Voitot',tabMan:'📐 Yhdistelmät',simulate:'🎲 Simuloi arvonta',generate:'Generoi',world:'Maailman lottoanalyysi',copy:'📋 Kopioi rivit',smart:'🎯 Yhdistelmägeneraattori',smartSub:'Tutkimusmallit · ei ennustetta',use:'✅ Siirrä simulaattoriin',close:'Sulje',pickHint:'👆 Valitse menetelmä — pallot pyörivät tässä',wheelBtn:'Generoi wheel'},
+ de:{_n:'Deutsch',sim:'Simulator',ana:'Analyse',tabInp:'➕ Eingabe',tabFreq:'📊 Häufigkeit',tabChi:'🔬 χ²',tabCmp:'⚖️ Vergleich',tabPrize:'💵 Gewinne',tabMan:'📐 Kombinationen',simulate:'🎲 Ziehung simulieren',generate:'Generieren',world:'Welt-Lotto-Analyse',copy:'📋 Reihen kopieren',smart:'🎯 Kombinationsgenerator',smartSub:'Forschungsmodelle · keine Prognose',use:'✅ Zum Simulator übertragen',close:'Schließen',pickHint:'👆 Methode wählen — die Kugeln drehen sich hier',wheelBtn:'Wheel generieren'},
+ fr:{_n:'Français',sim:'Simulateur',ana:'Analyse',tabInp:'➕ Saisie',tabFreq:'📊 Fréquence',tabChi:'🔬 χ²',tabCmp:'⚖️ Comparer',tabPrize:'💵 Gains',tabMan:'📐 Combinaisons',simulate:'🎲 Simuler le tirage',generate:'Générer',world:'Analyse loto mondiale',copy:'📋 Copier les grilles',smart:'🎯 Générateur de combinaisons',smartSub:'Modèles de recherche · sans prédiction',use:'✅ Transférer au simulateur',close:'Fermer',pickHint:'👆 Choisis une méthode — les boules tournent ici',wheelBtn:'Générer le wheel'},
+ es:{_n:'Español',sim:'Simulador',ana:'Análisis',tabInp:'➕ Entrada',tabFreq:'📊 Frecuencia',tabChi:'🔬 χ²',tabCmp:'⚖️ Comparar',tabPrize:'💵 Premios',tabMan:'📐 Combinaciones',simulate:'🎲 Simular sorteo',generate:'Generar',world:'Análisis mundial de loto',copy:'📋 Copiar filas',smart:'🎯 Generador de combinaciones',smartSub:'Modelos de investigación · sin predicción',use:'✅ Pasar al simulador',close:'Cerrar',pickHint:'👆 Elige un método — las bolas giran aquí',wheelBtn:'Generar wheel'},
+ it:{_n:'Italiano',sim:'Simulatore',ana:'Analisi',tabInp:'➕ Inserimento',tabFreq:'📊 Frequenza',tabChi:'🔬 χ²',tabCmp:'⚖️ Confronta',tabPrize:'💵 Premi',tabMan:'📐 Combinazioni',simulate:'🎲 Simula estrazione',generate:'Genera',world:'Analisi lotto mondiale',copy:'📋 Copia righe',smart:'🎯 Generatore di combinazioni',smartSub:'Modelli di ricerca · nessuna previsione',use:'✅ Trasferisci al simulatore',close:'Chiudi',pickHint:'👆 Scegli un metodo — le palline girano qui',wheelBtn:'Genera wheel'},
+ pt:{_n:'Português',sim:'Simulador',ana:'Análise',tabInp:'➕ Entrada',tabFreq:'📊 Frequência',tabChi:'🔬 χ²',tabCmp:'⚖️ Comparar',tabPrize:'💵 Prémios',tabMan:'📐 Combinações',simulate:'🎲 Simular sorteio',generate:'Gerar',world:'Análise mundial de loto',copy:'📋 Copiar linhas',smart:'🎯 Gerador de combinações',smartSub:'Modelos de pesquisa · sem previsão',use:'✅ Transferir para o simulador',close:'Fechar',pickHint:'👆 Escolhe um método — as bolas giram aqui',wheelBtn:'Gerar wheel'},
+ pl:{_n:'Polski',sim:'Symulator',ana:'Analiza',tabInp:'➕ Wpis',tabFreq:'📊 Częstość',tabChi:'🔬 χ²',tabCmp:'⚖️ Porównaj',tabPrize:'💵 Wygrane',tabMan:'📐 Kombinacje',simulate:'🎲 Symuluj losowanie',generate:'Generuj',world:'Analiza lotto na świecie',copy:'📋 Kopiuj wiersze',smart:'🎯 Generator kombinacji',smartSub:'Modele badawcze · bez prognozy',use:'✅ Przenieś do symulatora',close:'Zamknij',pickHint:'👆 Wybierz metodę — kule zakręcą się tutaj',wheelBtn:'Generuj wheel'},
+ nl:{_n:'Nederlands',sim:'Simulator',ana:'Analyse',tabInp:'➕ Invoer',tabFreq:'📊 Frequentie',tabChi:'🔬 χ²',tabCmp:'⚖️ Vergelijk',tabPrize:'💵 Prijzen',tabMan:'📐 Combinaties',simulate:'🎲 Trekking simuleren',generate:'Genereren',world:'Wereld lotto-analyse',copy:'📋 Rijen kopiëren',smart:'🎯 Combinatiegenerator',smartSub:'Onderzoeksmodellen · geen voorspelling',use:'✅ Naar simulator verplaatsen',close:'Sluiten',pickHint:'👆 Kies een methode — de ballen draaien hier',wheelBtn:'Wheel genereren'},
+ et:{_n:'Eesti',sim:'Simulaator',ana:'Analüüs',tabInp:'➕ Sisestus',tabFreq:'📊 Sagedus',tabChi:'🔬 χ²',tabCmp:'⚖️ Võrdle',tabPrize:'💵 Võidud',tabMan:'📐 Kombinatsioonid',simulate:'🎲 Simuleeri loosimist',generate:'Genereeri',world:'Maailma loto analüüs',copy:'📋 Kopeeri read',smart:'🎯 Kombinatsioonide generaator',smartSub:'Uurimismudelid · prognoosita',use:'✅ Teisalda simulaatorisse',close:'Sulge',pickHint:'👆 Vali meetod — pallid keerlevad siin',wheelBtn:'Genereeri wheel'},
+ lv:{_n:'Latviešu',sim:'Simulators',ana:'Analīze',tabInp:'➕ Ievade',tabFreq:'📊 Biežums',tabChi:'🔬 χ²',tabCmp:'⚖️ Salīdzini',tabPrize:'💵 Laimesti',tabMan:'📐 Kombinācijas',simulate:'🎲 Simulēt izlozi',generate:'Ģenerēt',world:'Pasaules loto analīze',copy:'📋 Kopēt rindas',smart:'🎯 Kombināciju ģenerators',smartSub:'Pētniecības modeļi · bez prognozes',use:'✅ Pārvietot uz simulatoru',close:'Aizvērt',pickHint:'👆 Izvēlies metodi — bumbiņas griezīsies šeit',wheelBtn:'Ģenerēt wheel'},
+ lt:{_n:'Lietuvių',sim:'Simuliatorius',ana:'Analizė',tabInp:'➕ Įvestis',tabFreq:'📊 Dažnis',tabChi:'🔬 χ²',tabCmp:'⚖️ Palygink',tabPrize:'💵 Laimėjimai',tabMan:'📐 Deriniai',simulate:'🎲 Simuliuoti traukimą',generate:'Generuoti',world:'Pasaulio loto analizė',copy:'📋 Kopijuoti eilutes',smart:'🎯 Derinių generatorius',smartSub:'Tyrimų modeliai · be prognozės',use:'✅ Perkelti į simuliatorių',close:'Uždaryti',pickHint:'👆 Pasirink metodą — kamuoliukai suksis čia',wheelBtn:'Generuoti wheel'}
 };
 const LANG_ORDER=['ru','en','no','sv','da','fi','de','fr','es','it','pt','pl','nl','et','lv','lt'];
 const LANG_FLAGS={ru:'🇷🇺',en:'🇬🇧',no:'🇳🇴',sv:'🇸🇪',da:'🇩🇰',fi:'🇫🇮',de:'🇩🇪',fr:'🇫🇷',es:'🇪🇸',it:'🇮🇹',pt:'🇵🇹',pl:'🇵🇱',nl:'🇳🇱',et:'🇪🇪',lv:'🇱🇻',lt:'🇱🇹'};
@@ -4992,7 +5208,7 @@ function rollBalls(){
 function renderGen(){
   stopRolls();
   const l=L();
-  const notes={freq:'Топ частых чисел из базы',bal:'Микс горячих и холодных',rnd:'Pure random (теория вероятности)',man:'Мандель: охват сегментов','world-hot':'Мировой горячий профиль','world-mix':'Мировой комбинированный профиль',markov:'Цепи Маркова: переходы от последнего тиража',gauss:'Гаусс/ЦПТ: сумма ряда в пике колокола',delta:'Дельта-метод: типичные интервалы базы',bayes:'Байес: сглаженные частоты (Лаплас α=3)',overdue:'Gap-анализ: просроченные интервалы',phys:'Физика: симуляция лототрона',chaos:'Хаос: логистическое отображение r=3.99',quantum:'Квантовый коллапс · '+(lastQuantumSrc||'истинная случайность'),paradox:'Парадоксы: контринтуитивная структура'};
+  const notes={freq:'Топ частых чисел из базы',bal:'Микс горячих и холодных',rnd:'Pure random (теория вероятности)',man:'Сегментный охват диапазона','world-hot':'Мировой горячий профиль','world-mix':'Мировой комбинированный профиль',markov:'Цепи Маркова: переходы от последнего тиража',gauss:'Гаусс/ЦПТ: сумма ряда в пике колокола',delta:'Дельта-метод: типичные интервалы базы',bayes:'Байес: сглаженные частоты (Лаплас α=3)',overdue:'Gap-анализ: просроченные интервалы',phys:'Физика: симуляция лототрона',chaos:'Хаос: логистическое отображение r=3.99',quantum:'Криптослучайность · '+(lastQuantumSrc||'генератор устройства'),paradox:'Парадоксы: контринтуитивная структура'};
   const bc=l.cls==='euro'?'#f4a0b0':'#10183a',bt2=l.cls==='euro'?'#1c1c1e':'#fff';
   let html='';
   sgGen.forEach((c,i)=>{
@@ -5270,7 +5486,7 @@ function IF_buildRows(A,Ab,l,ctx){
     prs.forEach(p=>usedPairs.add(p));
     const strong=m.filter(x=>(A.scores[x-1]||{}).score>=70);
     const sPairs=prs.filter(p=>{const v=A.pairs.lift.get(p);return v&&v.lift>=1.3&&v.obs>=2;});
-    rows.push({modelId:'field',modelName:'Информационное поле',type,typeName:name,
+    rows.push({modelId:'field',modelName:'Структурное поле данных',type,typeName:name,
       lotteryId:ctx.lotteryId,drawWindow:ctx.currentDraws.length,
       m,b:IF_pickBonus(Ab?Ab.scores:[],l,type,Math.random),
       generatedAt:new Date().toISOString(),
@@ -5354,7 +5570,7 @@ async function IF_run(){
   const A=IF_scores(ctx.currentDraws,'m',l.mB,l.pM);
   const bonusCnt=drawBonusCount?drawBonusCount(l):(l.pBo||0);
   const Ab=(l.bB&&bonusCnt)?IF_scores(ctx.currentDraws,'b',l.bB,bonusCnt):null;
-  const rows=IF_buildRows(A,Ab,l,ctx);
+  const rows=ensureUniqueGeneratedRows(IF_buildRows(A,Ab,l,ctx),l);
   const strongBalls=A.scores.filter(s=>s.score>=70).length;
   const strongLinks=[...A.pairs.lift.values()].filter(p=>p.lift>=1.5&&p.obs>=2).length;
   IF_state={ctx,A,Ab,rows,strongBalls,strongLinks,lot:cur,tab:'field'};
@@ -5379,7 +5595,7 @@ function IF_tab(t){
   if(t==='field'){
     body.innerHTML='<div class="if-grid">'+A.scores.map(s=>'<div class="if-ball '+ballCls+'" style="'+glow(s)+';opacity:'+(0.55+s.score/220)+'" onclick="IF_ballInfo('+s.n+',false)">'+s.n+'</div>').join('')+'</div>'+
       (Ab?'<div class="if-seclbl">'+(l.bonusName||'Дополнительные шары')+'</div><div class="if-grid">'+Ab.scores.map(s=>'<div class="if-ball '+bBallCls+'" style="'+glow(s)+';opacity:'+(0.55+s.score/220)+'" onclick="IF_ballInfo('+s.n+',true)">'+s.n+'</div>').join('')+'</div>':'')+
-      '<div class="if-note">Нажми на шар — увидишь его силу поля и сильные связи. Свечение отражает Field Strength Score. <b onclick="IF_scoreInfo()" style="color:var(--gold);cursor:pointer">ⓘ Что такое сила поля</b></div>';
+      '<div class="if-note">Нажми на шар — увидишь его структурный балл и связи. Свечение отражает Structure Score. <b onclick="IF_scoreInfo()" style="color:var(--gold);cursor:pointer">ⓘ Что такое структурный балл</b></div>';
   }
   if(t==='links'){
     const top=[...A.pairs.lift.values()].filter(p=>p.obs>=2).sort((a,b)=>b.lift-a.lift).slice(0,14);
@@ -5399,7 +5615,7 @@ function IF_tab(t){
       '<div class="if-note">Следующая строка улучшит разнообразие, если добавит числа из слабо представленной группы и новые, ещё не встречавшиеся пары — так работает «Поле покрытия».</div>';
   }
   if(t==='rows'){
-    body.innerHTML=rows.map((r,i)=>'<div class="if-rowcard"><div style="display:flex;justify-content:space-between;align-items:center"><span class="if-rowtype">'+(i+1)+' · '+r.typeName+'</span><span class="if-rowscore">Field Score '+r.fieldScore+'</span></div>'+
+    body.innerHTML=rows.map((r,i)=>'<div class="if-rowcard"><div style="display:flex;justify-content:space-between;align-items:center"><span class="if-rowtype">'+(i+1)+' · '+r.typeName+'</span><span class="if-rowscore">Structure Score '+r.fieldScore+'</span></div>'+
       '<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball '+ballCls+'">'+n+'</div>').join('')+(r.b&&r.b.length?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball '+bBallCls+'">'+n+'</div>').join(''):'')+'</div>'+
       '<div class="if-rowexp">'+r.explanation+' Новых пар: '+r.newPairs+(r.maxOverlap?' · пересечение с другими строками: до '+r.maxOverlap+' чисел':'')+'</div></div>').join('')+
       '<button class="btn-draw '+l.cls+'" style="margin-top:6px" onclick="IF_useRows()">Использовать 10 строк в симуляторе</button>';
@@ -5414,16 +5630,16 @@ function IF_ballInfo(n,isBonus){
   const lvl3=x=>x>=0.66?'высокий':(x>=0.33?'средний':'низкий');
   const links=[...A.pairs.lift.values()].filter(p=>(p.a===n||p.b===n)&&p.obs>=2).sort((a,b)=>b.lift-a.lift).slice(0,3);
   const linkTxt=links.length?'\nСильные связи:\n'+links.map(p=>n+' — '+(p.a===n?p.b:p.a)).join('\n'):'';
-  showFeedback('Шар '+n+' · '+(s.score>=70?'Высокая':(s.score>=40?'Средняя':'Спокойная'))+' сила поля',
-    'Сила поля: '+s.score+'/100\nЧастота в периоде: '+lvl(s.sig.freq)+'\nНедавняя активность: '+lvl(s.sig.recent)+'\nСвязи с другими шарами: '+lvl2(s.sig.conn)+'\nСтруктурный вклад: '+lvl3(s.sig.struct)+'\nВклад в разнообразие: '+lvl3(s.sig.div)+linkTxt,'🧬',6000);
+  showFeedback('Шар '+n+' · '+(s.score>=70?'Высокий':(s.score>=40?'Средний':'Низкий'))+' структурный балл',
+    'Структурный балл: '+s.score+'/100\nЧастота в периоде: '+lvl(s.sig.freq)+'\nНедавняя активность: '+lvl(s.sig.recent)+'\nСвязи с другими шарами: '+lvl2(s.sig.conn)+'\nСтруктурный вклад: '+lvl3(s.sig.struct)+'\nВклад в разнообразие: '+lvl3(s.sig.div)+linkTxt,'🧬',6000);
 }
 function IF_scoreInfo(){
-  showFeedback('Сила поля','Сила поля объединяет статистику выбранного периода, интервалы, связи между числами и вклад в разнообразие комбинаций. Она описывает структуру доступных данных выбранной лотереи, а не вероятность будущего независимого тиража.','ⓘ',7000);
+  showFeedback('Структурный балл','Структурный балл объединяет статистику выбранного периода, интервалы, связи между числами и вклад в разнообразие комбинаций. Он описывает только доступные данные выбранной лотереи, а не вероятность будущего независимого тиража.','ⓘ',7000);
 }
 function IF_useRows(){
   if(!IF_state)return;
   IF_close();
-  const dur=setGeneratedRows(IF_state.rows.map(r=>({m:r.m,b:r.b})),'Готово: 10 исследовательских строк · Информационное поле · '+IF_state.ctx.lotteryName+' · '+IF_state.ctx.currentDraws.length+' тиражей.');
+  const dur=setGeneratedRows(IF_state.rows,'Готово: 10 исследовательских строк · Структурное поле данных · '+IF_state.ctx.lotteryName+' · '+IF_state.ctx.currentDraws.length+' тиражей.',true);
   setTimeout(()=>showFeedback('Строки поля готовы','10 исследовательских строк Информационного поля перенесены в симулятор.','🧬',2400),dur+150);
 }
 /* инициализация селектора окна */
@@ -5434,7 +5650,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 /* ═══════════════════════════════════════════════════════════
-   КОНСЕНСУС МОДЕЛЕЙ · Информационное поле как главный судья
+   КОНСЕНСУС МОДЕЛЕЙ · структурный анализ итоговых строк
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Реестр базовых моделей с семействами (динамический; world-* исключены —
@@ -5447,13 +5663,13 @@ const CONS_MODELS=[
   {id:'bayes',  name:'Байесовский',           family:'Байесовские и вероятностные'},
   {id:'gauss',  name:'Гаусс · ЦПТ',           family:'Байесовские и вероятностные'},
   {id:'delta',  name:'Дельта-метод',          family:'Структура комбинации'},
-  {id:'man',    name:'Мандель-сегменты',      family:'Структура комбинации'},
+  {id:'man',    name:'Сегментный охват',      family:'Структура комбинации'},
   {id:'wheel',  name:'Колёсная матрица',      family:'Комбинаторное покрытие'},
   {id:'rnd',    name:'Pure random',           family:'Равномерная случайность'},
   {id:'phys',   name:'Физика лототрона',      family:'Физическая симуляция'},
   {id:'chaos',  name:'Детерминированный хаос',family:'Авторские экспериментальные'},
-  {id:'quantum',name:'Квантовый коллапс',     family:'Авторские экспериментальные'},
-  {id:'qastro', name:'Квантово-астральный',   family:'Квантово-астральная'}
+  {id:'quantum',name:'Криптослучайность',      family:'Авторские экспериментальные'},
+  {id:'qastro', name:'Астрологический режим',  family:'Развлекательная интерпретация'}
 ];
 const CONS_ROWS_PER_MODEL=10;
 var CONS_state=null;
@@ -5509,18 +5725,18 @@ async function CONS_run(){
     const score=100*(0.40*(e.models.size/totModels)+0.25*(e.fams.size/totFams)+0.20*(e.freq/maxFreq)+0.15*Math.min(stab,1));
     cons.push({n,score:Math.round(score),models:e.models.size,fams:e.fams.size,freq:e.freq,stab});
   }
-  /* 3) Информационное поле — судья: анализ поля + свои 10 строк с учётом консенсуса */
+  /* 3) Структурное поле данных: анализ + 10 строк с учётом консенсуса */
   const A=IF_scores(ctx.currentDraws,'m',l.mB,l.pM);
   const bonusCnt=drawBonusCount?drawBonusCount(l):(l.pBo||0);
   const Ab=(l.bB&&bonusCnt)?IF_scores(ctx.currentDraws,'b',l.bB,bonusCnt):null;
   /* поле видит консенсус: подмешиваем Consensus Score в веса поля (но не в сам Consensus Score!) */
   const blended={...A,scores:A.scores.map(s=>({...s,score:Math.round(0.6*s.score+0.4*(cons[s.n-1]||{}).score||0)}))};
-  const fieldRows=IF_buildRows(blended,Ab,l,ctx).map(r=>{const fixed=normalizeGeneratedRow(r,l);return{modelId:'field',modelName:'Информационное поле',family:'Авторская meta-модель',rowNumber:0,lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,m:fixed.m,b:fixed.b,typeName:r.typeName,explanation:r.explanation,generatedAt:r.generatedAt};});
+  const fieldRows=IF_buildRows(blended,Ab,l,ctx).map(r=>{const fixed=normalizeGeneratedRow(r,l);return{modelId:'field',modelName:'Структурное поле данных',family:'Исследовательская meta-модель',rowNumber:0,lotteryId:ctx.lotteryId,window:ctx.currentDraws.length,m:fixed.m,b:fixed.b,typeName:r.typeName,explanation:r.explanation,generatedAt:r.generatedAt};});
   CONS_state={ctx,l,modelRows,fieldRows,cons,A,Ab,lot:cur,pickN:5,pickMode:'mixed'};
   /* сохранить эксперимент */
   try{localStorage.setItem('md2_cons_exp',JSON.stringify({lottery:cur,window:ctx.selectedDrawWindow,drawsUsed:ctx.currentDraws.length,models:CONS_MODELS.map(m=>m.id),date:new Date().toISOString()}));}catch(e){}
   /* 4) сводка + топ чисел */
-  const sum=[[CONS_MODELS.length,'базовых моделей'],[modelRows.length,'строк моделей'],[fieldRows.length,'строк Информационного поля'],[modelRows.length+fieldRows.length,'всего кандидатов'],[totFams,'семейств моделей'],[ctx.currentDraws.length,'тиражей использовано']];
+  const sum=[[CONS_MODELS.length,'базовых моделей'],[modelRows.length,'строк моделей'],[fieldRows.length,'строк структурного анализа'],[modelRows.length+fieldRows.length,'всего кандидатов'],[totFams,'семейств моделей'],[ctx.currentDraws.length,'тиражей использовано']];
   document.getElementById('cons-summary').innerHTML=sum.map(x=>'<div class="if-sumcard"><div class="if-sumv">'+x[0]+'</div><div class="if-suml">'+x[1]+'</div></div>').join('');
   const top=[...cons].sort((a,b)=>b.score-a.score).slice(0,12);
   const cat=s=>s>=65?['высокий консенсус','hi']:(s>=40?['средний консенсус','mid']:['распределённая поддержка','dist']);
@@ -5528,7 +5744,7 @@ async function CONS_run(){
     top.map(t=>{const c=cat(t.score);return '<div class="cons-num"><div class="if-rball rb-m-'+l.cls+'">'+t.n+'</div><div style="flex:1"><b style="font-size:13.5px">Score '+t.score+'</b><div style="font-size:11.5px;color:var(--sub2)">'+t.models+' моделей · '+t.fams+' семейств · '+t.freq+' появлений</div></div><span class="cons-cat '+c[1]+'">'+c[0]+'</span></div>';}).join('')+
     '<div class="if-note" style="margin-top:10px">Консенсус показывает согласие моделей на последних тиражах выбранной лотереи. Он не является вероятностью будущего тиража.</div>'+
     '<div class="if-seclbl" style="margin-top:16px">Роль Информационного поля</div>'+
-    '<div class="if-note" style="margin-top:0">Информационное поле сравнивает голоса моделей, связи между числами, повторы и разнообразие матрицы. Оно помогает сформировать более структурированный итоговый набор исследовательских строк — но не считается отдельным независимым голосом в Consensus Score.</div>';
+    '<div class="if-note" style="margin-top:0">Структурный анализ сравнивает голоса моделей, связи между числами, повторы и разнообразие матрицы. Он помогает сформировать итоговый набор исследовательских строк, но не считается отдельным независимым голосом в Consensus Score и не прогнозирует выигрыш.</div>';
 }
 function CONS_close(){document.getElementById('cons-ov').classList.remove('show');}
 
@@ -5582,7 +5798,7 @@ async function PICK_go(){
   const judgeMount=document.getElementById('matrix-jmount');
   if(judgeMount)judgeMount.innerHTML='';
   document.getElementById('matrix-ov').classList.add('show');
-  const phrases=['Модели передают результаты…','Информационное поле анализирует связи…','Проверяем разнообразие…','Формируем итоговую матрицу…'];
+  const phrases=['Модели передают результаты…','Структурный анализ проверяет связи…','Проверяем разнообразие…','Формируем итоговую матрицу…'];
   for(let i=0;i<phrases.length;i++){body.innerHTML='<div class="if-empty">'+phrases[i]+'</div>';await new Promise(r=>setTimeout(r,260));}
   const{l,ctx,cons}=st;
   const pairKey=(a,b)=>Math.min(a,b)+'-'+Math.max(a,b);
@@ -5630,7 +5846,7 @@ async function PICK_go(){
     chosen.push(best);
     pool=pool.filter(r=>r!==best);
   }
-  const matrixRows=chosen.map(r=>{const fixed=normalizeGeneratedRow(r,l);return{...r,m:fixed.m,b:fixed.b};});
+  const matrixRows=ensureUniqueGeneratedRows(chosen.map(r=>{const fixed=normalizeGeneratedRow(r,l);return{...r,m:fixed.m,b:fixed.b};}),l);
   st.matrix=matrixRows;
   try{localStorage.setItem('md2_matrix_exp',JSON.stringify({lottery:cur,mode:st.pickMode,n:st.pickN,date:new Date().toISOString(),rows:matrixRows.map(r=>({m:r.m,b:r.b,model:r.modelId,cs:r.cs}))}));}catch(e){}
   /* рендер итоговой матрицы */
@@ -5638,7 +5854,7 @@ async function PICK_go(){
   document.getElementById('matrix-sub').textContent=matrixRows.length+' '+rowWord(matrixRows.length)+' из '+totalCand+' исследовательских результатов';
   document.getElementById('matrix-ctx').textContent=ctx.lotteryName+' · последние '+ctx.currentDraws.length+' доступных тиражей · режим: '+(PICK_MODES.find(m=>m[0]===st.pickMode)||[])[1];
   body.innerHTML=matrixRows.map((r,i)=>{
-    const who=r.modelId==='field'?('Информационное поле · '+(r.typeName||'')):(r.modelName+(r.family?' · '+r.family:''));
+    const who=r.modelId==='field'?('Структурное поле данных · '+(r.typeName||'')):(r.modelName+(r.family?' · '+r.family:''));
     const supModels=new Set(),supFams=new Set();
     r.m.forEach(n=>{st.modelRows.forEach(mr=>{if(mr.m.includes(n)){supModels.add(mr.modelId);supFams.add(mr.family);}});});
     r._exp='Числа строки поддержали '+supModels.size+' моделей из '+CONS_MODELS.length+' ('+supFams.size+' семейств). '+(r.explanation||'')+' Включена в матрицу за '+(st.pickMode==='coverage'?'вклад в покрытие пар':(st.pickMode==='minoverlap'?'минимальное пересечение':'сочетание Candidate Score и разнообразия'))+'. Анализ выполнен по '+ctx.currentDraws.length+' последним тиражам '+ctx.lotteryName+'.';
@@ -5666,7 +5882,7 @@ function MATRIX_close(){document.getElementById('matrix-ov').classList.remove('s
 function MATRIX_use(){
   const st=CONS_state;if(!st||!st.matrix)return;
   MATRIX_close();CONS_close();
-  const dur=setGeneratedRows(st.matrix.map(r=>({m:r.m,b:r.b})),'Готово: '+st.matrix.length+' '+rowWord(st.matrix.length)+' · Итоговая матрица консенсуса · '+st.ctx.lotteryName+'.');
+  const dur=setGeneratedRows(st.matrix,'Готово: '+st.matrix.length+' '+rowWord(st.matrix.length)+' · Итоговая матрица консенсуса · '+st.ctx.lotteryName+'.',true);
   setTimeout(()=>showFeedback('Матрица готова',st.matrix.length+' '+rowWord(st.matrix.length)+' итоговой матрицы консенсуса перенесены в симулятор.','💠',2600),dur+150);
 }
 function MATRIX_judge(){
@@ -5674,12 +5890,9 @@ function MATRIX_judge(){
   if(!st||!st.matrix||!st.matrix.length){showFeedback('Матрица пуста','Сначала сформируй итоговую матрицу.','✋',2400);return;}
   JUDGE_open('matrix',st.matrix.map(r=>({m:[...r.m],b:[...(r.b||[])]})),'matrix-jmount',(finalRows,meta)=>{
     MATRIX_close();CONS_close();
-    let decision='без изменений';
-    if(meta.proposed&&meta.active===meta.proposed)decision='со всеми '+meta.active+' заменами';
-    else if(meta.active)decision='с выбранными '+meta.active+' из '+meta.proposed+' замен';
-    else if(meta.proposed)decision='без выбранных замен';
-    const dur=setGeneratedRows(finalRows,'Проверенная судьёй матрица перенесена в симулятор '+decision+'.');
-    setTimeout(()=>showFeedback('Решение применено','Матрица перенесена на главный экран '+decision+'.','⚖️',2800),dur+150);
+    const decision=JUDGE_choiceText(meta);
+    const dur=setGeneratedRows(finalRows,'Проверенная судьёй матрица перенесена в симулятор. '+decision+'.');
+    setTimeout(()=>showFeedback('Решение применено',decision+'. Матрица перенесена на главный экран.','⚖️',2800),dur+150);
   },{
     intro:'Судья проверяет уже собранную итоговую матрицу и только предлагает точечные замены. Нажми на любую замену, чтобы принять или отклонить её; остальные строки сохранятся как есть.',
     applyLabel:'Использовать проверенную матрицу'
@@ -5719,11 +5932,11 @@ async function WC_open(){
   const l=L();
   const draws=await loadD(cur);
   if(!draws.length){
-    showFeedback('База пуста','Обнови официальные результаты на вкладке «Аналитика» — и здесь появится свежая победная комбинация '+(l.short||l.name)+'.','📭',4200);
+    showFeedback('База пуста','Обнови официальные результаты на вкладке «Аналитика» — и здесь появится последний опубликованный результат '+(l.short||l.name)+'.','📭',4200);
     return;
   }
   const d=draws[0];WC_draw=d;
-  document.getElementById('wc-title').textContent='🎯 Победная комбинация · '+(l.short||l.name);
+  document.getElementById('wc-title').textContent='🎯 Результат симуляции · '+(l.short||l.name);
   document.getElementById('wc-date').textContent='Тираж '+d.date;
   document.getElementById('wc-balls').innerHTML=
     (d.main||[]).map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+
@@ -5757,8 +5970,8 @@ async function WC_fav(){
 function WC_share(){
   if(!WC_draw)return;
   const l=L();
-  shareText('Победная комбинация · '+(l.short||l.name),
-    '🎯 Победная комбинация '+(l.short||l.name)+' · тираж '+WC_draw.date+'\n'+
+  shareText('Результат симуляции · '+(l.short||l.name),
+    '🎯 Результат симуляции '+(l.short||l.name)+' · тираж '+WC_draw.date+'\n'+
     (WC_draw.main||[]).join(' ')+((WC_draw.bonus&&WC_draw.bonus.length)?' | '+WC_draw.bonus.join(' '):''));
 }
 function TK_open(){
@@ -5830,10 +6043,11 @@ async function SUP_go(){
     const b=(l.bB&&bc)?weightedDistinct(wb,bc,l.bB,Math.random).sort((a,b)=>a-b):[];
     verdict.push({m,b});
   }
-  st.verdict=verdict;
+  st.verdict=ensureUniqueGeneratedRows(verdict,l);
+  const issued=st.verdict;
   res.innerHTML='<div class="if-seclbl">Вердикт судьи · '+verdict.length+' '+rowWord(verdict.length)+'</div>'+
-    verdict.map((r,i)=>'<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+(r.b.length?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>').join('')+
-    '<div class="if-note">Судья объединил голоса твоих рядов ('+st.srcRows.length+') с силой поля последних '+(ctx.currentDraws.length)+' тиражей и собрал разнообразный вердикт. Это исследовательские строки, а не прогноз.</div>'+
+    issued.map((r,i)=>'<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+(r.b.length?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>').join('')+
+    '<div class="if-note">Судья объединил голоса твоих рядов ('+st.srcRows.length+') со структурным баллом последних '+(ctx.currentDraws.length)+' тиражей и собрал разнообразный вердикт. Это исследовательские строки, а не прогноз.</div>'+
     '<button class="btn-draw '+l.cls+'" style="margin-top:10px" onclick="SUP_use()">Использовать в симуляторе</button>'+
     '<button class="btn-exp" style="margin-top:8px" onclick="SUP_share()">📤 Поделиться вердиктом</button>';
   document.getElementById('sup-go').style.display='none';
@@ -5841,7 +6055,7 @@ async function SUP_go(){
 function SUP_use(){
   const st=SUP_state;if(!st||!st.verdict)return;
   SUP_close();try{MATRIX_close();CONS_close();}catch(e){}
-  const dur=setGeneratedRows(st.verdict.map(r=>({m:r.m,b:r.b})),'Готово: '+st.verdict.length+' '+rowWord(st.verdict.length)+' · Верховный судья.');
+  const dur=setGeneratedRows(st.verdict,'Готово: '+st.verdict.length+' '+rowWord(st.verdict.length)+' · Верховный судья.',true);
   setTimeout(()=>showFeedback('Вердикт принят',st.verdict.length+' '+rowWord(st.verdict.length)+' Верховного судьи перенесены в симулятор.','⚖️',2400),dur+150);
 }
 function SUP_share(){
@@ -5875,7 +6089,7 @@ async function PERIOD_open(){
   const presets=[[0,'Вся база · '+n+' тиражей']];
   [[1,'За 1 год'],[2,'За 2 года'],[3,'За 3 года']].forEach(([yy,lbl])=>{const c=y(yy);if(c>=10&&c<n)presets.push([c,lbl+' · '+c]);});
   [150,100,50].forEach(k=>{if(n>k)presets.push([k,'Последние '+k]);});
-  document.getElementById('period-note').textContent='Для '+(l.short||l.name)+' доступно '+n+' тиражей. Все модели, поле и консенсус будут считать по выбранному периоду.';
+  document.getElementById('period-note').textContent='Для '+(l.short||l.name)+' доступно '+n+' тиражей. Все модели, структурный анализ и консенсус будут считать по выбранному периоду.';
   const curW=IF_getRange()?-1:IF_getWin();
   document.getElementById('period-presets').innerHTML=presets.map(([v,lbl])=>'<div class="pick-mode'+(v===curW?' on':'')+'" onclick="PERIOD_set('+v+')"><div class="pick-mode-t">'+lbl+'</div></div>').join('');
   document.getElementById('period-custom').max=n;
@@ -6083,7 +6297,19 @@ const PRO_PLANS=Object.freeze({
    Допустимы строка URL или объект {default,card,apple,google}. */
 const PRO_CHECKOUT_URLS=Object.assign({m1:'',m3:'',m6:'',m12:''},window.MANDEL_PRO_CHECKOUT_URLS||{});
 let PRO_selectedPlan='m12',PRO_selectedMethod='card';
+function PRO_isConfigured(){return Object.values(PRO_CHECKOUT_URLS).some(v=>typeof v==='string'?!!v:!!(v&&Object.values(v).some(Boolean)));}
+function PRO_updateAvailability(){
+  if(!PRO_isConfigured())return;
+  const badge=document.getElementById('sub-badge'),line=document.getElementById('sub-price-line'),cta=document.getElementById('sub-cta');
+  if(badge)badge.textContent='PREMIUM';
+  if(line)line.innerHTML='$4.99/мес <span>· 3 мес $12.99 · 6 мес $22.99 · год $34.99</span>';
+  if(cta)cta.textContent='Узнать подробнее →';
+}
 function openSubInfo(){
+  if(!PRO_isConfigured()){
+    showFeedback('Mandel World Pro','Оплата ещё не подключена. В публичной версии незавершённый checkout отключён; для iOS и Android потребуется встроенная подписка магазина.','🛠️',5200);
+    return;
+  }
   PRO_showPlans();
   document.getElementById('pro-ov').classList.add('show');
 }
@@ -6123,6 +6349,7 @@ function PRO_continueCheckout(){
   if(target){window.location.assign(target);return;}
   status.textContent='Экран оформления готов. Для запуска оплаты осталось подключить защищённую платёжную ссылку для этого тарифа.';
 }
+PRO_updateAvailability();
 
 
 /* ═══ Картина тиража: сколько «соседей» выиграло бы (по реальной статистике базы) ═══ */
@@ -6133,9 +6360,10 @@ async function crowdStats(){
   const draws=await loadD(cur);
   const agg={};let n=0;
   for(const d of draws.slice(0,60)){
-    if(!d||!Array.isArray(d.prizes)||!d.prizes.length)continue;
+    const payouts=d&&(d.payoutTiers||d.prizes);
+    if(!Array.isArray(payouts)||!payouts.length)continue;
     n++;
-    for(const p of d.prizes){
+    for(const p of payouts){
       if(!p||!p.label)continue;
       (agg[p.label]=agg[p.label]||{w:[],v:[]});
       if(isFinite(p.winners))agg[p.label].w.push(p.winners);
@@ -6153,16 +6381,10 @@ async function crowdStats(){
     src='calc';n=0;
     const vol=Math.max(200000,Math.round(jackpotCombos(l)*0.08)); /* объём рынка: джекпот берётся в ~8% тиражей */
     tiers=getPrizeTiers(l).map(t=>{
-      const mm=parseInt(t.match),bb=t.match.includes('+')?parseInt(t.match.split('+')[1]):null;
-      const pr={name:t.label,lvl:0,m:mm,b:bb};
-      const bonusDrawn=drawnBonusCount(l);
-      const pMain=comb(l.pM,mm)*comb(l.mB-l.pM,l.pM-mm)/comb(l.mB,l.pM);
-      const pBon=(bb===null||!l.bB||!bonusDrawn)?1:comb(bonusDrawn,bb)*comb(l.bB-bonusDrawn,(l.pBo||bonusDrawn)-bb)/comb(l.bB,l.pBo||bonusDrawn);
-      const prob=pMain*(isFinite(pBon)?pBon:1);
-      const isTop=mm===l.pM&&(bb===null||bb===(l.pBo||drawBonusCount(l)));
-      const v=estimatePrizeNok({name:(isTop?'ДЖЕКПОТ ':'')+t.label,lvl:isTop?9:5,m:mm,b:bb===null?0:bb},l)||0;
+      const prob=tierProbability(l,t.match);
+      const v=estimatePrizeNok({key:t.match,name:t.label,lvl:0},l)||0;
       return{label:t.label,avgW:prob>0?vol*prob:0,avgV:v};
-    }).filter(t=>t.avgW>=0.05&&t.avgV>0).slice(0,8);
+    }).filter(t=>t.avgW>=0.05&&t.avgV>0);
   }
   tiers.sort((a,b)=>b.avgV-a.avgV);
   CROWD_cache={tiers,n,src};CROWD_lot=cur;
@@ -6179,7 +6401,7 @@ async function renderCrowd(dM,dB){
   rows.forEach(r=>{const p=checkPrize(r.m,r.b,dM,dB,l);if(p&&(!my||p.lvl>my.lvl))my=p;});
   const jitter=x=>Math.max(0,Math.round(x*(0.82+Math.random()*0.36)));
   box.innerHTML='<div class="crowd-t">🌍 Картина тиража</div>'+
-    tiers.slice(0,8).map(t=>{
+    tiers.slice(0,10).map(t=>{
       const isMe=my&&my.name&&t.label&&my.name.replace(/\s/g,'')===t.label.replace(/\s/g,'');
       const w=jitter(t.avgW);
       return '<div class="crowd-row'+(isMe?' me':'')+'"><span class="crowd-tier">'+t.label+(isMe?' · + ты! 🎉':'')+'</span><span class="crowd-n">'+(w>0?w.toLocaleString('nb-NO')+' чел.':'—')+'</span><span class="crowd-p">'+(t.avgV?fmtInt(t.avgV)+' '+(l.currency||'NOK'):'')+'</span></div>';
@@ -6209,17 +6431,7 @@ function QA_moonSign(d){
   return Math.floor(L/30);
 }
 function QA_nextDrawDate(){
-  const l=L(),now=new Date();
-  const [hh,mm]=l.dl.split(':').map(Number);
-  let nd=null;
-  for(const d of l.drawDays){
-    const cand=new Date(now);
-    cand.setDate(now.getDate()+((d-now.getDay()+7)%7));
-    cand.setHours(hh,mm,0,0);
-    if(cand<=now)cand.setDate(cand.getDate()+7);
-    if(!nd||cand<nd)nd=cand;
-  }
-  return nd;
+  return nextDraw(cur).date;
 }
 function QA_getSign(){const v=parseInt(localStorage.getItem('md2_zsign'));return isFinite(v)&&v>=0&&v<12?v:null;}
 async function QA_rows(count,opts){
@@ -6329,7 +6541,7 @@ async function QA_go(){
   const res=document.getElementById('qa-result');
   res.innerHTML='<div class="if-empty" style="color:#C9B8E8;padding:22px">🔭 Запрашиваю квантовый поток и считаю положение Луны…</div>';
   const l=L();
-  const rows=await QA_rows(st.n);
+  const rows=ensureUniqueGeneratedRows(await QA_rows(st.n),l);
   st.rows=rows;
   const{ph,ms,zs,src,drawDate}=rows.meta;
   res.innerHTML=rows.map((r,ri)=>
@@ -6337,11 +6549,11 @@ async function QA_go(){
     r.m.map((n,i)=>'<div class="qa-ball '+(r.tags[i]==='z'?'zres':(r.tags[i]==='m'?'mres':'qb'))+'" style="animation-delay:'+(ri*0.12+i*0.07).toFixed(2)+'s,'+(ri*0.12+i*0.07+0.5).toFixed(2)+'s">'+n+'</div>').join('')+
     (r.b.length?'<div style="width:6px"></div>'+r.b.map((n,bi)=>'<div class="qa-ball bonus" style="width:34px;height:34px;font-size:13px;animation-delay:'+(ri*0.12+(r.m.length+bi)*0.07).toFixed(2)+'s,'+(ri*0.12+(r.m.length+bi)*0.07+0.5).toFixed(2)+'s">'+n+'</div>').join(''):'')+
     '</div></div>').join('')+
-    '<div class="qa-legend"><span><span class="qa-dot" style="background:#3DBB8A"></span>звёздные/бонус</span><span><span class="qa-dot" style="background:#E9B44C"></span>твой знак</span><span><span class="qa-dot" style="background:#6BB8E8"></span>Луна тиража</span><span><span class="qa-dot" style="background:#E86BA8"></span>личный резонанс</span><span><span class="qa-dot" style="background:#9B6BE8"></span>чистый квант</span></div>'+
+    '<div class="qa-legend"><span><span class="qa-dot" style="background:#3DBB8A"></span>звёздные/бонус</span><span><span class="qa-dot" style="background:#E9B44C"></span>твой знак</span><span><span class="qa-dot" style="background:#6BB8E8"></span>фаза Луны</span><span><span class="qa-dot" style="background:#E86BA8"></span>персональный профиль</span><span><span class="qa-dot" style="background:#9B6BE8"></span>случайный источник</span></div>'+
     '<div class="qa-pass">🪪 <b>Звёздный паспорт</b><br>Знак: '+QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+' · Луна тиража: '+ph.emoji+' '+ph.name+' ('+ph.illum+'%) в '+QA_ZODIAC[ms][1]+
     (rows.meta.natal?'<br>Натальная Луна: '+QA_ZODIAC[rows.meta.natal.moonSign][0]+' '+QA_ZODIAC[rows.meta.natal.moonSign][1]+(rows.meta.natal.hasTime?' (по времени рождения)':' (~полдень)')+' · Число судьбы: '+rows.meta.natal.lifePath:'')+
     '<br>Тираж: '+drawDate.toLocaleString('ru-RU',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'<br>Источник случайности: '+src+
-    (rows.meta.baseN?'<br>Резонанс базы: сила поля из '+rows.meta.baseN+' тиражей вплетена в веса':'')+'</div>'+
+    (rows.meta.baseN?'<br>Данные базы: структурные веса рассчитаны по '+rows.meta.baseN+' тиражам':'')+'</div>'+
     '<button class="btn-draw euro qa-go" style="margin-top:12px" onclick="QA_use()">Использовать в симуляторе</button>'+
     '<button class="btn-exp" style="margin-top:8px;border-color:#C9A55A;color:#F5CE7B" onclick="HORO_open()">📜 Гороскоп на сегодня</button>'+
     '<button class="btn-exp" style="margin-top:8px;border-color:#6B4BA8;color:#E8DEFA" onclick="QA_share()">📤 Поделиться со Вселенной</button>';
@@ -6349,14 +6561,14 @@ async function QA_go(){
 function QA_use(){
   const st=QA_state;if(!st||!st.rows)return;
   QA_close();
-  const dur=setGeneratedRows(st.rows.map(r=>({m:r.m,b:r.b})),'Готово: '+st.rows.length+' '+rowWord(st.rows.length)+' · Квантово-астральный.');
+  const dur=setGeneratedRows(st.rows,'Готово: '+st.rows.length+' '+rowWord(st.rows.length)+' · Астрологический режим (развлекательный).',true);
   setTimeout(()=>showFeedback('Вселенная услышала',st.rows.length+' '+rowWord(st.rows.length)+' перенесены в симулятор. Шансы прежние — мечта бесценна. ✨','🔮',2600),dur+150);
 }
 function QA_share(){
   const st=QA_state;if(!st||!st.rows)return;
   const{ph,ms,zs}=st.rows.meta;
-  shareText('Квантово-астральный ряд · '+L().name,
-    '🔮 Мои квантово-астральные числа · '+L().name+'\n'+
+  shareText('Астрологический развлекательный ряд · '+L().name,
+    '🔮 Мой развлекательный астрологический ряд · '+L().name+'\n'+
     rowsAsText(st.rows,L())+'\n'+
     QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+' · '+ph.emoji+' '+ph.name+' · Луна в '+QA_ZODIAC[ms][1]);
 }
@@ -6622,9 +6834,9 @@ async function withBusy(label,fn){
 }
 
 
-/* ═══════════ СОВЕТ МОДЕЛИ НА СЛЕДУЮЩИЙ ТИРАЖ + ВЕРДИКТ СУДЬИ-СЛЕДОВАТЕЛЯ ═══════════ */
+/* ═══════════ ИССЛЕДОВАТЕЛЬСКИЙ НАБОР + ВЕРДИКТ СУДЬИ-СЛЕДОВАТЕЛЯ ═══════════ */
 var ADV_state=null;
-const ADV_NAMES={freq:'Частотный анализ',bal:'Сбалансированный',man:'Мандель-сегменты',markov:'Цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'Дельта-метод',bayes:'Байесовский',overdue:'Gap-анализ',phys:'Физика лототрона',chaos:'Детерминированный хаос',quantum:'Квантовый коллапс',rnd:'Pure random','world-hot':'Мировой горячий','world-mix':'Мировой смешанный',qastro:'Квантово-астральный',wheel:'Колёсная матрица',paradox:'Система парадоксов'};
+const ADV_NAMES={freq:'Частотный анализ',bal:'Сбалансированный',man:'Сегментный охват',markov:'Цепи Маркова',gauss:'Гаусс · ЦПТ',delta:'Дельта-метод',bayes:'Байесовский',overdue:'Gap-анализ',phys:'Физика лототрона',chaos:'Детерминированный хаос',quantum:'Криптослучайность',rnd:'Pure random','world-hot':'Мировой горячий','world-mix':'Мировой смешанный',qastro:'Астрологический режим',wheel:'Колёсная матрица',paradox:'Система парадоксов'};
 function ADV_injectButtons(){
   document.querySelectorAll('.sg-algo').forEach(card=>{
     if(card.querySelector('.sg-adv'))return;
@@ -6644,7 +6856,7 @@ async function ADV_open(algo){
   const dd=QA_nextDrawDate();
   const days=Math.round((dd-new Date())/86400000);
   const when=days<=0?'сегодня':days===1?'завтра':'через '+days+' дн.';
-  document.getElementById('adv-draw').innerHTML='🎯 Совет строго на следующий тираж:<br><b>'+dd.toLocaleString('ru-RU',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})+'</b> · '+when;
+  document.getElementById('adv-draw').innerHTML='🎯 Исследовательский набор для выбранной даты:<br><b>'+dd.toLocaleString('ru-RU',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})+'</b> · '+when;
   const draws=IF_window(await loadD(cur));
   document.getElementById('adv-sub').textContent=l.name+' · анализ по '+draws.length+' тиражам выбранного периода';
   document.getElementById('adv-counts').innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>'<button class="pick-cnt'+(n===ADV_state.n?' on':'')+'" onclick="ADV_setN('+n+',this)">'+n+'</button>').join('');
@@ -6664,7 +6876,7 @@ async function ADV_go(){
   const l=L();
   const rows=await withBusy((ADV_NAMES[st.algo]||st.algo)+' · совет',()=>generateRowsByAlgo(st.algo,st.n));
   if(!rows)return;
-  st.rows=rows;st.verdict=null;
+  st.rows=ensureUniqueGeneratedRows(rows,l);st.verdict=null;
   const dd=QA_nextDrawDate();
   document.getElementById('adv-go').style.display='none';
   if(SUPC_pending&&SUPC_pending.algo===st.algo){
@@ -6672,8 +6884,8 @@ async function ADV_go(){
     setTimeout(()=>{showCopyToast('⚖️ Переношу дело в кабинет судьи…');ADV_judge();},900);
   }
   document.getElementById('adv-result').innerHTML=
-    '<div class="if-seclbl">Совет модели · '+rows.length+' '+rowWord(rows.length)+'</div>'+
-    rows.map(r=>'<div class="adv-row">'+ADV_ballsHtml(r,l)+'</div>').join('')+
+    '<div class="if-seclbl">Совет модели · '+st.rows.length+' '+rowWord(st.rows.length)+'</div>'+
+    st.rows.map(r=>'<div class="adv-row">'+ADV_ballsHtml(r,l)+'</div>').join('')+
     '<div class="if-note" style="margin-top:8px">«'+(ADV_NAMES[st.algo]||st.algo)+'» советую применить эти числа на тираж '+dd.toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'short'})+'.</div>'+
     '<button class="btn-draw '+l.cls+'" style="margin-top:12px" onclick="ADV_use()">Использовать в билете</button>'+
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
@@ -6702,14 +6914,14 @@ async function ADV_judge(){
   if(SUPC_pending&&SUPC_pending.algo===st.algo){intro='<b>⚖️ Кабинет судьи.</b> Вы вернулись по моему направлению. '+SUPC_pending.reason+'<br><br>';SUPC_pending=null;}
   intro+='<b>Расследование судьи.</b> Проверил '+checked+' чисел по силе поля из '+data.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). '+
     'Согласен с <b>'+agreed+'</b>. '+(proposed?('Предлагаю заменить <b>'+proposed+'</b>: '+swapsList.slice(0,8).map(x=>x.from+'→'+x.to).join(', ')+(proposed>8?' и ещё '+(proposed-8):'')+'. Реши сам, какие замены применить.'):'Возражений нет — совет выдержал проверку поля полностью. ✅')+covLine;
-  JUDGE_state['adv']={plan:data.plan,l,drawsN:data.drawsN,mountId:'adv-result',intro,applyLabel:'Использовать в билете',onApply:finalRows=>{ADV_close();closeSG();setGeneratedRows(finalRows,'Вердикт судьи перенесён в билет. ⚖️🍀');}};
+  JUDGE_state['adv']={plan:data.plan,l,drawsN:data.drawsN,mountId:'adv-result',intro,applyLabel:'Использовать в билете',onApply:(finalRows,meta)=>{ADV_close();closeSG();setGeneratedRows(finalRows,JUDGE_choiceText(meta)+'. Ряды перенесены в билет. ⚖️🍀');}};
   JUDGE_render('adv');
   const mp=document.getElementById('adv-result');if(mp)try{mp.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
 }
 function ADV_use(){
   const st=ADV_state;if(!st||!st.rows)return;
   ADV_close();closeSG();
-  setGeneratedRows(st.rows.map(r=>({m:r.m,b:r.b})),'Совет «'+(ADV_NAMES[st.algo]||st.algo)+'» перенесён в билет. Гарантий нет — удачи есть! 🍀');
+  setGeneratedRows(st.rows,'Набор «'+(ADV_NAMES[st.algo]||st.algo)+'» перенесён в симулятор. Это не прогноз. 🍀',true);
 }
 function ADV_useVerdict(){
   const st=ADV_state;if(!st||!st.verdict)return;
@@ -6719,7 +6931,7 @@ function ADV_useVerdict(){
 function ADV_share(){
   const st=ADV_state;if(!st||!st.rows)return;
   const dd=QA_nextDrawDate();
-  shareText('Совет · '+L().name,'💬 Совет «'+(ADV_NAMES[st.algo]||st.algo)+'» на тираж '+dd.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+' · '+L().name+'\n'+rowsAsText(st.rows,L())+'\nГарантий нет — это исследование истории.');
+  shareText('Исследовательский набор · '+L().name,'💬 Набор «'+(ADV_NAMES[st.algo]||st.algo)+'» для даты '+dd.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+' · '+L().name+'\n'+rowsAsText(st.rows,L())+'\nЭто исследование истории, а не прогноз.');
 }
 function ADV_shareVerdict(){
   const st=ADV_state;if(!st||!st.verdict)return;
@@ -6769,16 +6981,16 @@ async function SUPC_route(){
   const structured=data.cv>0.28; /* поле выражено или ровное */
   /* направление: стихия × состояние поля × луна/число судьбы */
   const routes={
-    0:structured?['overdue','поле неровное — история дала зацепки, а знак огня любит идти против толпы: берём просроченные числа']:['quantum','поле ровное — зацепок мало, огню подойдёт чистая смелость квантового коллапса'],
+    0:structured?['overdue','структура неравномерна — развлекательный профиль огня выбрал просроченные числа']:['quantum','структура ровная — развлекательный профиль огня выбрал криптослучайность'],
     1:structured?['freq','поле выражено — земля доверяет фактам: частотный анализ по вашей базе']:['bayes','поле ровное — земле подойдёт байесовская осторожность: данные ведут, но не диктуют'],
     2:structured?['markov','поле неровное — воздух читает связи: цепи Маркова по переходам тиражей']:['wheel','поле ровное — воздуху важна широта: колёсная матрица покроет пары'],
     3:structured?['delta','поле выражено — вода чувствует ритм: дельта-метод по разностям базы']:['gauss','поле ровное — воде подойдёт колокол распределения сумм: Гаусс']
   };
   let[algo,why]=routes[elem];
-  if(lp&&(lp===7||lp===11)&&!structured){algo='qastro';why='ваше число судьбы '+lp+' — знак глубокой интуиции: направляю к Квантово-астральному';}
+  if(lp&&(lp===7||lp===11)&&!structured){algo='qastro';why='в развлекательном профиле число '+lp+' связано с интуицией: выбран Астрологический режим';}
   const reason='Вы — '+QA_ZODIAC[zs][0]+' '+QA_ZODIAC[zs][1]+', знак '+SUPC_ELEMENTS[elem][0]+': вам идут '+SUPC_ELEMENTS[elem][1]+'.'+
     (birth?' Натальная Луна в '+QA_ZODIAC[QA_moonSign(QA_birthDateObj(birth))][1]+(lp?', число судьбы '+lp:'')+'.':' (дата рождения углубила бы анализ)')+
-    ' База: '+data.draws+' тиражей, вариация силы поля '+(data.cv*100).toFixed(0)+'% — '+(structured?'структура выражена':'поле ровное')+'. Луна тиража: '+ph.emoji+' '+ph.name+'.';
+    ' База: '+data.draws+' тиражей, вариация структурного балла '+(data.cv*100).toFixed(0)+'% — '+(structured?'структура выражена':'структура ровная')+'. Фаза Луны: '+ph.emoji+' '+ph.name+'.';
   SUPC_pending={algo,reason};
   document.getElementById('supc-result').innerHTML=
     '<div class="supc-route"><b>⚖️ Моё направление: '+(ADV_NAMES[algo]||algo)+'</b><br>'+reason+'<br><br>'+why.charAt(0).toUpperCase()+why.slice(1)+'.<br><br>Идите к этой модели, выберите количество рядов, получите её совет — и <b>возвращайтесь ко мне за решающим вердиктом</b>: я рассмотрю дело сам.</div>'+
@@ -6863,6 +7075,7 @@ async function SUPC_db(){
   });
   if(!data)return;
   if(data.err){showFeedback('Судья',data.err,'⚖️',3200);return;}
+  data.rows=ensureUniqueGeneratedRows(data.rows,l);
   window.SUPC_dbRows=data.rows;
   const lead=[];
   if(data.quads.length)lead.push('четвёрка <b>'+data.quads[0][0].split('-').join('·')+'</b> ('+data.quads[0][1]+' раз)');
@@ -6880,7 +7093,7 @@ async function SUPC_db(){
 function SUPC_dbUse(){
   if(!window.SUPC_dbRows)return;
   SUPC_close();closeSG();
-  setGeneratedRows(window.SUPC_dbRows.map(r=>({m:r.m,b:r.b})),'Совет судьи по лидерам базы перенесён в билет. 📊🍀');
+  setGeneratedRows(window.SUPC_dbRows,'Совет судьи по лидерам базы перенесён в билет. 📊🍀',true);
 }
 function SUPC_dbShare(){
   if(!window.SUPC_dbRows)return;
@@ -6959,7 +7172,7 @@ function JUDGE_plan(rows,l,draws){
     const swaps=[],used=new Set();
     weak.slice(0,Math.max(1,Math.floor(l.pM/2))).forEach(w0=>{
       const repl=strongPool.find(x=>!used.has(x));
-      if(repl!=null&&score(repl)>score(w0)){used.add(repl);swaps.push({from:w0,to:repl,sf:Math.round(score(w0)),st:Math.round(score(repl)),apply:true});}
+      if(repl!=null&&score(repl)>score(w0)){used.add(repl);swaps.push({from:w0,to:repl,sf:Math.round(score(w0)),st:Math.round(score(repl)),apply:false});}
     });
     return {orig:[...r.m],b:[...(r.b||[])],swaps};
   });
@@ -6981,11 +7194,11 @@ function JUDGE_render(ns){
   const applyBase=st.applyLabel||'Использовать проверенные ряды';
   let html=(st.intro?'<div class="adv-invest" style="margin:0 0 4px">'+st.intro+'</div>':'')+
     '<div class="if-seclbl">⚖️ Разбор Верховного судьи</div>'+
-    '<div class="if-note" style="margin:0 0 12px">Судья проверил каждый шар силой поля из '+st.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Ниже — какие шары и в каких рядах он предлагает заменить. Реши сам: нажми на замену, чтобы включить или отключить её. Можно поменять только одну, а остальное оставить. Золотом отмечены изменённые числа. Гарантий это не даёт.</div>';
+    '<div class="if-note" style="margin:0 0 12px">Судья проверил каждый шар по структурному баллу из '+st.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Ниже — какие шары и в каких рядах он предлагает заменить. Реши сам: нажми на замену, чтобы включить или отключить её. Можно поменять только одну, а остальное оставить. Золотом отмечены изменённые числа. Это не прогноз и не гарантия.</div>';
   st.plan.forEach((p,ri)=>{
     html+='<div class="pdx-jrow"><div class="pdx-jhead">Ряд '+(ri+1)+'</div>'+JUDGE_ballsHtml(p,l);
     if(p.swaps.length){
-      html+='<div class="pdx-swaps">'+p.swaps.map((s,si)=>'<button class="pdx-swap'+(s.apply?' on':'')+'" aria-pressed="'+(s.apply?'true':'false')+'" onclick="JUDGE_toggle(\''+ns+'\','+ri+','+si+')">'+(s.apply?'✓ ':'')+s.from+' → '+s.to+'<span class="pdx-sd">поле '+s.sf+'→'+s.st+'</span></button>').join('')+'</div>';
+      html+='<div class="pdx-swaps">'+p.swaps.map((s,si)=>'<button class="pdx-swap'+(s.apply?' on':'')+'" aria-pressed="'+(s.apply?'true':'false')+'" onclick="JUDGE_toggle(\''+ns+'\','+ri+','+si+')">'+(s.apply?'✓ ':'')+s.from+' → '+s.to+'<span class="pdx-sd">балл '+s.sf+'→'+s.st+'</span></button>').join('')+'</div>';
     }else{
       html+='<div class="pdx-ok">Возражений нет — ряд выдержал проверку поля ✅</div>';
     }
@@ -6993,20 +7206,20 @@ function JUDGE_render(ns){
   });
   let choiceTitle,choiceText,applyText;
   if(proposed===0){
-    choiceTitle='Изменений не требуется';
-    choiceText='Судья оставляет исходные числа. Можно перенести проверенные ряды на главный экран.';
+    choiceTitle='Твой выбор: исходные числа';
+    choiceText='Судья не предложил замен; исходная комбинация сохранится.';
     applyText='✅ '+applyBase;
   }else if(active===0){
-    choiceTitle='Все замены отключены';
-    choiceText='Исходные числа останутся без изменений.';
+    choiceTitle='Твой выбор: без судейских замен';
+    choiceText='Ты не выбрал ни одной из '+proposed+' предложенных замен; исходные числа останутся без изменений.';
     applyText='↩ '+applyBase+' без замен';
   }else if(active===proposed){
-    choiceTitle='Выбраны все предложенные замены';
-    choiceText='Будут применены все предложенные изменения: '+proposed+'.';
+    choiceTitle='Твой выбор: все '+proposed+' '+(proposed===1?'изменение':'изменения');
+    choiceText='Будут применены все предложенные судьёй замены.';
     applyText='✅ '+applyBase+' · все замены ('+proposed+')';
   }else{
-    choiceTitle='Частичная замена';
-    choiceText='Будут применены только выбранные изменения: '+active+' из '+proposed+'. Остальные числа останутся исходными.';
+    choiceTitle='Твой выбор: '+active+' '+(active===1?'изменение':'изменения')+' из '+proposed;
+    choiceText='Будут применены только выбранные тобой замены; остальные числа останутся исходными.';
     applyText='✅ '+applyBase+' · '+active+' из '+proposed+' замен';
   }
   html+='<div class="judge-choice-summary"><div><b>'+choiceTitle+'</b><span>'+choiceText+'</span></div><div class="judge-choice-count">'+active+' / '+proposed+'</div></div>'+
@@ -7030,6 +7243,12 @@ function JUDGE_rerender(ns,change){
 function JUDGE_toggle(ns,ri,si){const s=JUDGE_state[ns]?.plan?.[ri]?.swaps?.[si];if(!s)return;JUDGE_rerender(ns,()=>{s.apply=!s.apply;});}
 function JUDGE_setAll(ns,val){const st=JUDGE_state[ns];if(!st)return;JUDGE_rerender(ns,()=>{st.plan.forEach(p=>p.swaps.forEach(s=>s.apply=val));});}
 function JUDGE_finalRows(ns){return JUDGE_state[ns].plan.map(p=>{const e=JUDGE_effective(p);return{m:e.m,b:p.b};});}
+function JUDGE_choiceText(meta){
+  if(!meta||!meta.proposed)return'Твой выбор: исходные числа; судья не предложил замен';
+  if(!meta.active)return'Твой выбор: оставить исходные числа без судейских замен';
+  if(meta.active===meta.proposed)return'Твой выбор: применить все '+meta.active+' '+(meta.active===1?'изменение':'изменения')+' судьи';
+  return'Твой выбор: применить '+meta.active+' '+(meta.active===1?'изменение':'изменения')+' из '+meta.proposed;
+}
 function JUDGE_apply(ns){
   const st=JUDGE_state[ns];if(!st||!st.onApply)return;
   const proposed=st.plan.reduce((sum,p)=>sum+p.swaps.length,0);
@@ -7081,7 +7300,7 @@ async function PDX_go(){
   if(!data)return;
   let useBase=st.useBase;
   if(data.warn){useBase=false;showFeedback('Мало данных для базы','Для «с базой» нужно минимум 5 тиражей. Собираю парадоксы без базы — по чистой структуре.','♾️',3200);st.useBase=false;PDX_renderMode();}
-  st.rows=PDX_generate(st.n,useBase,l,data.draws);
+  st.rows=ensureUniqueGeneratedRows(PDX_generate(st.n,useBase,l,data.draws),l);
   document.getElementById('pdx-go').style.display='none';
   PDX_renderRows();
 }
@@ -7108,7 +7327,7 @@ function PDX_renderRows(){
 function PDX_use(){
   const st=PDX_state;if(!st||!st.rows)return;
   PDX_close();
-  setGeneratedRows(st.rows.map(r=>({m:r.m,b:r.b})),'Парадоксы перенесены в билет. ♾️ Это исследование структуры, а не прогноз — вероятность тиража не меняется.');
+  setGeneratedRows(st.rows,'Парадоксы перенесены в билет. ♾️ Это исследование структуры, а не прогноз — вероятность тиража не меняется.',true);
 }
 function PDX_copy(btn){
   const st=PDX_state;if(!st||!st.rows)return;
@@ -7122,10 +7341,11 @@ function PDX_share(){
 }
 function PDX_judge(){
   const st=PDX_state;if(!st||!st.rows)return;
-  JUDGE_open('pdx',st.rows.map(r=>({m:r.m,b:r.b})),'pdx-jmount',finalRows=>{
+  JUDGE_open('pdx',st.rows.map(r=>({m:r.m,b:r.b})),'pdx-jmount',(finalRows,meta)=>{
     PDX_close();
-    const dur=setGeneratedRows(finalRows,'Парадоксы с решением судьи перенесены в билет. ⚖️♾️ Гарантий нет.');
-    setTimeout(()=>showFeedback('Готово','Ряды с учётом твоего выбора перенесены в билет.','⚖️',2600),dur+150);
+    const choice=JUDGE_choiceText(meta);
+    const dur=setGeneratedRows(finalRows,choice+'. Парадоксы перенесены в билет. ⚖️♾️ Гарантий нет.');
+    setTimeout(()=>showFeedback('Готово',choice+'. Ряды перенесены в билет.','⚖️',2600),dur+150);
   });
 }
 
@@ -7160,7 +7380,7 @@ async function JC_open(){
   const covLine=' Твои '+good.length+' '+rowWord(good.length)+' покрывают '+uniq.size+' из '+l.mB+' чисел поля ('+covPct+'%) — '+(covPct>=45?'широкий охват.':covPct>=22?'умеренный охват; больше рядов раскрыли бы поле шире.':'узкий охват: для покрытия поля возьми больше рядов.');
   const intro='<b>Дело о твоей комбинации.</b> Проверил '+checked+' чисел по силе поля из '+data.drawsN+' тиражей (частота, пары, пропуски, зоны, чётность, суммы). Согласен с <b>'+agreed+'</b>. '+
     (proposed?('Под подозрением <b>'+proposed+'</b>: '+swapsList.slice(0,8).map(x=>x.from+'→'+x.to).join(', ')+(proposed>8?' и ещё '+(proposed-8):'')+'.'):'Возражений нет.')+covLine+'<br><br>'+verdict;
-  JUDGE_state['jc']={plan:data.plan,l,drawsN:data.drawsN,mountId:'jc-mount',intro,applyLabel:'Применить в билете',onApply:finalRows=>{JC_close();const dur=setGeneratedRows(finalRows,'Комбинация с решением судьи применена в билете. ⚖️');setTimeout(()=>showFeedback('Готово','Твои ряды обновлены по решению судьи.','⚖️',2400),dur+150);}};
+  JUDGE_state['jc']={plan:data.plan,l,drawsN:data.drawsN,mountId:'jc-mount',intro,applyLabel:'Применить в билете',onApply:(finalRows,meta)=>{JC_close();const choice=JUDGE_choiceText(meta),dur=setGeneratedRows(finalRows,choice+'. Комбинация применена в билете. ⚖️');setTimeout(()=>showFeedback('Готово',choice+'.','⚖️',2400),dur+150);}};
   JUDGE_render('jc');
 }
 </script>

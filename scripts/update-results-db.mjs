@@ -7,7 +7,7 @@ const DEFAULT_OUT = path.join(ROOT, 'results.json');
 const TODAY = new Date();
 const CURRENT_YEAR = TODAY.getUTCFullYear();
 const HTTP_TIMEOUT_MS = 12000;
-const DEFAULT_USER_AGENT = 'MandelWorldResultsBot/1.0 (+https://github.com/RedSprut/mandel-v2)';
+const DEFAULT_USER_AGENT = 'LotoSimulatorResultsBot/2.0 (+https://github.com/RedSprut/mandel-v2)';
 const BROWSER_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15';
 
 const MONTHS = {
@@ -52,7 +52,8 @@ const RULES = {
   vikinglotto: {
     mainCount: 6, mainMax: 48, bonusCount: 1, bonusMax: 5,
     archiveFrom: '2017-05-24',
-    currentFrom: '2022-01-05',
+    /* 2 June 2021 was the last 1–8 Viking-number draw; next draw was 9 June. */
+    currentFrom: '2021-06-09',
     source: 'Viking-Lotto.net / Norsk Tipping',
     sourceUrl: 'https://viking-lotto.net/en/results'
   },
@@ -77,6 +78,7 @@ const RULES = {
   },
   euroMillions: {
     mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 12,
+    archiveFrom: '2004-02-13',
     currentFrom: '2016-09-27',
     source: 'Euro-Millions.com',
     sourceUrl: 'https://www.euro-millions.com/results-history-2026'
@@ -91,7 +93,8 @@ const RULES = {
     mainCount: 7, mainMax: 52, bonusCount: 1, bonusMax: 52,
     currentFrom: '2026-04-14',
     source: 'WCLC',
-    sourceUrl: 'https://www.wclc.com/winning-numbers/lotto-max-extra.htm'
+    sourceUrl: 'https://www.wclc.com/winning-numbers/lotto-max-extra.htm',
+    officialArchiveUrl: 'https://www.wclc.com/display-on/display-on-downloads/lotto-max-since-inception.htm'
   },
   powerballAustralia: {
     mainCount: 7, mainMax: 35, bonusCount: 1, bonusMax: 20,
@@ -106,6 +109,7 @@ const selectedGames = cli.games || GAME_ORDER;
 const currentRulesOnly = !cli.includeOldRules;
 const dryRun = Boolean(cli.dryRun);
 const outFile = path.resolve(cli.out || DEFAULT_OUT);
+const archiveFile = cli.archiveOut ? path.resolve(cli.archiveOut) : null;
 
 main().catch((err) => {
   console.error(err.stack || err.message || err);
@@ -114,13 +118,18 @@ main().catch((err) => {
 
 async function main() {
   const previous = await readExisting(outFile);
+  const previousArchive = archiveFile ? await readExisting(archiveFile) : { games: {} };
   const games = {};
+  const archiveGames = {};
   const diagnostics = {};
+  const archiveDiagnostics = {};
 
   for (const game of GAME_ORDER) {
     if (!selectedGames.includes(game)) {
       games[game] = previous.games?.[game] || [];
+      if (archiveFile) archiveGames[game] = previousArchive.games?.[game] || [];
       diagnostics[game] = { skipped: true, kept: games[game].length };
+      if (archiveFile) archiveDiagnostics[game] = { skipped: true, kept: archiveGames[game].length };
       continue;
     }
 
@@ -133,6 +142,7 @@ async function main() {
       const { kept: existingKept, rejected: rejectedExisting } = normalizeAndValidate(game, existing, currentRulesOnly);
       console.error(`warn ${game}: ${err.message}; keeping ${existing.length} existing rows`);
       games[game] = existingKept;
+      if (archiveFile) archiveGames[game] = previousArchive.games?.[game] || [];
       diagnostics[game] = {
         fetchError: err.message,
         keptExisting: true,
@@ -142,6 +152,14 @@ async function main() {
         currentFrom: RULES[game].currentFrom,
         source: RULES[game].source,
         sourceUrl: RULES[game].sourceUrl
+      };
+      if (archiveFile) archiveDiagnostics[game] = {
+        fetchError: err.message,
+        keptExisting: true,
+        merged: archiveGames[game].length,
+        coverage: analyzeCoverage(game, archiveGames[game]),
+        source: RULES[game].source,
+        sourceUrl: RULES[game].officialArchiveUrl || RULES[game].sourceUrl
       };
       continue;
     }
@@ -157,9 +175,28 @@ async function main() {
       rejectedExisting: summarizeRejected(rejectedExisting),
       currentRulesOnly,
       currentFrom: RULES[game].currentFrom,
+      coverage: analyzeCoverage(game, merged),
       source: RULES[game].source,
       sourceUrl: RULES[game].sourceUrl
     };
+    if (archiveFile) {
+      const { kept: archiveKept, rejected: archiveRejected } = normalizeArchiveRows(game, fetched);
+      const archiveMergedRaw = mergeByDate(previousArchive.games?.[game] || [], archiveKept);
+      const { kept: archiveMerged, rejected: archiveRejectedExisting } = normalizeArchiveRows(game, archiveMergedRaw);
+      archiveGames[game] = archiveMerged;
+      archiveDiagnostics[game] = {
+        fetched: fetched.length,
+        kept: archiveKept.length,
+        merged: archiveMerged.length,
+        legacyRows: archiveMerged.filter((row) => row.ruleEra === 'legacy').length,
+        currentRows: archiveMerged.filter((row) => row.ruleEra === 'current').length,
+        rejected: summarizeRejected(archiveRejected),
+        rejectedExisting: summarizeRejected(archiveRejectedExisting),
+        coverage: analyzeCoverage(game, archiveMerged),
+        source: RULES[game].source,
+        sourceUrl: RULES[game].officialArchiveUrl || RULES[game].sourceUrl
+      };
+    }
   }
 
   const output = {
@@ -171,15 +208,39 @@ async function main() {
     diagnostics
   };
 
+  const archiveOutput = archiveFile ? {
+    schemaVersion: 1,
+    updatedAt: ymd(TODAY),
+    generatedBy: 'scripts/update-results-db.mjs --archive-out',
+    purpose: 'offline-research-only',
+    warning: 'Содержит тиражи разных исторических правил. Не использовать напрямую в моделях текущего формата.',
+    games: archiveGames,
+    diagnostics: archiveDiagnostics
+  } : null;
+
+  console.log('game\trows\toldest\tlatest');
   for (const game of GAME_ORDER) {
     const rows = output.games[game] || [];
     const dates = rows.map((r) => r.date).filter(Boolean);
     console.log(`${game}\t${rows.length}\t${dates.at(-1) || ''}\t${dates[0] || ''}`);
   }
 
+  if (archiveOutput) {
+    console.log('\nresearch archive (mixed rule eras)');
+    console.log('game\trows\tlegacy\toldest\tlatest');
+    for (const game of GAME_ORDER) {
+      const rows = archiveOutput.games[game] || [], dates = rows.map((r) => r.date).filter(Boolean);
+      console.log(`${game}\t${rows.length}\t${rows.filter((r) => r.ruleEra === 'legacy').length}\t${dates.at(-1) || ''}\t${dates[0] || ''}`);
+    }
+  }
+
   if (dryRun) return;
   await mkdir(path.dirname(outFile), { recursive: true });
   await writeFile(outFile, JSON.stringify(output, null, 2) + '\n');
+  if (archiveOutput) {
+    await mkdir(path.dirname(archiveFile), { recursive: true });
+    await writeFile(archiveFile, JSON.stringify(archiveOutput, null, 2) + '\n');
+  }
 }
 
 function parseArgs(args) {
@@ -188,15 +249,18 @@ function parseArgs(args) {
     const arg = args[i];
     if (arg === '--dry-run') out.dryRun = true;
     else if (arg === '--include-old-rules') out.includeOldRules = true;
+    else if (arg === '--archive-out') out.archiveOut = args[++i];
+    else if (arg.startsWith('--archive-out=')) out.archiveOut = arg.slice(14);
     else if (arg === '--out') out.out = args[++i];
     else if (arg.startsWith('--out=')) out.out = arg.slice(6);
     else if (arg === '--games') out.games = parseGames(args[++i]);
     else if (arg.startsWith('--games=')) out.games = parseGames(arg.slice(8));
     else if (arg === '--help' || arg === '-h') {
-      console.log(`Usage: node scripts/update-results-db.mjs [--games a,b] [--out results.json] [--dry-run] [--include-old-rules]
+      console.log(`Usage: node scripts/update-results-db.mjs [--games a,b] [--out results.json] [--archive-out results-archive.json] [--dry-run] [--include-old-rules]
 
 Default writes current-rule-compatible draws to results.json.
-Use --include-old-rules only for offline research, not for the live app models.`);
+--archive-out additionally writes every structurally valid fetched draw, marks legacy/current eras, and is for offline research only.
+Legacy --include-old-rules keeps its old mixed-output behaviour; prefer --archive-out so the live database remains safe.`);
       process.exit(0);
     } else {
       throw new Error(`Unknown argument: ${arg}`);
@@ -284,7 +348,7 @@ async function fetchVikinglotto() {
   }
 
   // Norsk Tipping is authoritative for recent Norwegian prize data. Merge it over the archive by date.
-  const recent = await fetchNorskGame('vikinglotto', 'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater', 2022)
+  const recent = await fetchNorskGame('vikinglotto', 'https://www.norsk-tipping.no/lotteri/vikinglotto/resultater', 2021)
     .catch(() => []);
   return mergeByDate(out, recent);
 }
@@ -315,7 +379,7 @@ async function fetchEurojackpot() {
 }
 
 async function fetchSocrataPowerball() {
-  const rows = await fetchJson('https://data.ny.gov/resource/d6yy-54nr.json?$limit=5000&$order=draw_date%20DESC');
+  const rows = await fetchSocrataAll('d6yy-54nr');
   return rows.map((raw) => {
     const nums = parseNumberList(raw.winning_numbers);
     return draw(
@@ -331,7 +395,7 @@ async function fetchSocrataPowerball() {
 }
 
 async function fetchSocrataMegaMillions() {
-  const rows = await fetchJson('https://data.ny.gov/resource/5xaw-6ayf.json?$limit=5000&$order=draw_date%20DESC');
+  const rows = await fetchSocrataAll('5xaw-6ayf');
   return rows.map((raw) => draw(
     String(raw.draw_date || '').slice(0, 10),
     parseNumberList(raw.winning_numbers),
@@ -343,9 +407,22 @@ async function fetchSocrataMegaMillions() {
   ));
 }
 
+async function fetchSocrataAll(datasetId) {
+  /* Pagination prevents silent truncation when the official archive grows past one API page. */
+  const pageSize = 50000, out = [];
+  for (let offset = 0; ; offset += pageSize) {
+    const url = `https://data.ny.gov/resource/${datasetId}.json?$limit=${pageSize}&$offset=${offset}&$order=draw_date%20DESC`;
+    const page = await fetchJson(url);
+    if (!Array.isArray(page)) throw new Error(`${datasetId}: Socrata response is not an array`);
+    out.push(...page);
+    if (page.length < pageSize) break;
+  }
+  return out;
+}
+
 async function fetchEuroMillions() {
   const out = [];
-  for (let year = 2016; year <= CURRENT_YEAR; year++) {
+  for (let year = 2004; year <= CURRENT_YEAR; year++) {
     let html;
     try {
       html = await fetchText(`https://www.euro-millions.com/results-history-${year}`);
@@ -563,6 +640,7 @@ function normalizeAndValidate(game, rows, currentOnly) {
     };
     const errors = [];
     if (!/^\d{4}-\d{2}-\d{2}$/.test(d.date || '')) errors.push('date');
+    if (d.date > ymd(TODAY)) errors.push('future-date');
     if (minDate && d.date < minDate) errors.push('old-rule-date');
     if (d.main.length !== rule.mainCount) errors.push(`main-count-${d.main.length}`);
     if (d.bonus.length !== rule.bonusCount) errors.push(`bonus-count-${d.bonus.length}`);
@@ -573,6 +651,50 @@ function normalizeAndValidate(game, rows, currentOnly) {
   }
 
   return { kept: mergeByDate([], kept), rejected };
+}
+
+function normalizeArchiveRows(game, rows) {
+  const kept = [], rejected = [], rule = RULES[game];
+  for (const row of rows || []) {
+    const d = {
+      ...row,
+      main: uniqSorted(row.main || []),
+      bonus: uniqSorted(row.bonus || []),
+      ruleEra: String(row.date || '') >= rule.currentFrom ? 'current' : 'legacy'
+    };
+    const errors = [];
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d.date || '')) errors.push('date');
+    if (d.date > ymd(TODAY)) errors.push('future-date');
+    if (!d.main.length) errors.push('empty-main');
+    if (d.main.some((n) => !Number.isInteger(n) || n < 1 || n > 999)) errors.push('main-range');
+    if (d.bonus.some((n) => !Number.isInteger(n) || n < 1 || n > 999)) errors.push('bonus-range');
+    if (errors.length) rejected.push({ date: d.date, errors });
+    else kept.push(d);
+  }
+  return { kept: mergeByDate([], kept), rejected };
+}
+
+function analyzeCoverage(game, rows) {
+  const ordered = [...(rows || [])].filter((r) => /^\d{4}-\d{2}-\d{2}$/.test(r.date || ''))
+    .sort((a, b) => a.date.localeCompare(b.date));
+  if (!ordered.length) return { rows: 0, oldest: null, latest: null, maxGapDays: null, suspiciousGaps: [] };
+  const gapLimit = ['eurojackpot', 'megaMillions', 'euroMillions', 'lottoMax'].includes(game) ? 10
+    : ['powerball', 'superEnalotto'].includes(game) ? 8 : 15;
+  let maxGapDays = 0;
+  const gaps = [];
+  for (let i = 1; i < ordered.length; i++) {
+    const days = Math.round((Date.parse(ordered[i].date + 'T00:00:00Z') - Date.parse(ordered[i - 1].date + 'T00:00:00Z')) / 86400000);
+    if (days > maxGapDays) maxGapDays = days;
+    if (days > gapLimit) gaps.push({ after: ordered[i - 1].date, before: ordered[i].date, days });
+  }
+  return {
+    rows: ordered.length,
+    oldest: ordered[0].date,
+    latest: ordered.at(-1).date,
+    maxGapDays,
+    suspiciousGaps: gaps.slice(-25),
+    suspiciousGapCount: gaps.length
+  };
 }
 
 function mergeByDate(oldRows, newRows) {

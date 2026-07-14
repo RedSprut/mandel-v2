@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<title>Мандель · Лотерея</title>
+<title>Лото Симулятор</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#26121c">
 <style>
@@ -498,7 +499,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
 
 <div class="lock-ov" id="lock-ov">
   <div class="lock-box">
-    <div class="lock-title">Мандель · Лотерея</div>
+    <div class="lock-title">Лото Симулятор</div>
     <div class="lock-sub">Закрытая семейная ссылка. Введи код доступа, чтобы открыть приложение.</div>
     <input class="lock-inp" id="lock-code" type="password" autocomplete="current-password" placeholder="Код доступа" onkeydown="if(event.key==='Enter')unlockApp()">
     <button class="lock-btn" onclick="unlockApp()">Открыть</button>
@@ -519,7 +520,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
 <div class="page show" id="pg-sim">
   <div class="sched-strip" id="sched-strip">
   </div>
-  <div class="responsible-note">18+ · Аналитика и развлечение. Приложение не продаёт билеты, не принимает ставки и не связано с операторами лотерей, Apple или Google. Названия игр используются только для идентификации. Отдельные числа могут повторяться; полная основная комбинация в симуляторе не повторяется до завершения цикла. В реальном независимом тираже повтор возможен.</div>
+  <div class="responsible-note">18+ · Симуляция и аналитика. Приложение не продаёт билеты, не принимает ставки и не связано с операторами лотерей, Apple или Google. Названия игр используются только для идентификации. Отдельные числа могут повторяться; полная основная комбинация в симуляторе не повторяется до завершения цикла. В реальном независимом тираже повтор возможен.</div>
 
   <div class="win-banner none" id="win-banner">
     <div class="wb-top"><div class="wb-icon" id="wb-icon">🎯</div><div><div class="wb-title" id="wb-title">Результат симуляции</div><div class="wb-sub" id="wb-sub">Запусти тираж или проверь билет</div></div></div>
@@ -770,7 +771,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
     </div>
   </div>
 
-  <!-- MANDEL -->
+  <!-- КАЛЬКУЛЯТОР ОХВАТА -->
   <div class="tab-content" id="at-man">
     <div class="card">
       <div class="card-t">Комбинаторный калькулятор</div>
@@ -812,7 +813,7 @@ button:active,.lt:active,.ss-item:active,.ticket-row:active,.sg-algo:active,.bn:
       <div class="sg-algo" id="al-world-mix" onclick="selAlgo('world-mix')"><div class="sg-algo-icon">🌐</div><div><div class="sg-algo-name">Мировой комбинированный</div><div class="sg-algo-desc">Горячие зоны + средние + холодные для каждой строки</div></div></div>
     </div>
     <div id="sg-result"></div>
-    <div class="sg-disc">⚠️ <b>Важно:</b> Ни один алгоритм не может предсказать результат лотереи. Каждый тираж независим. Только для образовательных и развлекательных целей.</div>
+    <div class="sg-disc">⚠️ <b>Важно:</b> Ни один алгоритм не предсказывает результат лотереи. Каждый тираж независим, а любая допустимая комбинация имеет одинаковую вероятность.</div>
     <button class="sg-use euro" id="sg-use" onclick="useGen()">✅ Перенести в симулятор</button>
     <button class="btn-close2" onclick="closeSG()">Закрыть</button>
   </div>
@@ -2944,7 +2945,7 @@ async function renderJackpotChart(){
   c.innerHTML=html;
 }
 
-// ─── MANDEL ───────────────────────────────────
+// ─── КАЛЬКУЛЯТОР ОХВАТА ──────────────────────
 function renderMandel(){
   const l=L();
   const currency=l.currency||'NOK',combos=jackpotCombos(l),totalCost=combos*l.price,totalCostM=(totalCost/1e6).toFixed(1);
@@ -3022,7 +3023,7 @@ async function renderStats(){
 async function doExport(){
   const data={};
   for(const id of Object.keys(LOTS)){ data[id]=await loadD(id); }
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download=`mandel_${new Date().toISOString().slice(0,10)}.json`;a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download=`loto_simulator_${new Date().toISOString().slice(0,10)}.json`;a.click();
 }
 function toggleTextImport(){
   const w=document.getElementById('text-import-wrap'),ic=document.getElementById('text-import-icon');

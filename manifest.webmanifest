@@ -1,6 +1,6 @@
 {
-  "name": "Мандель · Мир лотерей",
-  "short_name": "Мандель",
+  "name": "Лото Симулятор",
+  "short_name": "Лото",
   "lang": "ru",
   "start_url": "./",
   "scope": "./",
@@ -9,6 +9,8 @@
   "theme_color": "#26121c",
   "description": "Симулятор и математическая аналитика международных лотерей.",
   "icons": [
-    {"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+    {"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"},
+    {"src": "icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any"},
+    {"src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any"}
   ]
 }

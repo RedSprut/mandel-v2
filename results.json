@@ -15163,6 +15163,606 @@
         "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
         "drawId": 1340,
         "drawName": "VKL2021-05.01.2022 20:00"
+      },
+      {
+        "date": "2021-12-29",
+        "main": [
+          1,
+          15,
+          21,
+          22,
+          29,
+          48
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": 43.9,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1339,
+        "drawName": "VKL2021-29.12.2021 20:00"
+      },
+      {
+        "date": "2021-12-22",
+        "main": [
+          6,
+          9,
+          31,
+          35,
+          46,
+          47
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": 30.2,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1338,
+        "drawName": "VKL2021-22.12.2021 20:00"
+      },
+      {
+        "date": "2021-12-15",
+        "main": [
+          3,
+          7,
+          23,
+          31,
+          42,
+          44
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": 110.3,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1337,
+        "drawName": "VKL2021-15.12.2021 20:00"
+      },
+      {
+        "date": "2021-12-08",
+        "main": [
+          1,
+          5,
+          15,
+          25,
+          30,
+          31
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": 216.1,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1336,
+        "drawName": "VKL2021-08.12.2021 20:00"
+      },
+      {
+        "date": "2021-12-01",
+        "main": [
+          11,
+          14,
+          25,
+          35,
+          39,
+          46
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": 197.2,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1335,
+        "drawName": "VKL2021-01.12.2021 20:00"
+      },
+      {
+        "date": "2021-11-24",
+        "main": [
+          2,
+          22,
+          32,
+          36,
+          38,
+          41
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": 173.4,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1334,
+        "drawName": "VKL2021-24.11.2021 20:00"
+      },
+      {
+        "date": "2021-11-17",
+        "main": [
+          17,
+          20,
+          27,
+          28,
+          43,
+          45
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": 150.3,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1333,
+        "drawName": "VKL2021-17.11.2021 20:00"
+      },
+      {
+        "date": "2021-11-10",
+        "main": [
+          20,
+          24,
+          27,
+          30,
+          37,
+          38
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": 133.4,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1332,
+        "drawName": "VKL2021-10.11.2021 20:00"
+      },
+      {
+        "date": "2021-11-03",
+        "main": [
+          2,
+          8,
+          18,
+          20,
+          40,
+          43
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": 116.4,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1331,
+        "drawName": "VKL2021-03.11.2021 20:00"
+      },
+      {
+        "date": "2021-10-27",
+        "main": [
+          9,
+          11,
+          16,
+          29,
+          35,
+          39
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": 99.3,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1330,
+        "drawName": "VKL2021-27.10.2021 20:00"
+      },
+      {
+        "date": "2021-10-20",
+        "main": [
+          16,
+          23,
+          31,
+          35,
+          38,
+          42
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": 84.8,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1329,
+        "drawName": "VKL2021-20.10.2021 20:00"
+      },
+      {
+        "date": "2021-10-13",
+        "main": [
+          2,
+          15,
+          20,
+          30,
+          36,
+          46
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": 71,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1328,
+        "drawName": "VKL2021-13.10.2021 20:00"
+      },
+      {
+        "date": "2021-10-06",
+        "main": [
+          6,
+          13,
+          27,
+          34,
+          39,
+          48
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": 57.6,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1327,
+        "drawName": "VKL2021-06.10.2021 20:00"
+      },
+      {
+        "date": "2021-09-29",
+        "main": [
+          1,
+          2,
+          13,
+          26,
+          32,
+          42
+        ],
+        "bonus": [
+          3
+        ],
+        "jackpot": 43.6,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1326,
+        "drawName": "VKL2021-29.09.2021 20:00"
+      },
+      {
+        "date": "2021-09-22",
+        "main": [
+          19,
+          21,
+          29,
+          36,
+          44,
+          48
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": 44.8,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1325,
+        "drawName": "VKL2021-22.09.2021 20:00"
+      },
+      {
+        "date": "2021-09-15",
+        "main": [
+          6,
+          12,
+          22,
+          23,
+          24,
+          35
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": 44.6,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1324,
+        "drawName": "VKL2021-15.09.2021 20:00"
+      },
+      {
+        "date": "2021-09-08",
+        "main": [
+          1,
+          14,
+          25,
+          28,
+          38,
+          43
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": 45.6,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1323,
+        "drawName": "VKL2021-08.09.2021 20:00"
+      },
+      {
+        "date": "2021-09-01",
+        "main": [
+          6,
+          7,
+          13,
+          18,
+          19,
+          23
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": 45.2,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1322,
+        "drawName": "VKL2021-01.09.2021 20:00"
+      },
+      {
+        "date": "2021-08-25",
+        "main": [
+          3,
+          15,
+          20,
+          25,
+          29,
+          36
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": 31.2,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1321,
+        "drawName": "VKL2021-25.08.2021 20:00"
+      },
+      {
+        "date": "2021-08-18",
+        "main": [
+          10,
+          15,
+          28,
+          39,
+          44,
+          46
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": 260.6,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1320,
+        "drawName": "VKL2021-18.08.2021 20:00"
+      },
+      {
+        "date": "2021-08-11",
+        "main": [
+          29,
+          30,
+          31,
+          36,
+          39,
+          44
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": 261.4,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1319,
+        "drawName": "VKL2021-11.08.2021 20:00"
+      },
+      {
+        "date": "2021-08-04",
+        "main": [
+          8,
+          10,
+          35,
+          37,
+          38,
+          42
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": 261.4,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1318,
+        "drawName": "VKL2021-04.08.2021 20:00"
+      },
+      {
+        "date": "2021-07-28",
+        "main": [
+          15,
+          21,
+          25,
+          32,
+          34,
+          39
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": 262.1,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1317,
+        "drawName": "VKL2021-28.07.2021 20:00"
+      },
+      {
+        "date": "2021-07-21",
+        "main": [
+          2,
+          11,
+          12,
+          23,
+          26,
+          43
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": 264.5,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1316,
+        "drawName": "VKL2021-21.07.2021 20:00"
+      },
+      {
+        "date": "2021-07-14",
+        "main": [
+          3,
+          9,
+          14,
+          16,
+          20,
+          45
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": 258.3,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1315,
+        "drawName": "VKL2021-14.07.2021 20:00"
+      },
+      {
+        "date": "2021-07-07",
+        "main": [
+          2,
+          5,
+          42,
+          44,
+          46,
+          47
+        ],
+        "bonus": [
+          5
+        ],
+        "jackpot": 256.2,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1314,
+        "drawName": "VKL2021-07.07.2021 20:00"
+      },
+      {
+        "date": "2021-06-30",
+        "main": [
+          7,
+          32,
+          33,
+          36,
+          37,
+          39
+        ],
+        "bonus": [
+          2
+        ],
+        "jackpot": 254.3,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1313,
+        "drawName": "VKL2021-30.06.2021 20:00"
+      },
+      {
+        "date": "2021-06-23",
+        "main": [
+          9,
+          16,
+          29,
+          31,
+          33,
+          39
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": 254.3,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1312,
+        "drawName": "VKL2021-23.06.2021 20:00"
+      },
+      {
+        "date": "2021-06-16",
+        "main": [
+          7,
+          11,
+          18,
+          21,
+          34,
+          35
+        ],
+        "bonus": [
+          4
+        ],
+        "jackpot": 253,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1311,
+        "drawName": "VKL2021-16.06.2021 20:00"
+      },
+      {
+        "date": "2021-06-09",
+        "main": [
+          3,
+          15,
+          25,
+          33,
+          34,
+          39
+        ],
+        "bonus": [
+          1
+        ],
+        "jackpot": 251.3,
+        "lotteryId": "vikinglotto",
+        "source": "Norsk Tipping",
+        "sourceUrl": "https://www.norsk-tipping.no/lotteri/vikinglotto/resultater",
+        "drawId": 1310,
+        "drawName": "VKL2021-09.06.2021 20:00"
       }
     ],
     "eurojackpot": [
@@ -159747,149 +160347,60 @@
   },
   "diagnostics": {
     "lotto": {
-      "fetched": 497,
-      "kept": 497,
-      "merged": 497,
-      "rejected": {
-        "total": 0
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "2017-01-01",
-      "source": "Norsk Tipping",
-      "sourceUrl": "https://www.norsk-tipping.no/lotteri/lotto/resultater"
+      "skipped": true,
+      "kept": 497
     },
     "vikinglotto": {
-      "fetched": 477,
-      "kept": 236,
-      "merged": 236,
-      "rejected": {
-        "total": 241,
-        "old-rule-date": 241,
-        "bonus-range": 83
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "2022-01-05",
-      "source": "Viking-Lotto.net / Norsk Tipping",
-      "sourceUrl": "https://viking-lotto.net/en/results"
+      "skipped": true,
+      "kept": 266
     },
     "eurojackpot": {
-      "fetched": 971,
-      "kept": 449,
-      "merged": 449,
-      "rejected": {
-        "total": 522,
-        "old-rule-date": 522
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "2022-03-25",
-      "source": "Euro-Jackpot.net",
-      "sourceUrl": "https://www.euro-jackpot.net/results-archive-2012"
+      "skipped": true,
+      "kept": 449
     },
     "powerball": {
-      "fetched": 1966,
-      "kept": 1375,
-      "merged": 1375,
-      "rejected": {
-        "total": 591,
-        "old-rule-date": 591,
-        "bonus-range": 173
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "2015-10-07",
-      "source": "NY Open Data / Powerball",
-      "sourceUrl": "https://data.ny.gov/resource/d6yy-54nr.json"
+      "skipped": true,
+      "kept": 1375
     },
     "megaMillions": {
-      "fetched": 2518,
-      "kept": 132,
-      "merged": 132,
-      "rejected": {
-        "total": 2386,
-        "old-rule-date": 2386,
-        "bonus-range": 622,
-        "main-range": 119
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "2025-04-08",
-      "source": "NY Open Data / Mega Millions",
-      "sourceUrl": "https://data.ny.gov/resource/5xaw-6ayf.json"
+      "skipped": true,
+      "kept": 132
     },
     "euroMillions": {
-      "fetched": 1099,
+      "fetched": 1962,
       "kept": 1022,
       "merged": 1022,
       "rejected": {
-        "total": 77,
-        "old-rule-date": 77
+        "total": 940,
+        "old-rule-date": 940
       },
       "rejectedExisting": {
         "total": 0
       },
       "currentRulesOnly": true,
       "currentFrom": "2016-09-27",
+      "coverage": {
+        "rows": 1022,
+        "oldest": "2016-09-27",
+        "latest": "2026-07-10",
+        "maxGapDays": 4,
+        "suspiciousGaps": [],
+        "suspiciousGapCount": 0
+      },
       "source": "Euro-Millions.com",
       "sourceUrl": "https://www.euro-millions.com/results-history-2026"
     },
     "superEnalotto": {
-      "fetched": 4230,
-      "kept": 4230,
-      "merged": 4230,
-      "rejected": {
-        "total": 0
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "1997-01-01",
-      "source": "National-Lottery.com / Lottologia",
-      "sourceUrl": "https://www.national-lottery.com/superenalotto/results/2026-archive"
+      "skipped": true,
+      "kept": 4230
     },
     "lottoMax": {
-      "fetched": 108,
-      "kept": 26,
-      "merged": 26,
-      "rejected": {
-        "total": 82,
-        "old-rule-date": 82
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "2026-04-14",
-      "source": "WCLC",
-      "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm"
+      "skipped": true,
+      "kept": 26
     },
     "powerballAustralia": {
-      "fetched": 430,
-      "kept": 430,
-      "merged": 430,
-      "rejected": {
-        "total": 0
-      },
-      "rejectedExisting": {
-        "total": 0
-      },
-      "currentRulesOnly": true,
-      "currentFrom": "2018-04-19",
-      "source": "Australia National Lottery / The Lott",
-      "sourceUrl": "https://australia.national-lottery.com/powerball/results-archive-2026"
+      "skipped": true,
+      "kept": 430
     }
   }
 }

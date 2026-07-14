@@ -135,4 +135,29 @@ for(const [id,draws] of Object.entries(results.games||{})){
     drawCount++;
   }
 }
-console.log(JSON.stringify({ok:true,reports,drawCount},null,2));
+
+let archiveDrawCount=0;
+const archivePath=path.join(root,'results-archive.json');
+if(fs.existsSync(archivePath)){
+  const archive=JSON.parse(fs.readFileSync(archivePath,'utf8'));
+  assert(archive.purpose==='offline-research-only','archive: unsafe or missing purpose marker');
+  for(const [id,draws] of Object.entries(archive.games||{})){
+    const seen=new Set(),currentByDate=new Map((results.games?.[id]||[]).map(d=>[d.date,d]));
+    for(const draw of draws){
+      assert(/^\d{4}-\d{2}-\d{2}$/.test(draw.date),id+': archive invalid date');
+      assert(!seen.has(draw.date),id+': archive duplicate date '+draw.date);seen.add(draw.date);
+      assert(draw.ruleEra==='current'||draw.ruleEra==='legacy',id+': archive rule era missing '+draw.date);
+      assert(Array.isArray(draw.main)&&draw.main.length>0,id+': archive empty main '+draw.date);
+      assert(new Set(draw.main).size===draw.main.length,id+': archive duplicate main '+draw.date);
+      assert(new Set(draw.bonus||[]).size===(draw.bonus||[]).length,id+': archive duplicate bonus '+draw.date);
+      assert(draw.main.every(n=>Number.isInteger(n)&&n>=1&&n<=999),id+': archive main range '+draw.date);
+      assert((draw.bonus||[]).every(n=>Number.isInteger(n)&&n>=1&&n<=999),id+': archive bonus range '+draw.date);
+      if(draw.ruleEra==='current'&&currentByDate.has(draw.date)){
+        const live=currentByDate.get(draw.date);
+        assert(draw.main.join(',')===live.main.join(',')&&(draw.bonus||[]).join(',')===(live.bonus||[]).join(','),id+': archive/live mismatch '+draw.date);
+      }
+      archiveDrawCount++;
+    }
+  }
+}
+console.log(JSON.stringify({ok:true,reports,drawCount,archiveDrawCount},null,2));

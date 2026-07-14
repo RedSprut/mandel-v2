@@ -160395,8 +160395,51 @@
       "kept": 4230
     },
     "lottoMax": {
-      "skipped": true,
-      "kept": 26
+      "fetched": 1247,
+      "kept": 26,
+      "merged": 26,
+      "rejected": {
+        "total": 1221,
+        "old-rule-date": 1221
+      },
+      "rejectedExisting": {
+        "total": 0
+      },
+      "currentRulesOnly": true,
+      "currentFrom": "2026-04-14",
+      "coverage": {
+        "rows": 26,
+        "oldest": "2026-04-14",
+        "latest": "2026-07-10",
+        "maxGapDays": 4,
+        "suspiciousGaps": [],
+        "suspiciousGapCount": 0
+      },
+      "source": "WCLC",
+      "sourceUrl": "https://www.wclc.com/winning-numbers/lotto-max-extra.htm",
+      "pdfArchive": {
+        "url": "https://www.wclc.com/display-on/display-on-downloads/lotto-max-since-inception.htm",
+        "pages": 161,
+        "parsedRows": 1234,
+        "rejectedRows": 3,
+        "rejected": [
+          {
+            "page": 102,
+            "date": "2022-01-25",
+            "reason": "number-range"
+          },
+          {
+            "page": 144,
+            "date": "2024-11-26",
+            "reason": "missing-bonus"
+          },
+          {
+            "page": 159,
+            "date": "2026-03-03",
+            "reason": "number-range"
+          }
+        ]
+      }
     },
     "powerballAustralia": {
       "skipped": true,

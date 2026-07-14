@@ -505,17 +505,20 @@ body[data-game="viking"] .bonus-col .nb.sb-viking{--ball:#183A91;--ball-hi:#8EAE
 .pair-axis{width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:var(--sub);flex-shrink:0}
 
 /* избранное */
-.fav-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--hist-border)}
-.fav-main{min-width:0;overflow:visible}
-.fav-rows{display:flex;flex-direction:column;gap:4px}
-.fav-rowballs{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;white-space:nowrap;overflow:visible}
+.favorite-combos-card{overflow:hidden}
+.favorite-combos-card .card-t{text-align:center}
+.fav-item{display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px 0 18px;border-bottom:1px solid var(--hist-border)}
+.fav-main{display:flex;flex-direction:column;align-items:center;width:100%;min-width:0;overflow:visible}
+.fav-rows{display:flex;flex-direction:column;align-items:center;width:100%;gap:7px}
+.fav-rowballs{display:flex;align-items:center;justify-content:center;gap:4px;max-width:100%;flex-wrap:nowrap;white-space:nowrap;overflow:visible}
 .fav-balls{display:flex;gap:4px;flex-wrap:nowrap}
-.fav-name{font-size:15px;color:var(--sub);margin-bottom:7px}
-.btn-fav-del{background:none;border:none;color:#e8556a;font-size:16px;cursor:pointer;padding:2px 6px}
-.fav-actions{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
-.btn-fav-use,.btn-fav-copy{width:38px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:18px;padding:0;font-size:14px;font-weight:800;cursor:pointer;line-height:1}
+.fav-sep{font-size:9px;opacity:.4;margin:0 2px;flex:0 0 auto}
+.fav-name{font-size:15px;color:var(--sub);margin-bottom:10px;text-align:center;font-weight:700}
+.fav-actions{display:flex;flex-direction:row;justify-content:center;align-items:center;gap:10px;padding:7px 10px;border:1px solid var(--border);border-radius:999px;background:var(--bg3);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.btn-fav-use,.btn-fav-copy,.btn-fav-del{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;padding:0;font-size:16px;font-weight:800;cursor:pointer;line-height:1}
 .btn-fav-use{background:linear-gradient(160deg,var(--gold2),var(--gold));color:#2A1608;border:none}
 .btn-fav-copy{background:var(--exp-bg);color:var(--exp-c);border:1.5px solid var(--exp-border)}
+.btn-fav-del{background:rgba(232,85,106,.1);border:1.5px solid rgba(232,85,106,.32);color:#e8556a}
 
 /* проверка билета */
 .check-inp-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
@@ -763,7 +766,7 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .hist-balls{gap:3px}
   .hist-sep{margin:0 1px}
   .btn-del{top:6px;width:32px;height:32px}
-  .btn-fav-use,.btn-fav-copy{width:34px;height:32px;font-size:13px}
+  .btn-fav-use,.btn-fav-copy,.btn-fav-del{width:44px;height:44px;font-size:15px}
   .dball{width:clamp(29px,9vw,42px);height:clamp(29px,9vw,42px);font-size:clamp(12px,3.7vw,16px)}
   .mb{width:clamp(30px,8.8vw,36px);height:clamp(30px,8.8vw,36px);font-size:clamp(11px,3.4vw,13.5px)}
   #wb-rows .mb{width:clamp(29px,9vw,42px);height:clamp(29px,9vw,42px);font-size:clamp(12px,3.7vw,16px)}
@@ -773,8 +776,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .if-rball{width:clamp(30px,9vw,38px);height:clamp(30px,9vw,38px);font-size:clamp(11px,3.5vw,14.5px)}
   .qa-balls{flex-wrap:nowrap;gap:5px}
   .qa-ball{width:clamp(30px,9.2vw,44px);height:clamp(30px,9.2vw,44px);flex:0 0 auto;font-size:clamp(11px,3.6vw,16px)}
-  .fav-item{grid-template-columns:1fr;gap:7px}
-  .fav-actions{flex-direction:row;justify-content:flex-end;align-items:center}
+  .fav-item{gap:12px;padding:14px 0 16px}
+  .fav-actions{justify-content:center}
   .wb-winning-line,#wb-drawn,#wb-bonus-wrap,#wb-bonus,.prize-draw-balls{flex-wrap:nowrap!important}
   .wb-winning-line{gap:2px}
   #wb-drawn,#wb-bonus{gap:2px}
@@ -831,6 +834,9 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .bonus-col{min-width:92px}
   .wheel-grid{grid-template-columns:repeat(8,minmax(54px,72px));justify-content:center;gap:10px}
   .wheel-num{font-size:17px}
+  .favorite-combos-card .hball{width:48px;height:48px;font-size:17px}
+  .fav-name{font-size:16px;margin-bottom:13px}
+  .fav-rowballs{gap:6px}
 }
 
 /* ── ШИРОКИЙ БРАУЗЕР: единая центрированная рабочая область ── */
@@ -869,6 +875,15 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-sim .sim-workspace .mine-tall{font-size:24px}
   #pg-sim .sim-workspace .wheel-grid{grid-template-columns:repeat(10,minmax(58px,76px));justify-content:center;gap:12px}
   #pg-sim .sim-workspace .wheel-num{font-size:18px}
+  .favorite-combos-card{padding:24px 28px}
+  .favorite-combos-card .card-t{font-size:14px;margin-bottom:18px}
+  .favorite-combos-card .hball{width:56px;height:56px;font-size:19px}
+  .fav-item{gap:18px;padding:22px 0 24px}
+  .fav-rows{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:720px;margin:0 auto}
+  .fav-rowballs{gap:7px}
+  .fav-sep{margin:0 4px}
+  .fav-actions{gap:12px;padding:8px 12px}
+  .btn-fav-use,.btn-fav-copy,.btn-fav-del{width:48px;height:48px;font-size:17px}
   #pg-ana .sec-tabs{max-width:1040px}
   #pg-ana .tab-content.vis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch;width:100%;max-width:1760px;margin:0 auto;padding:14px 20px 20px}
   #pg-ana .tab-content.vis>.card,#pg-ana .ana-column>.card{margin:0;max-width:none;min-width:0}
@@ -4065,7 +4080,7 @@ async function renderFavs(){
     let rowsH='';
     displayRows.forEach(row=>{
       let balls=row.m.map(n=>`<div class="hball ${l.cls}-m">${n}</div>`).join('');
-      if(row.b&&row.b.length>0){balls+=`<div style="font-size:9px;opacity:.4;margin:0 2px">|</div>`;balls+=row.b.map(n=>`<div class="hball ${l.cls}-b">${n}</div>`).join('');}
+      if(row.b&&row.b.length>0){balls+=`<div class="fav-sep" aria-hidden="true">|</div>`;balls+=row.b.map(n=>`<div class="hball ${l.cls}-b">${n}</div>`).join('');}
       rowsH+=`<div class="fav-rowballs">${balls}</div>`;
     });
     div.innerHTML=`<div class="fav-main"><div class="fav-name">${fav.name}</div><div class="fav-rows">${rowsH}</div></div>

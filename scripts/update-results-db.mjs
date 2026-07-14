@@ -9,6 +9,7 @@ const CURRENT_YEAR = TODAY.getUTCFullYear();
 const HTTP_TIMEOUT_MS = 12000;
 const DEFAULT_USER_AGENT = 'LotoSimulatorResultsBot/2.0 (+https://github.com/RedSprut/mandel-v2)';
 const BROWSER_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15';
+const LOTTO_MAX_ARCHIVE_MIN_ROWS = 1200;
 
 const MONTHS = {
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -110,6 +111,7 @@ const currentRulesOnly = !cli.includeOldRules;
 const dryRun = Boolean(cli.dryRun);
 const outFile = path.resolve(cli.out || DEFAULT_OUT);
 const archiveFile = cli.archiveOut ? path.resolve(cli.archiveOut) : null;
+const fetchDiagnostics = {};
 
 main().catch((err) => {
   console.error(err.stack || err.message || err);
@@ -128,8 +130,8 @@ async function main() {
     if (!selectedGames.includes(game)) {
       games[game] = previous.games?.[game] || [];
       if (archiveFile) archiveGames[game] = previousArchive.games?.[game] || [];
-      diagnostics[game] = { skipped: true, kept: games[game].length };
-      if (archiveFile) archiveDiagnostics[game] = { skipped: true, kept: archiveGames[game].length };
+      diagnostics[game] = previous.diagnostics?.[game] || { skipped: true, kept: games[game].length };
+      if (archiveFile) archiveDiagnostics[game] = previousArchive.diagnostics?.[game] || { skipped: true, kept: archiveGames[game].length };
       continue;
     }
 
@@ -177,7 +179,8 @@ async function main() {
       currentFrom: RULES[game].currentFrom,
       coverage: analyzeCoverage(game, merged),
       source: RULES[game].source,
-      sourceUrl: RULES[game].sourceUrl
+      sourceUrl: RULES[game].sourceUrl,
+      ...(fetchDiagnostics[game] || {})
     };
     if (archiveFile) {
       const { kept: archiveKept, rejected: archiveRejected } = normalizeArchiveRows(game, fetched);
@@ -194,7 +197,8 @@ async function main() {
         rejectedExisting: summarizeRejected(archiveRejectedExisting),
         coverage: analyzeCoverage(game, archiveMerged),
         source: RULES[game].source,
-        sourceUrl: RULES[game].officialArchiveUrl || RULES[game].sourceUrl
+        sourceUrl: RULES[game].officialArchiveUrl || RULES[game].sourceUrl,
+        ...(fetchDiagnostics[game] || {})
       };
     }
   }
@@ -251,15 +255,18 @@ function parseArgs(args) {
     else if (arg === '--include-old-rules') out.includeOldRules = true;
     else if (arg === '--archive-out') out.archiveOut = args[++i];
     else if (arg.startsWith('--archive-out=')) out.archiveOut = arg.slice(14);
+    else if (arg === '--lotto-max-pdf') out.lottoMaxPdf = args[++i];
+    else if (arg.startsWith('--lotto-max-pdf=')) out.lottoMaxPdf = arg.slice(16);
     else if (arg === '--out') out.out = args[++i];
     else if (arg.startsWith('--out=')) out.out = arg.slice(6);
     else if (arg === '--games') out.games = parseGames(args[++i]);
     else if (arg.startsWith('--games=')) out.games = parseGames(arg.slice(8));
     else if (arg === '--help' || arg === '-h') {
-      console.log(`Usage: node scripts/update-results-db.mjs [--games a,b] [--out results.json] [--archive-out results-archive.json] [--dry-run] [--include-old-rules]
+      console.log(`Usage: node scripts/update-results-db.mjs [--games a,b] [--out results.json] [--archive-out results-archive.json] [--lotto-max-pdf file.pdf] [--dry-run] [--include-old-rules]
 
 Default writes current-rule-compatible draws to results.json.
 --archive-out additionally writes every structurally valid fetched draw, marks legacy/current eras, and is for offline research only.
+--lotto-max-pdf reads a local WCLC archive PDF instead of downloading it (useful for reproducible tests).
 Legacy --include-old-rules keeps its old mixed-output behaviour; prefer --archive-out so the live database remains safe.`);
       process.exit(0);
     } else {
@@ -543,6 +550,17 @@ async function fetchSuperEnalottoLottologia() {
 }
 
 async function fetchLottoMax() {
+  const archive = await fetchLottoMaxArchivePdf().catch((err) => {
+    fetchDiagnostics.lottoMax = { pdfArchive: { error: err.message } };
+    console.error(`warn lottoMax official PDF archive: ${err.message}`);
+    return [];
+  });
+  const recent = await fetchLottoMaxRecent();
+  if (!archive.length && !recent.length) throw new Error('WCLC PDF archive and recent-results pages returned no Lotto Max draws');
+  return mergeByDate(archive, recent);
+}
+
+async function fetchLottoMaxRecent() {
   const out = [];
   for (let back = 0; back <= 12; back++) {
     const sourceUrl = `https://www.wclc.com/lotto-max-extra.htm?back=${back}`;
@@ -567,6 +585,105 @@ async function fetchLottoMax() {
     }
   }
   return out;
+}
+
+async function fetchLottoMaxArchivePdf() {
+  const sourceUrl = RULES.lottoMax.officialArchiveUrl;
+  const bytes = cli.lottoMaxPdf
+    ? Uint8Array.from(await readFile(path.resolve(cli.lottoMaxPdf)))
+    : await fetchBinary(sourceUrl, { attempts: 3, timeoutMs: 30000 });
+  if (String.fromCharCode(...bytes.slice(0, 5)) !== '%PDF-') throw new Error('WCLC archive response is not a PDF');
+
+  const lines = await extractPdfLines(bytes);
+  const { rows, rejected } = parseLottoMaxArchiveLines(lines, sourceUrl);
+  fetchDiagnostics.lottoMax = {
+    pdfArchive: {
+      url: sourceUrl,
+      pages: lines.at(-1)?.page || 0,
+      parsedRows: rows.length,
+      rejectedRows: rejected.length,
+      rejected: rejected.map(({ page, date, reason }) => ({ page, date, reason }))
+    }
+  };
+  if (rows.length < LOTTO_MAX_ARCHIVE_MIN_ROWS) {
+    throw new Error(`only ${rows.length} complete draws parsed; expected at least ${LOTTO_MAX_ARCHIVE_MIN_ROWS}`);
+  }
+  if (rejected.length) {
+    const sample = rejected.slice(0, 3).map((item) => `p.${item.page} ${item.date || 'unknown'} (${item.reason})`).join('; ');
+    console.error(`warn lottoMax PDF: skipped ${rejected.length} incomplete/invalid dated rows: ${sample}`);
+  }
+  console.error(`lottoMax PDF: ${rows.length} complete draws from ${lines.at(-1)?.page || 0} pages`);
+  return rows;
+}
+
+async function extractPdfLines(bytes) {
+  let getDocument;
+  try {
+    ({ getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs'));
+  } catch (err) {
+    throw new Error(`PDF parser is unavailable; run npm install (${err.message})`);
+  }
+
+  const loadingTask = getDocument({
+    data: bytes,
+    disableFontFace: true,
+    useSystemFonts: false,
+    isEvalSupported: false
+  });
+  let pdf;
+  try {
+    pdf = await loadingTask.promise;
+    const lines = [];
+    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+      const page = await pdf.getPage(pageNumber);
+      const content = await page.getTextContent();
+      const groups = [];
+      for (const item of content.items || []) {
+        const text = String(item.str || '').trim();
+        if (!text) continue;
+        const x = Number(item.transform?.[4] || 0), y = Number(item.transform?.[5] || 0);
+        let group = groups.find((candidate) => Math.abs(candidate.y - y) < 0.7);
+        if (!group) {
+          group = { y, items: [] };
+          groups.push(group);
+        }
+        group.items.push({ x, text });
+      }
+      groups.sort((a, b) => b.y - a.y).forEach((group) => {
+        const text = group.items.sort((a, b) => a.x - b.x).map((item) => item.text).join(' ').replace(/\s+/g, ' ').trim();
+        if (text) lines.push({ page: pageNumber, text });
+      });
+      page.cleanup();
+    }
+    return lines;
+  } finally {
+    if (pdf) await pdf.destroy();
+    else await loadingTask.destroy().catch(() => {});
+  }
+}
+
+function parseLottoMaxArchiveLines(lines, sourceUrl) {
+  const dateLine = /^(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),\s+(\d{4})\s+(.+)$/i;
+  const rows = [], rejected = [];
+  for (const line of lines || []) {
+    const match = line.text.match(dateLine);
+    if (!match) continue; // Excludes headings, Maxmillions and EXTRA-only rows.
+    const date = buildDate(Number(match[3]), MONTHS[match[1].toLowerCase()], Number(match[2]));
+    const values = parseNumberList(match[4]);
+    const main = values.slice(0, 7), bonus = values.slice(7, 8);
+    let reason = '';
+    if (main.length !== 7) reason = `main-count-${main.length}`;
+    else if (bonus.length !== 1) reason = 'missing-bonus';
+    else if (new Set(main).size !== 7) reason = 'duplicate-main';
+    else if (main.some((n) => n < 1 || n > 52) || bonus.some((n) => n < 1 || n > 52)) reason = 'number-range';
+    else if (main.includes(bonus[0])) reason = 'bonus-overlap';
+    if (reason) {
+      rejected.push({ page: line.page, date, reason, text: line.text });
+      continue;
+    }
+    rows.push(draw(date, main, bonus, 'lottoMax', 'WCLC Lotto Max official archive', sourceUrl));
+  }
+  return { rows: mergeByDate([], rows), rejected };
 }
 
 async function fetchPowerballAustralia() {
@@ -732,6 +849,17 @@ async function fetchJson(url, options = {}) {
   }, options);
   if (!res.ok) throw new Error(`${url} HTTP ${res.status}`);
   return res.json();
+}
+
+async function fetchBinary(url, options = {}) {
+  const headers = {
+    'accept': 'application/pdf,application/octet-stream;q=0.9,*/*;q=0.2',
+    'user-agent': DEFAULT_USER_AGENT,
+    ...(options.headers || {})
+  };
+  const res = await fetchResponse(url, { headers }, options);
+  if (!res.ok) throw new Error(`${url} HTTP ${res.status}`);
+  return new Uint8Array(await res.arrayBuffer());
 }
 
 async function fetchResponse(url, requestOptions, retryOptions = {}) {

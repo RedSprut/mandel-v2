@@ -117,6 +117,10 @@ for(const relative of files){
 }
 
 const results=JSON.parse(fs.readFileSync(path.join(root,'results.json'),'utf8'));
+const updateScript=fs.readFileSync(path.join(root,'scripts/update-results-db.mjs'),'utf8');
+const packageJson=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
+assert(updateScript.includes('fetchLottoMaxArchivePdf')&&updateScript.includes("pdfjs-dist/legacy/build/pdf.mjs"),'lottoMax: automatic WCLC PDF parser missing');
+assert(packageJson.dependencies?.['pdfjs-dist'],'lottoMax: PDF parser dependency missing');
 const resultToApp={lotto:'lotto',vikinglotto:'viking',eurojackpot:'euro',powerball:'powerball',megaMillions:'mega',euroMillions:'euromillions',superEnalotto:'superenalotto',lottoMax:'lottomax',powerballAustralia:'powerballau'};
 const auditLots=extractLots(fs.readFileSync(path.join(root,'second_version/index.html'),'utf8'));
 let drawCount=0;
@@ -141,6 +145,9 @@ const archivePath=path.join(root,'results-archive.json');
 if(fs.existsSync(archivePath)){
   const archive=JSON.parse(fs.readFileSync(archivePath,'utf8'));
   assert(archive.purpose==='offline-research-only','archive: unsafe or missing purpose marker');
+  const lottoMaxArchive=archive.games?.lottoMax||[];
+  assert(lottoMaxArchive.length>=1200,'lottoMax: full WCLC PDF archive was not imported');
+  assert(lottoMaxArchive.at(-1)?.date==='2009-09-25','lottoMax: WCLC archive inception date missing');
   for(const [id,draws] of Object.entries(archive.games||{})){
     const seen=new Set(),currentByDate=new Map((results.games?.[id]||[]).map(d=>[d.date,d]));
     for(const draw of draws){

@@ -766,6 +766,12 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .hist-balls{gap:3px}
   .hist-sep{margin:0 1px}
   .btn-del{top:6px;width:32px;height:32px}
+  #pg-ana #at-inp .hist-item{display:grid;grid-template-columns:minmax(0,1fr) 42px;align-items:center;column-gap:8px;padding:12px 0}
+  #pg-ana #at-inp .hist-main{min-width:0}
+  #pg-ana #at-inp .hist-date{padding-right:0}
+  #pg-ana #at-inp .hist-balls{min-width:0}
+  #pg-ana #at-inp .hball{width:clamp(29px,8vw,35px);height:clamp(29px,8vw,35px);font-size:clamp(11px,3vw,13px)}
+  #pg-ana #at-inp .btn-del{position:relative;top:auto;right:auto;justify-self:center;align-self:center;width:36px;height:36px;margin:0}
   .btn-fav-use,.btn-fav-copy,.btn-fav-del{width:44px;height:44px;font-size:15px}
   .dball{width:clamp(29px,9vw,42px);height:clamp(29px,9vw,42px);font-size:clamp(12px,3.7vw,16px)}
   .mb{width:clamp(30px,8.8vw,36px);height:clamp(30px,8.8vw,36px);font-size:clamp(11px,3.4vw,13.5px)}
@@ -1480,10 +1486,10 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div id="official-desc" style="font-size:12px;color:var(--sub2);line-height:1.55;margin-bottom:10px">Обновляет последние тиражи из подключённого официального источника или общей базы results.json.</div>
       <div class="sub-banner" onclick="openSubInfo()">
         <div class="sub-badge" id="sub-badge">СКОРО</div>
-        <div class="sub-title">Лото Симулятор Pro</div>
+        <div class="sub-title">Лото Симулятор</div>
         <div class="sub-desc">Максимально полная доступная база каждой игры · Квантово-астральный · безлимит Судьи и Консенсуса</div>
-        <div class="sub-price" id="sub-price-line">Подписка откроется после подключения безопасной оплаты</div>
-        <div class="sub-cta" id="sub-cta">Статус подключения →</div>
+        <div class="sub-price" id="sub-price-line">$4.99/мес <span>· 3 мес $12.99 · 6 мес $22.99 · год $34.99</span></div>
+        <div class="sub-cta" id="sub-cta">Тарифы и возможности →</div>
       </div>
       <button class="btn-exp" id="notify-btn" onclick="toggleWinNotify()" style="margin:0 0 8px">🔔 Уведомлять о выигрышах: выкл</button>
       <button class="btn-draw euro" id="official-btn" onclick="updateOfficialCurrent()" style="font-size:14px;padding:12px;margin-top:0">↻ Обновить текущую лотерею</button>
@@ -1867,12 +1873,12 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
   </div>
 </div>
 
-<!-- ЛОТО СИМУЛЯТОР PRO -->
+<!-- ЛОТО СИМУЛЯТОР: бесплатный и платный режимы -->
 <div class="pro-ov" id="pro-ov" onclick="if(event.target===this)PRO_close()">
   <div class="pro-sheet">
     <button class="pro-close" onclick="PRO_close()">✕</button>
     <div class="pro-crown">👑</div>
-    <div class="pro-title">Лото Симулятор Pro</div>
+    <div class="pro-title">Лото Симулятор</div>
     <div class="pro-tag">Твоя лаборатория тиражей</div>
 
     <div class="pro-step" id="pro-plans-step">
@@ -1885,7 +1891,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       </div>
 
       <div class="pro-sec">
-        <div class="pro-sec-t">👑 Pro · полная лаборатория</div>
+        <div class="pro-sec-t">👑 Платно · полная лаборатория</div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>Вся собранная <b>история каждой лотереи</b></span></div>
         <div class="pro-li"><span class="pro-ic">◆</span><span>База <b>обновляется автоматически</b> — свежие тиражи подтягиваются сами</span></div>
         <div class="pro-li"><span class="pro-ic">◆</span><span><b>Безлимитные</b> Консенсус, Структурное поле, Судья (обе роли), Парадоксы и Астрал с натальной картой</span></div>
@@ -1910,7 +1916,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div class="pro-checkout-title">Оформление подписки</div>
       <div class="pro-checkout-sub">Проверь заказ и выбери удобный способ безопасной оплаты.</div>
       <div class="pro-order">
-        <div><div class="pro-order-name" id="pro-order-name">Лото Симулятор Pro</div><div style="font-size:12px;color:#8A6B2E;margin-top:2px">Автопродление можно отменить в любое время</div></div>
+        <div><div class="pro-order-name" id="pro-order-name">Лото Симулятор</div><div style="font-size:12px;color:#8A6B2E;margin-top:2px">Автопродление можно отменить в любое время</div></div>
         <div class="pro-order-price" id="pro-order-price">$4.99</div>
       </div>
       <label class="pro-field">E-mail для чека
@@ -6357,10 +6363,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 /* ═══ ПОДПИСКА: выбор тарифа и передача в защищённый hosted checkout ═══ */
 const PRO_PLANS=Object.freeze({
-  m1:{name:'Лото Симулятор Pro · 1 месяц',price:'$4.99'},
-  m3:{name:'Лото Симулятор Pro · 3 месяца',price:'$12.99'},
-  m6:{name:'Лото Симулятор Pro · 6 месяцев',price:'$22.99'},
-  m12:{name:'Лото Симулятор Pro · 12 месяцев',price:'$34.99'}
+  m1:{name:'Лото Симулятор · 1 месяц',price:'$4.99'},
+  m3:{name:'Лото Симулятор · 3 месяца',price:'$12.99'},
+  m6:{name:'Лото Симулятор · 6 месяцев',price:'$22.99'},
+  m12:{name:'Лото Симулятор · 12 месяцев',price:'$34.99'}
 });
 /* Вставьте hosted checkout URL платёжного провайдера для каждого тарифа.
    Допустимы строка URL или объект {default,card,apple,google}. */
@@ -6368,17 +6374,12 @@ const PRO_CHECKOUT_URLS=Object.assign({m1:'',m3:'',m6:'',m12:''},window.LOTO_PRO
 let PRO_selectedPlan='m12',PRO_selectedMethod='card';
 function PRO_isConfigured(){return Object.values(PRO_CHECKOUT_URLS).some(v=>typeof v==='string'?!!v:!!(v&&Object.values(v).some(Boolean)));}
 function PRO_updateAvailability(){
-  if(!PRO_isConfigured())return;
   const badge=document.getElementById('sub-badge'),line=document.getElementById('sub-price-line'),cta=document.getElementById('sub-cta');
-  if(badge)badge.textContent='PREMIUM';
+  if(badge)badge.textContent='ПОДПИСКА';
   if(line)line.innerHTML='$4.99/мес <span>· 3 мес $12.99 · 6 мес $22.99 · год $34.99</span>';
-  if(cta)cta.textContent='Узнать подробнее →';
+  if(cta)cta.textContent='Тарифы и возможности →';
 }
 function openSubInfo(){
-  if(!PRO_isConfigured()){
-    showFeedback('Лото Симулятор Pro','Оплата ещё не подключена. В публичной версии незавершённый checkout отключён; для iOS и Android потребуется встроенная подписка магазина.','🛠️',5200);
-    return;
-  }
   PRO_showPlans();
   document.getElementById('pro-ov').classList.add('show');
 }

@@ -18,7 +18,7 @@ const LOCALES={
 };
 
 const EXTRA_SOURCE={
-  ru:['Вся доступная база'],
+  ru:['Вся доступная база','{{0}} ({{1}}) — 1 до {{2}}'],
   en:[
     'Language','Theme','Reality Check Simulator','Pure random','Main numbers','Bonus numbers',
     'Norway','Nordic/Baltic','Europe','USA','Italy','Canada','Australia',
@@ -34,6 +34,8 @@ const EXTRA_SOURCE={
 };
 
 const TERM_OVERRIDES={
+  'Главные числа ({{0}}) — 1 до {{1}}': ['Главные числа ({{0}}) — 1 до {{1}}','Main numbers ({{0}}) — 1 to {{1}}','Hovedtall ({{0}}) — 1 til {{1}}','Huvudnummer ({{0}}) — 1 till {{1}}','Hovednumre ({{0}}) — 1 til {{1}}','Päänumerot ({{0}}) — 1–{{1}}','Hauptzahlen ({{0}}) — 1 bis {{1}}','Numéros principaux ({{0}}) — 1 à {{1}}','Números principales ({{0}}) — 1 a {{1}}','Numeri principali ({{0}}) — da 1 a {{1}}','Números principais ({{0}}) — 1 a {{1}}','Liczby główne ({{0}}) — od 1 do {{1}}','Hoofdnummers ({{0}}) — 1 tot {{1}}','Põhinumbrid ({{0}}) — 1 kuni {{1}}','Galvenie skaitļi ({{0}}) — no 1 līdz {{1}}','Pagrindiniai skaičiai ({{0}}) — nuo 1 iki {{1}}'],
+  '{{0}} ({{1}}) — 1 до {{2}}': ['{{0}} ({{1}}) — 1 до {{2}}','{{0}} ({{1}}) — 1 to {{2}}','{{0}} ({{1}}) — 1 til {{2}}','{{0}} ({{1}}) — 1 till {{2}}','{{0}} ({{1}}) — 1 til {{2}}','{{0}} ({{1}}) — 1–{{2}}','{{0}} ({{1}}) — 1 bis {{2}}','{{0}} ({{1}}) — 1 à {{2}}','{{0}} ({{1}}) — 1 a {{2}}','{{0}} ({{1}}) — da 1 a {{2}}','{{0}} ({{1}}) — 1 a {{2}}','{{0}} ({{1}}) — od 1 do {{2}}','{{0}} ({{1}}) — 1 tot {{2}}','{{0}} ({{1}}) — 1 kuni {{2}}','{{0}} ({{1}}) — no 1 līdz {{2}}','{{0}} ({{1}}) — nuo 1 iki {{2}}'],
   '— свежие тиражи подтягиваются сами': ['— свежие тиражи подтягиваются сами','— new lottery draws update automatically','— nye lotteritrekninger oppdateres automatisk','— nya lotteridragningar uppdateras automatiskt','— nye lotteritrækninger opdateres automatisk','— uudet lottoarvonnat päivittyvät automaattisesti','— neue Lotterieziehungen werden automatisch aktualisiert','— les nouveaux tirages sont mis à jour automatiquement','— los nuevos sorteos se actualizan automáticamente','— le nuove estrazioni si aggiornano automaticamente','— os novos sorteios são atualizados automaticamente','— nowe losowania są aktualizowane automatycznie','— nieuwe loterijtrekkingen worden automatisch bijgewerkt','— uued loosimised uuendatakse automaatselt','— jaunās izlozes tiek atjauninātas automātiski','— nauji traukimai atnaujinami automatiškai'],
   'Выпавшие главные числа ({{0}} из {{1}})': ['Выпавшие главные числа ({{0}} из {{1}})','Drawn main numbers ({{0}} of {{1}})','Trukne hovedtall ({{0}} av {{1}})','Dragna huvudnummer ({{0}} av {{1}})','Udtrukne hovednumre ({{0}} af {{1}})','Arvotut päänumerot ({{0}}/{{1}})','Gezogene Hauptzahlen ({{0}} von {{1}})','Numéros principaux tirés ({{0}} sur {{1}})','Números principales extraídos ({{0}} de {{1}})','Numeri principali estratti ({{0}} su {{1}})','Números principais sorteados ({{0}} de {{1}})','Wylosowane liczby główne ({{0}} z {{1}})','Getrokken hoofdnummers ({{0}} van {{1}})','Loositud põhinumbrid ({{0}}/{{1}})','Izlozētie galvenie skaitļi ({{0}} no {{1}})','Ištraukti pagrindiniai skaičiai ({{0}} iš {{1}})'],
   '{{0}} ({{1}} из {{2}})': ['{{0}} ({{1}} из {{2}})','{{0}} ({{1}} of {{2}})','{{0}} ({{1}} av {{2}})','{{0}} ({{1}} av {{2}})','{{0}} ({{1}} af {{2}})','{{0}} ({{1}}/{{2}})','{{0}} ({{1}} von {{2}})','{{0}} ({{1}} sur {{2}})','{{0}} ({{1}} de {{2}})','{{0}} ({{1}} su {{2}})','{{0}} ({{1}} de {{2}})','{{0}} ({{1}} z {{2}})','{{0}} ({{1}} van {{2}})','{{0}} ({{1}}/{{2}})','{{0}} ({{1}} no {{2}})','{{0}} ({{1}} iš {{2}})'],

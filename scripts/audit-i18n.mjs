@@ -53,8 +53,8 @@ for(const [index,entry] of (catalog?.entries||[]).entries()){
 const langOrderMatch=html.match(/const LANG_ORDER=\[([^\]]+)\]/);
 const htmlLocales=langOrderMatch?.[1]?.match(/['"]([a-z]{2})['"]/g)?.map(value=>value.slice(1,-1))||[];
 if(JSON.stringify(htmlLocales)!==JSON.stringify(EXPECTED_LOCALES))fail(`HTML language order mismatch: ${htmlLocales.join(', ')}`);
-if(!html.includes('<script src="./i18n-catalog.js"></script>'))fail('index.html does not load i18n-catalog.js');
-if(!html.includes('<script src="./i18n-runtime.js"></script>'))fail('index.html does not load i18n-runtime.js');
+if(!/<script src="\.\/i18n-catalog\.js\?v=[^"]+"><\/script>/.test(html))fail('index.html does not load a versioned i18n-catalog.js');
+if(!/<script src="\.\/i18n-runtime\.js\?v=[^"]+"><\/script>/.test(html))fail('index.html does not load a versioned i18n-runtime.js');
 if(!runtime.includes('MutationObserver'))fail('Runtime does not localize dynamically inserted content');
 if(/(?:toLocaleDateString|toLocaleString|Intl\.(?:DateTimeFormat|NumberFormat))\(\s*['"](?:ru-RU|nb-NO)['"]/.test(html)){
   fail('Hard-coded Russian/Norwegian display locale remains in index.html');

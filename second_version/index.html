@@ -462,6 +462,12 @@ body[data-game="viking"] .bonus-col .nb.sb-viking{--ball:#183A91;--ball-hi:#8EAE
 .hist-main{min-width:0;overflow:visible}
 .hist-date{font-size:15px;color:var(--sub);margin-bottom:8px;line-height:1.35}
 .hist-balls{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow:visible;padding:3px 0 5px}
+.rule-summary{display:grid;gap:8px;margin:8px 0 12px}
+.rule-era{padding:10px 11px;border:1px solid var(--border);border-radius:12px;background:var(--bg2);font-size:11.5px;color:var(--sub2);line-height:1.45}
+.rule-era b{display:block;color:var(--fg);font-size:12px;margin-bottom:2px}
+.rule-badge{display:inline-flex;align-items:center;margin-left:6px;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:800;vertical-align:1px;background:rgba(255,159,10,.14);color:#ff9f0a;border:1px solid rgba(255,159,10,.32)}
+.rule-badge.current{background:rgba(52,199,89,.12);color:#34c759;border-color:rgba(52,199,89,.28)}
+.hist-extra-label{font-size:9px;font-weight:800;color:var(--sub2);margin-left:3px}
 .hist-sep{font-size:9px;opacity:.4;margin:0 2px;flex:0 0 auto}
 .hball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex:0 0 auto}
 .hball.lotto-m{--ball:#cc2060;--ball-hi:#ef5a8a;--ball-lo:#7e0f3a;color:#fff}
@@ -741,7 +747,9 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .st .st-ic{width:41px;height:41px;font-size:27px}
   .hdr-title{font-size:13.5px}.hdr-title .hdr-sub{font-size:10px}
 }
-@media (max-width:430px){
+/* Телефонная компоновка применяется ко всему диапазону, где приложение
+   остаётся в 430-px колонке: iPhone, Android и складные телефоны. */
+@media (max-width:699px){
   body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
   input,select,textarea,.date-inp,.num-inp,.mini-inp{font-size:16px!important}
   .hdr-back,.hdr-icon,.sa-btn{width:44px;height:44px;min-width:44px;min-height:44px}
@@ -772,6 +780,12 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-ana #at-inp .hist-balls{min-width:0}
   #pg-ana #at-inp .hball{width:clamp(29px,8vw,35px);height:clamp(29px,8vw,35px);font-size:clamp(11px,3vw,13px)}
   #pg-ana #at-inp .btn-del{position:relative;top:auto;right:auto;justify-self:center;align-self:center;width:36px;height:36px;margin:0}
+  #pg-ana #at-inp .hist-item.no-action{grid-template-columns:minmax(0,1fr)}
+  #pg-ana #at-inp .hist-item.no-action>span:last-child{display:none}
+  #pg-ana #at-inp .hist-item.no-action .hist-extra-label{display:none}
+  #pg-ana #at-inp .hist-item.no-action .hist-balls{gap:2px}
+  #pg-ana #at-inp .hist-item.no-action .hist-sep{margin:0;min-width:4px}
+  #pg-ana #at-inp .hist-item.no-action .hball{width:clamp(25px,7.3vw,31px);height:clamp(25px,7.3vw,31px);font-size:clamp(10px,2.8vw,12px)}
   .btn-fav-use,.btn-fav-copy,.btn-fav-del{width:44px;height:44px;font-size:15px}
   .dball{width:clamp(29px,9vw,42px);height:clamp(29px,9vw,42px);font-size:clamp(12px,3.7vw,16px)}
   .mb{width:clamp(30px,8.8vw,36px);height:clamp(30px,8.8vw,36px);font-size:clamp(11px,3.4vw,13.5px)}
@@ -810,6 +824,14 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   .picker-wrap{gap:5px}
   .main-grid{min-width:0;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
   .bonus-col{width:54px;min-width:0;flex:0 0 54px;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+  #pg-ana #at-inp .hist-item{grid-template-columns:minmax(0,1fr) 34px;column-gap:4px}
+  #pg-ana #at-inp .hist-balls{gap:1px}
+  #pg-ana #at-inp .hist-sep{margin:0;min-width:3px}
+  #pg-ana #at-inp .hball{width:23px;height:23px;font-size:9px}
+  #pg-ana #at-inp .btn-del{width:32px;height:32px}
+  #pg-ana #at-inp .hist-item.no-action .hist-balls{gap:1px}
+  #pg-ana #at-inp .hist-item.no-action .hist-sep{min-width:3px}
+  #pg-ana #at-inp .hist-item.no-action .hball{width:22px;height:22px;font-size:9px}
 }
 @media (min-width:431px) and (max-width:699px) and (hover:hover) and (pointer:fine){
   .lot-scroll-btn{display:grid}
@@ -906,6 +928,8 @@ button:focus-visible,.nb:focus-visible,.wheel-num:focus-visible{outline:2px soli
   #pg-ana #at-inp .hist-date{margin:0;padding:0;font-weight:700}
   #pg-ana #at-inp .hist-balls{min-width:0;padding:4px 0}
   #pg-ana #at-inp .btn-del{position:static;justify-self:end}
+  #pg-ana #at-inp .hist-item.no-action{grid-template-columns:minmax(170px,.65fr) minmax(0,1.35fr)}
+  #pg-ana #at-inp .hist-item.no-action>span:last-child{display:none}
   .card{font-size:16px}
 }
 @media (min-width:700px) and (max-width:1199px){
@@ -1205,7 +1229,7 @@ body.sa-flight .win-banner,body.sa-flight .srow,body.sa-flight .ndb{box-shadow:n
 .judge-action-panel .btn-draw{margin-top:10px}
 .judge-bulk{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .matrix-judge-mount:not(:empty){margin-top:16px;padding-top:4px;border-top:1px solid var(--srow-border)}
-@media(max-width:430px){.judge-choice-summary{gap:8px;padding:11px 10px}.judge-choice-summary b{font-size:12px}.judge-choice-summary span{font-size:11.5px}.judge-bulk{grid-template-columns:1fr}.judge-bulk .btn-exp{min-height:46px}}
+@media(max-width:699px){.judge-choice-summary{gap:8px;padding:11px 10px}.judge-choice-summary b{font-size:12px}.judge-choice-summary span{font-size:11.5px}.judge-bulk{grid-template-columns:1fr}.judge-bulk .btn-exp{min-height:46px}}
 
 /* ══ КАБИНЕТ СУДЬИ ══ */
 .supc-card{display:flex;gap:12px;align-items:center;padding:13px 14px;margin-bottom:10px;border:1.5px solid var(--gold);border-radius:16px;cursor:pointer;background:linear-gradient(150deg,rgba(233,180,76,.14),transparent)}
@@ -1502,6 +1526,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
     </div>
     <div class="card">
       <div class="card-t" id="hist-title">История (0 тиражей)</div>
+      <div id="hist-rule-summary" class="rule-summary"></div>
       <input class="num-inp" id="hist-search" placeholder="🔍 Поиск: дата, год или число (напр. 2023, 07 апр, 44)" style="width:100%;margin:8px 0 10px" oninput="HIST_filter()">
       <div id="hist-list"><div class="empty">📭 Тиражей нет</div></div>
       <button class="btn-exp" onclick="doExport()">📤 Экспорт JSON</button>
@@ -1596,7 +1621,7 @@ body :is(.if-sheet,.sg-sheet,.lang-box,.horo-sheet,.pro-sheet,.fb-box,.cc-box,.c
       <div id="man-out"></div>
       <div style="margin-top:12px">
         <div id="jackpot-currency-label" style="font-size:12px;font-weight:600;color:var(--sub2);margin-bottom:5px">Текущий джекпот (млн в валюте игры)</div>
-        <input type="number" class="num-inp" id="jackpot-inp" placeholder="Например: 150" oninput="renderMandel()">
+        <input type="number" class="num-inp" id="jackpot-inp" placeholder="Например: 150" oninput="renderCombinationAnalysis()">
       </div>
     </div>
     <div class="card"><div class="card-t">Проверка математики</div><div id="math-check-out"><div class="empty">Нет данных</div></div></div>
@@ -2145,7 +2170,9 @@ const LOTTERY_APP_KEYS={
 };
 const APP_LOTTERY_KEYS=Object.fromEntries(Object.entries(LOTTERY_APP_KEYS).map(([configKey,appKey])=>[appKey,configKey]));
 const RESULTS_JSON_URL='../results.json';
+const RESULTS_ARCHIVE_URL='../results-archive.json';
 let resultsJsonCache=null;
+let resultsArchiveJsonCache=null;
 
 const LOTS={
   lotto:{id:'lotto',name:'LOTTO',short:'Lotto',region:'Norway',flag:'🇳🇴',activeClass:'ol',cls:'lotto',mB:34,pM:7,bB:34,pBo:0,offBo:1,price:5,currency:'NOK',minR:2,day:'Суббота',dl:'18:00',timeZone:'Europe/Oslo',tzLabel:'Oslo',res:'20:00 Oslo',combos:5379616,plm:'Velg 7 tall',plb:'',bonusName:'Tilleggstall',drawDays:[6],officialProvider:'norsk',officialSourceName:'Norsk Tipping',officialGame:'lotto',officialUrl:'https://www.norsk-tipping.no/lotteri/lotto/resultater',
@@ -2194,15 +2221,26 @@ function normalizeResultDraw(draw){
     date:draw.date||draw.drawDate||'',
     main:uniqValid(draw.main||draw.numbers||draw.mainNumbers||[],Number.MAX_SAFE_INTEGER),
     bonus:uniqValid(draw.bonus||draw.extra||draw.extraBall||draw.extraNumbers||[],Number.MAX_SAFE_INTEGER),
-    jackpot:draw.jackpot??null
+    jackpot:draw.jackpot??null,
+    payoutTiers:draw.payoutTiers||null,
+    lotteryId:draw.lotteryId||'',
+    lotteryName:draw.lotteryName||'',
+    source:draw.source||'',
+    sourceUrl:draw.sourceUrl||'',
+    drawId:draw.drawId??null,
+    ruleVersion:draw.ruleVersion||'',
+    ruleEra:draw.ruleEra||'',
+    extraGroups:Array.isArray(draw.extraGroups)?draw.extraGroups.map(group=>({label:group.label||'',numbers:[...(group.numbers||[])]})):null
   };
 }
 async function fetchResultsJson(url=RESULTS_JSON_URL){
   if(url===RESULTS_JSON_URL&&resultsJsonCache)return resultsJsonCache;
+  if(url===RESULTS_ARCHIVE_URL&&resultsArchiveJsonCache)return resultsArchiveJsonCache;
   const res=await fetch(url,{cache:'no-store'});
-  if(!res.ok)throw new Error(`results.json HTTP ${res.status}`);
+  if(!res.ok)throw new Error(`${url.split('/').pop()} HTTP ${res.status}`);
   const data=await res.json();
   if(url===RESULTS_JSON_URL)resultsJsonCache=data;
+  if(url===RESULTS_ARCHIVE_URL)resultsArchiveJsonCache=data;
   return data;
 }
 async function loadHistoricalResults(gameKey,url=RESULTS_JSON_URL){
@@ -2210,6 +2248,24 @@ async function loadHistoricalResults(gameKey,url=RESULTS_JSON_URL){
   const configKey=resolveConfigKey(gameKey),appKey=resolveGameKey(gameKey);
   const source=db.games?.[configKey]||db.games?.[appKey]||db[configKey]||db[appKey]||[];
   return Array.isArray(source)?source.map(normalizeResultDraw):[];
+}
+async function loadArchivePackage(gameKey){
+  const db=await fetchResultsJson(RESULTS_ARCHIVE_URL);
+  const configKey=resolveConfigKey(gameKey),appKey=resolveGameKey(gameKey);
+  const source=db.games?.[configKey]||db.games?.[appKey]||[];
+  const eras=db.ruleVersions?.[configKey]||db.ruleVersions?.[appKey]||[];
+  return{draws:Array.isArray(source)?source.map(normalizeResultDraw):[],eras:Array.isArray(eras)?eras:[],updatedAt:db.updatedAt||''};
+}
+function ruleEraForDraw(draw,eras=[]){
+  return eras.find(era=>era.id===draw.ruleVersion)
+    ||eras.find(era=>draw.date>=era.from&&(!era.to||draw.date<=era.to))
+    ||null;
+}
+async function loadFullHistory(gameKey){
+  const current=await loadD(gameKey);
+  const archive=await loadArchivePackage(gameKey).catch(()=>({draws:[],eras:[],updatedAt:''}));
+  const merged=mergeDrawLists(archive.draws,current).merged;
+  return{draws:merged,eras:archive.eras,updatedAt:archive.updatedAt,currentCount:current.length,currentDates:new Set(current.map(draw=>draw.date))};
 }
 function analyzeData(gameKey,historicalData=[]){
   const cfg=getLotteryConfig(gameKey);
@@ -3169,7 +3225,7 @@ const PDX_TYPES=[
   {key:'cluster',name:'Парадокс кластера',      short:'соседняя пара чисел',
    note:'Соседние числа (например, 23–24) кажутся «неслучайными», но вполне допустимы. Точная вероятность хотя бы одной соседней пары для k из N: 1 − C(N−k+1,k) / C(N,k).'},
   {key:'mirror', name:'Парадокс зеркала',       short:'симметрия n ↔ max+1−n',
-   note:'Беру числа и их «отражения» относительно центра диапазона. Симметричные наборы люди почти не отмечают.'},
+   note:'Строю максимально возможную симметрию n ↔ N+1−n: зеркальные пары и, при нечётном N и нечётном k, центральное число. Для нечётного k при чётном N одно число неизбежно остаётся без пары.'},
   {key:'regress',name:'Регрессия к среднему',   short:'ушедшие от нормы числа',
    note:'Модель показывает числа с наибольшим расхождением краткой и длинной частоты. Регрессия описывает статистику повторных выборок, но не означает, что отдельный шар обязан «вернуться» к средней.'}
 ];
@@ -3185,11 +3241,40 @@ function PDX_finish(m,l){
   while(m.length<l.pM){const n=1+Math.floor(Math.random()*l.mB);if(!m.includes(n))m.push(n);}
   return m.sort((a,b)=>a-b);
 }
+function PDX_mirrorNumbers(l){
+  const pairs=Math.floor(l.pM/2),left=shufSlice(rangeNums(Math.floor(l.mB/2)),pairs),m=[];
+  left.forEach(n=>m.push(n,l.mB+1-n));
+  if(l.pM%2){
+    const center=(l.mB+1)/2;
+    if(Number.isInteger(center))m.push(center);
+    else{
+      const rest=rangeNums(l.mB).filter(n=>!m.includes(n));
+      m.push(rest[secureInt(rest.length)]);
+    }
+  }
+  return m.sort((a,b)=>a-b);
+}
+function PDX_clusterProbability(l){
+  return 1-comb(l.mB-l.pM+1,l.pM)/comb(l.mB,l.pM);
+}
 function PDX_row(type,ctx){
   const l=ctx.l,pM=l.pM,mB=l.mB;let m=[];
   if(type==='crowd'){
-    const w=rangeNums(mB).map(n=>{let base=n>31?1.9:0.45;if(n%10===0)base*=1.15;return base+Math.random()*0.6;});
+    /* анти-толпа: люди массово берут даты 1–31 и «красивые» узоры.
+       Граница толпы: 31 для больших полей, иначе ~62% диапазона (у 34/35 «вне дат» почти нет). */
+    const cut=mB>=42?31:Math.max(2,Math.floor(mB*0.62));
+    const w=rangeNums(mB).map(n=>{let base=n>cut?2.6:0.28;if(n%10===0)base*=1.1;return base+Math.random()*0.22;});
     m=weightedDistinct(w,pM,mB);
+    /* структурная гарантия: минимум 60% ряда — выше границы толпы (иначе парадокс не работает) */
+    const needHi=Math.min(Math.ceil(pM*0.6),mB-cut);
+    let hiPool=rangeNums(mB).filter(n=>n>cut&&!m.includes(n));
+    while(m.filter(n=>n>cut).length<needHi&&hiPool.length){
+      const lows=m.filter(n=>n<=cut);
+      const drop=lows[Math.floor(Math.random()*lows.length)];
+      const add=hiPool.splice(Math.floor(Math.random()*hiPool.length),1)[0];
+      m[m.indexOf(drop)]=add;
+    }
+    m.sort((a,b)=>a-b);
   }else if(type==='clash'){
     if(ctx.hist){
       const sorted=[...ctx.freq.entries()].sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
@@ -3206,8 +3291,7 @@ function PDX_row(type,ctx){
     m=[start,(start+1>mB)?start-1:start+1];
     m=[...m,...shufSlice(rangeNums(mB).filter(n=>!m.includes(n)),pM)].slice(0,pM);
   }else if(type==='mirror'){
-    const half=rangeNums(Math.floor(mB/2));
-    shufSlice(half,pM).forEach(n=>{m.push(n);const mir=mB+1-n;if(mir!==n)m.push(mir);});
+    m=PDX_mirrorNumbers(l);
   }else if(type==='regress'){
     if(ctx.hist){
       const recentW=Math.min(10,ctx.draws.length);
@@ -3222,23 +3306,26 @@ function PDX_row(type,ctx){
   }
   return {m:PDX_finish(m,l),type};
 }
-function PDX_generate(count,useBase,l,draws){
+function PDX_generate(count,useBase,l,draws,applyFilters=false){
   const ctx=PDX_ctx(l,(useBase?draws:[]));
-  const rows=[],seen=new Set();let guard=0;
-  while(rows.length<count&&guard++<count*40){
+  const history=loadModelHistory(l),seen=new Set(history),added=[],rows=[];let guard=0;
+  const flt=applyFilters?getFilterSettings():null;
+  while(rows.length<count&&guard++<count*500){
     const t=PDX_TYPES[rows.length%PDX_TYPES.length];
     const r=PDX_row(t.key,ctx);
-    const key=r.m.join(',');
+    const candidate={m:r.m,b:genBonus(l,ctx.draws),pdx:PDX_TYPES.find(x=>x.key===r.type),_uniqueIssued:true};
+    if(flt&&!passesFilters(candidate,l,flt))continue;
+    const key=generatedRowKey(candidate,l);
     if(seen.has(key))continue;
-    seen.add(key);
-    rows.push({m:r.m,b:genBonus(l,ctx.draws),pdx:PDX_TYPES.find(x=>x.key===r.type)});
+    seen.add(key);added.push(key);rows.push(candidate);
   }
+  saveModelHistory(l,[...history,...added]);
   return rows;
 }
 
 async function generateRowsByAlgo(algo,count){
   const l=L(),draws=IF_window(await loadD(cur)),hasHist=draws.length>=5;
-  if(algo==='paradox')return filterGeneratedRows(PDX_generate(count,hasHist,l,draws).map(r=>({m:r.m,b:r.b})),count,l,draws);
+  if(algo==='paradox')return PDX_generate(count,hasHist,l,draws,true);
   if(algo==='qastro')return filterGeneratedRows((await QA_rows(count,{fast:true})).map(r=>({m:r.m,b:r.b})),count,l,draws);
   if(algo==='wheel')return filterGeneratedRows((await buildWheelGenerated(count)).rows,count,l,draws);
   if(algo==='world-hot'||algo==='world-mix')return filterGeneratedRows(await generateWorldRows(algo,count),count,l,draws);
@@ -3852,7 +3939,7 @@ function checkPrize(m,b,dM,dB,l){
   if(id==='lotto'){
     if(mh===7)return P('7','ДЖЕКПОТ 🏆',7);
     if(mh===6&&addition)return P('6+1','2-й приз · 6+tillegg',6);
-    if(mh===6)return P('6+0','3-й приз · 6 rette',5);
+    if(mh===6)return P('6','3-й приз · 6 rette',5);
     if(mh===5)return P('5','4-й приз · 5 rette',4);
     if(mh===4)return P('4','5-й приз · 4 rette',3);
   }else if(id==='viking'){
@@ -3916,11 +4003,12 @@ function runLifeSim(){
   const ticket=rows.filter(r=>r.m.length===l.pM&&(l.pBo===0||r.b.length===l.pBo)).map(r=>({m:[...r.m],b:[...r.b]}));
   if(!ticket.length){if(out)out.textContent='Нет заполненных рядов для симуляции.';return;}
   lifeRunning=true;
-  const total=2600,batch=25;
+  const drawsPerWeek=Math.max(1,new Set(l.drawDays||[]).size);
+  const drawsPerYear=52*drawsPerWeek,total=50*drawsPerYear,batch=50;
   let done=0,spent=0,won=0,best=0,hits=0;
   const wins=[],tierCnt={};
   const paint=(final)=>{
-    const years=(done/52).toFixed(1),net=won-spent;
+    const years=(done/drawsPerYear).toFixed(1),net=won-spent;
     let html=`<div class="life-big">${final?'Итог 50 лет с этими числами':'Прошло '+years+' лет...'}</div>
       <div class="life-stats">
         <div class="life-stat"><span>Потрачено</span><b>${fmtInt(spent)} ${l.currency||'NOK'}</b></div>
@@ -3959,7 +4047,7 @@ function runLifeSim(){
       spent+=ticket.length*l.price;
       ticket.forEach(row=>{
         const p=checkPrize(row.m,row.b,dM,dB,l),v=estimatePrizeNok(p,l,true);
-        if(v>0){won+=v;hits++;best=Math.max(best,v);wins.push({yr:done/52,name:p.name,v,lvl:p.lvl});tierCnt[p.name]=(tierCnt[p.name]||0)+1;}
+        if(v>0){won+=v;hits++;best=Math.max(best,v);wins.push({yr:done/drawsPerYear,name:p.name,v,lvl:p.lvl});tierCnt[p.name]=(tierCnt[p.name]||0)+1;}
       });
     }
     paint(done>=total);
@@ -4147,7 +4235,7 @@ async function renderAna(){
   if(curAT==='chi')await renderChi();
   if(curAT==='cmp'){renderComparison();renderROI();await renderJackpotChart();}
   if(curAT==='prize')await renderPrizes();
-  if(curAT==='man'){renderMandel();await renderMathCheck();await renderStats();}
+  if(curAT==='man'){renderCombinationAnalysis();await renderMathCheck();await renderStats();}
 }
 
 function buildInpFields(){
@@ -4489,17 +4577,20 @@ async function openSourceInfo(){
   const l=L();
   let cnt=0,last='—';
   try{const d=await loadD(cur);cnt=(d||[]).length;if(d&&d[0]&&d[0].date)last=d[0].date;}catch(e){}
+  const archive=await loadArchivePackage(cur).catch(()=>({draws:[],eras:[],updatedAt:''}));
   const provider=getOfficialProvider(cur);
   const status=provider?'Живое обновление подключено':'Локальная база (results.json)';
   const rows=[
     ['Оператор',l.officialSourceName||'—'],
     ['Лотерея',l.short||l.name],
-    ['Доступно тиражей',String(cnt)],
+    ['Текущие правила',String(cnt)+' тиражей'],
+    ['Полный архив',String(archive.draws.length||cnt)+' тиражей'],
+    ['Исторических версий правил',String(archive.eras.length||1)],
     ['Последнее обновление',last],
     ['Статус источника',status]
   ].map(r=>`<div class="src-row"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('');
   document.getElementById('src-body').innerHTML=rows+
-    '<div class="src-note">Данные используются для статистики, симуляций и проверки опубликованных результатов.</div>';
+    '<div class="src-note">Текущая матрица используется в моделях и симуляциях. Более старые тиражи показываются и считаются отдельно по историческим версиям правил.</div>';
   document.getElementById('src-ov').classList.add('show');
 }
 function closeSourceInfo(){document.getElementById('src-ov').classList.remove('show');}
@@ -4535,9 +4626,21 @@ async function addDraw(){
   await renderSavedDrawOptions();
 }
 
+function renderRuleSummary(draws,eras,currentCount){
+  if(!eras.length)return'<div class="rule-era"><b>Текущая база</b>Исторические версии правил для этого источника не заявлены.</div>';
+  const blocks=eras.map(era=>{
+    const count=draws.filter(draw=>ruleEraForDraw(draw,eras)?.id===era.id).length;
+    const range=era.from+(era.to?' — '+era.to:' — сейчас');
+    return`<div class="rule-era"><b>${era.current?'Текущие правила':'Изменённые старые правила'} · ${era.label}</b>${range} · ${count} тиражей</div>`;
+  }).join('');
+  return`<div class="rule-era"><b>Как используется архив</b>Показано ${draws.length} тиражей. Математические модели используют только ${currentCount} совместимых с сегодняшними правилами; старые эпохи считаются и показываются отдельно.</div>${blocks}`;
+}
+
 async function renderHistory(){
-  const l=L(),draws=await loadD(cur);
-  document.getElementById('hist-title').textContent=`История (${draws.length} тиражей · общая база)`;
+  const l=L(),pack=await loadFullHistory(cur),draws=pack.draws,eras=pack.eras;
+  document.getElementById('hist-title').textContent=`История (${draws.length} всего · ${pack.currentCount} по текущим правилам)`;
+  const summary=document.getElementById('hist-rule-summary');
+  if(summary)summary.innerHTML=renderRuleSummary(draws,eras,pack.currentCount);
   const c=document.getElementById('hist-list');
   if(!draws.length){c.innerHTML='<div class="empty">📭 Тиражей нет</div>';return;}
   c.innerHTML='';
@@ -4545,10 +4648,20 @@ async function renderHistory(){
   draws.forEach(d=>{
     const div=document.createElement('div');div.className='hist-item';
     let balls=d.main.map(n=>`<div class="hball ${l.cls}-m">${n}</div>`).join('');
-    if(d.bonus&&d.bonus.length){balls+=`<div class="hist-sep">|</div>`;balls+=d.bonus.map(n=>`<div class="hball ${l.cls}-b">${n}</div>`).join('');}
+    if(d.extraGroups&&d.extraGroups.length){
+      d.extraGroups.forEach(group=>{
+        balls+=`<div class="hist-sep">|</div><span class="hist-extra-label">${group.label}</span>`;
+        balls+=(group.numbers||[]).map(n=>`<div class="hball ${l.cls}-b">${n}</div>`).join('');
+      });
+    }else if(d.bonus&&d.bonus.length){balls+=`<div class="hist-sep">|</div>`;balls+=d.bonus.map(n=>`<div class="hball ${l.cls}-b">${n}</div>`).join('');}
     const[y,mo,dy]=d.date.split('-');
     const src=` · ${drawLotteryName(d,cur)}`;
-    div.innerHTML=`<div class="hist-main"><div class="hist-date">${dy} ${ms[+mo-1]} ${y}${src}</div><div class="hist-balls">${balls}</div></div><button class="btn-del" onclick="delDraw('${d.date}')">🗑</button>`;
+    const era=ruleEraForDraw(d,eras),isCurrent=era?.current??d.ruleEra!=='legacy';
+    const badge=era?`<span class="rule-badge ${isCurrent?'current':''}" title="${era.label}">${isCurrent?'текущие правила':'старые правила'}</span>`:'';
+    const canDelete=pack.currentDates.has(d.date);
+    const action=canDelete?`<button class="btn-del" onclick="delDraw('${d.date}')">🗑</button>`:'<span></span>';
+    if(!canDelete)div.classList.add('no-action');
+    div.innerHTML=`<div class="hist-main"><div class="hist-date">${dy} ${ms[+mo-1]} ${y}${src}${badge}</div><div class="hist-balls">${balls}</div></div>${action}`;
     c.appendChild(div);
   });
   try{HIST_filter();}catch(e){}
@@ -4748,21 +4861,27 @@ async function renderChi(){
   if(draws.length<10){c.innerHTML='<div class="empty">Нужно мин. 10 тиражей</div>';return;}
   const freq=buildFreq(draws,'main',l.mB);
   const obs=[...freq.values()],tot=obs.reduce((s,v)=>s+v,0),exp=tot/l.mB;
-  const chi2=obs.reduce((s,o)=>s+Math.pow(o-exp,2)/exp,0);
+  const pearson=obs.reduce((s,o)=>s+Math.pow(o-exp,2)/exp,0);
+  /* В одном тираже k чисел выбираются без возвращения. Обычная мультиномиальная
+     χ² занижает статистику; ковариация простой случайной выборки даёт поправку
+     (N−1)/(N−k), после которой асимптотически получаем χ²(N−1). */
+  const correction=(l.mB-1)/(l.mB-l.pM);
+  const chi2=pearson*correction;
   const df=l.mB-1,p=chi2pvalue(chi2,df);
   const pos=POSQ_audit(draws,l);
   let css,icon,verdict;
-  if(p>0.05){css='ok';icon='✅';verdict='Лотерея статистически честная';}
-  else if(p>0.01){css='warn';icon='⚠️';verdict='Незначительное отклонение';}
-  else{css='fail';icon='🚨';verdict='Заметное отклонение';}
+  if(p>0.05){css='ok';icon='✅';verdict='Значимого отклонения не обнаружено';}
+  else if(p>0.01){css='warn';icon='⚠️';verdict='Пограничное отклонение частот';}
+  else{css='fail';icon='🚨';verdict='Статистически значимое отклонение';}
   c.innerHTML=`<div class="chi2-box ${css}"><div class="chi2-icon">${icon}</div><div class="chi2-title">${verdict}</div><div class="chi2-desc">На основе ${draws.length} тиражей</div></div>
-  <div class="srow"><span>χ² статистика:</span><span>${chi2.toFixed(3)}</span></div>
+  <div class="srow"><span>χ² с поправкой без возвращения:</span><span>${chi2.toFixed(3)}</span></div>
+  <div class="srow"><span>Исходная Pearson χ²:</span><span>${pearson.toFixed(3)}</span></div>
   <div class="srow"><span>Степени свободы:</span><span>${df}</span></div>
   <div class="srow"><span>p-value:</span><span>${p.toFixed(4)}</span></div>
   <div class="srow"><span>Ожид. частота:</span><span>${exp.toFixed(2)}</span></div>`;
   if(pos){
     const rowsT=pos.ybar.map((y,i)=>'<tr><td style="padding:3px 8px">Y('+(i+1)+')</td><td style="padding:3px 8px">'+pos.mu[i].toFixed(2)+'</td><td style="padding:3px 8px">'+y.toFixed(2)+'</td></tr>').join('');
-    const verdict=pos.p>0.05?'согласуется с честной ✅':(pos.p>0.01?'отклонение ⚠️':'сильное отклонение 🚨');
+    const verdict=pos.p>0.05?'не противоречит модели честного тиража ✅':(pos.p>0.01?'пограничное отклонение ⚠️':'сильное отклонение 🚨');
     c.innerHTML+='<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--srow-border)">'+
       '<div style="font-weight:900;font-size:13px">Позиционный аудит (Q-тест)</div>'+
       '<div style="font-size:11px;color:var(--sub2);margin:3px 0 8px">Многомерный тест средних позиций по Coronel-Brizio et al., arXiv:0806.4595: у честной '+pos.k+'/'+L().mB+' i-е по возрастанию число обязано иметь среднее (N+1)·i/(k+1).</div>'+
@@ -4801,20 +4920,17 @@ function renderComparison(){
 // ─── ROI ──────────────────────────────────────
 function renderROI(){
   const c=document.getElementById('roi-out');
-  // aggregate all lotteries
-  let totalSpent=0,totalWon=0;
-  Object.keys(LOTS).forEach(id=>{const roi=loadROI();totalSpent+=roi.spent||0;totalWon+=roi.won||0;});
-  const roi=loadROI();
+  const roi=loadROI(),currency=L().currency||'NOK';
   const net=roi.won-roi.spent;
   c.innerHTML=`<div class="roi-card">
     <div class="roi-card-title">💰 ROI · ${L().name}</div>
-    <div class="roi-big ${net>=0?'roi-green':'roi-red'}">${net>=0?'+':''} ${net} NOK</div>
+    <div class="roi-big ${net>=0?'roi-green':'roi-red'}">${net>=0?'+':''} ${net} ${currency}</div>
     <div class="roi-sub">${net>=0?'Чистая прибыль':'Чистый убыток'}</div>
-    <div class="srow"><span>Потрачено (симул.):</span><span class="roi-red">${roi.spent} NOK</span></div>
-    <div class="srow"><span>Выиграно:</span><span class="roi-green">${roi.won} NOK</span></div>
+    <div class="srow"><span>Потрачено (симул.):</span><span class="roi-red">${roi.spent} ${currency}</span></div>
+    <div class="srow"><span>Выиграно:</span><span class="roi-green">${roi.won} ${currency}</span></div>
     <div style="margin-top:10px;font-size:11px;color:var(--sub2)">Трата симулируется автоматически. Введи выигрыши вручную:</div>
     <div style="display:flex;gap:8px;margin-top:8px">
-      <input type="number" id="won-inp" placeholder="Сумма выигрыша NOK" class="num-inp" style="flex:1">
+      <input type="number" id="won-inp" placeholder="Сумма выигрыша ${currency}" class="num-inp" style="flex:1">
       <button onclick="addWon()" style="padding:10px 14px;border-radius:10px;background:#34c759;color:#fff;border:none;font-weight:700;cursor:pointer;white-space:nowrap">+ Добавить</button>
     </div>
     <button onclick="resetROI()" style="margin-top:8px;width:100%;padding:10px;border-radius:10px;border:none;background:var(--bg3);color:var(--sub);font-size:12px;cursor:pointer">Сбросить ROI</button>
@@ -4909,7 +5025,7 @@ async function renderJackpotChart(){
 }
 
 // ─── КАЛЬКУЛЯТОР ОХВАТА ──────────────────────
-function renderMandel(){
+function renderCombinationAnalysis(){
   const l=L();
   const currency=l.currency||'NOK',combos=jackpotCombos(l),totalCost=combos*l.price,totalCostM=(totalCost/1e6).toFixed(1);
   const conservativeTarget=(totalCost*3/1e6).toFixed(1);
@@ -4941,13 +5057,15 @@ function renderMandel(){
 
 async function renderMathCheck(){
   const l=L(),draws=await loadD(cur),c=document.getElementById('math-check-out');
+  const archive=await loadArchivePackage(cur).catch(()=>({draws:[],eras:[]}));
   const computed=jackpotCombos(l);
+  const packageRows=l.packagePrice&&l.minR>1?l.minR:1;
   const constantOk=l.combos===computed;
   const dateCounts={};
   draws.forEach(d=>{dateCounts[d.date]=(dateCounts[d.date]||0)+1;});
   const dupDates=Object.values(dateCounts).filter(n=>n>1).length;
   const invalid=draws.map((d,i)=>({i,date:d.date,errs:validateDrawRecord(d,cur,d.source==='Norsk Tipping')})).filter(x=>x.errs.length);
-  const official=draws.filter(d=>d.source==='Norsk Tipping').length;
+  const sourced=draws.filter(d=>d.source).length;
   const expFreq=draws.length?draws.length*l.pM/l.mB:0;
   const chiReady=expFreq>=5;
   const formula=`C(${l.mB},${l.pM})${l.pBo>0?` × C(${l.bB},${l.pBo})`:''}`;
@@ -4956,7 +5074,11 @@ async function renderMathCheck(){
     <div class="srow"><span>Комбинаций по формуле:</span><span>${fmtInt(computed)}</span></div>
     <div class="srow"><span>Константа LOTS:</span><span style="color:${constantOk?'#34c759':'#ff3b30'}">${constantOk?'OK':'НЕ СОВПАДАЕТ'} · ${fmtInt(l.combos)}</span></div>
     <div class="srow"><span>Шанс джекпота:</span><span>1 : ${fmtChance(computed)}</span></div>
-    <div class="srow"><span>Официальных тиражей:</span><span>${official}/${draws.length}</span></div>
+    ${packageRows>1?`<div class="srow"><span>Шанс минимального пакета (${packageRows} строки):</span><span>1 : ${fmtChance(computed/packageRows)}</span></div>`:''}
+    <div class="srow"><span>Тиражей текущих правил:</span><span>${draws.length}</span></div>
+    <div class="srow"><span>Полный исторический архив:</span><span>${archive.draws.length||draws.length}</span></div>
+    <div class="srow"><span>Версий правил в архиве:</span><span>${archive.eras.length||1}</span></div>
+    <div class="srow"><span>С указанием источника:</span><span>${sourced}/${draws.length}</span></div>
     <div class="srow"><span>Ошибок формата базы:</span><span style="color:${invalid.length?'#ff3b30':'#34c759'}">${invalid.length}</span></div>
     <div class="srow"><span>Дубли дат:</span><span style="color:${dupDates?'#ff3b30':'#34c759'}">${dupDates}</span></div>
     <div class="srow"><span>χ² ожидаемая частота:</span><span style="color:${chiReady?'#34c759':'#ff9f0a'}">${expFreq.toFixed(2)} ${chiReady?'OK':'мало данных'}</span></div>
@@ -4965,7 +5087,7 @@ async function renderMathCheck(){
 }
 
 async function renderStats(){
-  const l=L(),draws=await loadD(cur),c=document.getElementById('stats-out');
+  const l=L(),draws=await loadD(cur),pack=await loadFullHistory(cur),c=document.getElementById('stats-out');
   if(!draws.length){c.innerHTML='<div class="empty">Нет данных</div>';return;}
   const all=draws.flatMap(d=>d.main);
   const avg=(all.reduce((s,v)=>s+v,0)/all.length).toFixed(1);
@@ -4974,12 +5096,23 @@ async function renderStats(){
   const minF=[...freq.entries()].sort((a,b)=>a[1]-b[1])[0];
   const ms=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
   const fmt=s=>{const[y,mo,d]=s.split('-');return`${d} ${ms[+mo-1]} ${y}`;};
-  c.innerHTML=`<div class="srow"><span>Тиражей:</span><span>${draws.length}</span></div>
+  const eraStats=pack.eras.map(era=>{
+    const rows=pack.draws.filter(draw=>ruleEraForDraw(draw,pack.eras)?.id===era.id);
+    if(!rows.length)return'';
+    const freq=new Map(Array.from({length:era.mainMax},(_,i)=>[i+1,0]));
+    rows.forEach(draw=>draw.main.forEach(n=>freq.set(n,(freq.get(n)||0)+1)));
+    const hot=[...freq.entries()].sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,3).map(([n,v])=>`№${n} (${v}×)`).join(', ');
+    return`<div class="rule-era"><b>${era.current?'Текущая эпоха':'Старые правила'} · ${era.label}</b>${era.from}${era.to?' — '+era.to:' — сейчас'} · ${rows.length} тиражей<br>Чаще в этой эпохе: ${hot}</div>`;
+  }).join('');
+  c.innerHTML=`<div class="srow"><span>Тиражей текущих правил:</span><span>${draws.length}</span></div>
+  <div class="srow"><span>Полный архив:</span><span>${pack.draws.length}</span></div>
   <div class="srow"><span>Первый:</span><span>${fmt(draws[draws.length-1].date)}</span></div>
   <div class="srow"><span>Последний:</span><span>${fmt(draws[0].date)}</span></div>
   <div class="srow"><span>Среднее число:</span><span>${avg} (ожид. ${((l.mB+1)/2).toFixed(1)})</span></div>
   <div class="srow"><span>Самое частое:</span><span>№${maxF[0]} (${maxF[1]}×)</span></div>
-  <div class="srow"><span>Самое редкое:</span><span>№${minF[0]} (${minF[1]}×)</span></div>`;
+  <div class="srow"><span>Самое редкое:</span><span>№${minF[0]} (${minF[1]}×)</span></div>
+  <div style="font-weight:900;font-size:13px;margin:14px 0 8px">Историческая статистика по версиям правил</div>
+  <div class="rule-summary">${eraStats||'<div class="rule-era">Исторические эпохи не найдены.</div>'}</div>`;
 }
 
 // ─── EXPORT/IMPORT ────────────────────────────
@@ -5980,7 +6113,8 @@ function rowsAsText(rws,l){
   return rws.map((r,i)=>(i+1)+') '+r.m.join(' ')+(r.b&&r.b.length?' | '+r.b.join(' '):'')).join('\n');
 }
 async function shareText(title,text){
-  const payload={title,text:text+'\n\n🎰 Лото Симулятор · redsprut.github.io/mandel-v2/second_version/'};
+  const appUrl=location.href.split(/[?#]/)[0];
+  const payload={title,text:text+'\n\n🎰 Лото Симулятор · '+appUrl};
   if(navigator.share){try{await navigator.share(payload);return;}catch(e){if(e&&e.name==='AbortError')return;}}
   try{await navigator.clipboard.writeText(payload.text);showCopyToast('📋 Скопировано — вставь в любой мессенджер');}
   catch(e){showFeedback('Поделиться','Скопируй вручную:\n\n'+payload.text,'📤',9000);}
@@ -6370,7 +6504,7 @@ const PRO_PLANS=Object.freeze({
 });
 /* Вставьте hosted checkout URL платёжного провайдера для каждого тарифа.
    Допустимы строка URL или объект {default,card,apple,google}. */
-const PRO_CHECKOUT_URLS=Object.assign({m1:'',m3:'',m6:'',m12:''},window.LOTO_PRO_CHECKOUT_URLS||window.MANDEL_PRO_CHECKOUT_URLS||{});
+const PRO_CHECKOUT_URLS=Object.assign({m1:'',m3:'',m6:'',m12:''},window.LOTO_PRO_CHECKOUT_URLS||{});
 let PRO_selectedPlan='m12',PRO_selectedMethod='card';
 function PRO_isConfigured(){return Object.values(PRO_CHECKOUT_URLS).some(v=>typeof v==='string'?!!v:!!(v&&Object.values(v).some(Boolean)));}
 function PRO_updateAvailability(){
@@ -7384,16 +7518,19 @@ async function PDX_go(){
   if(!data)return;
   let useBase=st.useBase;
   if(data.warn){useBase=false;showFeedback('Мало данных для базы','Для «с базой» нужно минимум 5 тиражей. Собираю парадоксы без базы — по чистой структуре.','♾️',3200);st.useBase=false;PDX_renderMode();}
-  st.rows=ensureUniqueGeneratedRows(PDX_generate(st.n,useBase,l,data.draws),l);
+  st.rows=PDX_generate(st.n,useBase,l,data.draws);
   document.getElementById('pdx-go').style.display='none';
   PDX_renderRows();
 }
 function PDX_rowHtml(r,l){
+  const note=r.pdx.key==='cluster'
+    ?r.pdx.note+' Для '+l.name+': '+(PDX_clusterProbability(l)*100).toFixed(2).replace('.',',')+'%.'
+    :r.pdx.note;
   return '<div class="pdx-row">'+
     '<div class="pdx-rlbl">♾️ '+r.pdx.name+' <span class="pdx-rtag">'+r.pdx.short+'</span></div>'+
     '<div class="if-rowballs">'+r.m.map(n=>'<div class="if-rball rb-m-'+l.cls+'">'+n+'</div>').join('')+
     ((r.b&&r.b.length)?'<div style="width:6px"></div>'+r.b.map(n=>'<div class="if-rball rb-b-'+l.cls+'">'+n+'</div>').join(''):'')+'</div>'+
-    '<div class="pdx-rnote">'+r.pdx.note+'</div></div>';
+    '<div class="pdx-rnote">'+note+'</div></div>';
 }
 function PDX_renderRows(){
   const st=PDX_state,l=L();

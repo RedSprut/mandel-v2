@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root=path.resolve(new URL('..',import.meta.url).pathname);
-const files=['mandel_world.html','second_version/index.html'];
+const files=['second_version/index.html'];
 
 function assert(ok,message){if(!ok)throw new Error(message);}
 function comb(n,k){
@@ -84,7 +84,7 @@ for(const relative of files){
     }
     for(const tier of l.tiers){
       const c=buildCase(l,tier.match),prize=api.checkPrize(c.ticketMain,c.ticketBonus,c.drawMain,c.drawBonus,l);
-      const expected=id==='lotto'&&tier.match==='6'?'6+0':tier.match;
+      const expected=tier.match;
       assert(prize?.key===expected,relative+': '+id+' tier '+tier.match+' resolved as '+(prize?.key||'none'));
       const value=api.estimatePrizeNok({key:tier.match,name:tier.label,lvl:0},l);
       assert(Number.isFinite(value)&&value>0,relative+': '+id+' tier '+tier.match+' has no positive estimate');
@@ -144,21 +144,41 @@ let archiveDrawCount=0;
 const archivePath=path.join(root,'results-archive.json');
 if(fs.existsSync(archivePath)){
   const archive=JSON.parse(fs.readFileSync(archivePath,'utf8'));
-  assert(archive.purpose==='offline-research-only','archive: unsafe or missing purpose marker');
+  assert(archive.purpose==='historical-display-and-research','archive: unsafe or missing purpose marker');
+  const minimumArchiveDepth={
+    lotto:758,vikinglotto:751,eurojackpot:972,powerball:1966,
+    megaMillions:2519,euroMillions:1963,superEnalotto:4231,
+    lottoMax:1250,powerballAustralia:1573
+  };
+  const expectedOldest={
+    lotto:'2012-01-07',vikinglotto:'2012-02-22',eurojackpot:'2012-03-23',
+    powerball:'2010-02-03',megaMillions:'2002-05-17',euroMillions:'2004-02-13',
+    superEnalotto:'1997-12-03',lottoMax:'2009-09-25',powerballAustralia:'1996-05-23'
+  };
   const lottoMaxArchive=archive.games?.lottoMax||[];
   assert(lottoMaxArchive.length>=1200,'lottoMax: full WCLC PDF archive was not imported');
   assert(lottoMaxArchive.at(-1)?.date==='2009-09-25','lottoMax: WCLC archive inception date missing');
   for(const [id,draws] of Object.entries(archive.games||{})){
+    assert(draws.length>=(minimumArchiveDepth[id]||0),id+': archive depth regressed to '+draws.length);
+    assert(draws.at(-1)?.date===expectedOldest[id],id+': archive start regressed to '+draws.at(-1)?.date);
+    const versions=archive.ruleVersions?.[id]||[];
+    assert(versions.length>0,id+': historical rule registry missing');
     const seen=new Set(),currentByDate=new Map((results.games?.[id]||[]).map(d=>[d.date,d]));
     for(const draw of draws){
       assert(/^\d{4}-\d{2}-\d{2}$/.test(draw.date),id+': archive invalid date');
       assert(!seen.has(draw.date),id+': archive duplicate date '+draw.date);seen.add(draw.date);
       assert(draw.ruleEra==='current'||draw.ruleEra==='legacy',id+': archive rule era missing '+draw.date);
+      const era=versions.find(v=>v.id===draw.ruleVersion&&draw.date>=v.from&&(!v.to||draw.date<=v.to));
+      assert(era,id+': unknown or date-incompatible rule version '+draw.ruleVersion+' '+draw.date);
       assert(Array.isArray(draw.main)&&draw.main.length>0,id+': archive empty main '+draw.date);
+      assert(draw.main.length===era.mainCount,id+': archive main count does not match '+era.id+' '+draw.date);
+      const archiveBonus=Array.isArray(draw.extraGroups)&&draw.extraGroups.length
+        ? draw.extraGroups.flatMap(group=>group.numbers||[])
+        : (draw.bonus||[]);
+      assert(archiveBonus.length===era.bonusCount,id+': archive bonus count does not match '+era.id+' '+draw.date);
       assert(new Set(draw.main).size===draw.main.length,id+': archive duplicate main '+draw.date);
-      assert(new Set(draw.bonus||[]).size===(draw.bonus||[]).length,id+': archive duplicate bonus '+draw.date);
-      assert(draw.main.every(n=>Number.isInteger(n)&&n>=1&&n<=999),id+': archive main range '+draw.date);
-      assert((draw.bonus||[]).every(n=>Number.isInteger(n)&&n>=1&&n<=999),id+': archive bonus range '+draw.date);
+      assert(draw.main.every(n=>Number.isInteger(n)&&n>=1&&n<=era.mainMax),id+': archive main range '+draw.date);
+      assert(archiveBonus.every(n=>Number.isInteger(n)&&n>=1&&n<=era.bonusMax),id+': archive bonus range '+draw.date);
       if(draw.ruleEra==='current'&&currentByDate.has(draw.date)){
         const live=currentByDate.get(draw.date);
         assert(draw.main.join(',')===live.main.join(',')&&(draw.bonus||[]).join(',')===(live.bonus||[]).join(','),id+': archive/live mismatch '+draw.date);

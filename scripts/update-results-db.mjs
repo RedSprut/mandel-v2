@@ -11,6 +11,27 @@ const DEFAULT_USER_AGENT = 'LotoSimulatorResultsBot/2.0 (+https://github.com/Red
 const BROWSER_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15';
 const LOTTO_MAX_ARCHIVE_MIN_ROWS = 1200;
 
+/* WCLC's otherwise complete since-inception PDF currently contains three
+   visibly malformed primary rows. Keep corrections narrow, dated and
+   auditable instead of silently discarding valid historical draws. */
+const LOTTO_MAX_PDF_CORRECTIONS = Object.freeze({
+  '2022-01-25': {
+    main: [11, 13, 18, 20, 23, 30, 40], bonus: [37],
+    reason: 'WCLC PDF joins Bonus 37 with footnote marker 4 as 374.',
+    referenceUrl: 'https://www.lotto.net/canada-lotto-max/numbers/january-25-2022'
+  },
+  '2024-11-26': {
+    main: [20, 24, 31, 33, 36, 41, 49], bonus: [50],
+    reason: 'WCLC PDF page break omits the tail of this dated row.',
+    referenceUrl: 'https://www.lottery.net/lotto-max/lotto-max/numbers/11-26-2024'
+  },
+  '2026-03-03': {
+    main: [1, 3, 4, 18, 20, 23, 31], bonus: [2],
+    reason: 'WCLC PDF prints the final main number 31 as out-of-range 61.',
+    referenceUrl: 'https://www.wclc.com/lotto-max-extra.htm?back=4'
+  }
+});
+
 const MONTHS = {
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
   july: 7, august: 8, september: 9, october: 10, november: 11, december: 12
@@ -46,13 +67,14 @@ const GAME_ORDER = [
 const RULES = {
   lotto: {
     mainCount: 7, mainMax: 34, bonusCount: 1, bonusMax: 34,
-    currentFrom: '2017-01-01',
+    archiveFrom: '2012-01-07',
+    currentFrom: '2015-03-21',
     source: 'Norsk Tipping',
     sourceUrl: 'https://www.norsk-tipping.no/lotteri/lotto/resultater'
   },
   vikinglotto: {
     mainCount: 6, mainMax: 48, bonusCount: 1, bonusMax: 5,
-    archiveFrom: '2017-05-24',
+    archiveFrom: '2012-02-22',
     /* 2 June 2021 was the last 1–8 Viking-number draw; next draw was 9 June. */
     currentFrom: '2021-06-09',
     source: 'Viking-Lotto.net / Norsk Tipping',
@@ -67,12 +89,14 @@ const RULES = {
   },
   powerball: {
     mainCount: 5, mainMax: 69, bonusCount: 1, bonusMax: 26,
+    archiveFrom: '2010-02-03',
     currentFrom: '2015-10-07',
     source: 'NY Open Data / Powerball',
     sourceUrl: 'https://data.ny.gov/resource/d6yy-54nr.json'
   },
   megaMillions: {
     mainCount: 5, mainMax: 70, bonusCount: 1, bonusMax: 24,
+    archiveFrom: '2002-05-17',
     currentFrom: '2025-04-08',
     source: 'NY Open Data / Mega Millions',
     sourceUrl: 'https://data.ny.gov/resource/5xaw-6ayf.json'
@@ -86,12 +110,14 @@ const RULES = {
   },
   superEnalotto: {
     mainCount: 6, mainMax: 90, bonusCount: 1, bonusMax: 90,
+    archiveFrom: '1997-12-03',
     currentFrom: '1997-01-01',
     source: 'National-Lottery.com / Lottologia',
     sourceUrl: 'https://www.national-lottery.com/superenalotto/results/2026-archive'
   },
   lottoMax: {
     mainCount: 7, mainMax: 52, bonusCount: 1, bonusMax: 52,
+    archiveFrom: '2009-09-25',
     currentFrom: '2026-04-14',
     source: 'WCLC',
     sourceUrl: 'https://www.wclc.com/winning-numbers/lotto-max-extra.htm',
@@ -99,11 +125,75 @@ const RULES = {
   },
   powerballAustralia: {
     mainCount: 7, mainMax: 35, bonusCount: 1, bonusMax: 20,
+    archiveFrom: '1996-05-23',
     currentFrom: '2018-04-19',
     source: 'Australia National Lottery / The Lott',
     sourceUrl: 'https://australia.national-lottery.com/powerball/results-archive-2026'
   }
 };
+
+/* Исторические матрицы нужны для двух разных задач:
+   - results.json содержит только тиражи, совместимые с текущей игрой и моделями;
+   - results-archive.json хранит максимальную доступную глубину и точную версию
+     правил каждого тиража. Несовместимые эпохи никогда не смешиваются молча. */
+const RULE_ERAS = {
+  lotto: [
+    { id: 'lotto-7-34-3', from: '2012-01-07', to: '2015-03-14', mainCount: 7, mainMax: 34, bonusCount: 3, bonusMax: 34, label: '7 из 34 + 3 дополнительных' },
+    { id: 'lotto-7-34-1', from: '2015-03-21', current: true, mainCount: 7, mainMax: 34, bonusCount: 1, bonusMax: 34, label: '7 из 34 + 1 дополнительный' }
+  ],
+  vikinglotto: [
+    { id: 'viking-lucky', from: '2012-02-22', to: '2017-05-17', mainCount: 6, mainMax: 48, bonusCount: 3, bonusMax: 48, label: '6 из 48 + 2 дополнительных + Lucky Number' },
+    { id: 'viking-1-8', from: '2017-05-24', to: '2021-06-02', mainCount: 6, mainMax: 48, bonusCount: 1, bonusMax: 8, label: '6 из 48 + Viking 1 из 8' },
+    { id: 'viking-1-5', from: '2021-06-09', current: true, mainCount: 6, mainMax: 48, bonusCount: 1, bonusMax: 5, label: '6 из 48 + Viking 1 из 5' }
+  ],
+  eurojackpot: [
+    { id: 'eurojackpot-2-8', from: '2012-03-23', to: '2014-10-03', mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 8, label: '5 из 50 + 2 Euro числа из 8' },
+    { id: 'eurojackpot-2-10', from: '2014-10-10', to: '2022-03-18', mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 10, label: '5 из 50 + 2 Euro числа из 10' },
+    { id: 'eurojackpot-2-12', from: '2022-03-25', current: true, mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 12, label: '5 из 50 + 2 Euro числа из 12' }
+  ],
+  powerball: [
+    { id: 'powerball-59-39', from: '2010-02-03', to: '2012-01-14', mainCount: 5, mainMax: 59, bonusCount: 1, bonusMax: 39, label: '5 из 59 + Powerball 1 из 39' },
+    { id: 'powerball-59-35', from: '2012-01-18', to: '2015-10-03', mainCount: 5, mainMax: 59, bonusCount: 1, bonusMax: 35, label: '5 из 59 + Powerball 1 из 35' },
+    { id: 'powerball-69-26', from: '2015-10-07', current: true, mainCount: 5, mainMax: 69, bonusCount: 1, bonusMax: 26, label: '5 из 69 + Powerball 1 из 26' }
+  ],
+  megaMillions: [
+    { id: 'mega-52-52', from: '2002-05-17', to: '2005-06-21', mainCount: 5, mainMax: 52, bonusCount: 1, bonusMax: 52, label: '5 из 52 + Mega Ball 1 из 52' },
+    { id: 'mega-56-46', from: '2005-06-24', to: '2013-10-18', mainCount: 5, mainMax: 56, bonusCount: 1, bonusMax: 46, label: '5 из 56 + Mega Ball 1 из 46' },
+    { id: 'mega-75-15', from: '2013-10-22', to: '2017-10-27', mainCount: 5, mainMax: 75, bonusCount: 1, bonusMax: 15, label: '5 из 75 + Mega Ball 1 из 15' },
+    { id: 'mega-70-25', from: '2017-10-31', to: '2025-04-04', mainCount: 5, mainMax: 70, bonusCount: 1, bonusMax: 25, label: '5 из 70 + Mega Ball 1 из 25' },
+    { id: 'mega-70-24', from: '2025-04-08', current: true, mainCount: 5, mainMax: 70, bonusCount: 1, bonusMax: 24, label: '5 из 70 + Mega Ball 1 из 24' }
+  ],
+  euroMillions: [
+    { id: 'euromillions-2-9', from: '2004-02-13', to: '2011-05-06', mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 9, label: '5 из 50 + 2 Lucky Stars из 9' },
+    { id: 'euromillions-2-11', from: '2011-05-10', to: '2016-09-23', mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 11, label: '5 из 50 + 2 Lucky Stars из 11' },
+    { id: 'euromillions-2-12', from: '2016-09-27', current: true, mainCount: 5, mainMax: 50, bonusCount: 2, bonusMax: 12, label: '5 из 50 + 2 Lucky Stars из 12' }
+  ],
+  superEnalotto: [
+    { id: 'superenalotto-6-90', from: '1997-12-03', current: true, mainCount: 6, mainMax: 90, bonusCount: 1, bonusMax: 90, label: '6 из 90 + Jolly' }
+  ],
+  lottoMax: [
+    { id: 'lottomax-7-49', from: '2009-09-25', to: '2019-05-10', mainCount: 7, mainMax: 49, bonusCount: 1, bonusMax: 49, label: '7 из 49 + Bonus' },
+    { id: 'lottomax-7-50', from: '2019-05-14', to: '2026-04-10', mainCount: 7, mainMax: 50, bonusCount: 1, bonusMax: 50, label: '7 из 50 + Bonus' },
+    { id: 'lottomax-7-52', from: '2026-04-14', current: true, mainCount: 7, mainMax: 52, bonusCount: 1, bonusMax: 52, label: '7 из 52 + Bonus' }
+  ],
+  powerballAustralia: [
+    { id: 'powerballau-5-45', from: '1996-05-23', to: '2013-02-28', mainCount: 5, mainMax: 45, bonusCount: 1, bonusMax: 45, label: '5 из 45 + Powerball 1 из 45' },
+    { id: 'powerballau-6-40', from: '2013-03-07', to: '2018-04-12', mainCount: 6, mainMax: 40, bonusCount: 1, bonusMax: 20, label: '6 из 40 + Powerball 1 из 20' },
+    { id: 'powerballau-7-35', from: '2018-04-19', current: true, mainCount: 7, mainMax: 35, bonusCount: 1, bonusMax: 20, label: '7 из 35 + Powerball 1 из 20' }
+  ]
+};
+
+function publicRuleVersions() {
+  return Object.fromEntries(GAME_ORDER.map((game) => [
+    game,
+    (RULE_ERAS[game] || []).map((era) => ({ ...era }))
+  ]));
+}
+
+function ruleEraFor(game, date) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date || ''))) return null;
+  return (RULE_ERAS[game] || []).find((era) => date >= era.from && (!era.to || date <= era.to)) || null;
+}
 
 const cli = parseArgs(process.argv.slice(2));
 const selectedGames = cli.games || GAME_ORDER;
@@ -208,6 +298,7 @@ async function main() {
     updatedAt: ymd(TODAY),
     generatedBy: 'scripts/update-results-db.mjs',
     rulesMode: currentRulesOnly ? 'current-rules-only' : 'include-old-rules',
+    ruleVersions: publicRuleVersions(),
     games,
     diagnostics
   };
@@ -216,8 +307,9 @@ async function main() {
     schemaVersion: 1,
     updatedAt: ymd(TODAY),
     generatedBy: 'scripts/update-results-db.mjs --archive-out',
-    purpose: 'offline-research-only',
-    warning: 'Содержит тиражи разных исторических правил. Не использовать напрямую в моделях текущего формата.',
+    purpose: 'historical-display-and-research',
+    warning: 'Содержит тиражи разных исторических правил. Интерфейс показывает их по эпохам; модели текущего формата используют только results.json.',
+    ruleVersions: publicRuleVersions(),
     games: archiveGames,
     diagnostics: archiveDiagnostics
   } : null;
@@ -265,7 +357,7 @@ function parseArgs(args) {
       console.log(`Usage: node scripts/update-results-db.mjs [--games a,b] [--out results.json] [--archive-out results-archive.json] [--lotto-max-pdf file.pdf] [--dry-run] [--include-old-rules]
 
 Default writes current-rule-compatible draws to results.json.
---archive-out additionally writes every structurally valid fetched draw, marks legacy/current eras, and is for offline research only.
+--archive-out additionally writes every structurally valid fetched draw, marks legacy/current eras, and supplies the labelled historical UI.
 --lotto-max-pdf reads a local WCLC archive PDF instead of downloading it (useful for reproducible tests).
 Legacy --include-old-rules keeps its old mixed-output behaviour; prefer --archive-out so the live database remains safe.`);
       process.exit(0);
@@ -299,7 +391,7 @@ async function readExisting(file) {
 }
 
 async function fetchGame(game) {
-  if (game === 'lotto') return fetchNorskGame('lotto', RULES.lotto.sourceUrl, 2017);
+  if (game === 'lotto') return fetchNorskGame('lotto', RULES.lotto.sourceUrl, 2012);
   if (game === 'vikinglotto') return fetchVikinglotto();
   if (game === 'eurojackpot') return fetchEurojackpot();
   if (game === 'powerball') return fetchSocrataPowerball();
@@ -333,7 +425,7 @@ async function fetchNorskGame(officialGame, sourceUrl, startYear) {
 
 async function fetchVikinglotto() {
   const out = [];
-  for (let year = 2017; year <= CURRENT_YEAR; year++) {
+  for (let year = 2012; year <= CURRENT_YEAR; year++) {
     let html;
     try {
       html = await fetchText(`https://viking-lotto.net/en/results/${year}`, { attempts: 1, timeoutMs: 6000 });
@@ -344,12 +436,20 @@ async function fetchVikinglotto() {
     const rows = extractRows(html);
     for (const row of rows) {
       const main = numbersByClass(row, 'ball', (cls) => !/\bviking-ball\b/.test(cls));
-      const bonus = numbersByClass(row, 'viking-ball');
+      const viking = numbersByClass(row, 'viking-ball');
+      const additions = numbersByClass(row, 'tillægstal');
+      const lucky = numbersByClass(row, 'supertal');
+      const bonus = viking.length ? viking : [...additions, ...lucky];
       const dateHtml = firstMatch(row, /<div class="date">([\s\S]*?)<\/div>/i);
       const drawId = numberFromText(stripTags(firstMatch(row, /<td>([\s\S]*?)<\/td>/i)));
       const date = parseEnglishDate(dateHtml, year);
-      if (date && main.length === 6 && bonus.length === 1) {
-        out.push(draw(date, main, bonus, 'vikinglotto', RULES.vikinglotto.source, RULES.vikinglotto.sourceUrl, drawId));
+      if (date && main.length === 6 && bonus.length) {
+        const record = draw(date, main, bonus, 'vikinglotto', RULES.vikinglotto.source, RULES.vikinglotto.sourceUrl, drawId);
+        if (!viking.length) record.extraGroups = [
+          { label: 'Дополнительные', numbers: additions },
+          { label: 'Lucky Number', numbers: lucky }
+        ];
+        out.push(record);
       }
     }
   }
@@ -595,14 +695,15 @@ async function fetchLottoMaxArchivePdf() {
   if (String.fromCharCode(...bytes.slice(0, 5)) !== '%PDF-') throw new Error('WCLC archive response is not a PDF');
 
   const lines = await extractPdfLines(bytes);
-  const { rows, rejected } = parseLottoMaxArchiveLines(lines, sourceUrl);
+  const { rows, rejected, corrections } = parseLottoMaxArchiveLines(lines, sourceUrl);
   fetchDiagnostics.lottoMax = {
     pdfArchive: {
       url: sourceUrl,
       pages: lines.at(-1)?.page || 0,
       parsedRows: rows.length,
       rejectedRows: rejected.length,
-      rejected: rejected.map(({ page, date, reason }) => ({ page, date, reason }))
+      rejected: rejected.map(({ page, date, reason }) => ({ page, date, reason })),
+      appliedCorrections: corrections
     }
   };
   if (rows.length < LOTTO_MAX_ARCHIVE_MIN_ROWS) {
@@ -611,6 +712,9 @@ async function fetchLottoMaxArchivePdf() {
   if (rejected.length) {
     const sample = rejected.slice(0, 3).map((item) => `p.${item.page} ${item.date || 'unknown'} (${item.reason})`).join('; ');
     console.error(`warn lottoMax PDF: skipped ${rejected.length} incomplete/invalid dated rows: ${sample}`);
+  }
+  if (corrections.length) {
+    console.error(`lottoMax PDF: applied ${corrections.length} documented WCLC layout corrections (${corrections.map((item) => item.date).join(', ')})`);
   }
   console.error(`lottoMax PDF: ${rows.length} complete draws from ${lines.at(-1)?.page || 0} pages`);
   return rows;
@@ -664,7 +768,7 @@ async function extractPdfLines(bytes) {
 
 function parseLottoMaxArchiveLines(lines, sourceUrl) {
   const dateLine = /^(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),\s+(\d{4})\s+(.+)$/i;
-  const rows = [], rejected = [];
+  const rows = [], rejected = [], corrections = [];
   for (const line of lines || []) {
     const match = line.text.match(dateLine);
     if (!match) continue; // Excludes headings, Maxmillions and EXTRA-only rows.
@@ -678,21 +782,37 @@ function parseLottoMaxArchiveLines(lines, sourceUrl) {
     else if (main.some((n) => n < 1 || n > 52) || bonus.some((n) => n < 1 || n > 52)) reason = 'number-range';
     else if (main.includes(bonus[0])) reason = 'bonus-overlap';
     if (reason) {
+      const correction = LOTTO_MAX_PDF_CORRECTIONS[date];
+      if (correction) {
+        rows.push({
+          ...draw(date, correction.main, correction.bonus, 'lottoMax', 'WCLC Lotto Max official archive (documented PDF correction)', sourceUrl),
+          sourceNote: correction.reason,
+          correctionReferenceUrl: correction.referenceUrl
+        });
+        corrections.push({ page: line.page, date, originalReason: reason, note: correction.reason, referenceUrl: correction.referenceUrl });
+        continue;
+      }
       rejected.push({ page: line.page, date, reason, text: line.text });
       continue;
     }
     rows.push(draw(date, main, bonus, 'lottoMax', 'WCLC Lotto Max official archive', sourceUrl));
   }
-  return { rows: mergeByDate([], rows), rejected };
+  return { rows: mergeByDate([], rows), rejected, corrections };
 }
 
 async function fetchPowerballAustralia() {
   const out = [];
   let archiveFailures = 0;
-  for (let year = 2018; year <= CURRENT_YEAR; year++) {
+  for (let year = 1996; year <= CURRENT_YEAR; year++) {
     let html;
     try {
-      html = await fetchText(`https://australia.national-lottery.com/powerball/results-archive-${year}`, { attempts: 1, timeoutMs: 6000 });
+      html = await fetchText(`https://australia.national-lottery.com/powerball/results-archive-${year}`, {
+        attempts: 3,
+        timeoutMs: 8000,
+        retryOn403: true,
+        retryDelayMs: 1800,
+        headers: { 'user-agent': BROWSER_USER_AGENT }
+      });
       archiveFailures = 0;
     } catch (err) {
       archiveFailures += 1;
@@ -708,11 +828,13 @@ async function fetchPowerballAustralia() {
       const bonus = numbersByClass(row, 'powerball');
       const title = firstMatch(row, /title="Powerball Draw\s+([^"]+)"/i);
       const drawId = numberFromText(title);
-      const date = parseEnglishDate(title, year) || parseEnglishDate(stripTags(row), year);
-      if (date && main.length === 7 && bonus.length === 1) {
+      const hrefDate = firstMatch(row, /href=["'][^"']*\/powerball\/results\/(\d{2}-\d{2}-\d{4})["']/i);
+      const date = parseDmyDate(hrefDate) || parseEnglishDate(title, year) || parseEnglishDate(stripTags(row), year);
+      if (date && main.length >= 5 && main.length <= 7 && bonus.length === 1) {
         out.push(draw(date, main, bonus, 'powerballAustralia', RULES.powerballAustralia.source, RULES.powerballAustralia.sourceUrl, drawId));
       }
     }
+    await sleep(350);
   }
   return out;
 }
@@ -724,7 +846,7 @@ function normalizeNorsk(raw, lotteryId, sourceUrl) {
   const firstPrize = Array.isArray(raw.prize) ? raw.prize[0] || {} : {};
   const jackpotAmount = Number(firstPrize.jackpotAmount || firstPrize.value || 0);
   return {
-    ...draw(String(raw.drawDate || '').slice(0, 10), main, bonus, lotteryId, 'Norsk Tipping', sourceUrl, raw.drawId ?? null),
+    ...draw(parseNorskDrawDate(raw) || String(raw.drawDate || '').slice(0, 10), main, bonus, lotteryId, 'Norsk Tipping', sourceUrl, raw.drawId ?? null),
     jackpot: jackpotAmount ? Math.round(jackpotAmount / 100000) / 10 : null,
     drawName: raw.drawName || ''
   };
@@ -747,7 +869,6 @@ function normalizeAndValidate(game, rows, currentOnly) {
   const rule = RULES[game];
   const kept = [];
   const rejected = [];
-  const minDate = currentOnly ? rule.currentFrom : (rule.archiveFrom || rule.currentFrom);
 
   for (const row of rows) {
     const d = {
@@ -758,11 +879,18 @@ function normalizeAndValidate(game, rows, currentOnly) {
     const errors = [];
     if (!/^\d{4}-\d{2}-\d{2}$/.test(d.date || '')) errors.push('date');
     if (d.date > ymd(TODAY)) errors.push('future-date');
-    if (minDate && d.date < minDate) errors.push('old-rule-date');
-    if (d.main.length !== rule.mainCount) errors.push(`main-count-${d.main.length}`);
-    if (d.bonus.length !== rule.bonusCount) errors.push(`bonus-count-${d.bonus.length}`);
-    if (d.main.some((n) => !Number.isInteger(n) || n < 1 || n > rule.mainMax)) errors.push('main-range');
-    if (d.bonus.some((n) => !Number.isInteger(n) || n < 1 || n > rule.bonusMax)) errors.push('bonus-range');
+    const era = ruleEraFor(game, d.date);
+    if (!era) errors.push('unknown-rule-era');
+    if (currentOnly && era && !era.current) errors.push('old-rule-date');
+    const expected = era || rule;
+    if (d.main.length !== expected.mainCount) errors.push(`main-count-${d.main.length}`);
+    if (d.bonus.length !== expected.bonusCount) errors.push(`bonus-count-${d.bonus.length}`);
+    if (d.main.some((n) => !Number.isInteger(n) || n < 1 || n > expected.mainMax)) errors.push('main-range');
+    if (d.bonus.some((n) => !Number.isInteger(n) || n < 1 || n > expected.bonusMax)) errors.push('bonus-range');
+    if (era) {
+      d.ruleVersion = era.id;
+      d.ruleEra = era.current ? 'current' : 'legacy';
+    }
     if (errors.length) rejected.push({ date: d.date, errors });
     else kept.push(d);
   }
@@ -771,20 +899,27 @@ function normalizeAndValidate(game, rows, currentOnly) {
 }
 
 function normalizeArchiveRows(game, rows) {
-  const kept = [], rejected = [], rule = RULES[game];
+  const kept = [], rejected = [];
   for (const row of rows || []) {
+    const era = ruleEraFor(game, row.date);
     const d = {
       ...row,
       main: uniqSorted(row.main || []),
       bonus: uniqSorted(row.bonus || []),
-      ruleEra: String(row.date || '') >= rule.currentFrom ? 'current' : 'legacy'
+      ruleVersion: era?.id || 'unknown',
+      ruleEra: era?.current ? 'current' : 'legacy'
     };
     const errors = [];
     if (!/^\d{4}-\d{2}-\d{2}$/.test(d.date || '')) errors.push('date');
     if (d.date > ymd(TODAY)) errors.push('future-date');
-    if (!d.main.length) errors.push('empty-main');
-    if (d.main.some((n) => !Number.isInteger(n) || n < 1 || n > 999)) errors.push('main-range');
-    if (d.bonus.some((n) => !Number.isInteger(n) || n < 1 || n > 999)) errors.push('bonus-range');
+    if (!era) errors.push('unknown-rule-era');
+    if (era && d.main.length !== era.mainCount) errors.push(`main-count-${d.main.length}`);
+    const validationBonus = Array.isArray(d.extraGroups) && d.extraGroups.length
+      ? d.extraGroups.flatMap((group) => group.numbers || [])
+      : d.bonus;
+    if (era && validationBonus.length !== era.bonusCount) errors.push(`bonus-count-${validationBonus.length}`);
+    if (era && d.main.some((n) => !Number.isInteger(n) || n < 1 || n > era.mainMax)) errors.push('main-range');
+    if (era && validationBonus.some((n) => !Number.isInteger(n) || n < 1 || n > era.bonusMax)) errors.push('bonus-range');
     if (errors.length) rejected.push({ date: d.date, errors });
     else kept.push(d);
   }
@@ -865,18 +1000,20 @@ async function fetchBinary(url, options = {}) {
 async function fetchResponse(url, requestOptions, retryOptions = {}) {
   const attempts = retryOptions.attempts ?? 2;
   const timeoutMs = retryOptions.timeoutMs ?? HTTP_TIMEOUT_MS;
+  const retryDelayMs = retryOptions.retryDelayMs ?? 400;
   let lastError = null;
 
   for (let attempt = 1; attempt <= attempts; attempt++) {
     try {
       const res = await fetchWithTimeout(url, requestOptions, timeoutMs);
-      if (res.ok || !isRetryableStatus(res.status) || attempt === attempts) return res;
+      const retryable = isRetryableStatus(res.status) || (retryOptions.retryOn403 && res.status === 403);
+      if (res.ok || !retryable || attempt === attempts) return res;
       lastError = new Error(`${url} HTTP ${res.status}`);
     } catch (err) {
       lastError = err;
       if (attempt === attempts) throw err;
     }
-    await sleep(400 * attempt);
+    await sleep(retryDelayMs * attempt);
   }
 
   throw lastError || new Error(`${url} failed`);
@@ -964,6 +1101,16 @@ function parseItalianDate(input) {
   const m = text.match(/\b(\d{1,2})\s+([a-zà-ù]+)\s+(\d{4})\b/i);
   if (!m) return '';
   return buildDate(Number(m[3]), ITALIAN_MONTHS[m[2]], Number(m[1]));
+}
+
+function parseDmyDate(input) {
+  const match = String(input || '').match(/^(\d{2})-(\d{2})-(\d{4})$/);
+  return match ? buildDate(Number(match[3]), Number(match[2]), Number(match[1])) : '';
+}
+
+function parseNorskDrawDate(raw) {
+  const match = String(raw?.drawName || '').match(/-(\d{2})\.(\d{2})\.(\d{4})(?:\s|$)/);
+  return match ? buildDate(Number(match[3]), Number(match[2]), Number(match[1])) : '';
 }
 
 function buildDate(year, month, day) {

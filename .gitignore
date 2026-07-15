@@ -1,0 +1,3 @@
+.DS_Store
+node_modules/
+.i18n-build-cache.json

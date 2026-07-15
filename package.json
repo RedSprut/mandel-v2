@@ -3,10 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "audit": "node scripts/audit-math.mjs && node scripts/audit-models.mjs",
+    "audit": "node scripts/audit-math.mjs && node scripts/audit-models.mjs && node scripts/audit-i18n.mjs",
+    "audit:i18n": "node scripts/audit-i18n.mjs",
+    "build:i18n": "node scripts/build-i18n.mjs",
     "update-results": "node scripts/update-results-db.mjs"
   },
   "dependencies": {
     "pdfjs-dist": "5.6.205"
+  },
+  "devDependencies": {
+    "acorn": "^8.15.0"
   }
 }

@@ -1,18 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Лото Симулятор — шар 8">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Лото Симулятор — шары 18, 8 и 3">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#351525"/><stop offset="1" stop-color="#12070d"/></linearGradient>
-    <radialGradient id="gold" cx="31%" cy="24%" r="76%"><stop stop-color="#fff4c2"/><stop offset=".34" stop-color="#f2c65c"/><stop offset=".72" stop-color="#d18820"/><stop offset="1" stop-color="#71340d"/></radialGradient>
-    <radialGradient id="rose" cx="31%" cy="24%" r="76%"><stop stop-color="#ffdbe7"/><stop offset=".38" stop-color="#ef6e9b"/><stop offset="1" stop-color="#781234"/></radialGradient>
-    <filter id="shadow"><feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#000" flood-opacity=".48"/></filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b002b"/><stop offset="1" stop-color="#19000d"/></linearGradient>
+    <radialGradient id="gold" cx="31%" cy="24%" r="76%"><stop stop-color="#fff6a6"/><stop offset=".34" stop-color="#ffc51a"/><stop offset=".72" stop-color="#d98700"/><stop offset="1" stop-color="#7a3900"/></radialGradient>
+    <radialGradient id="rose" cx="31%" cy="24%" r="76%"><stop stop-color="#ffd3e2"/><stop offset=".38" stop-color="#ff2d73"/><stop offset="1" stop-color="#8f0038"/></radialGradient>
+    <radialGradient id="blue" cx="31%" cy="24%" r="76%"><stop stop-color="#bfe4ff"/><stop offset=".38" stop-color="#087cff"/><stop offset="1" stop-color="#00347f"/></radialGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#000" flood-opacity=".5"/></filter>
   </defs>
-  <rect width="1024" height="1024" rx="228" fill="url(#bg)"/>
-  <path d="M227 625c62-116 133-174 213-174 108 0 166 150 246 150 47 0 86-34 119-103" fill="none" stroke="#f2c65c" stroke-width="46" stroke-linecap="round" opacity=".34"/>
+  <rect width="1024" height="1024" rx="218" fill="url(#bg)"/>
   <g filter="url(#shadow)">
-    <circle cx="270" cy="622" r="154" fill="url(#rose)" stroke="#ffd4e2" stroke-width="15"/>
-    <circle cx="754" cy="622" r="154" fill="url(#rose)" stroke="#ffd4e2" stroke-width="15"/>
-    <circle cx="512" cy="421" r="244" fill="url(#gold)" stroke="#fff1b0" stroke-width="20"/>
+    <circle cx="292" cy="670" r="202" fill="url(#rose)" stroke="#ff91bd" stroke-width="12"/>
+    <circle cx="732" cy="670" r="202" fill="url(#blue)" stroke="#72c1ff" stroke-width="12"/>
+    <circle cx="512" cy="376" r="246" fill="url(#gold)" stroke="#fff19b" stroke-width="15"/>
   </g>
-  <circle cx="512" cy="421" r="142" fill="#fffaf0" stroke="#d89b2b" stroke-width="12"/>
-  <text x="512" y="506" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="250" font-weight="900" fill="#29131b">8</text>
-  <circle cx="432" cy="292" r="35" fill="#fff" opacity=".62"/>
+  <circle cx="292" cy="670" r="112" fill="#fff5df" stroke="#9c1648" stroke-width="8"/>
+  <circle cx="732" cy="670" r="112" fill="#fff5df" stroke="#064da8" stroke-width="8"/>
+  <circle cx="512" cy="376" r="142" fill="#fff5df" stroke="#d88f00" stroke-width="10"/>
+  <g text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="900" fill="#210813">
+    <text x="292" y="724" font-size="150">18</text>
+    <text x="732" y="735" font-size="188">3</text>
+    <text x="512" y="462" font-size="250">8</text>
+  </g>
+  <circle cx="438" cy="252" r="30" fill="#fff" opacity=".62"/>
 </svg>
